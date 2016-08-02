@@ -2,7 +2,7 @@
 @echo off
 
 setlocal
-call "%USERPROFILE%\dotfiles\batch\set_golang.bat"
+call "%USERPROFILE%\dotfiles\win_bat\set_golang.bat"
 
 rem 必要になるまでコメントアウトしておく
 rem call %USERPROFILE%\call\set_Git_usr_bin.bat
