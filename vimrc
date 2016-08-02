@@ -1,6 +1,5 @@
 "###vim設定ファイル###
 
-cd $HOME
 set hidden
 set history=1000
 set nocompatible
@@ -41,13 +40,13 @@ set background=dark
 
 "backupをとらない
 set nobackup
-set backupdir=~/vim.d/backup
+set backupdir=~/dotfiles/vim/tmp/backup
 
 "undoフォルダを指定
-set undodir=~/vim.d/undo
+set undodir=~/dotfiles/vim/tmp/undo
 
 "swp output directory
-set directory=~/vim.d/swp
+set directory=~/dotfiles/vim/tmp/swap
 
 " New splits open to right and bottom
 set splitbelow
