@@ -1,66 +1,89 @@
-"###vim設定ファイル###
 
-set hidden
-set history=1000
-set nocompatible
+"####vim設定ファイル###
+" 時間が取れたら整理する
+
+
+set hidden " bufferを隠せるようにする,保存していないバッファを隠して次のバッファを開けるように
+set history=1000 " コマンドの履歴数
+set nocompatible " vi互換を捨てる
 
 " Charset Init
-set encoding=utf-8
+set encoding=utf-8 " vimの内部エンコード設定
 
 "-----| Visual Options |-----"
-syntax on
+syntax on " シンタックスハイライト
+set antialias " アンチエイリアス
+"set mouse=a " mouseを使えるように設定
+"set mousemodel=extend " mouseのクリック時動作を指定
 
-set number
-set title
-set ruler
+set number " 行番号
+set title " タイトル
+set ruler " ルーラー使用
+set cursorcolumn " カーソルの現在位置で縦を強調
+set nocursorline " カーソルの現在行を強調
 "set vb
-set showmatch
-set autoindent
-set smartindent
+set wrap " txtがウィンドウに入らなければ折り返す
+set showmatch " 閉じ括弧の確認
+set autoindent " 自動インデント
+set smartindent " スマートインデント
+set matchpairs+=<:>,":",':',`:` " 括弧等の組を構成するペアをコロンで区切り設定、既定は(:),{:},[:]となっている
 
-set cmdheight=2
-set wildmenu
-set showcmd
+set cmdheight=2    "vimコマンドラインの表示に使われる行数
+set wildmenu " vimコマンドのtab補完
+set showcmd " vimコマンドを表示する
+set confirm " vimコマンド確認が必要ならダイアログを出して対話する
+"set shell " vimから叩くシェルを設定, shell=zsh
 
-set expandtab
-set tabstop=4
+set expandtab " tabをスペースとして挿入
+set tabstop=4 " tabをエディタ内でいくつの空白として表示するか設定
+set backspace=indent,eol,start " バックスペースで特殊文字を削除できるように
 
-set list
+set list " tab文字をctrl-Iで表示し、行末に$を表示する
+
+" listがオンの状態で、どのようにタブや空白を表示するかを指定する
 set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:<,eol:<
 
-set laststatus=2
-"# statuslineに表示する情報の指定(コピペなので正規表現で何を指定してるか理解が浅い)
-"# statuslineに+=で表示情報を追加してる,起動中にvimrcを複数読むとバグりそう
+set laststatus=2 " 最下層ウィンドウに何時ステータス行を表示するか、2は常に表示
+"# statuslineに表示する情報の指定(コピペなので何を指定してるか理解が浅い)
+"# statuslineに+=で表示情報を追加してる?,起動中にvimrcを複数読むとバグりそう
 set statusline+=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
 
 
-colorscheme desert
+"-----| colorscheme  |-----"
+" シェルの設定で大きく変わるので~/.vimrcで設定した方がいいかも
+"colorscheme desert
+"colorscheme elflord
+colorscheme ron
 set background=dark
+"set background=light
 
 
-"backupをとらない
-set nobackup
+"backup
+set nobackup " backup設定
 set backupdir=~/dotfiles/vim/tmp/backup
 
-"undoフォルダを指定
+"undoフォルダ指定
 set undodir=~/dotfiles/vim/tmp/undo
 
 "swp output directory
+set swapfile " swapfile設定
 set directory=~/dotfiles/vim/tmp/swap
 
 " New splits open to right and bottom
-set splitbelow
-set splitright
+set splitbelow " split時カレントウィンドウの下に分割
+set splitright " vsplit時カレントウィンドウの横に分割
 
 
 "-----| key maps  |-----"
-inoremap jj <Esc>
+" jjでノーマルモードに
+inoremap jj <Esc><Esc><Esc>
+
 
 "-----| test adds |-----"
-set incsearch
-set hlsearch
+set incsearch " 検索コマンドでワードを打ち込む間にもマッチする
+set hlsearch " 前回の検索パターンが存在するとき、マッチテキストを強調表示
 set autoread  "ファイル内容が変更されると自動で読み込む
 "---beep off
-set vb t_vb=
+set vb t_vb= " ビジュアルベル、vbはビープ音、t_vbは画面の点滅、offに設定
 
 "-----EOF
