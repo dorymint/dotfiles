@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# bashrc source
+# 使用例
+# jisho 検索対象文字列
+
+# use gene95 和英辞書
+# gene95をutf8に変換して使用、存在しなければ使用できない
+# pathも環境依存
+
+function jisho() {
+  grep $1 ~/document/gene95/gene-utf8.txt -A 1 -wi --color
+}
+
