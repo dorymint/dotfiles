@@ -3,8 +3,6 @@
 
 @echo make symboliclinks
 @echo require administrative environment
-@echo please call this batch then
-@echo win_mksymlinks administrator_name
 
 setlocal
 set DOT_VIM_PATH=%USERPROFILE%\dotfiles\vim
