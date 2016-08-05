@@ -1,7 +1,7 @@
 
 @echo off
 
-if "%GOPATH%" == "%USERPROFILE%\golang" goto :eof
+if not "%GOPATH%" == "" goto :eof
 
 echo --------------------
 echo seting GOPATH = %USERPROFILE%\golang
