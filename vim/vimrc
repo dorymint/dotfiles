@@ -65,12 +65,11 @@ set statusline=%f%m%r%w%y%{&fileencoding}[%{&fileformat}]%=%(buf[%n]hex[%4B]line
 
 "-----| colorscheme  |-----"
 " シェルの設定で大きく変わるので~/.vimrcで設定した方がいいかも
+set background=dark
+"set background=light
 "colorscheme desert
 "colorscheme elflord
 colorscheme ron
-set background=dark
-"set background=light
-
 
 "backup
 set writebackup " backup設定
