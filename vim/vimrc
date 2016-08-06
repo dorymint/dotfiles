@@ -1,5 +1,5 @@
 
-"####vim設定ファイル###
+"----- vim設定ファイル -----
 " 時間が取れたら整理する
 
 
@@ -45,7 +45,7 @@ set list " tab文字をctrl-Iで表示し、行末に$を表示する
 set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:<,eol:<
 
 set laststatus=2 " 最下層ウィンドウに何時ステータス行を表示するか、2は常に表示
-set statusline=%f\ %m[%{&fileencoding}]%r%w\ %y[%{&ff}]\ %=%(line[%4l/%L]\ bufnum[%n]\ hex[%4B]\ %8P%)
+set statusline=%f%m%r%w%y%{&fileencoding}[%{&fileformat}]%=%(buf[%n]hex[%4B]line[%4l/%4L:%4P]%)
 "----- statuslineの値指定
 " %< 表示が長すぎるときに詰める場所を指定
 " %f fileの相対パス,起点はカレントディレクトリ
@@ -59,6 +59,9 @@ set statusline=%f\ %m[%{&fileencoding}]%r%w\ %y[%{&ff}]\ %=%(line[%4l/%L]\ bufnu
 " %p 現在行がファイルの何%の位置あるか
 " %P 現在表示されているウィンドウ内のテキストが何%か
 " %と指定文字の間の数字は間隔を指定している
+" {}で囲まれたところは評価が展開される
+" &fileencoding エンコード表示
+" &fileformat ファイル末尾<CR><NL>or<NL>or<CR>に応じて、[dos][unix][mac]を表示
 
 "-----| colorscheme  |-----"
 " シェルの設定で大きく変わるので~/.vimrcで設定した方がいいかも
