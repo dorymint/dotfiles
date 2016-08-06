@@ -29,11 +29,11 @@ set shiftwidth=2 " autoindentの幅指定
 set smartindent " スマートインデント
 set matchpairs+=<:>,":",':',`:` " 括弧等の組を構成するペアをコロンで区切り設定、既定は(:),{:},[:]となっている
 
-set cmdheight=2    "vimコマンドラインの表示に使われる行数
+set cmdheight=2 "vimコマンドラインの表示に使われる行数
 set wildmenu " vimコマンドのtab補完
 set showcmd " vimコマンドを表示する
 set confirm " vimコマンド確認が必要ならダイアログを出して対話する
-"set shell " vimから叩くシェルを設定, shell=zsh
+"set shell " vimから呼ぶシェルを設定, shell=zsh
 
 set expandtab " tabをスペースとして挿入
 set tabstop=2 " tabをエディタ内でいくつの空白として表示するか設定
@@ -42,7 +42,7 @@ set backspace=indent,eol,start " バックスペースで特殊文字を削除�
 set list " tab文字をctrl-Iで表示し、行末に$を表示する
 
 " listがオンの状態で、どのようにタブや空白を表示するかを指定する
-set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:<,eol:<
+set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:<,eol:↵
 
 set laststatus=2 " 最下層ウィンドウに何時ステータス行を表示するか、2は常に表示
 set statusline=%f%m%r%w%y%{&fileencoding}[%{&fileformat}]%=%(buf[%n]hex[%4B]line[%4l/%4L:%4P]%)
