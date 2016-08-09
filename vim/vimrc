@@ -10,6 +10,8 @@ set nocompatible " vi互換を捨てる
 " Charset Init
 set encoding=utf-8 " vimの内部エンコード設定
 
+set helplang=ja
+
 "-----| Visual Options |-----"
 syntax on " シンタックスハイライト
 set antialias " アンチエイリアス
@@ -19,6 +21,7 @@ set antialias " アンチエイリアス
 set number " 行番号
 set title " タイトル
 set ruler " ルーラー使用
+"set showtabline=2 " show tabpage
 set cursorcolumn " カーソルの現在位置で縦を強調
 set nocursorline " カーソルの現在行を強調
 "set vb
@@ -36,16 +39,17 @@ set confirm " vimコマンド確認が必要ならダイアログを出して対
 "set shell " vimから呼ぶシェルを設定, shell=zsh
 
 set expandtab " tabをスペースとして挿入
-set tabstop=2 " tabをエディタ内でいくつの空白として表示するか設定
+set tabstop=4 " tabをエディタ内でいくつの空白として表示するか設定
+set softtabstop=2 " vimでtabを挿入した時、幾つの空白で置き換えるか
 set backspace=indent,eol,start " バックスペースで特殊文字を削除できるように
 
 set list " tab文字をctrl-Iで表示し、行末に$を表示する
 
 " listがオンの状態で、どのようにタブや空白を表示するかを指定する
-set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:<,eol:↵
+set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:< ",eol:↵
 
 set laststatus=2 " 最下層ウィンドウに何時ステータス行を表示するか、2は常に表示
-set statusline=%f%m%r%w%y%{&fileencoding}[%{&fileformat}]%=%(buf[%n]hex[%4B]line[%4l/%4L:%4P]%)
+"set statusline=%f%m%r%w%y%{&fileencoding}[%{&fileformat}]%=%(buf[%n]hex[%4B]line[%4l/%4L:%4P]%)
 "----- statuslineの値指定
 " %< 表示が長すぎるときに詰める場所を指定
 " %f fileの相対パス,起点はカレントディレクトリ
@@ -65,6 +69,7 @@ set statusline=%f%m%r%w%y%{&fileencoding}[%{&fileformat}]%=%(buf[%n]hex[%4B]line
 
 "-----| colorscheme  |-----"
 " シェルの設定で大きく変わるので~/.vimrcで設定した方がいいかも
+set t_Co=256
 set background=dark
 "set background=light
 "colorscheme desert
@@ -97,7 +102,14 @@ inoremap jj <Esc><Esc><Esc>
 set incsearch " 検索コマンドでワードを打ち込む間にもマッチする
 set hlsearch " 前回の検索パターンが存在するとき、マッチテキストを強調表示
 set autoread  "ファイル内容が変更されると自動で読み込む
+set ignorecase " 検索パターンで大文字少文字を区別しない,置換処理のマッチに影響するため注意
+set smartcase " 検索パターンが大文字を含んでいたらignorecaseを上書きする
+
 "---beep off
 set vb t_vb= " ビジュアルベル、vbはビープ音、t_vbは画面の点滅、offに設定
+
+"-----| color |-----"
+"highlight SpecialKey ctermfg=7
+"highlight SpecialKey ctermfg=5
 
 "-----EOF
