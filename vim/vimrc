@@ -1,115 +1,126 @@
+" vimrc
 
-"----- vim設定ファイル -----
-" 時間が取れたら整理する
-
-
-set hidden " bufferを隠せるようにする,保存していないバッファを隠して次のバッファを開けるように
-set history=1000 " コマンドの履歴数
-set nocompatible " vi互換を捨てる
-
-" Charset Init
-set encoding=utf-8 " vimの内部エンコード設定
-
-set helplang=ja
-
-"-----| Visual Options |-----"
-syntax on " シンタックスハイライト
-set antialias " アンチエイリアス
-"set mouse=a " mouseを使えるように設定
-"set mousemodel=extend " mouseのクリック時動作を指定
-
-set number " 行番号
-set title " タイトル
-set ruler " ルーラー使用
-"set showtabline=2 " show tabpage
-set cursorcolumn " カーソルの現在位置で縦を強調
-set nocursorline " カーソルの現在行を強調
-"set vb
-set wrap " txtがウィンドウに入らなければ折り返す
-set showmatch " 閉じ括弧の確認
-set autoindent " 自動インデント
-set shiftwidth=2 " autoindentの幅指定
-set smartindent " スマートインデント
-set matchpairs+=<:>,":",':',`:` " 括弧等の組を構成するペアをコロンで区切り設定、既定は(:),{:},[:]となっている
-
-set cmdheight=2 "vimコマンドラインの表示に使われる行数
-set wildmenu " vimコマンドのtab補完
-set showcmd " vimコマンドを表示する
-set confirm " vimコマンド確認が必要ならダイアログを出して対話する
-"set shell " vimから呼ぶシェルを設定, shell=zsh
-
-set expandtab " tabをスペースとして挿入
-set tabstop=4 " tabをエディタ内でいくつの空白として表示するか設定
-set softtabstop=2 " vimでtabを挿入した時、幾つの空白で置き換えるか
-set backspace=indent,eol,start " バックスペースで特殊文字を削除できるように
-
-set list " tab文字をctrl-Iで表示し、行末に$を表示する
-
-" listがオンの状態で、どのようにタブや空白を表示するかを指定する
-set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:< ",eol:↵
-
-set laststatus=2 " 最下層ウィンドウに何時ステータス行を表示するか、2は常に表示
-"set statusline=%f%m%r%w%y%{&fileencoding}[%{&fileformat}]%=%(buf[%n]hex[%4B]line[%4l/%4L:%4P]%)
-"----- statuslineの値指定
-" %< 表示が長すぎるときに詰める場所を指定
-" %f fileの相対パス,起点はカレントディレクトリ
-" %F fileの絶対パス
-" %t file名(パス無)
-" %l 現在のカーソル行番号
-" %L 総行数
-" %m 修正フラグ、バッファを編集すると[+]が表示される
-" %b カーソル上の文字コードの10進数表現
-" %B 同上16進数表現
-" %p 現在行がファイルの何%の位置あるか
-" %P 現在表示されているウィンドウ内のテキストが何%か
-" %と指定文字の間の数字は間隔を指定している
-" {}で囲まれたところは評価が展開される
-" &fileencoding エンコード表示
-" &fileformat ファイル末尾<CR><NL>or<NL>or<CR>に応じて、[dos][unix][mac]を表示
-
-"-----| colorscheme  |-----"
-" シェルの設定で大きく変わるので~/.vimrcで設定した方がいいかも
-set t_Co=256
-set background=dark
-"set background=light
-"colorscheme desert
-"colorscheme elflord
-colorscheme ron
-
-"backup
-set writebackup " backup設定
-set backupdir=~/dotfiles/vim/tmp/backup
-
-"undo
-set noundofile " undo設定
-set undodir=~/dotfiles/vim/tmp/undo
-
-"swp
-set noswapfile " swapfile設定
-set directory=~/dotfiles/vim/tmp/swap
-
-" New splits open to right and bottom
-set splitbelow " split時カレントウィンドウの下に分割
-set splitright " vsplit時カレントウィンドウの横に分割
+" TODO:時間が取れたら整理する
+" NOTE:設定の詳細は:helpで調べればまず困らない
 
 
-"-----| key maps  |-----"
-" jjでノーマルモードに
-inoremap jj <Esc><Esc><Esc>
+"-----| plugin manage |-----"
+"source <add plugin manage source>
+
+"-----| basic set |-----"
+  set hidden " bufferを隠せるように
+  set history=1000 " コマンドの履歴数
+  set nocompatible " vi互換を捨てる
+
+  " Charset
+  set encoding=utf-8 " vimの内部エンコード設定
+  set helplang=ja
+
+  syntax on " シンタックスハイライト
+  set antialias " アンチエイリアス
+
+  set number " 行番号
+  "set relativenumber " 行の相対位置
+  set title " タイトル
+  set ruler " ルーラー使用
+  set showtabline=2 " show tabpage
+  set cursorcolumn " カーソル現在位置で縦を強調設定
+  set cursorline " カーソル現在行の強調設定
+  set wrap " txtがウィンドウに入らなければ折り返す
+  set showmatch " 閉じ括弧の確認
+  set autoindent " 自動インデント
+  set shiftwidth=2 " autoindentの幅指定
+  set smartindent " スマートインデント
+
+  set cmdheight=2 "vimコマンドラインの表示に使われる行数
+  set wildmenu " vimコマンドのtab補完
+  set showcmd " vimコマンドを表示する
+  set confirm " vimコマンド確認が必要ならダイアログを出して対話する
+  "set shell " vimから呼ぶシェルを設定, shell=zsh
+
+  set expandtab " tabをスペースとして挿入
+  set tabstop=2 " tabをエディタ内でいくつの空白として表示するか設定
+  set softtabstop=2 " vimでtabを挿入した時、幾つの空白で置き換えるか
+  set backspace=indent,eol,start " バックスペースで特殊文字を削除できるように
+
+  set list " tab文字をctrl-Iで表示し、行末に$を表示する
+
+  " listがオンの状態で、どのようにタブや空白を表示するかを指定する
+  set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:< ",eol:↵
+
+  set laststatus=2 " 最下層ウィンドウに何時ステータス行を表示するか、2は常に表示
+  set statusline=%f%m%r%w%y%{&fileencoding}[%{&fileformat}]%=%(buf[%n]hex[%4B]line[%4l/%4L:%4P]%)
+  "----- statuslineの値指定
+  " %< 表示が長すぎるときに詰める場所を指定
+  " %f fileの相対パス,起点はカレントディレクトリ
+  " %F fileの絶対パス
+  " %t file名(パス無)
+  " %l 現在のカーソル行番号
+  " %L 総行数
+  " %m 修正フラグ、バッファを編集すると[+]が表示される
+  " %b カーソル上の文字コードの10進数表現
+  " %B 同上16進数表現
+  " %p 現在行がファイルの何%の位置あるか
+  " %P 現在表示されているウィンドウ内のテキストが何%か
+  " %と指定文字の間の数字は間隔を指定している
+  " {}で囲まれたところは評価が展開される
+  " &fileencoding エンコード表示
+  " &fileformat ファイル末尾<CR><NL>or<NL>or<CR>に応じて、[dos][unix][mac]を表示
+  " 詳しくは:help statuslineで確認
+
+  "backup
+  set writebackup " backup設定
+  set backupdir=~/dotfiles/vim/tmp/backup
+
+  "undo
+  set noundofile " undo設定
+  set undodir=~/dotfiles/vim/tmp/undo
+
+  "swp
+  set noswapfile " swapfile設定
+  set directory=~/dotfiles/vim/tmp/swap
+
+  " New splits open to right and bottom
+  set splitbelow " split時カレントウィンドウの下に分割
+  set splitright " vsplit時カレントウィンドウの横に分割
+
+  " bell
+  set vb t_vb= " ビジュアルベル、vbはビープ音、t_vbは画面の点滅、offに設定
+  "set vb
+
+
+"-----| color |-----"
+  " シェルの設定で大きく変わるので~/.vimrcで設定した方がいいかも
+  set t_Co=256
+  set background=dark
+  "set background=light
+  "colorscheme desert
+  "colorscheme elflord
+  "colorscheme ron
+  "colorscheme solarized
+  colorscheme hybrid
+
+"-----| key map  |-----"
+  " jjでノーマルモードに
+  inoremap jj <Esc>
+
+  " Resize window
+  noremap <up>    <C-w>+
+  noremap <down>  <C-w>-
+  noremap <left>  <C-w><
+  noremap <right> <C-w>>
+
+  " 行を引っ張る
+  noremap <C-j>    ddp
+  noremap <C-p>    ddkP
+  " <C-p>はファイルの先頭で入れると行が消える、何故かはよくわかってない
 
 
 "-----| test adds |-----"
-set incsearch " 検索コマンドでワードを打ち込む間にもマッチする
-set hlsearch " 前回の検索パターンが存在するとき、マッチテキストを強調表示
-set autoread  "ファイル内容が変更されると自動で読み込む
-set ignorecase " 検索パターンで大文字少文字を区別しない,置換処理のマッチに影響するため注意
-set smartcase " 検索パターンが大文字を含んでいたらignorecaseを上書きする
-
-"---beep off
-set vb t_vb= " ビジュアルベル、vbはビープ音、t_vbは画面の点滅、offに設定
-
-"-----| color |-----"
-"highlight SpecialKey ctermfg=7
-"highlight SpecialKey ctermfg=5
+  set incsearch " 検索コマンドでワードを打ち込む間にもマッチする
+  set hlsearch " 前回の検索パターンが存在するとき、マッチテキストを強調表示
+  set autoread  "ファイル内容が変更されると自動で読み込む
+  set ignorecase " 検索パターンで大文字少文字を区別しない,置換処理のマッチに影響するため注意
+  set smartcase " 検索パターンが大文字を含んでいたらignorecaseを上書きする
 
 "-----EOF
