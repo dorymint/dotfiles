@@ -5,68 +5,68 @@
 
 
 "-----| plugin manage |-----"
-"source <add plugin manage source>
+"TODO:source <add plugin manage source>
 
 "-----| basic set |-----"
+  set nocompatible " vi互換を捨てる
   set hidden " bufferを隠せるように
   set history=1000 " コマンドの履歴数
-  set nocompatible " vi互換を捨てる
+  set autoread  "ファイル内容が変更されると自動で読み込む
+  set antialias " アンチエイリアス
+  syntax on " シンタックスハイライト
+  set showtabline=2 " show tabpage
+  set tabline=%t " use airline
 
   " Charset
   set encoding=utf-8 " vimの内部エンコード設定
   set helplang=ja
 
-  syntax on " シンタックスハイライト
-  set antialias " アンチエイリアス
 
+  set title " タイトル
   set number " 行番号
   "set relativenumber " 行の相対位置
-  set title " タイトル
   set ruler " ルーラー使用
-  set showtabline=2 " show tabpage
+
   set cursorcolumn " カーソル現在位置で縦を強調設定
   set cursorline " カーソル現在行の強調設定
-  set wrap " txtがウィンドウに入らなければ折り返す
-  set showmatch " 閉じ括弧の確認
-  set autoindent " 自動インデント
-  set shiftwidth=2 " autoindentの幅指定
-  set smartindent " スマートインデント
 
+  set wrap " txtがウィンドウに入らなければ折り返す
+
+  set autoindent " 自動インデント
+  set smartindent " スマートインデント
+  set shiftwidth=2 " autoindentの幅指定
+
+  " showmatch
+  set showmatch " 閉じ括弧の確認
+  set matchpairs=(:),{:},[:],<:>,\":\",\':\'
+
+  set showcmd " 入力中のvimコマンドを表示する
   set cmdheight=2 "vimコマンドラインの表示に使われる行数
   set wildmenu " vimコマンドのtab補完
-  set showcmd " vimコマンドを表示する
   set confirm " vimコマンド確認が必要ならダイアログを出して対話する
   "set shell " vimから呼ぶシェルを設定, shell=zsh
 
-  set expandtab " tabをスペースとして挿入
+  " search
+  set incsearch " 検索コマンドでワードを打ち込む間にもマッチする
+  set hlsearch " 前回の検索パターンが存在するとき、マッチテキストを強調表示
+  set ignorecase " 検索パターンで大文字少文字を区別しない,置換処理のマッチに影響するため注意
+  set smartcase " 検索パターンが大文字を含んでいたらignorecaseを上書きする
+
+
   set tabstop=2 " tabをエディタ内でいくつの空白として表示するか設定
-  set softtabstop=2 " vimでtabを挿入した時、幾つの空白で置き換えるか
+  set expandtab " vimでtabを挿入した時tabをスペースとして挿入
+  set softtabstop=2 " tabを幾つの空白で置き換えるか
   set backspace=indent,eol,start " バックスペースで特殊文字を削除できるように
 
-  set list " tab文字をctrl-Iで表示し、行末に$を表示する
-
-  " listがオンの状態で、どのようにタブや空白を表示するかを指定する
+  set list " 不可視文字の表示設定
   set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:< ",eol:↵
+    " listの表示文字を指定する
 
+  "----- statuslineの表示指定
   set laststatus=2 " 最下層ウィンドウに何時ステータス行を表示するか、2は常に表示
   set statusline=%f%m%r%w%y%{&fileencoding}[%{&fileformat}]%=%(buf[%n]hex[%4B]line[%4l/%4L:%4P]%)
-  "----- statuslineの値指定
-  " %< 表示が長すぎるときに詰める場所を指定
-  " %f fileの相対パス,起点はカレントディレクトリ
-  " %F fileの絶対パス
-  " %t file名(パス無)
-  " %l 現在のカーソル行番号
-  " %L 総行数
-  " %m 修正フラグ、バッファを編集すると[+]が表示される
-  " %b カーソル上の文字コードの10進数表現
-  " %B 同上16進数表現
-  " %p 現在行がファイルの何%の位置あるか
-  " %P 現在表示されているウィンドウ内のテキストが何%か
-  " %と指定文字の間の数字は間隔を指定している
-  " {}で囲まれたところは評価が展開される
-  " &fileencoding エンコード表示
-  " &fileformat ファイル末尾<CR><NL>or<NL>or<CR>に応じて、[dos][unix][mac]を表示
-  " 詳しくは:help statuslineで確認
+    " 指定の詳細は:help statuslineで確認
+    " use airline 上の設定はプラグインが効かないときだけ
 
   "backup
   set writebackup " backup設定
@@ -84,13 +84,13 @@
   set splitbelow " split時カレントウィンドウの下に分割
   set splitright " vsplit時カレントウィンドウの横に分割
 
-  " bell
-  set vb t_vb= " ビジュアルベル、vbはビープ音、t_vbは画面の点滅、offに設定
-  "set vb
-
+  " visualbell
+  set vb t_vb=
+    " set vb でbeep音を画面のフラッシュと置き換える
+    " t_vb= でフラッシュのターミナルコードを指定するが空なのでフラッシュさせない
 
 "-----| color |-----"
-  " シェルの設定で大きく変わるので~/.vimrcで設定した方がいいかも
+" シェルの設定で大きく変わるので~/.vimrcで設定した方がいいかも
   set t_Co=256
   set background=dark
   "set background=light
@@ -113,14 +113,22 @@
   " 行を引っ張る
   noremap <C-j>    ddp
   noremap <C-p>    ddkP
-  " <C-p>はファイルの先頭で入れると行が消える、何故かはよくわかってない
+    " <C-p>はファイルの先頭で入れると行が消える、どうしてそうなるかよくわかってない
 
+  " 閉じ括弧...{}だけ挙動が違う、なぜかよくわかってない
+  inoremap {<enter> {}<left><enter><bs><esc><S-o>
+  inoremap {<nl> {}<left><nl><bs><esc><S-o>
 
-"-----| test adds |-----"
-  set incsearch " 検索コマンドでワードを打ち込む間にもマッチする
-  set hlsearch " 前回の検索パターンが存在するとき、マッチテキストを強調表示
-  set autoread  "ファイル内容が変更されると自動で読み込む
-  set ignorecase " 検索パターンで大文字少文字を区別しない,置換処理のマッチに影響するため注意
-  set smartcase " 検索パターンが大文字を含んでいたらignorecaseを上書きする
+  inoremap (<enter> ()<left><enter><esc><S-o>
+  inoremap (<nl> ()<left><nl><esc><S-o>
+
+  inoremap [<enter> []<left><enter><esc><S-o>
+  inoremap [<nl> []<left><nl><esc><S-o>
+
+  inoremap < <><left>
+
+  inoremap " ""<left>
+  inoremap ' ''<left>
+
 
 "-----EOF
