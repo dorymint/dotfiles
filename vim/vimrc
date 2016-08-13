@@ -5,7 +5,7 @@
 
 
 "-----| plugin manage |-----"
-source $HOME/dotfiles/vim/plugin_manage
+source ~/dotfiles/vim/plugin_manage
 
 "-----| basic set |-----"
   set nocompatible " vi互換を捨てる
