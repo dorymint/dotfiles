@@ -1,4 +1,5 @@
 " plugin manage
+" TODO:pluginのdirectoryを変えるべきか
 
 "dein Scripts-----------------------------
 if &compatible
