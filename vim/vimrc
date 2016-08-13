@@ -5,17 +5,15 @@
 
 
 "-----| plugin manage |-----"
-"TODO:source <add plugin manage source>
+source $HOME/dotfiles/vim/plugin_manage
 
 "-----| basic set |-----"
   set nocompatible " vi互換を捨てる
+  set nomodeline " do not use modeline
   set hidden " bufferを隠せるように
-  set history=1000 " コマンドの履歴数
-  set autoread  "ファイル内容が変更されると自動で読み込む
   set antialias " アンチエイリアス
+  set autoread  "ファイル内容が変更されると自動で読み込む
   syntax on " シンタックスハイライト
-  set showtabline=2 " show tabpage
-  set tabline=%t " use airline
 
   " Charset
   set encoding=utf-8 " vimの内部エンコード設定
@@ -30,17 +28,24 @@
   set cursorcolumn " カーソル現在位置で縦を強調設定
   set cursorline " カーソル現在行の強調設定
 
-  set wrap " txtがウィンドウに入らなければ折り返す
+  set wrap " textがウィンドウに入らなければ折り返す
 
   set autoindent " 自動インデント
   set smartindent " スマートインデント
   set shiftwidth=2 " autoindentの幅指定
 
+  " foldmethod
+  set foldmethod=marker " ページの折り込みを使う
+  set foldmarker={,} " 折り込みのマーカー設定
+  set foldlevel=99 " デフォルトは開くように
+
   " showmatch
   set showmatch " 閉じ括弧の確認
-  set matchpairs=(:),{:},[:],<:>,\":\",\':\'
+  set matchpairs=(:),{:},[:],<:>
 
+  " cmdline
   set showcmd " 入力中のvimコマンドを表示する
+  set history=1000 " vimコマンドの履歴数
   set cmdheight=2 "vimコマンドラインの表示に使われる行数
   set wildmenu " vimコマンドのtab補完
   set confirm " vimコマンド確認が必要ならダイアログを出して対話する
@@ -60,13 +65,17 @@
 
   set list " 不可視文字の表示設定
   set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:< ",eol:↵
-    " listの表示文字を指定する
+    " listの表示文字を指定している
 
   "----- statuslineの表示指定
   set laststatus=2 " 最下層ウィンドウに何時ステータス行を表示するか、2は常に表示
   set statusline=%f%m%r%w%y%{&fileencoding}[%{&fileformat}]%=%(buf[%n]hex[%4B]line[%4l/%4L:%4P]%)
     " 指定の詳細は:help statuslineで確認
     " use airline 上の設定はプラグインが効かないときだけ
+
+  "----- tablineの表示指定
+  set showtabline=2 " tablineを常に表示
+  set tabline=%t " statuslineと同じように設定できる
 
   "backup
   set writebackup " backup設定
@@ -101,6 +110,9 @@
   colorscheme hybrid
 
 "-----| key map  |-----"
+" NOTE:defaultのマップは :help index.txt で確認できる
+" NOTE:user定義のマップは :imap :nmap :vmap :map :verbose map で確認できる
+
   " jjでノーマルモードに
   inoremap jj <Esc>
 
@@ -113,11 +125,12 @@
   " 行を引っ張る
   noremap <C-j>    ddp
   noremap <C-p>    ddkP
-    " <C-p>はファイルの先頭で入れると行が消える、どうしてそうなるかよくわかってない
+    " TODO:上の<C-p>はファイルの先頭で入れると行が消える、どうしてそうなるかよくわかってない
 
-  " 閉じ括弧...{}だけ挙動が違う、なぜかよくわかってない
+  " 閉じ括弧
   inoremap {<enter> {}<left><enter><bs><esc><S-o>
   inoremap {<nl> {}<left><nl><bs><esc><S-o>
+    " TODO:{}だけ挙動が違う、なぜかよくわかってない
 
   inoremap (<enter> ()<left><enter><esc><S-o>
   inoremap (<nl> ()<left><nl><esc><S-o>
@@ -131,4 +144,5 @@
   inoremap ' ''<left>
 
 
-"-----EOF
+"-----eof
+
