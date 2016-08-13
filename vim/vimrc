@@ -9,6 +9,7 @@ source $HOME/dotfiles/vim/plugin_manage
 
 "-----| basic set |-----"
   set nocompatible " vi互換を捨てる
+  set ttyfast " 高速ターミナル接続が何を指してるかわかってない
   set nomodeline " do not use modeline
   set hidden " bufferを隠せるように
   set autoread  "ファイル内容が変更されると自動で読み込む
@@ -22,6 +23,7 @@ source $HOME/dotfiles/vim/plugin_manage
   set ruler " ルーラー使用
   set number " 行番号
   "set relativenumber " 行の相対位置
+  set scrolloff=2 " 表示するページの上下余白の行数
 
   " cursor
   set cursorcolumn " カーソル現在位置で縦を強調設定
@@ -47,7 +49,8 @@ source $HOME/dotfiles/vim/plugin_manage
   set showcmd " 入力中のvimコマンドを表示する
   set history=1000 " vimコマンドの履歴数
   set cmdheight=2 "vimコマンドラインの表示に使われる行数
-  set wildmenu " vimコマンドのtab補完
+  set wildmenu " vimコマンドの補完
+  set wildmode=list:longest,full " 補完の挙動を指定
   set confirm " コマンド実行の確認が必要ならダイアログを出して対話する
   "set shell " vimから呼ぶシェルを設定, shell=zsh
 
@@ -70,7 +73,7 @@ source $HOME/dotfiles/vim/plugin_manage
   " statusline
   set laststatus=2 " 最下層ウィンドウに何時ステータス行を表示するか、2は常に表示
   set statusline=%f%m%r%w%y%{&fileencoding}[%{&fileformat}]%=%(buf[%n]hex[%4B]line[%4l/%4L:%4P]%)
-    " 指定の詳細は:help statuslineで確認
+    " %[n]?[.] の形式で指定してる、詳細は:help statuslineで確認
     " use airline 上の設定はプラグインが効かないときだけ
 
   " tabline
@@ -79,8 +82,10 @@ source $HOME/dotfiles/vim/plugin_manage
     " use airline 上の設定はプラグインが効かないときだけ
 
   "backup
-  set writebackup " backup設定
+  set nobackup " backupを残さない
+  set writebackup " backup設定、書き込み前にbackupが作られ、書き込み成功後は消される
   set backupdir=~/dotfiles/vim/tmp/backup
+    " NOTE:作成されているバックアップを残したいときは :set backup :set nowritebackup
 
   "undo
   set noundofile " undo設定
@@ -101,7 +106,7 @@ source $HOME/dotfiles/vim/plugin_manage
     " t_vb= でフラッシュのターミナルコードを空指定してフラッシュさせない
 
 "-----| color |-----"
-" シェルの設定で大きく変わるので~/.vimrcで設定した方がいいかも
+" NOTE:シェルの設定で大きく変わるのでlocalで設定するか分岐を作った方がいいかも
   set t_Co=256
   set background=dark
   "set background=light
@@ -119,6 +124,7 @@ source $HOME/dotfiles/vim/plugin_manage
   inoremap jj <Esc>
 
   " インサートモードの前後移動
+  " TODO:使い難い、もう少し考える
   "" inoremap <C-g>h   <left>
   "" inoremap <C-g>l   <right>
 
@@ -131,7 +137,7 @@ source $HOME/dotfiles/vim/plugin_manage
   " 行を上下に引っ張る
   noremap <C-j>    ddp
   noremap <C-p>    ddkP
-    " NOTE:上の<C-p>はファイルの先頭で入れると行が消える、どうしてそうなるかよくわかってない
+    " NOTE:上の<C-p>はファイルの先頭で入れると行が消える、挙動の理由がよくわかってない
 
   " 閉じ括弧
   inoremap {} {}<left>
