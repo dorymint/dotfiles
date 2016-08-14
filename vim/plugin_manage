@@ -1,5 +1,5 @@
 " plugin manage
-" TODO:pluginのdirectoryを変えるべきか
+" TODO:pluginのディレクトリをdotfiles以下に変えるべきか
 
 "dein Scripts-----------------------------
 if &compatible
