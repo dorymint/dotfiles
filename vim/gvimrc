@@ -2,9 +2,15 @@
 
 source ~/dotfiles/vim/vimrc
 
+" window size
+set lines=55
+set columns=200
+
 set winaltkeys=no
 
+" guioption
 set guioptions=M
+
 set guioptions-=T
 set guioptions-=m
 set guioptions-=l
@@ -16,5 +22,6 @@ set guioptions-=b
 set guioptions+=c
 set guioptions+=e
 
+" color
 colorscheme hybrid
 
