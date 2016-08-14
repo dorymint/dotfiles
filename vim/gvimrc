@@ -3,30 +3,32 @@
 source ~/dotfiles/vim/vimrc
 
 " window size
-set lines=55
-set columns=200
+  set lines=55
+  set columns=200
 
-set winaltkeys=no
+  set winaltkeys=no " altでメニューを掴まないようにする
 
 " guioption
-set guioptions=M
+" NOTE:画面上部のメニューとか横のスクロールバーとかの設定
+  set guioptions=M
 
-set guioptions-=T
-set guioptions-=m
-set guioptions-=l
-set guioptions-=L
-set guioptions-=r
-set guioptions-=R
-set guioptions-=b
+  set guioptions-=T
+  set guioptions-=m
+  set guioptions-=l
+  set guioptions-=L
+  set guioptions-=r
+  set guioptions-=R
+  set guioptions-=b
 
-set guioptions+=c
-set guioptions+=e
+  set guioptions+=c
+  set guioptions+=e
 
 " cursor
-set cursorline
-set cursorcolumn
+" NOTE:vimrcでwinならguiもcuiも無効にしてしまってるのでこちらプラス
+  set cursorline
+  set cursorcolumn
 
 " color
-set t_Co=256
-colorscheme hybrid
+  set t_Co=256 " guiでこの設定意味あるのかわかってない、無くても問題なく動作しそう
+  colorscheme hybrid
 
