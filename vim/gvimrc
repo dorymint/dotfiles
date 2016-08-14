@@ -27,5 +27,6 @@ set cursorline
 set cursorcolumn
 
 " color
+set t_Co=256
 colorscheme hybrid
 
