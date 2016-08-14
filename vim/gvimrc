@@ -22,6 +22,10 @@ set guioptions-=b
 set guioptions+=c
 set guioptions+=e
 
+" cursor
+set cursorline
+set cursorcolumn
+
 " color
 colorscheme hybrid
 
