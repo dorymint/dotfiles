@@ -1,8 +1,11 @@
 
 @echo off
 
+if "%DOTFILES_ROOT%" == "" goto :eof
+
 setlocal
-call "%USERPROFILE%\dotfiles\win_bat\set_golang.bat"
+echo define gopath
+call "%WIN_ENVTOOLPATH%\golang_env.bat"
 
 rem 必要になるまでコメントアウトしておく
 rem call %USERPROFILE%\call\set_Git_usr_bin.bat
@@ -10,9 +13,9 @@ rem
 
 pushd %GOPATH%
 
-call "%USERPROFILE%\opt\vim74-kaoriya-win32\vim.exe"
+call "gvim"
 
 echo if you need return dirctory, use command 'popd'...
 
-rem undef gopath
+echo undef gopath
 endlocal

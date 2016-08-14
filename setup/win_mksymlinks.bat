@@ -1,7 +1,9 @@
+rem test
+rem this batch is unstable
+rem
 
 @echo off
 
-rem this batch is unstable
 
 @echo make symboliclinks
 @echo require administrative environment
@@ -26,7 +28,7 @@ rem setup_toolpath_ref
 if exist %USERPROFILE%\setup_toolpath.bat (
     goto :eof
 ) else (
-    call %DOTFILE_SETUP%\runastest.bat "%USERPROFILE%\setup_toolpath.bat" "%USERPROFILE%\dotfiles\setup\setup_toolpath.bat"
+    call %DOTFILE_SETUP%\runastest.bat "%USERPROFILE%\setup_toolpath.bat" "%USERPROFILE%\dotfiles\setup_localenv.bat"
 )
 
 call cmd

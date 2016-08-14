@@ -1,10 +1,15 @@
+rem tset
+rem this batch is unstable
+rem
+
+if "%DOTFILES_ROOT%" == "" (
+    echo require localenv
+    goto :eof
+)
 
 echo runastest
 echo %~1
 echo %~2
-
-rem tset unstable
-rem goto :eof
 
 set arguments="/c","mklink","%1","%2"
 

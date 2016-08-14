@@ -1,14 +1,17 @@
 
 @echo off
+if "%DOTFILES_ROOT%" == "" goto :eof
+
 
 setlocal
-call %USERPROFILE%\dotfiles\win_bat\set_python.bat
+echo define pyenv
+call "%WIN_ENVTOOLPATH%\python_env.bat"
 
 rem 必要になるまでコメントアウトしておく
 rem @call %USERPROFILE%\dotfiles\batch\set_Git_usr_bin.bat
 rem
 
-call %USERPROFILE%\opt\vim74-kaoriya-win32\vim.exe
+call "gvim32"
 
-rem undef path to python
+echo undef pyenv
 endlocal

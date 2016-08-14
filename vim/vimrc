@@ -36,6 +36,7 @@ endif
   set smartindent " スマートインデント
   set shiftwidth=2 " autoindentの幅指定
 
+  set textwidth=0 " textの最大幅を指定しない
   set wrap " textがウィンドウに入らなければ折り返す
 
   " foldmethod
