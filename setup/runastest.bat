@@ -3,7 +3,7 @@ echo runastest
 echo %~1
 echo %~2
 
-rem tset
+rem tset unstable
 rem goto :eof
 
 set arguments="/c","mklink","%1","%2"
