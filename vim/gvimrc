@@ -3,8 +3,8 @@
 source ~/dotfiles/vim/vimrc
 
 " window size
-  set lines=55
-  set columns=200
+  set lines=70
+  set columns=235
 
   set winaltkeys=no " altでメニューを掴まないようにする
 
@@ -31,4 +31,7 @@ source ~/dotfiles/vim/vimrc
 " color
   set t_Co=256 " guiでこの設定意味あるのかわかってない、無くても問題なく動作しそう
   colorscheme hybrid
+
+" font
+set guifont=MS_Gothic:h10:cSHIFTJIS
 
