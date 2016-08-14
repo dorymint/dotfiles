@@ -5,7 +5,9 @@
 
 
 "-----| plugin manage |-----"
-source ~/dotfiles/vim/plugin_manage
+if isdirectory(glob('~/.vim/dein/repos/github.com/Shougo/dein.vim'))
+  source ~/dotfiles/vim/plugin_manage
+endif
 
 "-----| basic set |-----"
   set nocompatible " vi互換を捨てる
@@ -74,12 +76,12 @@ source ~/dotfiles/vim/plugin_manage
   set laststatus=2 " 最下層ウィンドウに何時ステータス行を表示するか、2は常に表示
   set statusline=%f%m%r%w%y%{&fileencoding}[%{&fileformat}]%=%(buf[%n]hex[%4B]line[%4l/%4L:%4P]%)
     " %[n]?[.] の形式で指定してる、詳細は:help statuslineで確認
-    " use airline 上の設定はプラグインが効かないときだけ
+    " use airline. 上の設定はプラグインが効かないときだけ
 
   " tabline
   set showtabline=2 " tablineを常に表示
   set tabline=%t " statuslineと同じように設定できる
-    " use airline 上の設定はプラグインが効かないときだけ
+    " use airline. 上の設定はプラグインが効かないときだけ
 
   "backup
   set nobackup " backupを残さない
@@ -105,6 +107,13 @@ source ~/dotfiles/vim/plugin_manage
     " set visualbell でbeep音を画面のフラッシュと置き換える
     " t_vb= でフラッシュのターミナルコードを空指定してフラッシュさせない
 
+  " set has win
+  if has('win32') || has('win64')
+    set nocursorline
+    set nocursorcolumn
+  endif
+
+
 "-----| color |-----"
 " NOTE:シェルの設定で大きく変わるのでlocalで設定するか分岐を作った方がいいかも
   set t_Co=256
@@ -115,6 +124,12 @@ source ~/dotfiles/vim/plugin_manage
   "colorscheme ron
   "colorscheme solarized
   colorscheme hybrid
+
+  " set has win
+  if has('win32') || has('win64')
+    set t_Co=16
+    colorscheme desert
+  endif
 
 "-----| key map  |-----"
 " NOTE:defaultのマップは :help index.txt で確認できる
