@@ -4,9 +4,17 @@ source ~/dotfiles/vim/vimrc
 
 set winaltkeys=no
 
+set guioptions=M
 set guioptions-=T
 set guioptions-=m
+set guioptions-=l
+set guioptions-=L
+set guioptions-=r
+set guioptions-=R
+set guioptions-=b
 
-set t_Co=256
+set guioptions+=c
+set guioptions+=e
+
 colorscheme hybrid
 
