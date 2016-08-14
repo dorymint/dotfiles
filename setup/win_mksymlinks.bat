@@ -1,6 +1,8 @@
 
 @echo off
 
+rem this batch is unstable
+
 @echo make symboliclinks
 @echo require administrative environment
 
