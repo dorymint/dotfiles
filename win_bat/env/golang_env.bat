@@ -1,7 +1,7 @@
 
 @echo off
 
-if not "%DOTFILES_ROOT%" == "" goto :eof
+if "%DOTFILES_ROOT%" == "" goto :eof
 if not "%GOPATH%" == "" goto :eof
 call "%DOTFILES_ROOT%\win_bat\env\gorootenv.bat"
 
