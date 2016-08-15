@@ -1,6 +1,8 @@
 "
 " plugin_manage_plug
 "
+scriptencoding=utf-8
+
 
 ""{{{
 "" vim-plug: Vim plugin manager
@@ -69,6 +71,9 @@
     Plug 'scrooloose/nerdtree'
     Plug 'ctrlpvim/ctrlp.vim'
 
+    Plug 'majutsushi/tagbar'
+      " require ctags
+
     " color
     Plug 'altercation/vim-colors-solarized'
     Plug 'w0ng/vim-hybrid'
@@ -88,4 +93,10 @@ let g:airline#extensions#tabline#enabled = 1
 "let g:airline#extensions#tabline#tab_nr_type = 1
 " }}}
 
+" tagbar {{{
+" path to local biuld ctags.exe
+if has('win32') || has('win64')
+  let g:tagber_ctagsbin = expand(glob('~/opt/ctags/ctags.exe'))
+endif
+" }}}
 
