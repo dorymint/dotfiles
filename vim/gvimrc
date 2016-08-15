@@ -33,5 +33,5 @@ source ~/dotfiles/vim/vimrc
   colorscheme hybrid
 
 " font
-set guifont=MS_Gothic:h10:cSHIFTJIS
+  set guifont=MS_Gothic:h10:cSHIFTJIS
 
