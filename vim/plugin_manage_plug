@@ -1,0 +1,91 @@
+"
+" plugin_manage_plug
+"
+
+""{{{
+"" vim-plug: Vim plugin manager
+"" ============================
+""   call plug#begin('~/.vim/plugged')
+""
+""   " Make sure you use single quotes
+""   Plug 'junegunn/vim-easy-align'
+""
+""   " Any valid git URL is allowed
+""   Plug 'https://github.com/junegunn/vim-github-dashboard.git'
+""
+""   " Group dependencies, vim-snippets depends on ultisnips
+""   Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+""
+""   " On-demand loading
+""   Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+""   Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+""
+""   " Using a non-master branch
+""   Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+""
+""   " Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
+""   Plug 'fatih/vim-go', { 'tag': '*' }
+""
+""   " Plugin options
+""   Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
+""
+""   " Plugin outside ~/.vim/plugged with post-update hook
+""   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+""
+""   " Unmanaged plugin (manually installed and updated)
+""   Plug '~/my-prototype-plugin'
+""
+""   " Add plugins to &runtimepath
+""   call plug#end()
+""
+"" Then reload .vimrc and :PlugInstall to install plugins.
+""
+"" Plug options:
+""
+""| Option                  | Description                                      |
+""| ----------------------- | ------------------------------------------------ |
+""| `branch`/`tag`/`commit` | Branch/tag/commit of the repository to use       |
+""| `rtp`                   | Subdirectory that contains Vim plugin            |
+""| `dir`                   | Custom directory for the plugin                  |
+""| `as`                    | Use different name for the plugin                |
+""| `do`                    | Post-update hook (string or funcref)             |
+""| `on`                    | On-demand loading: Commands or `<Plug>`-mappings |
+""| `for`                   | On-demand loading: File types                    |
+""| `frozen`                | Do not update unless explicitly specified        |
+""
+"" More information: https://github.com/junegunn/vim-plug
+""}}}
+
+
+"-----| plug begin |-----"{{{
+  call plug#begin('~/.vim/plugged')
+
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+
+    Plug 'tpope/vim-fugitive'
+    Plug 'airblade/vim-gitgutter'
+
+    Plug 'scrooloose/nerdtree'
+    Plug 'ctrlpvim/ctrlp.vim'
+
+    " color
+    Plug 'altercation/vim-colors-solarized'
+    Plug 'w0ng/vim-hybrid'
+
+  call plug#end()
+"-----| plug end |-----"}}}
+
+
+"-----| plugin config |-----"
+
+" vim-airline {{{
+"let g:airline_theme='papercolor'
+"let g:airline_theme='hybrid'
+
+let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#show_buffers = 0
+"let g:airline#extensions#tabline#tab_nr_type = 1
+" }}}
+
+
