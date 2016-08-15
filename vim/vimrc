@@ -4,11 +4,12 @@
 " NOTE:設定の詳細は:helpで調べればまず困らない
 
 "-----| plugin manage |-----"
+
 " dein
 "  if isdirectory(glob('~/.vim/dein/repos/github.com/Shougo/dein.vim'))
 "    source ~/dotfiles/vim/plugin_manage_dein
 "  endif
-"
+
 " plug
   if has('win32') || has('win64')
     set runtimepath^=~/.vim,~/.vim/after
