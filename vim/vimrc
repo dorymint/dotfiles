@@ -3,6 +3,10 @@
 " TODO:時間が取れたら整理する
 " NOTE:設定の詳細は:helpで調べればまず困らない
 
+"-----| fileencoding |-----"
+set encoding=utf-8 " vimの内部エンコード設定
+scriptencoding=utf-8
+
 "-----| plugin manage |-----"
 
 " dein
@@ -22,15 +26,15 @@
 
 
 "-----| basic set |-----"
-  set nocompatible " vi互換を捨てる
+  "set nocompatible " vi互換を捨てる
+    " vimrcで指定の意味は無いっぽいのとhistoryが初期化される副作用がある？
+    " 取りあえずコメントアウト
+
   set ttyfast " 高速ターミナル接続が何を指してるかわかってない
   set nomodeline " do not use modeline
   set hidden " bufferを隠せるように
   set autoread  "ファイル内容が変更されると自動で読み込む
   syntax on " シンタックスハイライト
-
-  " char set
-  set encoding=utf-8 " vimの内部エンコード設定
   set helplang=ja
 
   set title " タイトル
