@@ -3,11 +3,21 @@
 " TODO:時間が取れたら整理する
 " NOTE:設定の詳細は:helpで調べればまず困らない
 
-
 "-----| plugin manage |-----"
-if isdirectory(glob('~/.vim/dein/repos/github.com/Shougo/dein.vim'))
-  source ~/dotfiles/vim/plugin_manage
-endif
+" dein
+"  if isdirectory(glob('~/.vim/dein/repos/github.com/Shougo/dein.vim'))
+"    source ~/dotfiles/vim/plugin_manage_dein
+"  endif
+"
+" plug
+  if has('win32') || has('win64')
+    set runtimepath^=~/.vim,~/.vim/after
+  endif
+
+  if filereadable(glob('~/.vim/autoload/plug.vim'))
+    source ~/dotfiles/vim/plugin_manage_plug
+  endif
+
 
 "-----| basic set |-----"
   set nocompatible " vi互換を捨てる
@@ -152,7 +162,7 @@ endif
 
   " 行を上下に引っ張る
   noremap <C-j>    ddp
-  noremap <C-p>    ddkP
+  noremap <C-k>    ddkP
     " NOTE:上の<C-p>はファイルの先頭で入れると行が消える、挙動の理由がよくわかってない
 
   " 閉じ括弧
