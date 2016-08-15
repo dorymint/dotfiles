@@ -1,5 +1,7 @@
 " gvimrc
 
+scriptencoding=utf-8
+
 source ~/dotfiles/vim/vimrc
 
 " window size
