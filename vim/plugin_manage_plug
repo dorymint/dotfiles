@@ -96,7 +96,7 @@ let g:airline#extensions#tabline#enabled = 1
 " tagbar {{{
 " path to local biuld ctags.exe
 if has('win32') || has('win64')
-  let g:tagber_ctagsbin = expand(glob('~/opt/ctags/ctags.exe'))
+  let g:tagbar_ctags_bin = expand(glob('~/opt/ctags/ctags.exe'))
 endif
 " }}}
 
