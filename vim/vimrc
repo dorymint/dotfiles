@@ -27,8 +27,8 @@ scriptencoding=utf-8
 
 "-----| basic set |-----"
   "set nocompatible " vi互換を捨てる
-    " vimrcで指定の意味は無いっぽいのとhistoryが初期化される副作用がある？
-    " 取りあえずコメントアウト
+    " NOTE:vimrcで指定の意味は無いっぽいのとhistoryが初期化される副作用がある？
+    " NOTE:取りあえずコメントアウト
 
   set ttyfast " 高速ターミナル接続が何を指してるかわかってない
   set nomodeline " do not use modeline
@@ -62,6 +62,7 @@ scriptencoding=utf-8
 
   " showmatch
   set showmatch " 閉じ括弧の確認
+  set matchtime=1 " 対応括弧を強調する時間を0.1秒単位で指定
   set matchpairs=(:),{:},[:],<:>
 
   " cmdline
@@ -87,24 +88,24 @@ scriptencoding=utf-8
 
   set list " 不可視文字の表示設定
   set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:< ",eol:↵
-    " listの表示文字を指定している
+    " listの表示文字を指定
 
   " statusline
   set laststatus=2 " 最下層ウィンドウに何時ステータス行を表示するか、2は常に表示
   set statusline=%f%m%r%w%y%{&fileencoding}[%{&fileformat}]%=%(buf[%n]hex[%4B]line[%4l/%4L:%4P]%)
     " %[n]?[.] の形式で指定してる、詳細は:help statuslineで確認
-    " use airline. 上の設定はプラグインが効かないときだけ
+    " NOTE:use airline. 上の設定はプラグインが効かないときだけ
 
   " tabline
   set showtabline=2 " tablineを常に表示
   set tabline=%t " statuslineと同じように設定できる
-    " use airline. 上の設定はプラグインが効かないときだけ
+    " NOTE:use airline. 上の設定はプラグインが効かないときだけ
 
   "backup
   set nobackup " backupを残さない
   set writebackup " backup設定、書き込み前にbackupが作られ、書き込み成功後は消される
   set backupdir=~/dotfiles/vim/tmp/backup
-    " NOTE:作成されているバックアップを残したいときは :set backup :set nowritebackup
+    " NOTE:作成されているバックアップを残したいときは :set backup :set nowritebackup にする
 
   "undo
   set noundofile " undo設定
@@ -151,24 +152,37 @@ scriptencoding=utf-8
 "-----| key map  |-----"
 " NOTE:defaultのマップは :help index.txt で確認できる
 " NOTE:user定義のマップは :imap :nmap :vmap :map :verbose map で確認できる
+" NOTE:なるべくデフォルトを消さないようにmapする
 
   " jjでノーマルモードに
   inoremap jj <Esc>
 
   " インサートモードの前後移動
-  " TODO:使い難い、もう少し考える
+  " TODO:使い難い、もう少し考える...無くてもいいかも
   "" inoremap <C-g>h   <left>
   "" inoremap <C-g>l   <right>
 
   " Resize window
-  noremap <up>    <C-w>+
-  noremap <down>  <C-w>-
-  noremap <left>  <C-w><
-  noremap <right> <C-w>>
+  nnoremap <up>    <C-w>+
+  nnoremap <down>  <C-w>-
+  nnoremap <left>  <C-w><
+  nnoremap <right> <C-w>>
+
+  " tabpage
+  nnoremap tn   :tabnext<nl>
+  nnoremap tp   :tabprevious<nl>
+
+  nnoremap tN   :tabnew<nl>
+  nnoremap tc   :tabclose<nl>
+
+  nnoremap tf   :tabfirst<nl>
+  nnoremap tl   :tablast<nl>
+
+  nnoremap ts   :tabs<nl>
 
   " 行を上下に引っ張る
-  noremap <C-j>    ddp
-  noremap <C-k>    ddkP
+  nnoremap <C-j>    ddp
+  nnoremap <C-k>    ddkP
     " NOTE:上の<C-k>はファイルの先頭で入れると行が消える、挙動の理由がよくわかってない
 
   " 閉じ括弧
@@ -178,6 +192,8 @@ scriptencoding=utf-8
   inoremap <> <><left>
   inoremap "" ""<left>
   inoremap '' ''<left>
+  inoremap <C-l>  <right>
+    " NOTE:閉じ括弧を自動にしてると括弧から出る時面倒なので取りあえず<C-l>を定義しておく
 
   inoremap {<enter> {}<left><enter><bs><esc><S-o>
   inoremap {<nl> {}<left><nl><bs><esc><S-o>
@@ -189,6 +205,7 @@ scriptencoding=utf-8
   inoremap [<enter> []<left><enter><esc><S-o>
   inoremap [<nl> []<left><nl><esc><S-o>
     " NOTE:<enter>と<nl>の違いがいまいちわかってない、
-    " NOTE:改行コードが入力された時が<nl>でenterが押された時が<enter>ということだろうか?
+    " NOTE:<enter> <c-j> 両方入力したファイルのバイナリを見ても違いが無かった
+    " NOTE:help見ると同じらしい
 
 "-----eof
