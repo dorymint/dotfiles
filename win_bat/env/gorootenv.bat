@@ -3,9 +3,9 @@
 
 if not "%GOROOT%" == "" goto :eof
 
-echo '--------------------'
-echo 'seting GOROOT = %HOMEDRIVE%\Go\Current'
-echo '--------------------'
+echo --------------------
+echo seting GOROOT = %HOMEDRIVE%\Go\latest\go
+echo --------------------
 
-set GOROOT=%HOMEDRIVE%\Go\Current\
+set GOROOT=%HOMEDRIVE%\Go\latest\go
 PATH=%PATH%;%GOROOT%\bin
