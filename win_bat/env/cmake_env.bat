@@ -2,14 +2,18 @@
 @echo off
 
 if not "%SETUP_CMAKE%" == "" (
-    call cmake --version
-    goto :eof
+  echo cmake setup is correct
+  call cmake --version
+  goto :eof
 )
 
-echo setup_cmake
+echo start cmake setup
 
 set SETUP_CMAKE=%USERPROFILE%\opt\cmake\latest\cmake\bin
-if not exist %SETUP_CMAKE% ( goto :eof )
+if not exist %SETUP_CMAKE% (
+  echo cmake not found
+  goto :eof
+)
 path=%PATH%;%SETUP_CMAKE%
 
 call cmake --version
