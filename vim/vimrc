@@ -32,7 +32,7 @@ scriptencoding=utf-8
     " NOTE:取りあえずコメントアウト
 
   set ttyfast " 高速ターミナル接続が何を指してるかわかってない
-  set nomodeline " do not use modeline
+  set nomodeline " do not use modeline. 便利だけどsrcに書くがためらわれるので今は無効
   set hidden " bufferを隠せるように
   set autoread  "ファイル内容が変更されると自動で読み込む
   syntax on " シンタックスハイライト
@@ -44,6 +44,9 @@ scriptencoding=utf-8
   "set relativenumber " 行の相対位置
   set scrolloff=2 " 表示するページの上下余白の行数
 
+  set textwidth=0 " textの最大幅を指定しない
+  set wrap " textがウィンドウに入らなければ折り返す
+
   " cursor
   set cursorcolumn " カーソル現在位置で縦を強調設定
   set cursorline " カーソル現在行の強調設定
@@ -52,9 +55,6 @@ scriptencoding=utf-8
   set autoindent " 自動インデント
   set smartindent " スマートインデント
   set shiftwidth=2 " autoindentの幅指定
-
-  set textwidth=0 " textの最大幅を指定しない
-  set wrap " textがウィンドウに入らなければ折り返す
 
   " foldmethod
   set foldmethod=marker " ページの折り込みを使う
@@ -87,6 +87,7 @@ scriptencoding=utf-8
   set softtabstop=2 " tabを幾つの空白で置き換えるか
   set backspace=indent,eol,start " バックスペースで特殊文字を削除できるように
 
+  " list
   set list " 不可視文字の表示設定
   set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:< ",eol:↵
     " listの表示文字を指定

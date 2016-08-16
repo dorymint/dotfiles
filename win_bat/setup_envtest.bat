@@ -3,7 +3,7 @@
 echo  check DOTFILES_ROOT
 
 if "%DOTFILES_ROOT%" == "" (
-    echo do not called setup_localenv.bat
+    echo local_environment is no setup
     echo cmd_exit!
     pause
     exit(1)
