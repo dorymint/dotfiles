@@ -1,0 +1,11 @@
+# go package list
+
+# go get -u -t <path to repository>
+# example:go get -u -t <path to repository>=github.com/user/repname
+
+# -u    --get to use the net work. clone or checkout and marge.
+# -t    --do unite test. if false then stop build.
+
+# list begin
+github.com/jstemmer/gotags
+# list end
