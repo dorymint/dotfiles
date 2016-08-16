@@ -10,7 +10,7 @@ if %ERRORLEVEL% == 0 goto :eof
 call "%PROGRAMFILES%\Git\git-cmd.exe"
 
 echo --------------------
-echo set Git
+echo setup Git
 echo --------------------
 
 call git --version
