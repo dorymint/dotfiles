@@ -175,7 +175,7 @@ scriptencoding=utf-8
   nnoremap tp   :tabprevious<nl>
 
   nnoremap tN   :tabnew<nl>
-  nnoremap tc   :tabclose<nl>
+  nnoremap tC   :tabclose<nl>
 
   nnoremap tml  :+tabmove<nl>
   nnoremap tmh  :-tabmove<nl>

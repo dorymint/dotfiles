@@ -8,4 +8,5 @@
 
 # list begin
 github.com/jstemmer/gotags
+-ldflags -H=windowsgui github.com/nsf/gocode
 # list end
