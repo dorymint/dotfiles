@@ -64,7 +64,7 @@ scriptencoding=utf-8
 
     " edit
     Plug 'junegunn/vim-easy-align'
-    Plug 'vim-scripts/Drawlt'
+    Plug 'vim-scripts/DrawIt'
 
     " status
     Plug 'vim-airline/vim-airline'
