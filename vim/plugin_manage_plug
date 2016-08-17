@@ -62,22 +62,28 @@ scriptencoding=utf-8
 "-----| plug begin |-----"{{{
   call plug#begin('~/.vim/plugged')
 
+    " edit
     Plug 'junegunn/vim-easy-align'
+    Plug 'vim-scripts/Drawlt'
 
+    " status
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
 
+    " git
     Plug 'tpope/vim-fugitive'
     Plug 'airblade/vim-gitgutter'
 
+    " file
     Plug 'scrooloose/nerdtree'
     Plug 'ctrlpvim/ctrlp.vim'
 
+    " manage
     Plug 'majutsushi/tagbar'
       " require ctags
-
     Plug 'scrooloose/syntastic'
 
+    " IED like
     Plug 'fatih/vim-go'
 
     " color
