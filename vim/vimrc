@@ -197,6 +197,7 @@ scriptencoding=utf-8
   nnoremap <C-j>    ddp
   nnoremap <C-k>    ddkP
     " NOTE:上の<C-k>はファイルの先頭で入れると行が消える、挙動の理由がよくわかってない
+    " NOTE:ddまでは動いて、kが失敗するとPが入力されないっぽい？ dd && k && P
 
   " 閉じ括弧
   inoremap {} {}<left>
@@ -219,6 +220,6 @@ scriptencoding=utf-8
   inoremap [<nl> []<left><nl><esc><S-o>
     " NOTE:<enter>と<nl>の違いがいまいちわかってない、
     " NOTE:<enter> <c-j> 両方入力したファイルのバイナリを見ても違いが無かった
-    " NOTE:help見ると同じらしい
+    " NOTE:help見ると同じらしいけど入力は別扱いっぽい
 
 "-----eof
