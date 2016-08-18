@@ -1,12 +1,14 @@
 " vimrc
 
+"-----| fileencoding |-----"
+set encoding=utf-8
+scriptencoding=utf-8
+
+
 " TODO:時間が取れたら整理する
 " NOTE:設定の詳細は:helpで調べればまず困らない
 " NOTE:setはできるだけ省略せずに書く set nohl --> set nohlsearch
 
-"-----| fileencoding |-----"
-set encoding=utf-8 " vimの内部エンコード設定
-scriptencoding=utf-8
 
 "-----| plugin manage |-----"
 
