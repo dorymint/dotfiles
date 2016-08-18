@@ -143,7 +143,13 @@ scriptencoding=utf-8
   "colorscheme elflord
   "colorscheme ron
   "colorscheme solarized
-  colorscheme hybrid
+
+  try
+    colorscheme hybrid
+  catch
+    set t_Co=16
+    colorscheme desert
+  endtry
 
   " set has win
   if has('win32') || has('win64')
