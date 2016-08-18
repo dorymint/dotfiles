@@ -1,6 +1,7 @@
+scriptencoding=utf-8
+
 " plugin manage dein
 " TODO:pluginのディレクトリをdotfiles以下に変えるか迷ってる
-scriptencoding=utf-8
 
 "dein Scripts-----------------------------
 if &compatible
