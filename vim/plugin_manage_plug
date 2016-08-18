@@ -85,7 +85,10 @@ scriptencoding=utf-8
     Plug 'scrooloose/syntastic'
 
     " IED like
-    Plug 'fatih/vim-go'
+    "Plug 'fatih/vim-go'
+    Plug 'vim-jp/vim-go-extra'
+    Plug 'google/vim-ft-go'
+      " こちらはvimのversionが新しければ、本体にmargeされているらしい
 
     " color
     Plug 'altercation/vim-colors-solarized'
@@ -111,10 +114,7 @@ scriptencoding=utf-8
     let g:tagbar_ctags_bin = expand(glob('~/opt/ctags/ctags.exe'))
       " path to local biuld ctags.exe
   endif
-" }}}
 
-
-" tagbar {{{
   " go config
   let g:tagbar_type_go = {
       \ 'ctagstype' : 'go',
@@ -147,26 +147,46 @@ scriptencoding=utf-8
 
 " vim-go {{{
   " highlight
-  let g:go_highlight_functions = 1
-  let g:go_highlight_methods = 1
-  let g:go_highlight_fields = 1
-  let g:go_highlight_types = 1
-  let g:go_highlight_operator = 1
-  let g:go_highlight_build_constraints = 1
+  "let g:go_highlight_functions = 1
+  "let g:go_highlight_methods = 1
+  "let g:go_highlight_fields = 1
+  "let g:go_highlight_types = 1
+  "let g:go_highlight_operator = 1
+  "let g:go_highlight_build_constraints = 1
 
-  " fmt
-  let g:go_fmt_command = "goimports"
+  " fmt  " comment out
+  if 1 == 0
+    let g:go_fmt_command = "goimports"
+  endif
 
   " haswin
   if has('win32') || has('win64')
     let g:go_bin_path = expand(glob('$GOPATH/bin'))
   endif
 
-  " use syntastic
-  let g:syntastic_go_checkers = ['golin', 'govet', 'errcheck']
+" }}}
+
+
+" sytastic {{{
+  " golang
   let g:syntastic_go_mode_map = { 'mode': 'active', 'passive_filetype': ['go'] }
+  let g:syntastic_go_checkers = ['golin', 'govet', 'errcheck']
+" }}}
+
+
+" extension keymaps {{{
+" NOTE:プラグインのプレフィックスは<C-@>を基本に設定してみる
+  " easy-alignon
+    xmap <C-@>ea  <Plug>(EasyAlign)
+    nmap <C-@>ea  <Plug>(EasyAlign)
+
+  " NERDTree
+    nnoremap <C-@>n   :NERDTreeToggle<nl>
+
+
 " }}}
 
 " extension {{{
-"
 " }}}
+
+" eof

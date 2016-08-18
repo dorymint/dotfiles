@@ -5,7 +5,6 @@ set encoding=utf-8
 scriptencoding=utf-8
 
 
-
 " TODO:時間が取れたら整理する
 " NOTE:設定の詳細は:helpで調べればまず困らない
 " NOTE:setはできるだけ省略せずに書く set nohl --> set nohlsearch
@@ -97,7 +96,7 @@ scriptencoding=utf-8
     " listの表示文字を指定
 
   " statusline
-  set laststatus=2 " 最下層ウィンドウに何時ステータス行を表示するか、2は常に表示
+  set laststatus=2 " 最下層ウィンドウにステータス行を表示するか、2は常に表示
   set statusline=%f%m%r%w%y%{&fileencoding}[%{&fileformat}]%=%(buf[%n]hex[%4B]line[%4l/%4L:%4P]%)
     " %[n]?[.] の形式で指定してる、詳細は:help statuslineで確認
     " NOTE:use airline. 上の設定はプラグインが効かないときだけ
@@ -171,8 +170,9 @@ scriptencoding=utf-8
 
   " インサートモードの前後移動
   " TODO:使い難い、もう少し考える...無くてもいいかも
-  "" inoremap <C-g>h   <left>
-  "" inoremap <C-g>l   <right>
+  inoremap <C-f>   <left>
+  inoremap <C-l>   <right>
+    " NOTE:<C-f>に一貫性を感じられないけど取りあえず設定
 
   " Resize window
   nnoremap <up>    <C-w>+
@@ -181,19 +181,21 @@ scriptencoding=utf-8
   nnoremap <right> <C-w>>
 
   " tabpage
-  nnoremap tn   :tabnext<nl>
-  nnoremap tp   :tabprevious<nl>
+  " NOTE:tは移動系で便利っぽいけどfもあるので潰してみる...
+  " NOTE:これで良いかもう少し考える
+    nnoremap tn   :tabnext<nl>
+    nnoremap tp   :tabprevious<nl>
 
-  nnoremap tN   :tabnew<nl>
-  nnoremap tC   :tabclose<nl>
+    nnoremap tN   :tabnew<nl>
+    nnoremap tC   :tabclose<nl>
 
-  nnoremap tml  :+tabmove<nl>
-  nnoremap tmh  :-tabmove<nl>
+    nnoremap tml  :+tabmove<nl>
+    nnoremap tmh  :-tabmove<nl>
 
-  nnoremap tf   :tabfirst<nl>
-  nnoremap tl   :tablast<nl>
+    nnoremap tf   :tabfirst<nl>
+    nnoremap tl   :tablast<nl>
 
-  nnoremap ts   :tabs<nl>
+    nnoremap ts   :tabs<nl>
 
   " 行を上下に引っ張る
   nnoremap <C-j>    ddp
@@ -208,8 +210,7 @@ scriptencoding=utf-8
   inoremap <> <><left>
   inoremap "" ""<left>
   inoremap '' ''<left>
-  inoremap <C-l>  <right>
-    " NOTE:閉じ括弧を自動にしてると括弧から出る時面倒なので取りあえず<C-l>を定義しておく
+
 
   inoremap {<enter> {}<left><enter><bs><esc><S-o>
   inoremap {<nl> {}<left><nl><bs><esc><S-o>
@@ -223,5 +224,19 @@ scriptencoding=utf-8
     " NOTE:<enter>と<nl>の違いがいまいちわかってない、
     " NOTE:<enter> <c-j> 両方入力したファイルのバイナリを見ても違いが無かった
     " NOTE:help見ると同じらしいけど入力は別扱いっぽい
+
+"-----| autocmd |-----"
+  augroup vimrc
+    autocmd!
+  augroup END
+  " vimrcグループのautocmdを初期化
+
+  " filetypeによる挙動の変化を有効に設定
+  filetype indent plugin on
+
+  " go
+  autocmd vimrc Filetype go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
+    " NOTE:goはハードタブが推奨されるらしいのでnoexpandtabとスペースの表示をfmtに合わせて設定
+
 
 "-----eof
