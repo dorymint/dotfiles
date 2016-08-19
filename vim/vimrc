@@ -189,8 +189,9 @@ scriptencoding utf-8
     nnoremap tN   :tabnew<nl>
     nnoremap tC   :tabclose<nl>
 
-    nnoremap tml  :+tabmove<nl>
-    nnoremap tmh  :-tabmove<nl>
+    nnoremap tmn  :+tabmove<nl>
+    nnoremap tmp  :-tabmove<nl>
+      " 連続して入れると若干挙動が怪しい、理由は不明
 
     nnoremap tf   :tabfirst<nl>
     nnoremap tl   :tablast<nl>

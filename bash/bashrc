@@ -1,6 +1,22 @@
 # bashrc
 
-source ~/dotfiles/bash/function/jisho
+# env
+source $HOME/dotfiles/share/env_dotroot.sh
+if [[ "$DOTFILES_ROOT" != "" ]]; then
 
-source ~/dotfiles/bash/alias
+  # golang
+  source $DOTFILES_ROOT/share/goenv.sh
+
+  source $DOTFILES_ROOT/bash/function/jisho
+  source $DOTFILES_ROOT/bash/alias
+fi
+
+# 環境変数の設定はrcでは登録せず
+# functionをsourceしておいて必要に応じて呼ぶようにするべき?
+# 取り敢えずrcで呼ぶようにしておく
+
+# call zsh
+if [[ -f /bin/zsh ]] && [[ $SHLVL -eq 1 ]]; then
+  zsh
+fi
 
