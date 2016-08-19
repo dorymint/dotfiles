@@ -9,6 +9,6 @@
 # pathも環境依存
 
 function jisho() {
-  grep $1 ~/document/gene95/gene-utf8.txt -A 1 -wi --color
+  grep $1 ~/document/gene95/gene-utf8.txt -A 1 -wi --color=auto
 }
 

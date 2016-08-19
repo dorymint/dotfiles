@@ -1,0 +1,6 @@
+# bashrc
+
+source ~/dotfiles/bash/function/jisho
+
+source ~/dotfiles/bash/alias
+
