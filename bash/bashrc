@@ -17,6 +17,6 @@ fi
 
 # call zsh
 if [[ -f /bin/zsh ]] && [[ $SHLVL -eq 1 ]]; then
-  zsh
+  /bin/zsh
 fi
 
