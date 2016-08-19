@@ -34,60 +34,60 @@ scriptencoding=utf-8
     " NOTE:vimrcで指定の意味は無いっぽいのとhistoryが初期化される副作用がある？
     " NOTE:取りあえずコメントアウト
 
-  set ttyfast " 高速ターミナル接続が何を指してるかわかってない
+  set ttyfast    " 高速ターミナル接続が何を指してるかわかってない
   set nomodeline " do not use modeline. 便利だけどsrcに書くがためらわれるので今は無効
-  set hidden " bufferを隠せるように
-  set autoread  "ファイル内容が変更されると自動で読み込む
-  syntax on " シンタックスハイライト
+  set hidden     " bufferを隠せるように
+  set autoread   " ファイル内容が変更されると自動で読み込む
+  syntax on      " シンタックスハイライト
   set helplang=ja
 
-  set title " タイトル
-  set ruler " ルーラー使用
-  set number " 行番号
+  set title          " タイトル
+  set ruler          " ルーラー使用
+  set number         " 行番号
   "set relativenumber " 行の相対位置
-  set scrolloff=2 " 表示するページの上下余白の行数
+  set scrolloff=2    " 表示するページの上下余白の行数
 
-  set textwidth=0 " textの最大幅を指定しない
-  set wrap " textがウィンドウに入らなければ折り返す
+  set textwidth=0    " textの最大幅を指定しない
+  set wrap           " textがウィンドウに入らなければ折り返す
 
   " cursor
   set cursorcolumn " カーソル現在位置で縦を強調設定
-  set cursorline " カーソル現在行の強調設定
+  set cursorline   " カーソル現在行の強調設定
 
   " indent
-  set autoindent " 自動インデント
-  set smartindent " スマートインデント
+  set autoindent   " 自動インデント
+  set smartindent  " スマートインデント
   set shiftwidth=2 " autoindentの幅指定
 
   " foldmethod
   set foldmethod=marker " ページの折り込みを使う
-  set foldmarker={,} " 折り込みのマーカー設定
-  set foldlevel=99 " デフォルトは開くように
+  set foldmarker={,}    " 折り込みのマーカー設定
+  set foldlevel=99      " デフォルトは開くように
 
   " showmatch
-  set showmatch " 閉じ括弧の確認
+  set showmatch   " 閉じ括弧の確認
   set matchtime=1 " 対応括弧を強調する時間を0.1秒単位で指定
   set matchpairs=(:),{:},[:],<:>
 
   " cmdline
-  set showcmd " 入力中のvimコマンドを表示する
-  set history=1000 " vimコマンドの履歴数
-  set cmdheight=2 "vimコマンドラインの表示に使われる行数
-  set wildmenu " vimコマンドの補完
+  set showcmd                    " 入力中のvimコマンドを表示する
+  set history=1000               " vimコマンドの履歴数
+  set cmdheight=2                " vimコマンドラインの表示に使われる行数
+  set wildmenu                   " vimコマンドの補完
   set wildmode=list:longest,full " 補完の挙動を指定
-  set confirm " コマンド実行の確認が必要ならダイアログを出して対話する
-  "set shell " vimから呼ぶシェルを設定, shell=zsh
+  set confirm                    " コマンド実行の確認が必要ならダイアログを出して対話する
+  "set shell                      " vimから呼ぶシェルを設定, shell=zsh
 
   " search
-  set incsearch " 検索コマンドでワードを打ち込む間にもマッチする
-  set hlsearch " 前回の検索パターンが存在するとき、マッチテキストを強調表示
+  set incsearch  " 検索コマンドでワードを打ち込む間にもマッチする
+  set hlsearch   " 前回の検索パターンが存在するとき、マッチテキストを強調表示
   set ignorecase " 検索パターンで大文字少文字を区別しない,置換処理のマッチに影響するため注意
-  set smartcase " 検索パターンが大文字を含んでいたらignorecaseを上書きする
+  set smartcase  " 検索パターンが大文字を含んでいたらignorecaseを上書きする
 
   " tab
-  set tabstop=2 " tabをエディタ内でいくつの空白として表示するか設定
-  set expandtab " vimでtabを挿入した時tabをスペースとして挿入
-  set softtabstop=2 " tabを幾つの空白で置き換えるか
+  set tabstop=2                  " tabをエディタ内でいくつの空白として表示するか設定
+  set expandtab                  " vimでtabを挿入した時tabをスペースとして挿入
+  set softtabstop=2              " tabを幾つの空白で置き換えるか
   set backspace=indent,eol,start " バックスペースで特殊文字を削除できるように
 
   " list
@@ -103,11 +103,11 @@ scriptencoding=utf-8
 
   " tabline
   set showtabline=2 " tablineを常に表示
-  set tabline=%t " statuslineと同じように設定できる
+  set tabline=%t    " statuslineと同じように設定できる
     " NOTE:use airline. 上の設定はプラグインが効かないときだけ
 
   "backup
-  set nobackup " backupを残さない
+  set nobackup    " backupを残さない
   set writebackup " backup設定、書き込み前にbackupが作られ、書き込み成功後は消される
   set backupdir=~/dotfiles/vim/tmp/backup
     " NOTE:作成されているバックアップを残したいときは :set backup :set nowritebackup にする
@@ -226,17 +226,17 @@ scriptencoding=utf-8
     " NOTE:help見ると同じらしいけど入力は別扱いっぽい
 
 "-----| autocmd |-----"
-  augroup vimrc
-    autocmd!
-  augroup END
-  " vimrcグループのautocmdを初期化
 
   " filetypeによる挙動の変化を有効に設定
   filetype indent plugin on
 
-  " go
-  autocmd vimrc Filetype go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
-    " NOTE:goはハードタブが推奨されるらしいのでnoexpandtabとスペースの表示をfmtに合わせて設定
+  augroup vimrc
+    autocmd!
+    " vimrcグループのautocmdを初期化
 
+    " go
+    autocmd Filetype go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
+      " NOTE:goはハードタブが推奨されるらしいのでnoexpandtabとスペースの表示をfmtに合わせて設定
+  augroup END
 
 "-----eof
