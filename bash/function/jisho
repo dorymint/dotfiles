@@ -8,7 +8,11 @@
 # gene95をutf8に変換して使用、存在しなければ使用できない
 # pathも環境依存
 
-function jisho() {
-  grep $1 ~/document/gene95/gene-utf8.txt -A 1 -wi --color=auto
-}
+if [[ -r $HOME/document/gene95/gene-utf8.txt ]]; then
+  function jisho() {
+    grep $1 ~/document/gene95/gene-utf8.txt -A 1 -wi --color=auto
+  }
+else
+  echo gene-utf8.txtが見つかりません
+fi
 

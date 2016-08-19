@@ -1,0 +1,31 @@
+# zhsrc
+
+source $HOME/dotfiles/share/envdot.sh
+
+# use grml zshrc
+if [[ -n $DOTFILES_ROOT ]]; then
+  source $DOTFILES_ROOT/zsh/zshrc.grml
+  source $DOTFILES_ROOT/zsh/zshrc.grml.local
+fi
+
+
+# alias
+if [[ -r $DOTFILES_ROOT/zsh/alias ]]; then
+  source $DOTFILES_ROOT/zsh/alias
+fi
+
+# setopt
+setopt autocd
+setopt autopushd
+setopt pushdignoredups
+
+# env
+if [[ -n $DOTFILES_ROOT ]]; then
+  # golang
+  source $DOTFILES_ROOT/share/goenv.sh
+
+  # TODO:add any env
+
+fi
+
+# EOF

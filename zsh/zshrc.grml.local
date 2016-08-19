@@ -334,32 +334,3 @@ fi
 #vimhelp ()    { vim -c "help $1" -c on -c "au! VimEnter *" }
 
 ## END OF FILE #################################################################
-
-# add from uzupaka(dorymint) ------------------------------
-# alias
-alias egrep='egrep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias grep='grep --colour=auto'
-
-alias l='ls -CF'
-alias la='ls -A'
-alias ll='ls -alF'
-alias ls='ls --color=auto'
-alias sl='ls'
-
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i -v'
-
-# setopt
-setopt autocd
-setopt autopushd
-setopt pushdignoredups
-
-# env
-export LESSCHARSET=utf-8
-
-# TODO:add export DOTFILES_ROOT
-
-
-# eof
