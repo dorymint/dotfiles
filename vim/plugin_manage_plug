@@ -1,4 +1,4 @@
-scriptencoding=utf-8
+scriptencoding utf-8
 
 "
 " plugin_manage_plug
@@ -63,34 +63,36 @@ scriptencoding=utf-8
 "-----| plug begin |-----"{{{
   call plug#begin('~/.vim/plugged')
 
-    " edit
+  " edit
     Plug 'junegunn/vim-easy-align'
     Plug 'vim-scripts/DrawIt'
 
-    " status
+  " status
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
 
-    " git
+  " git
     Plug 'tpope/vim-fugitive'
     Plug 'airblade/vim-gitgutter'
 
-    " file
+  " file
     Plug 'scrooloose/nerdtree'
     Plug 'ctrlpvim/ctrlp.vim'
 
-    " manage
+  " manage
     Plug 'majutsushi/tagbar'
       " require ctags
-    Plug 'scrooloose/syntastic'
 
-    " IED like
+  " IED like
+    Plug 'mattn/sonictemplate-vim'
+    Plug 'scrooloose/syntastic'
     "Plug 'fatih/vim-go'
+      " 少し大きすぎるので今のところコメントアウト
     Plug 'vim-jp/vim-go-extra'
     Plug 'google/vim-ft-go'
-      " こちらはvimのversionが新しければ、本体にmargeされているらしい
+      " こちらはvimのversionが新しければ、本体にmergeされているらしい
 
-    " color
+  " color
     Plug 'altercation/vim-colors-solarized'
     Plug 'w0ng/vim-hybrid'
 
@@ -116,6 +118,7 @@ scriptencoding=utf-8
   endif
 
   " go config
+  " require gotags
   let g:tagbar_type_go = {
       \ 'ctagstype' : 'go',
       \ 'kinds'     : [
@@ -159,6 +162,8 @@ scriptencoding=utf-8
     let g:go_fmt_command = "goimports"
   endif
 
+  " windowsと設定変わってないので環境でpathを変えないなら下はいらないかも
+  let g:go_bin_path = expand(glob('$GOPATH/bin'))
   " haswin
   if has('win32') || has('win64')
     let g:go_bin_path = expand(glob('$GOPATH/bin'))
@@ -171,6 +176,11 @@ scriptencoding=utf-8
   " golang
   let g:syntastic_go_mode_map = { 'mode': 'active', 'passive_filetype': ['go'] }
   let g:syntastic_go_checkers = ['golin', 'govet', 'errcheck']
+
+  " cpp
+  let g:syntastic_cpp_compiler = 'clang++'
+  let g:syntastic_cpp_compiler_options = ' -lstdc++ -std=c++11'
+    " require clang-tidy?
 " }}}
 
 

@@ -335,7 +335,7 @@ fi
 
 ## END OF FILE #################################################################
 
-# add from uzupaka ------------------------------
+# add from uzupaka(dorymint) ------------------------------
 # alias
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
@@ -359,4 +359,7 @@ setopt pushdignoredups
 # env
 export LESSCHARSET=utf-8
 
+# TODO:add export DOTFILES_ROOT
 
+
+# eof
