@@ -92,6 +92,11 @@ scriptencoding utf-8
     Plug 'google/vim-ft-go'
       " こちらはvimのversionが新しければ、本体にmergeされているらしい
 
+  " snippet
+  Plug 'SirVer/ultisnips'
+  Plug 'honza/vim-snippets'
+
+
   " color
     Plug 'altercation/vim-colors-solarized'
     Plug 'w0ng/vim-hybrid'
@@ -174,8 +179,8 @@ scriptencoding utf-8
 
 " sytastic {{{
   " golang
-  let g:syntastic_go_mode_map = { 'mode': 'active', 'passive_filetype': ['go'] }
-  let g:syntastic_go_checkers = ['golin', 'govet', 'errcheck']
+  let g:syntastic_go_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+  let g:syntastic_go_checkers = ['golin', 'govet', 'errcheck', 'gometalinter']
 
   " cpp
   let g:syntastic_cpp_compiler = 'clang++'

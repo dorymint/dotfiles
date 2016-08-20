@@ -1,0 +1,29 @@
+# go package list
+
+# go get -u -t <path to repository>
+# example:go get -u -t <path to repository>=github.com/user/repname
+
+# options
+# -u                        " get to use the net work. clone or checkout and marge.
+# -t                        " do unite test. if false then stop build.
+# -ldflags -H=windowsgui    " hide window option. for windows os
+
+# go get list begin
+
+github.com/nsf/gocode
+github.com/alecthomas/gometalinter
+
+golang.org/x/tools/cmd/goimports
+golang.org/x/tools/cmd/guru
+golang.org/x/tools/cmd/gorename
+
+github.com/golang/lint/golint
+github.com/rogpeppe/godef
+github.com/kisielk/errcheck
+github.com/jstemmer/gotags
+github.com/klauspost/asmfmt/cmd/asmfmt
+github.com/fatih/motion
+github.com/zmb3/gogetdoc
+github.com/josharian/impl
+
+# go get list end

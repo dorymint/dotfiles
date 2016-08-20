@@ -9,7 +9,7 @@ echo make symboliclink
 echo ""
 
 echo zsh
-ln -s $dotfiles_root/bash/zshrc $HOME/.zhsrc
+ln -s $dotfiles_root/zsh/zshrc $HOME/.zshrc
 
 echo bash
 ln -s $dotfiles_root/bash/bashrc $HOME/.bashrc
