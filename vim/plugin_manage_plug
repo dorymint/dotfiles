@@ -182,6 +182,7 @@ scriptencoding utf-8
   let g:syntastic_go_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
   let g:syntastic_go_checkers = ['golin', 'govet', 'errcheck', 'gometalinter']
     " gometalinterは他の多くのパッケージに依存しているので注意
+    " といかlintermanagerっぽい
     " $gometalinter --install でgoの依存パッケージをインストールできるっぽい
 ""Installing:
 ""  structcheck
