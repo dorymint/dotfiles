@@ -232,6 +232,7 @@ scriptencoding utf-8
   let g:UltiSnipsEditSplit = "vertical"
 
 " }}}
+
 " extension {{{
 " }}}
 

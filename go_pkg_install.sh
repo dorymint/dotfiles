@@ -18,7 +18,7 @@ echo "$goroot"
 
 # go command
 goget="$goroot/bin/go get"
-options="-u"
+options="-u -v"
 
 # package set
 pkglist="$DOTFILES_ROOT/go_pkglist.txt"
