@@ -7,5 +7,6 @@ fi
 
 if [[ -d $HOME/gowork ]] && [[ "$GOPATH" = "" ]] && [[ "$GOROOT" != "" ]]; then
   export GOPATH=$HOME/gowork
+  export PATH=$PATH:$GOPATH/bin
 fi
 

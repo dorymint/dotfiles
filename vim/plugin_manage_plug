@@ -181,6 +181,28 @@ scriptencoding utf-8
   " golang
   let g:syntastic_go_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
   let g:syntastic_go_checkers = ['golin', 'govet', 'errcheck', 'gometalinter']
+    " gometalinterは他の多くのパッケージに依存しているので注意
+    " $gometalinter --install でgoの依存パッケージをインストールできるっぽい
+""Installing:
+""  structcheck
+""  aligncheck
+""  deadcode
+""  gocyclo
+""  ineffassign
+""  dupl
+""  golint
+""  gotype
+""  goimports
+""  errcheck
+""  varcheck
+""  interfacer
+""  goconst
+""  gosimple
+""  staticcheck
+""  unused
+""  misspell
+""  lll
+
 
   " cpp
   let g:syntastic_cpp_compiler = 'clang++'

@@ -4,7 +4,7 @@
 # example:go get -u -t <path to repository>=github.com/user/repname
 
 # options
-# -u                        " get to use the net work. clone or checkout and marge.
+# -u                        " get from net work and install. src is clone or checkout and marge.
 # -t                        " do unite test. if false then stop build.
 # -ldflags -H=windowsgui    " hide window option. for windows os
 
