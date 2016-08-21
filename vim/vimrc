@@ -214,9 +214,8 @@ scriptencoding utf-8
   inoremap '' ''<left>
 
 
-  inoremap {<enter> {}<left><enter><bs><esc><S-o>
-  inoremap {<nl> {}<left><nl><bs><esc><S-o>
-    " NOTE:{}だけ挙動が違う、なぜかよくわかってない
+  inoremap {<enter> {}<left><enter><esc><S-o>
+  inoremap {<nl> {}<left><nl><esc><S-o>
 
   inoremap (<enter> ()<left><enter><esc><S-o>
   inoremap (<nl> ()<left><nl><esc><S-o>

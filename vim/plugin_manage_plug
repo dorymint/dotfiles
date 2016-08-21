@@ -178,6 +178,10 @@ scriptencoding utf-8
 
 
 " sytastic {{{
+  " toggle
+  nnoremap <C-@>s   :SyntasticToggleMode<nl>
+    " 保存時に常に走らせると少し重いのでトグルをマップしておく
+
   " golang
   let g:syntastic_go_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
   let g:syntastic_go_checkers = ['golin', 'govet', 'errcheck', 'gometalinter']
