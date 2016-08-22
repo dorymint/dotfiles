@@ -163,6 +163,7 @@ scriptencoding utf-8
     colorscheme desert
   endif
 
+
 "-----| key map  |-----"
 " NOTE:defaultのマップは :help index.txt で確認できる
 " NOTE:user定義のマップは :imap :nmap :vmap :map :verbose map で確認できる
@@ -232,27 +233,22 @@ scriptencoding utf-8
       " NOTE:help見ると同じらしいけど入力は別扱いっぽい
 
 
-"-----| run |-----"
-"QuickRunを使うなら定義しなくていい
-
-  " go
-  "nnoremap <c-@>gorun :!go run % > gorunlog.txt 2>&1<nl>
-    "NOTE:レジスタを使ってコマンドを貼り付ける時は<C-r>"で実現できる
-    "NOTE:gorunlog.txtはpwdに出力されてファイルを上書きする
-
-
 "-----| autocmd |-----"
-
   " filetypeによる挙動の変化を有効に設定
   filetype indent plugin on
 
   augroup vimrc
-    autocmd!
     " vimrcグループのautocmdを初期化
+    autocmd!
 
     " go
+    " goはハードタブが推奨されるらしいのでnoexpandtabとスペースの表示をfmtに合わせて設定
     autocmd Filetype go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
-      " NOTE:goはハードタブが推奨されるらしいのでnoexpandtabとスペースの表示をfmtに合わせて設定
+    "autocmd Filetype go nnoremap <buffer> <c-@>gorun :!go run % > gorunlog.txt 2>&1<nl>
+      " NOTE:レジスタを使ってコマンドを貼り付ける時は<C-r>"で実現できる
+      " NOTE:gorunlog.txtはpwdに出力されてファイルを上書きする
+      " NOTE:QuickRunを使うなら定義しなくていい
+
 
   augroup END
 " EOF
