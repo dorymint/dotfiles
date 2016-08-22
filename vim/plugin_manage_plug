@@ -190,8 +190,8 @@ endif
 
 
 " sytastic {{{
-  
   let g:syntastic_mode_map = { 'mode': 'active' }
+    " NOTE:これを設定するとデフォルトでオンになる? よくわかってない
 
   " golang
   let g:syntastic_go_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
