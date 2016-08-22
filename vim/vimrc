@@ -169,6 +169,7 @@ scriptencoding utf-8
 " NOTE:なるべくデフォルトを消さないようにmapする
 " NOTE:<C-s> ttyへの入力受付をttyがロックするっぽい、<C-q>で復帰
 " NOTE:<C-z>はサスペンド、jobsでサスペンドの確認、fgでフォアグラウンドに
+" NOTE:<nop>はマップを削除できるっぽい
 
   " jjでノーマルモードに
   inoremap jj <Esc>
@@ -252,6 +253,6 @@ scriptencoding utf-8
     " go
     autocmd Filetype go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
       " NOTE:goはハードタブが推奨されるらしいのでnoexpandtabとスペースの表示をfmtに合わせて設定
-  augroup END
 
-"-----eof
+  augroup END
+" EOF

@@ -5,7 +5,7 @@ scriptencoding utf-8
 "
 
 
-""{{{
+" plug tuto {{{
 "" vim-plug: Vim plugin manager
 "" ============================
 ""   call plug#begin('~/.vim/plugged')
@@ -57,10 +57,10 @@ scriptencoding utf-8
 ""| `frozen`                | Do not update unless explicitly specified        |
 ""
 "" More information: https://github.com/junegunn/vim-plug
-""}}}
+"" }}}
 
 
-"-----| plug begin |-----"{{{
+"-----| plug begin |-----" {{{
   call plug#begin('~/.vim/plugged')
 
   " edit
@@ -83,6 +83,7 @@ scriptencoding utf-8
     Plug 'majutsushi/tagbar'
       " require ctags
     Plug 'thinca/vim-quickrun'
+    Plug 'thinca/vim-ref'
 
   " IED like
     Plug 'scrooloose/syntastic'
@@ -93,9 +94,9 @@ scriptencoding utf-8
       " こちらはvimのversionが新しければ、本体にmergeされているらしい
 
   " snippet
-  Plug 'mattn/sonictemplate-vim'
-  "Plug 'SirVer/ultisnips'
-  "Plug 'honza/vim-snippets'
+    Plug 'mattn/sonictemplate-vim'
+    "Plug 'SirVer/ultisnips'
+    "Plug 'honza/vim-snippets'
 
 
   " color
@@ -103,10 +104,10 @@ scriptencoding utf-8
     Plug 'w0ng/vim-hybrid'
 
   call plug#end()
-"-----| plug end |-----"}}}
+"-----| plug end |-----" }}}
 
 
-"-----| plugin config |-----"
+"-----| plugin config |-----"{{{
 
 " vim-airline {{{
   "let g:airline_theme='papercolor'
@@ -123,8 +124,7 @@ scriptencoding utf-8
       " path to local biuld ctags.exe
   endif
 
-  " go config
-  " require gotags
+  " go config... require gotags
   let g:tagbar_type_go = {
       \ 'ctagstype' : 'go',
       \ 'kinds'     : [
@@ -154,7 +154,19 @@ scriptencoding utf-8
   \ }
 " }}}
 
+
+" quickrun {{{
+if 1 == 0
+  let g:quickrun_no_default_key_mappings = 1
+    " NOTE:上を設定するとデフォルトマップが無効になる
+endif
+
+
+" }}}
+
 " vim-go {{{
+if 1 == 0
+
   " highlight
   "let g:go_highlight_functions = 1
   "let g:go_highlight_methods = 1
@@ -164,9 +176,7 @@ scriptencoding utf-8
   "let g:go_highlight_build_constraints = 1
 
   " fmt  " comment out
-  if 1 == 0
-    let g:go_fmt_command = "goimports"
-  endif
+  let g:go_fmt_command = "goimports"
 
   " windowsと設定変わってないので環境でpathを変えないなら下はいらないかも
   let g:go_bin_path = expand(glob('$GOPATH/bin'))
@@ -175,6 +185,7 @@ scriptencoding utf-8
     let g:go_bin_path = expand(glob('$GOPATH/bin'))
   endif
 
+endif
 " }}}
 
 
@@ -221,8 +232,22 @@ scriptencoding utf-8
 " }}}
 
 
-" extension keymaps {{{
+" ultisnips {{{
+if 1 == 0
+  let g:UltiSnipsExpandTrigger = "<tab>"
+  let g:UltiSnipsJumpForwardTrigger = "<tab>"
+  let g:UltiSnipsJumpBackwardTrigger = "<S-tab>"
+  let g:UltiSnipsEditSplit = "vertical"
+endif
+" }}}
+
+" -----| plugin config END |----- }}}
+
+
+"-----| keymap |-----"
 " NOTE:プラグインのプレフィックスは<C-@>を基本に設定してみる
+" NOTE:Filetypeでスイッチするマップは次の | autocmd | で定義する
+
   " easy-alignon
     xmap <C-@>ea  <Plug>(EasyAlign)
     nmap <C-@>ea  <Plug>(EasyAlign)
@@ -231,26 +256,15 @@ scriptencoding utf-8
     nnoremap <C-@>n   :NERDTreeToggle<nl>
 
 
-" }}}
+"-----| autocmd |-----"
+filetype indent plugin on
 
-" sonictemplate {{{
+augroup plugin_manage_plug
+  autocmd!
 
+  " vim-jp/vim-go-extra
+  autocmd Filetype go nnoremap <buffer> <S-k>   :Godoc<nl>
+    " Godocのキーマップ
 
-
-" }}}
-
-" ultisnips {{{
-
-if 1 == 0
-  let g:UltiSnipsExpandTrigger = "<tab>"
-  let g:UltiSnipsJumpForwardTrigger = "<tab>"
-  let g:UltiSnipsJumpBackwardTrigger = "<S-tab>"
-  let g:UltiSnipsEditSplit = "vertical"
-endif
-
-" }}}
-
-" extension {{{
-" }}}
-
-" eof
+augroup END
+" EOF
