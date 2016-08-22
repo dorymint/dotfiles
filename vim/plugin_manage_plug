@@ -190,9 +190,7 @@ endif
 
 
 " sytastic {{{
-  " toggle
-  nnoremap <C-@>s   :SyntasticToggleMode<nl>
-    " 保存時に常に走らせると少し重いのでトグルをマップしておく
+  
   let g:syntastic_mode_map = { 'mode': 'active' }
 
   " golang
@@ -251,6 +249,10 @@ endif
   " easy-alignon
     xmap <C-@>ea  <Plug>(EasyAlign)
     nmap <C-@>ea  <Plug>(EasyAlign)
+
+  " syntastic
+    nnoremap <C-@>s   :SyntasticToggleMode<nl>
+      " 保存時に常に走らせると少し重い時があるのでトグルをマップしておく
 
   " NERDTree
     nnoremap <C-@>n   :NERDTreeToggle<nl>
