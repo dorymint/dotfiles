@@ -181,6 +181,7 @@ scriptencoding utf-8
   " toggle
   nnoremap <C-@>s   :SyntasticToggleMode<nl>
     " 保存時に常に走らせると少し重いのでトグルをマップしておく
+  let g:syntastic_mode_map = { 'mode': 'active' }
 
   " golang
   let g:syntastic_go_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
@@ -212,6 +213,8 @@ scriptencoding utf-8
   " cpp
   let g:syntastic_cpp_compiler = 'clang++'
   let g:syntastic_cpp_compiler_options = ' -lstdc++ -std=c++11'
+  let g:syntastic_cpp_checkers = ['clang-tidy', 'clang_checker', 'gcc']
+  let g:syntastic_cpp_mode_map = { 'mode': 'active', 'passive_filetypes': ['cpp'] }
     " require clang-tidy?
 " }}}
 
