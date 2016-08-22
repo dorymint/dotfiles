@@ -13,12 +13,13 @@ scriptencoding utf-8
 
 "-----| plugin manage |-----"
 
-" dein
+"" dein {{{
 "  if isdirectory(glob('~/.vim/dein/repos/github.com/Shougo/dein.vim'))
 "    source ~/dotfiles/vim/plugin_manage_dein
 "  endif
+" }}}
 
-" plug
+"" plug {{{
   if has('win32') || has('win64')
     set runtimepath^=~/.vim,~/.vim/after
     " linuxの設定に合わせる
@@ -27,6 +28,7 @@ scriptencoding utf-8
   if filereadable(glob('~/.vim/autoload/plug.vim'))
     source ~/dotfiles/vim/plugin_manage_plug
   endif
+" }}}
 
 
 "-----| basic set |-----"
@@ -165,6 +167,8 @@ scriptencoding utf-8
 " NOTE:defaultのマップは :help index.txt で確認できる
 " NOTE:user定義のマップは :imap :nmap :vmap :map :verbose map で確認できる
 " NOTE:なるべくデフォルトを消さないようにmapする
+" NOTE:<C-s> ttyへの入力受付をttyがロックするっぽい、<C-q>で復帰
+" NOTE:<C-z>はサスペンド、jobsでサスペンドの確認、fgでフォアグラウンドに
 
   " jjでノーマルモードに
   inoremap jj <Esc>
@@ -192,7 +196,7 @@ scriptencoding utf-8
 
     nnoremap tmn  :+tabmove<nl>
     nnoremap tmp  :-tabmove<nl>
-      " 連続して入れると若干挙動が怪しい、理由は不明
+      " NOTE:連続して入れると若干挙動が怪しい、理由は不明
 
     nnoremap tf   :tabfirst<nl>
     nnoremap tl   :tablast<nl>
@@ -206,25 +210,35 @@ scriptencoding utf-8
     " NOTE:ddまでは動いて、kが失敗するとPが入力されないっぽい？ dd && k && P
 
   " 閉じ括弧
-  inoremap {} {}<left>
-  inoremap () ()<left>
-  inoremap [] []<left>
-  inoremap <> <><left>
-  inoremap "" ""<left>
-  inoremap '' ''<left>
+    inoremap {} {}<left>
+    inoremap () ()<left>
+    inoremap [] []<left>
+    inoremap <> <><left>
+    inoremap "" ""<left>
+    inoremap '' ''<left>
 
 
-  inoremap {<enter> {}<left><enter><esc><S-o>
-  inoremap {<nl> {}<left><nl><esc><S-o>
+    inoremap {<enter> {}<left><enter><esc><S-o>
+    inoremap {<nl> {}<left><nl><esc><S-o>
 
-  inoremap (<enter> ()<left><enter><esc><S-o>
-  inoremap (<nl> ()<left><nl><esc><S-o>
+    inoremap (<enter> ()<left><enter><esc><S-o>
+    inoremap (<nl> ()<left><nl><esc><S-o>
 
-  inoremap [<enter> []<left><enter><esc><S-o>
-  inoremap [<nl> []<left><nl><esc><S-o>
-    " NOTE:<enter>と<nl>の違いがいまいちわかってない、
-    " NOTE:<enter> <c-j> 両方入力したファイルのバイナリを見ても違いが無かった
-    " NOTE:help見ると同じらしいけど入力は別扱いっぽい
+    inoremap [<enter> []<left><enter><esc><S-o>
+    inoremap [<nl> []<left><nl><esc><S-o>
+      " NOTE:<enter>と<nl>の違いがいまいちわかってない、
+      " NOTE:<enter> <c-j> 両方入力したファイルのバイナリを見ても違いが無かった
+      " NOTE:help見ると同じらしいけど入力は別扱いっぽい
+
+
+"-----| run |-----"
+"QuickRunを使うなら定義しなくていい
+
+  " go
+  "nnoremap <c-@>gorun :!go run % > gorunlog.txt 2>&1<nl>
+    "NOTE:レジスタを使ってコマンドを貼り付ける時は<C-r>"で実現できる
+    "NOTE:gorunlog.txtはpwdに出力されてファイルを上書きする
+
 
 "-----| autocmd |-----"
 

@@ -82,9 +82,9 @@ scriptencoding utf-8
   " manage
     Plug 'majutsushi/tagbar'
       " require ctags
+    Plug 'thinca/vim-quickrun'
 
   " IED like
-    Plug 'mattn/sonictemplate-vim'
     Plug 'scrooloose/syntastic'
     "Plug 'fatih/vim-go'
       " 少し大きすぎるので今のところコメントアウト
@@ -93,8 +93,9 @@ scriptencoding utf-8
       " こちらはvimのversionが新しければ、本体にmergeされているらしい
 
   " snippet
-  Plug 'SirVer/ultisnips'
-  Plug 'honza/vim-snippets'
+  Plug 'mattn/sonictemplate-vim'
+  "Plug 'SirVer/ultisnips'
+  "Plug 'honza/vim-snippets'
 
 
   " color
@@ -187,8 +188,9 @@ scriptencoding utf-8
   let g:syntastic_go_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
   let g:syntastic_go_checkers = ['golin', 'govet', 'errcheck', 'gometalinter']
     " gometalinterは他の多くのパッケージに依存しているので注意
-    " といかlintermanagerっぽい
-    " $gometalinter --install でgoの依存パッケージをインストールできるっぽい
+    " といかmeta linter. lintermanagerっぽい
+    " $gometalinter --install でgoの依存パッケージをインストールできるらしい
+    " checkerはgometalinterだけ登録すればいいのかよくわかっていない
 ""Installing:
 ""  structcheck
 ""  aligncheck
@@ -231,12 +233,20 @@ scriptencoding utf-8
 
 " }}}
 
+" sonictemplate {{{
+
+
+
+" }}}
+
 " ultisnips {{{
 
+if 1 == 0
   let g:UltiSnipsExpandTrigger = "<tab>"
   let g:UltiSnipsJumpForwardTrigger = "<tab>"
   let g:UltiSnipsJumpBackwardTrigger = "<S-tab>"
   let g:UltiSnipsEditSplit = "vertical"
+endif
 
 " }}}
 
