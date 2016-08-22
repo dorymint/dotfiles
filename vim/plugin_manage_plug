@@ -91,7 +91,7 @@ scriptencoding utf-8
       " 少し大きすぎるので今のところコメントアウト
     Plug 'vim-jp/vim-go-extra'
     Plug 'google/vim-ft-go'
-      " こちらはvimのversionが新しければ、本体にmergeされているらしい
+      " vim-ft-goはvimのversionが新しければ、本体にmergeされているらしい
 
   " snippet
     Plug 'mattn/sonictemplate-vim'
