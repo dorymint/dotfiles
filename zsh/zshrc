@@ -1,5 +1,6 @@
 # zhsrc
 
+# define DOTFILES_ROOT
 source $HOME/dotfiles/share/envdot.sh
 
 # use grml zshrc

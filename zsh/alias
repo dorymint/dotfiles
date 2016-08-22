@@ -16,3 +16,10 @@ alias mv='mv -i -v'
 
 alias tmux='tmux -2'
 
+
+# local
+# change directory go work
+alias cdgw='pushd ~/gowork/src/github.com/$USERNAME/'
+
+
+# EOF
