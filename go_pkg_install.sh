@@ -14,7 +14,7 @@ cd $DOTFILES_ROOT
 
 # set env goroot
 goroot=$(go env GOROOT)
-echo "$goroot"
+echo "goroot is $goroot"
 
 # go command
 goget="$goroot/bin/go get"
@@ -33,8 +33,8 @@ done
 
 # confirm
 key=""
-echo "install packages[yes:no]?"
 while [[ -z $key ]] || [[ $key != "yes" ]]; do
+  echo "install packages[yes:no]?"
   read key
 
   if [[ $key = "no" ]] || [[ $key = "n" ]]; then

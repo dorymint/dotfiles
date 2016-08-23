@@ -12,7 +12,10 @@ if [[ "$DOTFILES_ROOT" != "" ]]; then
   source $DOTFILES_ROOT/bash/function/jisho
   source $DOTFILES_ROOT/bash/alias
 
+  source $DOTFILES_ROOT/share/bash_completion_tmux.sh
+
 fi
+
 
 # 環境変数の設定はrcでは登録せず
 # functionをsourceしておいて必要に応じて呼ぶようにするべき?

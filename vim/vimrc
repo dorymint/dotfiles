@@ -250,4 +250,6 @@ scriptencoding utf-8
 
 
   augroup END
+
+"-----| nvim |-----"
 " EOF

@@ -18,4 +18,7 @@ echo vim
 ln -s $dotfiles_root/vim/vimrc $HOME/.vimrc
 ln -s $dotfiles_root/vim/gvimrc $HOME/.gvimrc
 
+echo tmux
+ln -s $dotfiles_root/tmux/tmux.conf $HOME/.tmux.conf
+
 # eof
