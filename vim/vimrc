@@ -252,4 +252,10 @@ scriptencoding utf-8
   augroup END
 
 "-----| nvim |-----"
+
+  if has('nvim')
+    tnoremap <Esc>  <C-\><C-n>
+      " NOTE:nvimにはterminal modeとやらがあるらしい
+  endif
+
 " EOF
