@@ -98,6 +98,9 @@ scriptencoding utf-8
     "Plug 'SirVer/ultisnips'
     "Plug 'honza/vim-snippets'
 
+  " syntax
+    "Plug 'tpope/vim-markdown'
+    "Plug 'plasticboy/vim-markdown'
 
   " color
     Plug 'altercation/vim-colors-solarized'
