@@ -1,19 +1,25 @@
 # bashrc
 
-# env
+# define DOTFILES_ROOT
 source $HOME/dotfiles/share/dotenv.sh
-if [[ "$DOTFILES_ROOT" != "" ]]; then
 
-  # golang
-  source $DOTFILES_ROOT/share/goenv.sh
+# environment
+if [[ "$DOTFILES_ROOT" != "" ]]; then
 
   # TODO:add any env
 
+  # function
   source $DOTFILES_ROOT/bash/function/jisho
+
+  # alias
+  source $DOTFILES_ROOT/share/alias
   source $DOTFILES_ROOT/bash/alias
 
+  # pompletion
   source $DOTFILES_ROOT/share/bash_completion_tmux.sh
 
+  # golang
+  source $DOTFILES_ROOT/share/goenv.sh
 fi
 
 
@@ -28,3 +34,5 @@ if [[ -f /bin/zsh ]] && [[ $SHLVL -eq 1 ]]; then
 fi
 echo "exit zsh"
 
+
+# EOF

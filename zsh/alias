@@ -1,25 +1,5 @@
 # alias zsh
 
-alias egrep='egrep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias grep='grep --colour=auto'
-
-alias l='ls -CF'
-alias la='ls -A'
-alias ll='ls -alF'
-alias ls='ls --color=auto'
-alias sl='ls'
-
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i -v'
-
-alias tmux='tmux -2'
-
-
-# local
-# change directory go work
-alias cgw='pushd ~/gowork/src/github.com/$USERNAME/'
-
+# TODO:add local zsh alias
 
 # EOF

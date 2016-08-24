@@ -3,31 +3,29 @@
 # define DOTFILES_ROOT
 source $HOME/dotfiles/share/dotenv.sh
 
-# use grml zshrc
+# environment
 if [[ -n $DOTFILES_ROOT ]]; then
+
+  # TODO:add any env
+
+  # use grml zshrc
   source $DOTFILES_ROOT/zsh/zshrc.grml
   source $DOTFILES_ROOT/zsh/zshrc.grml.local
-fi
 
-
-# alias
-if [[ -r $DOTFILES_ROOT/zsh/alias ]]; then
+  # alias
+  source $DOTFILES_ROOT/share/alias
   source $DOTFILES_ROOT/zsh/alias
+
+  # golang
+  source $DOTFILES_ROOT/share/goenv.sh
+
 fi
+
 
 # setopt
 setopt autocd
 setopt autopushd
 setopt pushdignoredups
-
-# env
-if [[ -n $DOTFILES_ROOT ]]; then
-  # golang
-  source $DOTFILES_ROOT/share/goenv.sh
-
-  # TODO:add any env
-
-fi
 
 
 # EOF
