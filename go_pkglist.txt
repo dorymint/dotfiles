@@ -6,6 +6,7 @@
 # options
 # -u                        " get from net work and install. src is clone or checkout and marge.
 # -t                        " do unite test. if false then stop build.
+# -v                        " varbose
 # -ldflags -H=windowsgui    " hide window option. for windows os
 
 # go get list begin

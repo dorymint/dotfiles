@@ -1,4 +1,4 @@
-# alias bash
+# alias share
 
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
@@ -16,3 +16,10 @@ alias mv='mv -i -v'
 
 alias tmux='tmux -2'
 
+
+# local
+# change directory go work
+alias cgw='pushd ~/gowork/src/github.com/$USERNAME/'
+
+
+# EOF

@@ -1,7 +1,7 @@
 # zhsrc
 
 # define DOTFILES_ROOT
-source $HOME/dotfiles/share/envdot.sh
+source $HOME/dotfiles/share/dotenv.sh
 
 # use grml zshrc
 if [[ -n $DOTFILES_ROOT ]]; then

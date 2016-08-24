@@ -1,16 +1,18 @@
 #!/bin/bash
 # scriptencoding utr-8
 
-echo require
-echo --gawk-- --go--
+echo "require"
+echo "--gawk-- --go--"
+echo "--git-- or any version cotrol systems"
+echo ""
 
 # env check
 if [[ -z $DOTFILES_ROOT ]]; then
   echo "do not find dotfiles directory"
   echo "please set environment"
-  exit
+  exit 1
 fi
-cd $DOTFILES_ROOT
+cd "$DOTFILES_ROOT"
 
 # set env goroot
 goroot=$(go env GOROOT)
@@ -26,27 +28,26 @@ awkout=$(gawk '/^[^#].*/ { print $0 }' "$pkglist")
 
 # package show
 echo "--- install list ---"
-for x in $awkout
-do
+for x in $awkout; do
   echo "$x"
 done
+echo ""
 
 # confirm
 key=""
 while [[ -z $key ]] || [[ $key != "yes" ]]; do
-  echo "install packages[yes:no]?"
+  echo "install and update packages[yes:no]?"
   read key
 
   if [[ $key = "no" ]] || [[ $key = "n" ]]; then
     echo "ok... stop install process"
-    exit
+    exit 1
   fi
 done
 
 # install packages
 echo "ok...start install"
-for x in $awkout
-do
+for x in $awkout; do
   $goget $options $x
 done
 
