@@ -19,7 +19,7 @@ alias tmux='tmux -2'
 
 # local
 # change directory go work
-alias cgw='pushd ~/gowork/src/github.com/$USERNAME/'
+alias cgow='pushd ~/gowork/src/github.com/$USERNAME/'
 
 
 # EOF
