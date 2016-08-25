@@ -1,0 +1,17 @@
+#!/bin/bash
+
+## git alias ##
+
+# override ghostscript
+alias gs='git status'
+
+alias ga='git add'
+
+# override graphviz
+alias gc='git commit'
+
+alias gf='git fetch'
+
+alias gd='git diff'
+
+# EOF
