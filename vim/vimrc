@@ -231,6 +231,11 @@ scriptencoding utf-8
       " NOTE:<enter> <c-j> 両方入力したファイルのバイナリを見ても違いが無かった
       " NOTE:help見ると同じらしいけど入力は別扱いっぽい
 
+    " オムニ補完
+    " TODO:tabが遅くなって少し使いづらいので別のマップを考える
+      inoremap <tab>  <C-x><C-o>
+      inoremap <tab><tab> <tab>
+
 
 "-----| autocmd |-----"
   " filetypeによる挙動の変化を有効に設定

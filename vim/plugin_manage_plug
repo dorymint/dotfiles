@@ -106,6 +106,13 @@ scriptencoding utf-8
     Plug 'altercation/vim-colors-solarized'
     Plug 'w0ng/vim-hybrid'
 
+  " web
+    Plug 'mattn/webapi-vim'
+
+  " etc
+    Plug 'mattn/vim-soundcloud'
+      " require... mplayer ctrlp.vim webapi-vim
+
   call plug#end()
 "-----| plug end |-----" }}}
 
@@ -260,6 +267,9 @@ endif
   " NERDTree
     nnoremap <C-@>n   :NERDTreeToggle<nl>
 
+  " tagbar
+    nnoremap <C-@>t   :TagbarToggle<nl>
+
 
 "-----| autocmd |-----"
 filetype indent plugin on
@@ -268,8 +278,8 @@ augroup plugin_manage_plug
   autocmd!
 
   " vim-jp/vim-go-extra
-  autocmd Filetype go nnoremap <buffer> <S-k>   :Godoc<nl>
     " Godocのキーマップ
+    autocmd Filetype go nnoremap <buffer> <S-k>   :Godoc<nl>
 
 augroup END
 " EOF
