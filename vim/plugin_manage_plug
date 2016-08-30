@@ -205,11 +205,12 @@ endif
 
   " golang
   let g:syntastic_go_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-  let g:syntastic_go_checkers = ['golin', 'govet', 'errcheck', 'gometalinter']
+  let g:syntastic_go_checkers = ['gometalinter']
+  "let g:syntastic_go_checkers = ['golin', 'govet', 'errcheck', 'gometalinter']
     " gometalinterは他の多くのパッケージに依存しているので注意
     " といかmeta linter. lintermanagerっぽい
-    " $gometalinter --install でgoの依存パッケージをインストールできるらしい
-    " checkerはgometalinterだけ登録すればいいのかよくわかっていない
+    " $gometalinter --install で依存パッケージをインストールできるらしい
+    " checkerはgometalinterだけ登録すればいいのかよくわかっていない...取り敢えず動く
 ""Installing:
 ""  structcheck
 ""  aligncheck
@@ -252,7 +253,7 @@ endif
 " -----| plugin config END |----- }}}
 
 
-"-----| keymap |-----"
+"-----| plugin keymap |-----"
 " NOTE:プラグインのプレフィックスは<C-@>を基本に設定してみる
 " NOTE:Filetypeでスイッチするマップは次の | autocmd | で定義する
 
@@ -271,7 +272,7 @@ endif
     nnoremap <C-@>t   :TagbarToggle<nl>
 
 
-"-----| autocmd |-----"
+"-----| plugin autocmd |-----"
 filetype indent plugin on
 
 augroup plugin_manage_plug

@@ -27,4 +27,6 @@ github.com/fatih/motion
 github.com/zmb3/gogetdoc
 github.com/josharian/impl
 
+golang.org/x/tour/gotour
+
 # go get list end

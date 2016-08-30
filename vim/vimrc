@@ -7,7 +7,7 @@ scriptencoding utf-8
 " TODO:時間が取れたら整理する
 " NOTE:設定の詳細は:helpで調べればまず困らない
 " NOTE:setはできるだけ省略せずに書く set nohl --> set nohlsearch
-" NOTE:Vim scriptのコメントsetの後に書いてもいいのか若干疑問
+" NOTE:コメントをsetの直後に書いてもいいのか若干疑問、オプション指定だと危なそう
 
 
 "-----| plugin manage |-----"
@@ -41,6 +41,8 @@ scriptencoding utf-8
   set autoread  "ファイル内容が変更されると自動で読み込む
   set nopaste " 貼付け時の挙動を制御
     " NOTE:貼り付けで形が崩れる場合は:pasteにして貼付け後に:nopasteする
+  set completeopt=menu,preview
+    " NOTE:入力補完の表示方法
 
   syntax on " シンタックスハイライト
   set helplang=ja
@@ -82,7 +84,7 @@ scriptencoding utf-8
 
   " search
   set incsearch " 検索コマンドでワードを打ち込む間にもマッチする
-  set hlsearch " 前回の検索パターンが存在するとき、マッチテキストを強調表示
+  set nohlsearch " 前回の検索パターンが存在するとき、マッチテキストを強調表示
   set ignorecase " 検索パターンで大文字少文字を区別しない,置換処理のマッチに影響するため注意
   set smartcase " 検索パターンが大文字を含んでいたらignorecaseを上書きする
 
@@ -186,29 +188,50 @@ scriptencoding utf-8
   nnoremap <left>  <C-w><
   nnoremap <right> <C-w>>
 
-  " tabpage
-  " NOTE:tは移動系で便利っぽいけどfもあるので潰してみる...
-  " NOTE:これで良いかもう少し考える
-    nnoremap tn   :tabnext<nl>
-    nnoremap tp   :tabprevious<nl>
+  " prefix T t
+    " NOTE:tは移動系で便利っぽいけどfもあるので潰してみる...
+    " NOTE:これで良いかはもう少し考える
+    nnoremap T  <nop>
+    nnoremap t  <nop>
 
-    nnoremap tN   :tabnew<nl>
-    nnoremap tC   :tabclose<nl>
+    " tabpage
+      nnoremap tn   :tabnext<nl>
+      nnoremap tp   :tabprevious<nl>
 
-    nnoremap tmn  :+tabmove<nl>
-    nnoremap tmp  :-tabmove<nl>
-      " NOTE:連続して入れると若干挙動が怪しい、理由は不明
+      nnoremap tN   :tabnew<nl>
+      nnoremap tC   :tabclose<nl>
 
-    nnoremap tf   :tabfirst<nl>
-    nnoremap tl   :tablast<nl>
+      nnoremap tmn  :+tabmove<nl>
+      nnoremap tmp  :-tabmove<nl>
+        " NOTE:連続して入れると若干挙動が怪しい、理由は不明
 
-    nnoremap ts   :tabs<nl>
+      nnoremap tf   :tabfirst<nl>
+      nnoremap tl   :tablast<nl>
+
+      nnoremap ts   :tabs<nl>
+
+    " buffer
+      nnoremap tj  :bnext<nl>
+      nnoremap tk  :bprev<nl>
+
+      nnoremap tbs  :ls<nl>
+      nnoremap tbc  :ls<nl>:buffer<space>
+      nnoremap tbd  :ls<nl>:bdelete<space>
+
+    " prefix for toggle
+      " NOTE:setのトグルとオプションの補完は T を使う
+      nnoremap Th   :set hlsearch!<nl>
+      nnoremap Tf   :set ft=
+
 
   " 行を上下に引っ張る
   nnoremap <C-j>    ddp
   nnoremap <C-k>    ddkP
     " NOTE:上の<C-k>はファイルの先頭で入れると行が消える、挙動の理由がよくわかってない
     " NOTE:ddまでは動いて、kが失敗するとPが入力されないっぽい？ dd && k && P
+
+  " 改行の挿入
+  nnoremap <C-m>    o<Esc>k
 
   " 閉じ括弧
     inoremap {} {}<left>
@@ -231,10 +254,9 @@ scriptencoding utf-8
       " NOTE:<enter> <c-j> 両方入力したファイルのバイナリを見ても違いが無かった
       " NOTE:help見ると同じらしいけど入力は別扱いっぽい
 
-    " オムニ補完
-    " TODO:tabが遅くなって少し使いづらいので別のマップを考える
-      inoremap <tab>  <C-x><C-o>
-      inoremap <tab><tab> <tab>
+  " オムニ補完
+    inoremap <S-tab>  <C-x><C-o>
+      " TODO:少し使いづらいので別のマップを考える
 
 
 "-----| autocmd |-----"
@@ -260,7 +282,7 @@ scriptencoding utf-8
 
   if has('nvim')
     tnoremap <Esc>  <C-\><C-n>
-      " NOTE:nvimにはterminal modeとやらがあるらしい
+      " NOTE:nvimにはterminal modeがあるらしい
   endif
 
 " EOF
