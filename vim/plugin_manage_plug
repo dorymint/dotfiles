@@ -205,8 +205,8 @@ endif
 
   " golang
   let g:syntastic_go_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-  let g:syntastic_go_checkers = ['gometalinter']
-  "let g:syntastic_go_checkers = ['golin', 'govet', 'errcheck', 'gometalinter']
+  "let g:syntastic_go_checkers = ['gometalinter']
+  let g:syntastic_go_checkers = ['golin', 'govet', 'errcheck', 'gometalinter']
     " gometalinterは他の多くのパッケージに依存しているので注意
     " といかmeta linter. lintermanagerっぽい
     " $gometalinter --install で依存パッケージをインストールできるらしい

@@ -18,7 +18,7 @@ scriptencoding utf-8
 "  endif
 " }}}
 
-"" plug {{{
+" plug {{{
   if has('win32') || has('win64')
     set runtimepath^=~/.vim,~/.vim/after
     " linuxの設定に合わせる
@@ -46,6 +46,9 @@ scriptencoding utf-8
 
   syntax on " シンタックスハイライト
   set helplang=ja
+  set nospell " spell check
+  "set spelllang=en,cjk
+    " NOTE:cjkで東アジア圏の言葉をチェックから除外
   set title " タイトル
   set ruler " ルーラー使用
   set number " 行番号
@@ -171,7 +174,7 @@ scriptencoding utf-8
 " NOTE:なるべくデフォルトを消さないようにmapする
 " NOTE:<C-s> ttyへの入力受付をttyがロックするっぽい、<C-q>で復帰
 " NOTE:<C-z>はサスペンド、jobsでサスペンドの確認、fgでフォアグラウンドに
-" NOTE:<nop>はマップを削除できるっぽい
+" NOTE:<nop>はマップを削除できる
 
   " jjでノーマルモードに
   inoremap jj <Esc>
@@ -180,7 +183,7 @@ scriptencoding utf-8
   " TODO:使い難い、もう少し考える...無くてもいいかも
   inoremap <C-f>   <left>
   inoremap <C-l>   <right>
-    " NOTE:<C-f>に一貫性を感じられないけど取りあえず設定
+    " NOTE:<C-f> 微妙だけど取りあえず設定
 
   " Resize window
   nnoremap <up>    <C-w>+
@@ -188,13 +191,13 @@ scriptencoding utf-8
   nnoremap <left>  <C-w><
   nnoremap <right> <C-w>>
 
-  " prefix T t
-    " NOTE:tは移動系で便利っぽいけどfもあるので潰してみる...
-    " NOTE:これで良いかはもう少し考える
+  " prefix <T> <t> {{{
+  " NOTE:tは移動系で便利っぽいけどfもあるので潰してみる...
+  " NOTE:これで良いかはもう少し考える
     nnoremap T  <nop>
     nnoremap t  <nop>
 
-    " tabpage
+    " tabpage prefix<t>
       nnoremap tn   :tabnext<nl>
       nnoremap tp   :tabprevious<nl>
 
@@ -210,28 +213,43 @@ scriptencoding utf-8
 
       nnoremap ts   :tabs<nl>
 
-    " buffer
-      nnoremap tj  :bnext<nl>
-      nnoremap tk  :bprev<nl>
+    " buffer prefix<tb>
+      nnoremap tj   :bnext<nl>
+      nnoremap tk   :bprev<nl>
+        " NOTE:使用頻度が高いのでここは<t>にする
 
-      nnoremap tbs  :ls<nl>
+      nnoremap tbl  :ls<nl>
       nnoremap tbc  :ls<nl>:buffer<space>
-      nnoremap tbd  :ls<nl>:bdelete<space>
 
-    " prefix for toggle
+      nnoremap tbs  :ls<nl>:sbuffer<space>
+      nnoremap tbd  :ls<nl>:bdelete<space>
+        " char verbose
+        " <l>  list
+        " <c>  change
+        " <s>  split
+        " <d>  delete
+
+    " search and move
+      nnoremap T}  /}<nl>
+
+    " prefix for toggle<T>
       " NOTE:setのトグルとオプションの補完は T を使う
       nnoremap Th   :set hlsearch!<nl>
       nnoremap Tf   :set ft=
+      nnoremap Ts   :set spell!<nl>
+      nnoremap Tp   :set paste!<nl>
 
+  " prefix <T> <t> }}}
 
   " 行を上下に引っ張る
   nnoremap <C-j>    ddp
   nnoremap <C-k>    ddkP
     " NOTE:上の<C-k>はファイルの先頭で入れると行が消える、挙動の理由がよくわかってない
-    " NOTE:ddまでは動いて、kが失敗するとPが入力されないっぽい？ dd && k && P
+    " NOTE:ddまでは動いて、kが失敗するとPが入力されないっぽい? dd && k && P
 
   " 改行の挿入
   nnoremap <C-m>    o<Esc>k
+    " NOTE:prefixにしてもいいかも?
 
   " 閉じ括弧
     inoremap {} {}<left>
@@ -241,22 +259,21 @@ scriptencoding utf-8
     inoremap "" ""<left>
     inoremap '' ''<left>
 
-
     inoremap {<enter> {}<left><enter><esc><S-o>
-    inoremap {<nl> {}<left><nl><esc><S-o>
+    inoremap {<nl>    {}<left><nl><esc><S-o>
 
     inoremap (<enter> ()<left><enter><esc><S-o>
-    inoremap (<nl> ()<left><nl><esc><S-o>
+    inoremap (<nl>    ()<left><nl><esc><S-o>
 
     inoremap [<enter> []<left><enter><esc><S-o>
-    inoremap [<nl> []<left><nl><esc><S-o>
+    inoremap [<nl>    []<left><nl><esc><S-o>
       " NOTE:<enter>と<nl>の違いがいまいちわかってない、
-      " NOTE:<enter> <c-j> 両方入力したファイルのバイナリを見ても違いが無かった
+      " NOTE:<enter> <c-j> 両方入力したファイルのバイナリを見ても違いが無い
       " NOTE:help見ると同じらしいけど入力は別扱いっぽい
 
   " オムニ補完
-    inoremap <S-tab>  <C-x><C-o>
-      " TODO:少し使いづらいので別のマップを考える
+  inoremap <S-tab>  <C-x><C-o>
+    " TODO:少し使いづらいので別のマップを考える
 
 
 "-----| autocmd |-----"
@@ -268,15 +285,16 @@ scriptencoding utf-8
     autocmd!
 
     " go
-    " goはハードタブが推奨されるらしいのでnoexpandtabとスペースの表示をfmtに合わせて設定
-    autocmd Filetype go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
-    "autocmd Filetype go nnoremap <buffer> <c-@>gorun :!go run % > gorunlog.txt 2>&1<nl>
-      " NOTE:レジスタを使ってコマンドを貼り付ける時は<C-r>"で実現できる
-      " NOTE:gorunlog.txtはpwdに出力されてファイルを上書きする
-      " NOTE:QuickRunを使うなら定義しなくていい
+      autocmd Filetype go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
+        " NOTE:goはハードタブが推奨されるらしいのでnoexpandtabとスペースの表示をfmtに合わせて設定
 
+      "autocmd Filetype go nnoremap <buffer> <c-@>gorun :!go run % > gorunlog.txt 2>&1<nl>
+        " NOTE:QuickRunを使うなら定義しなくていい
+        " NOTE:レジスタを使ってコマンドを貼り付ける時は<C-r>"で実現できる
+        " NOTE:gorunlog.txtはpwdに出力されてファイルを上書きするので注意、使うなら出力先変えるべき
 
   augroup END
+
 
 "-----| nvim |-----"
 
