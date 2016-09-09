@@ -182,9 +182,9 @@ scriptencoding utf-8
 
   " インサートモードの前後移動
   " TODO:使い難い、もう少し考える...無くてもいいかも
-  inoremap <C-f>   <left>
+  inoremap <C-h>   <left>
   inoremap <C-l>   <right>
-    " NOTE:<C-f> 微妙だけど取りあえず設定
+    " NOTE:<C-h> 削除はbackspaceで割り切る
 
   " Resize window
   nnoremap <up>    <C-w>+
@@ -199,7 +199,7 @@ scriptencoding utf-8
     nnoremap t  <nop>
 
     " tabpage prefix<t>
-      nnoremap tn   :<C-u><tabnext<nl>
+      nnoremap tn   :<C-u>tabnext<nl>
       nnoremap tp   :<C-u>tabprevious<nl>
 
       nnoremap tN   :<C-u>tabnew<nl>
