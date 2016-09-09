@@ -5,6 +5,7 @@ set encoding=utf-8
 scriptencoding utf-8
 
 " TODO:時間が取れたら整理する
+" TODO:コメント多めに書いていく
 " NOTE:設定の詳細は:helpで調べればまず困らない
 " NOTE:setはできるだけ省略せずに書く set nohl --> set nohlsearch
 " NOTE:コメントをsetの直後に書いてもいいのか若干疑問、オプション指定だと危なそう
@@ -21,7 +22,7 @@ scriptencoding utf-8
 " plug {{{
   if has('win32') || has('win64')
     set runtimepath^=~/.vim,~/.vim/after
-    " linuxの設定に合わせる
+    " NOTE:linuxの構成に合わせる
   endif
 
   if filereadable(glob('~/.vim/autoload/plug.vim'))
@@ -32,7 +33,7 @@ scriptencoding utf-8
 
 "-----| basic set |-----"
   "set nocompatible " vi互換を捨てる
-    " NOTE:vimrcで指定の意味は無いっぽいのとhistoryが初期化される副作用がある？
+    " NOTE:vimrcで指定の意味が無くhistoryが初期化される副作用があるらしい
     " NOTE:取りあえずコメントアウト
 
   set ttyfast " 高速ターミナル接続が何を指してるかわかってない
@@ -165,6 +166,7 @@ scriptencoding utf-8
   if has('win32') || has('win64')
     set t_Co=16
     colorscheme desert
+      " NOTE:hybirdはgvimrcで設定
   endif
 
 
@@ -175,29 +177,36 @@ scriptencoding utf-8
 " NOTE:<C-s> ttyへの入力受付をttyがロックするっぽい、<C-q>で復帰
 " NOTE:<C-z>はサスペンド、jobsでサスペンドの確認、fgでフォアグラウンドに
 " NOTE:<nop>はマップを削除できる
-" NOTE:コマンドのキーマップは<C-u>数値の前置を消して置かないと範囲指定される
+" NOTE:コマンドのキーマップは<C-u>で数値の前置を消しておかないと範囲指定される
 
   " jjでノーマルモードに
-  inoremap jj <Esc>
+    inoremap jj <Esc>
 
   " インサートモードの前後移動
-  " TODO:使い難い、もう少し考える...無くてもいいかも
-  inoremap <C-h>   <left>
-  inoremap <C-l>   <right>
-    " NOTE:<C-h> 削除はbackspaceで割り切る
+    " TODO:使い難い、もう少し考える...無くてもいいかも
+    inoremap <C-f>   <left>
+    "inoremap <C-h>   <left>
+    inoremap <C-l>   <right>
+      " NOTE:<C-f> 直感に反する
+      " NOTE:<C-h> 削除はbackspaceで割り切るか
 
   " Resize window
-  nnoremap <up>    <C-w>+
-  nnoremap <down>  <C-w>-
-  nnoremap <left>  <C-w><
-  nnoremap <right> <C-w>>
+    nnoremap <up>    <nop>
+    nnoremap <down>  <nop>
+    nnoremap <left>  <nop>
+    nnoremap <right> <nop>
+      " NOTE:<nop> で消しておくとリサイズの処理が軽くなるかも
 
-  " prefix <T> <t> {{{
+    nnoremap <up>    <C-w>+
+    nnoremap <down>  <C-w>-
+    nnoremap <left>  <C-w><
+    nnoremap <right> <C-w>>
+
+  " keymap prefix <T> <t> {{{
   " NOTE:tは移動系で便利っぽいけどfもあるので潰してみる...
-  " NOTE:これで良いかはもう少し考える
+  " TODO:これで良いかはもう少し考える
     nnoremap T  <nop>
     nnoremap t  <nop>
-
     " tabpage prefix<t>
       nnoremap tn   :<C-u>tabnext<nl>
       nnoremap tp   :<C-u>tabprevious<nl>
@@ -215,13 +224,8 @@ scriptencoding utf-8
       nnoremap ts   :<C-u>tabs<nl>
 
     " buffer prefix<tb>
-      nnoremap tj   :<C-u>bnext<nl>
-      nnoremap tk   :<C-u>bprev<nl>
-        " NOTE:使用頻度が高いのでここは<t>にする
-
       nnoremap tbl  :<C-u>ls<nl>
       nnoremap tbc  :<C-u>ls<nl>:buffer<space>
-
       nnoremap tbs  :<C-u>ls<nl>:sbuffer<space>
       nnoremap tbd  :<C-u>ls<nl>:bdelete<space>
         " char verbose
@@ -229,9 +233,15 @@ scriptencoding utf-8
         " <c>  change
         " <s>  split
         " <d>  delete
+      nnoremap tj   :<C-u>bnext<nl>
+      nnoremap tk   :<C-u>bprev<nl>
+        " NOTE:使用頻度が高いので<tb>から<t>にする
 
     " search and move
       nnoremap T}  /}<nl>
+      nnoremap t}  /}<nl>
+      nnoremap T]  /}<nl>
+      nnoremap t]  /}<nl>
 
     " prefix for toggle<T>
       " NOTE:setのトグルとオプションの補完は T を使う
@@ -239,18 +249,17 @@ scriptencoding utf-8
       nnoremap Tf   :<C-u>set ft=
       nnoremap Ts   :<C-u>set spell!<nl>
       nnoremap Tp   :<C-u>set paste!<nl>
-
-  " prefix <T> <t> }}}
+  " keymap prefix <T> <t> }}}
 
   " 行を上下に引っ張る
-  nnoremap <C-j>    ddp
-  nnoremap <C-k>    ddkP
-    " NOTE:上の<C-k>はファイルの先頭で入れると行が消える、挙動の理由がよくわかってない
-    " NOTE:ddまでは動いて、kが失敗するとPが入力されないっぽい? dd && k && P
+    nnoremap <C-j>    ddp
+    nnoremap <C-k>    ddkP
+      " NOTE:上の<C-k>はファイルの先頭で入れると行が消える、挙動の理由がよくわかってない
+      " NOTE:ddまでは動いて、kが失敗するとPが入力されないっぽい? dd && k && P
 
   " 改行の挿入
-  nnoremap <C-m>    o<Esc>k
-    " NOTE:prefixにしてもいいかも?
+    nnoremap <C-m>    o<Esc>k
+      " NOTE:prefixにしてもいいかも?
 
   " 閉じ括弧
     inoremap {} {}<left>
@@ -270,11 +279,11 @@ scriptencoding utf-8
     inoremap [<nl>    []<left><nl><esc><S-o>
       " NOTE:<enter>と<nl>の違いがいまいちわかってない、
       " NOTE:<enter> <c-j> 両方入力したファイルのバイナリを見ても違いが無い
-      " NOTE:help見ると同じらしいけど入力は別扱いっぽい
+      " NOTE:入力は別扱い
 
   " オムニ補完
-  inoremap <S-tab>  <C-x><C-o>
-    " TODO:少し使いづらいので別のマップを考える
+    inoremap <S-tab>  <C-x><C-o>
+      " TODO:少し使いづらいので別のマップも考える
 
 
 "-----| autocmd |-----"
@@ -298,10 +307,9 @@ scriptencoding utf-8
 
 
 "-----| nvim |-----"
-
   if has('nvim')
     tnoremap <Esc>  <C-\><C-n>
-      " NOTE:nvimにはterminal modeがあるらしい
+      " NOTE:nvimにはterminal modeがある
   endif
 
 " EOF
