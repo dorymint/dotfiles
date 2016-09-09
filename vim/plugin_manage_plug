@@ -61,7 +61,7 @@ scriptencoding utf-8
 
 
 "-----| plug begin |-----" {{{
-  call plug#begin('~/.vim/plugged')
+call plug#begin('~/.vim/plugged')
 
   " edit
     Plug 'junegunn/vim-easy-align'
@@ -113,7 +113,7 @@ scriptencoding utf-8
     Plug 'mattn/vim-soundcloud'
       " require... mplayer ctrlp.vim webapi-vim
 
-  call plug#end()
+call plug#end()
 "-----| plug end |-----" }}}
 
 
@@ -170,8 +170,6 @@ if 1 == 0
   let g:quickrun_no_default_key_mappings = 1
     " NOTE:上を設定するとデフォルトマップが無効になる
 endif
-
-
 " }}}
 
 " vim-go {{{
@@ -255,6 +253,7 @@ endif
 
 "-----| plugin keymap |-----"
 " NOTE:プラグインのプレフィックスは<C-@>を基本に設定してみる
+" NOTE:CtrlPはCtrlPだから<C-p>
 " NOTE:Filetypeでスイッチするマップは次の | autocmd | で定義する
 
   " easy-alignon
@@ -262,14 +261,14 @@ endif
     nmap <C-@>ea  <Plug>(EasyAlign)
 
   " syntastic
-    nnoremap <C-@>s   :SyntasticToggleMode<nl>
+    nnoremap <C-@>s   :<C-u>SyntasticToggleMode<nl>
       " 保存時に常に走らせると少し重い時があるのでトグルをマップしておく
 
   " NERDTree
-    nnoremap <C-@>n   :NERDTreeToggle<nl>
+    nnoremap <C-@>n   :<C-u>NERDTreeToggle<nl>
 
   " tagbar
-    nnoremap <C-@>t   :TagbarToggle<nl>
+    nnoremap <C-@>t   :<C-u>TagbarToggle<nl>
 
 
 "-----| plugin autocmd |-----"
@@ -280,7 +279,7 @@ augroup plugin_manage_plug
 
   " vim-jp/vim-go-extra
     " Godocのキーマップ
-    autocmd Filetype go nnoremap <buffer> <S-k>   :Godoc<nl>
+    autocmd Filetype go nnoremap <buffer> <S-k>   :<C-u>Godoc<nl>
 
 augroup END
 " EOF

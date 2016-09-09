@@ -175,6 +175,7 @@ scriptencoding utf-8
 " NOTE:<C-s> ttyへの入力受付をttyがロックするっぽい、<C-q>で復帰
 " NOTE:<C-z>はサスペンド、jobsでサスペンドの確認、fgでフォアグラウンドに
 " NOTE:<nop>はマップを削除できる
+" NOTE:コマンドのキーマップは<C-u>数値の前置を消して置かないと範囲指定される
 
   " jjでノーマルモードに
   inoremap jj <Esc>
@@ -198,31 +199,31 @@ scriptencoding utf-8
     nnoremap t  <nop>
 
     " tabpage prefix<t>
-      nnoremap tn   :tabnext<nl>
-      nnoremap tp   :tabprevious<nl>
+      nnoremap tn   :<C-u><tabnext<nl>
+      nnoremap tp   :<C-u>tabprevious<nl>
 
-      nnoremap tN   :tabnew<nl>
-      nnoremap tC   :tabclose<nl>
+      nnoremap tN   :<C-u>tabnew<nl>
+      nnoremap tC   :<C-u>tabclose<nl>
 
-      nnoremap tmn  :+tabmove<nl>
-      nnoremap tmp  :-tabmove<nl>
+      nnoremap tmn  :<C-u>+tabmove<nl>
+      nnoremap tmp  :<C-u>-tabmove<nl>
         " NOTE:連続して入れると若干挙動が怪しい、理由は不明
 
-      nnoremap tf   :tabfirst<nl>
-      nnoremap tl   :tablast<nl>
+      nnoremap tf   :<C-u>tabfirst<nl>
+      nnoremap tl   :<C-u>tablast<nl>
 
-      nnoremap ts   :tabs<nl>
+      nnoremap ts   :<C-u>tabs<nl>
 
     " buffer prefix<tb>
-      nnoremap tj   :bnext<nl>
-      nnoremap tk   :bprev<nl>
+      nnoremap tj   :<C-u>bnext<nl>
+      nnoremap tk   :<C-u>bprev<nl>
         " NOTE:使用頻度が高いのでここは<t>にする
 
-      nnoremap tbl  :ls<nl>
-      nnoremap tbc  :ls<nl>:buffer<space>
+      nnoremap tbl  :<C-u>ls<nl>
+      nnoremap tbc  :<C-u>ls<nl>:buffer<space>
 
-      nnoremap tbs  :ls<nl>:sbuffer<space>
-      nnoremap tbd  :ls<nl>:bdelete<space>
+      nnoremap tbs  :<C-u>ls<nl>:sbuffer<space>
+      nnoremap tbd  :<C-u>ls<nl>:bdelete<space>
         " char verbose
         " <l>  list
         " <c>  change
@@ -234,10 +235,10 @@ scriptencoding utf-8
 
     " prefix for toggle<T>
       " NOTE:setのトグルとオプションの補完は T を使う
-      nnoremap Th   :set hlsearch!<nl>
-      nnoremap Tf   :set ft=
-      nnoremap Ts   :set spell!<nl>
-      nnoremap Tp   :set paste!<nl>
+      nnoremap Th   :<C-u>set hlsearch!<nl>
+      nnoremap Tf   :<C-u>set ft=
+      nnoremap Ts   :<C-u>set spell!<nl>
+      nnoremap Tp   :<C-u>set paste!<nl>
 
   " prefix <T> <t> }}}
 
@@ -288,7 +289,7 @@ scriptencoding utf-8
       autocmd Filetype go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
         " NOTE:goはハードタブが推奨されるらしいのでnoexpandtabとスペースの表示をfmtに合わせて設定
 
-      "autocmd Filetype go nnoremap <buffer> <c-@>gorun :!go run % > gorunlog.txt 2>&1<nl>
+      "autocmd Filetype go nnoremap <buffer> <c-@>gorun :<C-u>!go run % > gorunlog.txt 2>&1<nl>
         " NOTE:QuickRunを使うなら定義しなくていい
         " NOTE:レジスタを使ってコマンドを貼り付ける時は<C-r>"で実現できる
         " NOTE:gorunlog.txtはpwdに出力されてファイルを上書きするので注意、使うなら出力先変えるべき
