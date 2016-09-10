@@ -265,15 +265,19 @@ call plug#end()
     nnoremap <C-@>n   :<C-u>NERDTreeToggle<nl>
   " tagbar
     nnoremap <C-@>t   :<C-u>TagbarToggle<nl>
+  " sonictemplate
+    if isdirectory(glob('~/dotfiles/vim/sonicdir'))
+      nnoremap <C-@>w :<C-u>split ~/dotfiles/vim/sonicdir/%:e/
+        " NOTE:すぐにテンプレートを編集できるように
+    endif
 
 
 "-----| plugin autocmd |-----"
 filetype indent plugin on
 augroup plugin_manage_plug
   autocmd!
-  " vim-jp/vim-go-extra
+  " vim-go-extra
     " Godocのキーマップ
     autocmd Filetype go nnoremap <buffer> <S-k>   :<C-u>Godoc
-
 augroup END
 " EOF
