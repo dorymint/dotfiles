@@ -1,5 +1,4 @@
 # alias share
-
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias grep='grep --colour=auto'
@@ -16,10 +15,15 @@ alias mv='mv -i -v'
 
 alias tmux='tmux -2'
 
-
 # local
+
 # change directory go work
 alias gw='pushd ~/gowork/src/github.com/$USERNAME/'
 
+# if exist vim
+if [[ -e ~/opt/vim/bin/vim ]]; then
+  # local build
+  alias viml='~/opt/vim/bin/vim'
+fi
 
 # EOF
