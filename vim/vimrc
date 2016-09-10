@@ -20,13 +20,15 @@ scriptencoding utf-8
 " }}}
 
 " plug {{{
-  if has('win32') || has('win64')
+  if (has('win32') || has('win64')) && isdirectory(glob('~/.vim'))
     set runtimepath^=~/.vim,~/.vim/after
-    " NOTE:linuxの構成に合わせる
+      " NOTE:linuxの構成に合わせる
   endif
 
   if filereadable(glob('~/.vim/autoload/plug.vim'))
     source ~/dotfiles/vim/plugin_manage_plug
+  else
+    echo "do not find plugin_manage_plug"
   endif
 " }}}
 
@@ -114,20 +116,6 @@ scriptencoding utf-8
   set tabline=%t " statuslineと同じように設定できる
     " NOTE:use airline. 上の設定はプラグインが効かないときだけ
 
-  "backup
-  set nobackup " backupを残さない
-  set writebackup " backup設定、書き込み前にbackupが作られ、書き込み成功後は消される
-  set backupdir=~/dotfiles/vim/tmp/backup
-    " NOTE:作成されているバックアップを残したいときは :set backup :set nowritebackup にする
-
-  "undo
-  set noundofile " undo設定
-  set undodir=~/dotfiles/vim/tmp/undo
-
-  "swp
-  set noswapfile " swapfile設定
-  set directory=~/dotfiles/vim/tmp/swap
-
   " New splits open to right and bottom
   set splitbelow " split時カレントウィンドウの下に分割
   set splitright " vsplit時カレントウィンドウの横に分割
@@ -137,6 +125,23 @@ scriptencoding utf-8
   set t_vb=
     " set visualbell でbeep音を画面のフラッシュと置き換える
     " t_vb= でフラッシュのターミナルコードを空指定してフラッシュさせない
+
+  " backup, swap, undo, {{{
+      set nobackup " backupを残さない
+      set writebackup " backup設定、書き込み前にbackupが作られ、書き込み成功後は消される
+      set noundofile " undo設定
+      set noswapfile " swapfile設定
+    " directory
+      if isdirectory(glob('~/dotfiles/vim/tmp'))
+        set backupdir=~/dotfiles/vim/tmp/backup
+        set undodir=~/dotfiles/vim/tmp/undo
+        set directory=~/dotfiles/vim/tmp/swap
+        "set undofile
+        "set swapfile
+      else
+        echo "do not find ~/dotfiles/vim/tmp"
+      endif
+  " }}}
 
   " set has win
   if has('win32') || has('win64')
@@ -158,6 +163,7 @@ scriptencoding utf-8
   try
     colorscheme hybrid
   catch
+    echo "colorscheme hybrid is disable"
     set t_Co=16
     colorscheme desert
   endtry
@@ -238,17 +244,14 @@ scriptencoding utf-8
         " NOTE:使用頻度が高いので<tb>から<t>にする
 
     " search and move
-      nnoremap T}  /}<nl>
-      nnoremap t}  /}<nl>
-      nnoremap T]  /}<nl>
-      nnoremap t]  /}<nl>
+      nnoremap t;  /}<nl>
 
     " prefix for toggle<T>
       " NOTE:setのトグルとオプションの補完は T を使う
       nnoremap Th   :<C-u>set hlsearch!<nl>
-      nnoremap Tf   :<C-u>set ft=
       nnoremap Ts   :<C-u>set spell!<nl>
       nnoremap Tp   :<C-u>set paste!<nl>
+      nnoremap Tf   :<C-u>set ft=
   " keymap prefix <T> <t> }}}
 
   " 行を上下に引っ張る
@@ -259,7 +262,7 @@ scriptencoding utf-8
 
   " 改行の挿入
     nnoremap <C-m>    o<Esc>k
-      " NOTE:prefixにしてもいいかも?
+      " TODO:このマップももう少し考える
 
   " 閉じ括弧
     inoremap {} {}<left>
@@ -289,20 +292,17 @@ scriptencoding utf-8
 "-----| autocmd |-----"
   " filetypeによる挙動の変化を有効に設定
   filetype indent plugin on
-
   augroup vimrc
     " vimrcグループのautocmdを初期化
     autocmd!
-
     " go
       autocmd Filetype go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
         " NOTE:goはハードタブが推奨されるらしいのでnoexpandtabとスペースの表示をfmtに合わせて設定
 
-      "autocmd Filetype go nnoremap <buffer> <c-@>gorun :<C-u>!go run % > gorunlog.txt 2>&1<nl>
-        " NOTE:QuickRunを使うなら定義しなくていい
-        " NOTE:レジスタを使ってコマンドを貼り付ける時は<C-r>"で実現できる
-        " NOTE:gorunlog.txtはpwdに出力されてファイルを上書きするので注意、使うなら出力先変えるべき
-
+      "if isdirectory(glob('~/dotfiles/vim/tmp'))
+      "  autocmd Filetype go nnoremap <buffer> <c-@>gorun :<C-u>!go run % > ~/dotfiles/vim/tmp/gorunlog.txt 2>&1<nl>
+      "    " NOTE:QuickRunを使うなら定義しなくていい
+      "endif
   augroup END
 
 
@@ -311,5 +311,4 @@ scriptencoding utf-8
     tnoremap <Esc>  <C-\><C-n>
       " NOTE:nvimにはterminal modeがある
   endif
-
 " EOF

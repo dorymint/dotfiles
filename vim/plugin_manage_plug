@@ -1,9 +1,7 @@
 scriptencoding utf-8
-
 "
 " plugin_manage_plug
 "
-
 
 " plug tuto {{{
 "" vim-plug: Vim plugin manager
@@ -62,7 +60,6 @@ scriptencoding utf-8
 
 "-----| plug begin |-----" {{{
 call plug#begin('~/.vim/plugged')
-
   " edit
     Plug 'junegunn/vim-easy-align'
     Plug 'vim-scripts/DrawIt'
@@ -112,141 +109,144 @@ call plug#begin('~/.vim/plugged')
   " etc
     Plug 'mattn/vim-soundcloud'
       " require... mplayer ctrlp.vim webapi-vim
-
 call plug#end()
 "-----| plug end |-----" }}}
 
 
 "-----| plugin config |-----"{{{
-
-" vim-airline {{{
-  "let g:airline_theme='papercolor'
-  "let g:airline_theme='hybrid'
-
-  let g:airline#extensions#tabline#enabled = 1
-  "let g:airline#extensions#tabline#show_buffers = 0
-  "let g:airline#extensions#tabline#tab_nr_type = 1
+" status {{{
+  " vim-airline {{{
+    "let g:airline_theme='papercolor'
+    "let g:airline_theme='hybrid'
+    let g:airline#extensions#tabline#enabled = 1
+    "let g:airline#extensions#tabline#show_buffers = 0
+    "let g:airline#extensions#tabline#tab_nr_type = 1
+  " }}}
 " }}}
 
-" tagbar {{{
-  if has('win32') || has('win64')
-    let g:tagbar_ctags_bin = expand(glob('~/opt/ctags/ctags.exe'))
+" manage {{{
+  " tagbar {{{
+    if (has('win32') || has('win64'))
       " path to local biuld ctags.exe
+      if executable(glob('~/opt/ctags/ctags.exe'))
+        let g:tagbar_ctags_bin = expand(glob('~/opt/ctags/ctags.exe'))
+      else
+        echo "do not find ctags.exe"
+      endif
+    endif
+    " go config... require gotags
+    let g:tagbar_type_go = {
+        \ 'ctagstype' : 'go',
+        \ 'kinds'     : [
+            \ 'p:package',
+            \ 'i:imports:1',
+            \ 'c:constants',
+            \ 'v:variables',
+            \ 't:types',
+            \ 'n:interfaces',
+            \ 'w:fields',
+            \ 'e:embedded',
+            \ 'm:methods',
+            \ 'r:constructor',
+            \ 'f:functions'
+        \ ],
+        \ 'sro' : '.',
+        \ 'kind2scope' : {
+            \ 't' : 'ctype',
+            \ 'n' : 'ntype'
+        \ },
+        \ 'scope2kind' : {
+            \ 'ctype' : 't',
+            \ 'ntype' : 'n'
+        \ },
+        \ 'ctagsbin'  : 'gotags',
+        \ 'ctagsargs' : '-sort -silent'
+    \ }
+  " }}}
+
+  " vim-quickrun {{{
+  if 1 == 0
+    let g:quickrun_no_default_key_mappings = 1
+      " NOTE:上を設定するとデフォルトマップが無効になる
   endif
-
-  " go config... require gotags
-  let g:tagbar_type_go = {
-      \ 'ctagstype' : 'go',
-      \ 'kinds'     : [
-          \ 'p:package',
-          \ 'i:imports:1',
-          \ 'c:constants',
-          \ 'v:variables',
-          \ 't:types',
-          \ 'n:interfaces',
-          \ 'w:fields',
-          \ 'e:embedded',
-          \ 'm:methods',
-          \ 'r:constructor',
-          \ 'f:functions'
-      \ ],
-      \ 'sro' : '.',
-      \ 'kind2scope' : {
-          \ 't' : 'ctype',
-          \ 'n' : 'ntype'
-      \ },
-      \ 'scope2kind' : {
-          \ 'ctype' : 't',
-          \ 'ntype' : 'n'
-      \ },
-      \ 'ctagsbin'  : 'gotags',
-      \ 'ctagsargs' : '-sort -silent'
-  \ }
+  " }}}
 " }}}
 
 
-" quickrun {{{
-if 1 == 0
-  let g:quickrun_no_default_key_mappings = 1
-    " NOTE:上を設定するとデフォルトマップが無効になる
-endif
+" IED like {{{
+  " vim-go {{{
+  " NOTE:今は使ってないので読まない様にしておく
+    if 1 == 0
+      " highlight
+      "let g:go_highlight_functions = 1
+      "let g:go_highlight_methods = 1
+      "let g:go_highlight_fields = 1
+      "let g:go_highlight_types = 1
+      "let g:go_highlight_operator = 1
+      "let g:go_highlight_build_constraints = 1
+      let g:go_fmt_command = "goimports"
+      " windowsと設定変わってないので環境でpathを変えないなら下はいらないかも
+      let g:go_bin_path = expand(glob('$GOPATH/bin'))
+      " haswin
+      if has('win32') || has('win64')
+        let g:go_bin_path = expand(glob('$GOPATH/bin'))
+      endif
+    endif
+  " }}}
+  " sytastic {{{
+    let g:syntastic_mode_map = { 'mode': 'active' }
+    " golang
+    let g:syntastic_go_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+    let g:syntastic_go_checkers = ['golin', 'govet', 'errcheck', 'gometalinter']
+      " gometalinterは他の多くのパッケージに依存しているので注意
+      " といかmeta linter. lintermanagerみたい
+      " $gometalinter --install で依存パッケージをインストールできるらしい
+      " checkerはgometalinterだけ登録すればいいのかよくわかっていない...取り敢えず動く
+        ""Installing:
+        ""  structcheck
+        ""  aligncheck
+        ""  deadcode
+        ""  gocyclo
+        ""  ineffassign
+        ""  dupl
+        ""  golint
+        ""  gotype
+        ""  goimports
+        ""  errcheck
+        ""  varcheck
+        ""  interfacer
+        ""  goconst
+        ""  gosimple
+        ""  staticcheck
+        ""  unused
+        ""  misspell
+        ""  lll
+    " cpp
+    let g:syntastic_cpp_compiler = 'clang++'
+    let g:syntastic_cpp_compiler_options = ' -lstdc++ -std=c++11'
+    let g:syntastic_cpp_checkers = ['clang-tidy', 'clang_checker', 'gcc']
+    let g:syntastic_cpp_mode_map = { 'mode': 'active', 'passive_filetypes': ['cpp'] }
+      " require clang-tidy?
+  " }}}
 " }}}
 
-" vim-go {{{
-if 1 == 0
+" snippet
+  " sonictemplate-vim {{{
+    if isdirectory(glob('~/dotfiles/vim/sonicdir'))
+      let g:sonictemplate_vim_template_dir = '~/dotfiles/vim/sonicdir'
+    else
+      echo "sonicdir disable"
+    endif
+  " }}}
+  " ultisnips {{{
+    if 1 == 0
+      let g:UltiSnipsExpandTrigger = "<tab>"
+      let g:UltiSnipsJumpForwardTrigger = "<tab>"
+      let g:UltiSnipsJumpBackwardTrigger = "<S-tab>"
+      let g:UltiSnipsEditSplit = "vertical"
+    endif
+  " }}}
 
-  " highlight
-  "let g:go_highlight_functions = 1
-  "let g:go_highlight_methods = 1
-  "let g:go_highlight_fields = 1
-  "let g:go_highlight_types = 1
-  "let g:go_highlight_operator = 1
-  "let g:go_highlight_build_constraints = 1
-
-  " fmt  " comment out
-  let g:go_fmt_command = "goimports"
-
-  " windowsと設定変わってないので環境でpathを変えないなら下はいらないかも
-  let g:go_bin_path = expand(glob('$GOPATH/bin'))
-  " haswin
-  if has('win32') || has('win64')
-    let g:go_bin_path = expand(glob('$GOPATH/bin'))
-  endif
-
-endif
-" }}}
-
-
-" sytastic {{{
-  let g:syntastic_mode_map = { 'mode': 'active' }
-    " NOTE:これを設定するとデフォルトでオンになる? よくわかってない
-
-  " golang
-  let g:syntastic_go_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-  "let g:syntastic_go_checkers = ['gometalinter']
-  let g:syntastic_go_checkers = ['golin', 'govet', 'errcheck', 'gometalinter']
-    " gometalinterは他の多くのパッケージに依存しているので注意
-    " といかmeta linter. lintermanagerっぽい
-    " $gometalinter --install で依存パッケージをインストールできるらしい
-    " checkerはgometalinterだけ登録すればいいのかよくわかっていない...取り敢えず動く
-""Installing:
-""  structcheck
-""  aligncheck
-""  deadcode
-""  gocyclo
-""  ineffassign
-""  dupl
-""  golint
-""  gotype
-""  goimports
-""  errcheck
-""  varcheck
-""  interfacer
-""  goconst
-""  gosimple
-""  staticcheck
-""  unused
-""  misspell
-""  lll
-
-
-  " cpp
-  let g:syntastic_cpp_compiler = 'clang++'
-  let g:syntastic_cpp_compiler_options = ' -lstdc++ -std=c++11'
-  let g:syntastic_cpp_checkers = ['clang-tidy', 'clang_checker', 'gcc']
-  let g:syntastic_cpp_mode_map = { 'mode': 'active', 'passive_filetypes': ['cpp'] }
-    " require clang-tidy?
-" }}}
-
-
-" ultisnips {{{
-if 1 == 0
-  let g:UltiSnipsExpandTrigger = "<tab>"
-  let g:UltiSnipsJumpForwardTrigger = "<tab>"
-  let g:UltiSnipsJumpBackwardTrigger = "<S-tab>"
-  let g:UltiSnipsEditSplit = "vertical"
-endif
-" }}}
 
 " -----| plugin config END |----- }}}
 
@@ -255,31 +255,25 @@ endif
 " NOTE:プラグインのプレフィックスは<C-@>を基本に設定してみる
 " NOTE:CtrlPはCtrlPだから<C-p>
 " NOTE:Filetypeでスイッチするマップは次の | autocmd | で定義する
-
   " easy-alignon
     xmap <C-@>ea  <Plug>(EasyAlign)
     nmap <C-@>ea  <Plug>(EasyAlign)
-
   " syntastic
     nnoremap <C-@>s   :<C-u>SyntasticToggleMode<nl>
-      " 保存時に常に走らせると少し重い時があるのでトグルをマップしておく
-
+      " NOTE:保存時に常に走らせると少し重い時があるのでトグルをマップしておく
   " NERDTree
     nnoremap <C-@>n   :<C-u>NERDTreeToggle<nl>
-
   " tagbar
     nnoremap <C-@>t   :<C-u>TagbarToggle<nl>
 
 
 "-----| plugin autocmd |-----"
 filetype indent plugin on
-
 augroup plugin_manage_plug
   autocmd!
-
   " vim-jp/vim-go-extra
     " Godocのキーマップ
-    autocmd Filetype go nnoremap <buffer> <S-k>   :<C-u>Godoc<nl>
+    autocmd Filetype go nnoremap <buffer> <S-k>   :<C-u>Godoc
 
 augroup END
 " EOF
