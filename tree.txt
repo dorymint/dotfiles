@@ -1,7 +1,3 @@
-# dotfiles
-
-
-```txt:./tree.txt
 .
 ├── README.md
 ├── bash
@@ -71,6 +67,3 @@
     └── zshrc.grml.local
 
 16 directories, 50 files
-
-```
-
