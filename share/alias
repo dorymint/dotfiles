@@ -19,16 +19,23 @@ alias tmux='tmux -2'
 # change directory go work
 if [[ -d "$GOPATH/src/github.com/$USERNAME" ]]; then
   alias gw='pushd $GOPATH/src/github.com/$USERNAME/'
+else
+  echo "do not find go work directory"
 fi
 
 # if exist vim
-if [[ -x ~/opt/vim/bin/vim ]]; then
+if [[ -x "$HOME/opt/vim/bin/vim" ]]; then
   # local build
-  alias viml='~/opt/vim/bin/vim'
+  alias viml='$HOME/opt/vim/bin/vim'
+else
+  echo "do not filnd local vim"
 fi
 
+
 # sonictemplate add to commite
-if [[ -n "$DOTFILES_ROOT" ]] && [[ -r $DOTFILES_ROOT/vim/sonicdir/allcommit.sh ]]; then
-  alias sonic='bash ~/dotfiles/vim/sonicdir/allcommit.sh'
+if [[ -n "$DOTFILES_ROOT" ]] && [[ -r "$DOTFILES_ROOT/vim/sonicdir/allcommit.sh" ]]; then
+  alias sonic='bash $DOTFILES_ROOT/vim/sonicdir/allcommit.sh'
+else
+  echo "do not find sonicdir"
 fi
 # EOF
