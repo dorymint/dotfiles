@@ -9,7 +9,7 @@ if [[ -d "$DOTFILES_ROOT/vim/sonicdir" ]]; then
   # confirm
   key=""
   count=0
-  while [[ -z "$key" ]] || [[ "$key" != "yes" ]]; do
+  while [[ "$key" != "yes" ]] && [[ "$key" != "y" ]]; do
     if [[ "$key" = "no" ]] || [[ "$key" = "n" ]] || [[ $count -gt 2 ]]; then
       echo "ok... stop process"
       exit 1
