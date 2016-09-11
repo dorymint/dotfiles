@@ -35,14 +35,16 @@ echo ""
 
 # confirm
 key=""
-while [[ -z $key ]] || [[ $key != "yes" ]]; do
-  echo "install and update packages[yes:no]?"
-  read key
-
-  if [[ $key = "no" ]] || [[ $key = "n" ]]; then
+count=0
+while [[ "$key" != "yes" ]]; do
+  if [[ "$key" = "no" ]] || [[ "$key" = "n" ]] || [[ $count -gt 2 ]]; then
     echo "ok... stop install process"
     exit 1
   fi
+  count=$(expr $count + 1)
+
+  echo "install and update packages[yes:no]?"
+  read key
 done
 
 # install packages

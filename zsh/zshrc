@@ -12,10 +12,6 @@ if [[ -n $DOTFILES_ROOT ]]; then
   source $DOTFILES_ROOT/zsh/zshrc.grml
   source $DOTFILES_ROOT/zsh/zshrc.grml.local
 
-  # alias
-  source $DOTFILES_ROOT/share/alias
-  source $DOTFILES_ROOT/zsh/alias
-
   # golang
   source $DOTFILES_ROOT/share/goenv.sh
 
@@ -24,6 +20,9 @@ if [[ -n $DOTFILES_ROOT ]]; then
     source $DOTFILES_ROOT/share/galias
   }
 
+  # alias
+  source $DOTFILES_ROOT/share/alias
+  source $DOTFILES_ROOT/zsh/alias
 fi
 
 

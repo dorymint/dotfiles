@@ -18,7 +18,7 @@ alias tmux='tmux -2'
 # local setting
 # change directory go work
 if [[ -d "$GOPATH/src/github.com/$USERNAME" ]]; then
-  alias gw='pushd $GOPATH/src/github.com/$USERNAME/'
+  alias gw='pushd $GOPATH/src/github.com/$USERNAME'
 else
   echo "do not find go work directory"
 fi

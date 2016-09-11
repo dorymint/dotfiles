@@ -11,15 +11,15 @@ if [[ "$DOTFILES_ROOT" != "" ]]; then
   # function
   source $DOTFILES_ROOT/bash/function/jisho
 
-  # alias
-  source $DOTFILES_ROOT/share/alias
-  source $DOTFILES_ROOT/bash/alias
-
   # pompletion
   source $DOTFILES_ROOT/share/bash_completion_tmux.sh
 
   # golang
   source $DOTFILES_ROOT/share/goenv.sh
+
+  # alias
+  source $DOTFILES_ROOT/share/alias
+  source $DOTFILES_ROOT/bash/alias
 fi
 
 
