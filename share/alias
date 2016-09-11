@@ -23,6 +23,13 @@ else
   echo "do not find go work directory"
 fi
 
+#  goto src golang official pkg
+if [[ -d "$GOROOT/src" ]]; then
+  alias goofficial='pushd $GOROOT/src && vim -R . '
+else
+  echo "do not find GOROOT/src"
+fi
+
 # if exist vim
 if [[ -x "$HOME/opt/vim/bin/vim" ]]; then
   # local build
