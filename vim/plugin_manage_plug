@@ -62,9 +62,8 @@ scriptencoding utf-8
 call plug#begin('~/.vim/plugged')
   " edit
     Plug 'junegunn/vim-easy-align'
-    Plug 'vim-scripts/DrawIt'
 
-  " status
+  "status
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
 
@@ -175,8 +174,8 @@ call plug#end()
 
 " IED like {{{
   " vim-go {{{
-  " NOTE:今は使ってないので読まない様にしておく
     if 1 == 0
+    " NOTE:今は使ってないので読まない様にしておく
       " highlight
       "let g:go_highlight_functions = 1
       "let g:go_highlight_methods = 1
@@ -235,7 +234,7 @@ call plug#end()
     if isdirectory(glob('~/dotfiles/vim/sonicdir'))
       let g:sonictemplate_vim_template_dir = '~/dotfiles/vim/sonicdir'
     else
-      echo "sonicdir disable"
+      echo "template directory: sonicdir disable"
     endif
   " }}}
   " ultisnips {{{
@@ -252,15 +251,16 @@ call plug#end()
 
 
 "-----| plugin keymap |-----"
-" NOTE:プラグインのプレフィックスは<C-@>を基本に設定してみる
-" NOTE:CtrlPはCtrlPだから<C-p>
-" NOTE:Filetypeでスイッチするマップは次の | autocmd | で定義する
+" NOTE:
+" プラグインのプレフィックスは<C-@>を基本に設定してみる
+" Filetypeでスイッチするマップは次の | autocmd | で定義する
+" CtrlPは<ctrl-p>のまま変えない
   " easy-alignon
     xmap <C-@>ea  <Plug>(EasyAlign)
     nmap <C-@>ea  <Plug>(EasyAlign)
   " syntastic
     nnoremap <C-@>s   :<C-u>SyntasticToggleMode<nl>
-      " NOTE:保存時に常に走らせると少し重い時があるのでトグルをマップしておく
+      " NOTE:保存時に常に走らせると少し重い時があるのでトグルをマップ
   " NERDTree
     nnoremap <C-@>n   :<C-u>NERDTreeToggle<nl>
   " tagbar

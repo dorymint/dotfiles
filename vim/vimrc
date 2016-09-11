@@ -12,13 +12,11 @@ scriptencoding utf-8
 
 
 "-----| plugin manage |-----"
-
 "" dein {{{
 "  if isdirectory(glob('~/.vim/dein/repos/github.com/Shougo/dein.vim'))
 "    source ~/dotfiles/vim/plugin_manage_dein
 "  endif
 " }}}
-
 " plug {{{
   if (has('win32') || has('win64')) && isdirectory(glob('~/.vim'))
     set runtimepath^=~/.vim,~/.vim/after
@@ -36,22 +34,20 @@ scriptencoding utf-8
 "-----| basic set |-----"
   "set nocompatible " vi互換を捨てる
     " NOTE:vimrcで指定の意味が無くhistoryが初期化される副作用があるらしい
-    " NOTE:取りあえずコメントアウト
 
-  set ttyfast " 高速ターミナル接続が何を指してるかわかってない
+  set ttyfast " 高速ターミナル接続が何をしてるかわかってない
   set nomodeline " do not use modeline. 便利だけどsrcに書くがためらわれるので今は無効
   set hidden " bufferを隠せるように
   set autoread  "ファイル内容が変更されると自動で読み込む
   set nopaste " 貼付け時の挙動を制御
     " NOTE:貼り付けで形が崩れる場合は:pasteにして貼付け後に:nopasteする
   set completeopt=menu,preview
-    " NOTE:入力補完の表示方法
 
   syntax on " シンタックスハイライト
   set helplang=ja
   set nospell " spell check
   "set spelllang=en,cjk
-    " NOTE:cjkで東アジア圏の言葉をチェックから除外
+    " NOTE:cjkで東アジア圏の言葉をチェックから除外らしい
   set title " タイトル
   set ruler " ルーラー使用
   set number " 行番号
@@ -65,8 +61,8 @@ scriptencoding utf-8
   set cursorline " カーソル現在行の強調設定
 
   " indent
-  set autoindent " 自動インデント
-  set smartindent " スマートインデント
+  set autoindent " 新しい行を現在行と同じインデントに
+  set smartindent " 閉じ括弧でインデントを合わせるよう試みる
   set shiftwidth=2 " autoindentの幅指定
 
   " foldmethod
@@ -97,7 +93,7 @@ scriptencoding utf-8
   " tab
   set tabstop=2 " tabをエディタ内でいくつの空白として表示するか設定
   set expandtab " vimでtabを挿入した時tabをスペースとして挿入
-  set softtabstop=2 " tabを幾つの空白で置き換えるか
+  set softtabstop=2 " tabを幾つの空白で挿入するか
   set backspace=indent,eol,start " バックスペースで特殊文字を削除できるように
 
   " list
@@ -127,10 +123,10 @@ scriptencoding utf-8
     " t_vb= でフラッシュのターミナルコードを空指定してフラッシュさせない
 
   " backup, swap, undo, {{{
-      set nobackup " backupを残さない
+      set nobackup " 常にバックアップを作るか設定
       set writebackup " backup設定、書き込み前にbackupが作られ、書き込み成功後は消される
-      set noundofile " undo設定
-      set noswapfile " swapfile設定
+      set noundofile
+      set noswapfile
     " directory
       if isdirectory(glob('~/dotfiles/vim/tmp'))
         set backupdir=~/dotfiles/vim/tmp/backup
@@ -152,8 +148,6 @@ scriptencoding utf-8
 
 "-----| color |-----"
 " NOTE:シェルの設定で大きく変わるのでlocalで設定するか分岐を作った方がいいかも
-  set t_Co=256
-  set background=dark
   "set background=light
   "colorscheme desert
   "colorscheme elflord
@@ -161,10 +155,11 @@ scriptencoding utf-8
   "colorscheme solarized
 
   try
+    set background=dark
+    set t_Co=256
     colorscheme hybrid
   catch
     echo "colorscheme hybrid is disable"
-    set t_Co=16
     colorscheme desert
   endtry
 
@@ -177,13 +172,15 @@ scriptencoding utf-8
 
 
 "-----| key map  |-----"
-" NOTE:defaultのマップは :help index.txt で確認できる
-" NOTE:user定義のマップは :imap :nmap :vmap :map :verbose map で確認できる
-" NOTE:なるべくデフォルトを消さないようにmapする
-" NOTE:<C-s> ttyへの入力受付をttyがロックするっぽい、<C-q>で復帰
-" NOTE:<C-z>はサスペンド、jobsでサスペンドの確認、fgでフォアグラウンドに
-" NOTE:<nop>はマップを削除できる
-" NOTE:コマンドのキーマップは<C-u>で数値の前置を消しておかないと範囲指定される
+" NOTE:
+" defaultのマップは :help index.txt で確認できる
+" user定義のマップは :imap :nmap :vmap :map :verbose map で確認できる
+" なるべくデフォルトを消さないようにマップする
+" <C-s>はttyへの入力受付をロックする?<C-q>で復帰、端末制御に使うキーはマップに注意する
+" <C-b>はtmuxと被る、tmuxを変えずにvimでマップしないようにする
+" <C-z>はサスペンド、jobsでサスペンドの確認、fgでフォアグラウンドに
+" <nop>はマップを削除できる
+" コマンドのキーマップは<C-u>で数値の前置を消しておかないと範囲指定される
 
   " jjでノーマルモードに
     inoremap jj <Esc>
@@ -194,7 +191,7 @@ scriptencoding utf-8
     "inoremap <C-h>   <left>
     inoremap <C-l>   <right>
       " NOTE:<C-f> 直感に反する
-      " NOTE:<C-h> 削除はbackspaceで割り切るか
+      " NOTE:<C-h> 削除はbackspaceで割り切るか考える
 
   " Resize window
     nnoremap <up>    <nop>
@@ -222,7 +219,6 @@ scriptencoding utf-8
 
       nnoremap tmn  :<C-u>+tabmove<nl>
       nnoremap tmp  :<C-u>-tabmove<nl>
-        " NOTE:連続して入れると若干挙動が怪しい、理由は不明
 
       nnoremap tf   :<C-u>tabfirst<nl>
       nnoremap tl   :<C-u>tablast<nl>
@@ -262,15 +258,17 @@ scriptencoding utf-8
 
   " 改行の挿入
     nnoremap <C-m>    o<Esc>k
-      " TODO:このマップももう少し考える
+      " TODO:このマップはもう少し考える
 
   " 閉じ括弧
-    inoremap {} {}<left>
-    inoremap () ()<left>
-    inoremap [] []<left>
-    inoremap <> <><left>
-    inoremap "" ""<left>
-    inoremap '' ''<left>
+  if 1 == 0
+    inoremap {} {}<C-g>U<left>
+    inoremap () ()<C-g>U<left>
+    inoremap [] []<C-g>U<left>
+    inoremap <> <><C-g>U<left>
+    inoremap "" ""<C-g>U<left>
+    inoremap '' ''<C-g>U<left>
+  endif
 
     inoremap {<enter> {}<left><enter><esc><S-o>
     inoremap {<nl>    {}<left><nl><esc><S-o>
@@ -280,9 +278,8 @@ scriptencoding utf-8
 
     inoremap [<enter> []<left><enter><esc><S-o>
     inoremap [<nl>    []<left><nl><esc><S-o>
-      " NOTE:<enter>と<nl>の違いがいまいちわかってない、
-      " NOTE:<enter> <c-j> 両方入力したファイルのバイナリを見ても違いが無い
-      " NOTE:入力は別扱い
+      " NOTE:<enter>と<nl>、違いがよくわかってない
+      " NOTE:入力は別扱い、挿入が<eol>、書き込みがff依存ということ?
 
   " オムニ補完
     inoremap <S-tab>  <C-x><C-o>
@@ -293,14 +290,15 @@ scriptencoding utf-8
   " filetypeによる挙動の変化を有効に設定
   filetype indent plugin on
   augroup vimrc
-    " vimrcグループのautocmdを初期化
     autocmd!
+    " NOTE:vimrcグループのautocmdを初期化して再設定を防ぐ
+
     " go
       autocmd Filetype go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
-        " NOTE:goはハードタブが推奨されるらしいのでnoexpandtabとスペースの表示をfmtに合わせて設定
+      " NOTE:goはハードタブが推奨される、noexpandtabとスペースの表示をfmtに合わせて設定
 
       "if isdirectory(glob('~/dotfiles/vim/tmp'))
-      "  autocmd Filetype go nnoremap <buffer> <c-@>gorun :<C-u>!go run % > ~/dotfiles/vim/tmp/gorunlog.txt 2>&1<nl>
+      "  autocmd Filetype go nnoremap <buffer> <c-@>gorun  :<C-u>!go run  % > ~/dotfiles/vim/tmp/gorunlog.txt 2>&1<nl>
       "    " NOTE:QuickRunを使うなら定義しなくていい
       "endif
   augroup END
