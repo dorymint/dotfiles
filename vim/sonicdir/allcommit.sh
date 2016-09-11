@@ -1,8 +1,10 @@
 #!/bin/bash
 
 if [[ -d "$DOTFILES_ROOT/vim/sonicdir" ]]; then
-  git add $DOTFILES_ROOT/vim/sonicdir/*
-  git status
+  cd "$DOTFILES_ROOT/vim/sonicdir" &&
+  git add ./* &&
+  git status ||
+  exit
 
   # confirm
   key=""

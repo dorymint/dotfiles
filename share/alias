@@ -15,15 +15,20 @@ alias mv='mv -i -v'
 
 alias tmux='tmux -2'
 
-# local
-
+# local setting
 # change directory go work
-alias gw='pushd ~/gowork/src/github.com/$USERNAME/'
+if [[ -d "$GOPATH/src/github.com/$USERNAME" ]]; then
+  alias gw='pushd $GOPATH/src/github.com/$USERNAME/'
+fi
 
 # if exist vim
-if [[ -e ~/opt/vim/bin/vim ]]; then
+if [[ -x ~/opt/vim/bin/vim ]]; then
   # local build
   alias viml='~/opt/vim/bin/vim'
 fi
 
+# sonictemplate add to commite
+if [[ -n "$DOTFILES_ROOT" ]] && [[ -r $DOTFILES_ROOT/vim/sonicdir/allcommit.sh ]]; then
+  alias sonic='bash ~/dotfiles/vim/sonicdir/allcommit.sh'
+fi
 # EOF
