@@ -32,9 +32,6 @@ scriptencoding utf-8
 
 
 "-----| basic set |-----"
-  "set nocompatible " vi互換を捨てる
-    " NOTE:vimrcで指定の意味が無くhistoryが初期化される副作用があるらしい
-
   set ttyfast " 高速ターミナル接続が何をしてるかわかってない
   set nomodeline " do not use modeline. 便利だけどsrcに書くがためらわれるので今は無効
   set hidden " bufferを隠せるように
@@ -55,6 +52,7 @@ scriptencoding utf-8
   set scrolloff=2 " 表示するページの上下余白の行数
   set textwidth=0 " textの最大幅を指定しない
   set wrap " textがウィンドウに入らなければ折り返す
+  set breakindent " 折り返しのインデントを合わせる
 
   " cursor
   set cursorcolumn " カーソル現在位置で縦を強調設定
