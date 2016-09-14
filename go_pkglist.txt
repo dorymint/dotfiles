@@ -1,7 +1,7 @@
 # go package list
 
 # go get -u -t <path to repository>
-# example:go get -u -t <path to repository>=github.com/user/repname
+# example:go get -u -t <path to repository>=github.com/user/reponame
 
 # options
 # -u                        " get from net work and install. src is clone or checkout and marge.
@@ -28,5 +28,7 @@ github.com/zmb3/gogetdoc
 github.com/josharian/impl
 
 golang.org/x/tour/gotour
+
+github.com/dorymint/go-addtree/addtree
 
 # go get list end

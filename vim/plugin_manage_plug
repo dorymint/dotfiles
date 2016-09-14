@@ -99,8 +99,9 @@ call plug#begin('~/.vim/plugged')
     "Plug 'plasticboy/vim-markdown'
 
   " color
-    Plug 'altercation/vim-colors-solarized'
+    "Plug 'altercation/vim-colors-solarized'
     Plug 'w0ng/vim-hybrid'
+    Plug 'cocopon/Iceberg.vim'
 
   " web
     Plug 'mattn/webapi-vim'
@@ -243,6 +244,14 @@ call plug#end()
       let g:UltiSnipsJumpForwardTrigger = "<tab>"
       let g:UltiSnipsJumpBackwardTrigger = "<S-tab>"
       let g:UltiSnipsEditSplit = "vertical"
+    endif
+  " }}}
+
+" color
+  " vim-colors-solarized {{{
+    if has('win32') && has('win64')
+    else
+      let g:solarized_termcolors = 256
     endif
   " }}}
 
