@@ -245,6 +245,7 @@ scriptencoding utf-8
       nnoremap Th   :<C-u>set hlsearch!<nl>
       nnoremap Ts   :<C-u>set spell!<nl>
       nnoremap Tp   :<C-u>set paste!<nl>
+      nnoremap Tro  :<C-u>set readonly<nl>
       nnoremap Tf   :<C-u>set ft=
   " keymap prefix <T> <t> }}}
 
