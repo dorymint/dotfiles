@@ -276,7 +276,7 @@ call plug#end()
     nnoremap <C-@>t   :<C-u>TagbarToggle<nl>
   " sonictemplate
     if isdirectory(glob('~/dotfiles/vim/sonicdir'))
-      nnoremap <C-@>w :<C-u>split ~/dotfiles/vim/sonicdir/%:e/
+      nnoremap <C-@>w :<C-u>10split ~/dotfiles/vim/sonicdir/%:e/
         " NOTE:すぐにテンプレートを編集できるように
     endif
 

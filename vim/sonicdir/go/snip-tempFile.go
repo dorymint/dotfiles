@@ -1,6 +1,7 @@
 
 // Create tempfile, Return filename.
 func tempFile(content string) (string, error) {
+	// use os temp directory
 	f, err := ioutil.TempFile("", "prefix")
 	if err != nil {
 		return "", err
