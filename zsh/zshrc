@@ -15,10 +15,7 @@ if [[ -n $DOTFILES_ROOT ]]; then
   # golang
   source $DOTFILES_ROOT/share/goenv.sh
 
-  # function
-  function galias() {
-    source $DOTFILES_ROOT/share/galias
-  }
+  # function TODO:
 
   # alias
   source $DOTFILES_ROOT/share/alias
@@ -30,6 +27,4 @@ fi
 setopt autocd
 setopt autopushd
 setopt pushdignoredups
-
-
 # EOF
