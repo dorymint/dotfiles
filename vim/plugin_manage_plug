@@ -269,7 +269,9 @@ call plug#end()
     nmap <C-@>ea  <Plug>(EasyAlign)
   " syntastic
     nnoremap <C-@>s   :<C-u>SyntasticToggleMode<nl>
-      " NOTE:保存時に常に走らせると少し重い時があるのでトグルをマップ
+      " NOTE:
+      " 保存時に常に走らせると少し重い時があるのでトグルをマップ
+      " 非同期でチェックできる良いプラグインがあれば乗り換えたい
   " NERDTree
     nnoremap <C-@>n   :<C-u>NERDTreeToggle<nl>
   " tagbar

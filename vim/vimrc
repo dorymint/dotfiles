@@ -224,7 +224,7 @@ scriptencoding utf-8
       nnoremap ts   :<C-u>tabs<nl>
 
     " buffer prefix<tb>
-      nnoremap tbl  :<C-u>ls<nl>
+      nnoremap tbl  :<C-u>ls<nl>:buffer<space>
       nnoremap tbc  :<C-u>ls<nl>:buffer<space>
       nnoremap tbs  :<C-u>ls<nl>:sbuffer<space>
       nnoremap tbd  :<C-u>ls<nl>:bdelete<space>
