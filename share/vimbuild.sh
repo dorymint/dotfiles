@@ -32,7 +32,11 @@ if [[ -r ./configure ]]; then
     || exit 1
   make || exit 1
   make install || exit 1
+
+  echo ""
   echo "Local vim, build and install successful!!"
+  echo ""
+
 else
   echo "do not find ./configure"
   exit 1

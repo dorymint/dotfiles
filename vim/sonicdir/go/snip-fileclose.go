@@ -1,5 +1,5 @@
 defer func() {
-	if err := {{_cursor_}}file.Close(); err != nil {
-		log.Fatal(err)
+	if err := f.Close(); err != nil {
+		log.Printf({{_cursor_}}"%v", err)
 	}
 }()
