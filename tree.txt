@@ -25,27 +25,30 @@
 ├── vim
 │   ├── curl_plug.sh
 │   ├── gvimrc
-│   ├── plugin_manage_dein
-│   ├── plugin_manage_plug
+│   ├── plugin_manage_dein.vim
+│   ├── plugin_manage_plug.vim
 │   ├── sonicdir
 │   │   ├── allcommit.sh
 │   │   ├── cpp
 │   │   │   └── snip-hello.cpp
 │   │   └── go
+│   │       ├── snip-TestMain.go
+│   │       ├── snip-bench.go
+│   │       ├── snip-crawl.go
 │   │       ├── snip-defer-close.go
 │   │       ├── snip-defererr.go
 │   │       ├── snip-fatalIF.go
+│   │       ├── snip-file-close-log.go
 │   │       ├── snip-fileclose.go
+│   │       ├── snip-flag-check.go
+│   │       ├── snip-mux.go
 │   │       ├── snip-return-error.go
 │   │       ├── snip-tempFile.go
 │   │       └── snip-test.go
 │   ├── tmp
 │   │   ├── backup
-│   │   │   └── test.txt
 │   │   ├── swap
-│   │   │   └── test.txt
 │   │   └── undo
-│   │       └── test.txt
 │   └── vimrc
 ├── win_bat
 │   ├── env
@@ -70,4 +73,4 @@
     ├── zshrc.grml
     └── zshrc.grml.local
 
-16 directories, 54 files
+16 directories, 57 files
