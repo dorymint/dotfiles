@@ -301,6 +301,22 @@ endif
       " TODO:少し使いづらいので別のマップも考える
 
 
+"-----| tools |-----"
+if isdirectory(glob('~/dotfiles/vim/tmp'))
+" go-todogotcha
+  if executable(glob('$GOPATH/bin/todogotcha'))
+    " 長い
+    nnoremap <C-@>TODO  :<C-u>!todogotcha > ~/dotfiles/vim/tmp/TODOList.txt 2>&1<nl> :vsplit ~/dotfiles/vim/tmp/TODOList.txt<nl>
+  else
+    echo 'not found "todogotcha"'
+  endif
+
+else
+  echo 'not found "~/dotfiles/vim/tmp"'
+  echo 'disable tools'
+endif
+
+
 "-----| autocmd |-----"
   " filetypeによる挙動の変化を有効に設定
   filetype indent plugin on
