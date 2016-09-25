@@ -167,7 +167,7 @@ call plug#end()
   " vim-quickrun {{{
   if 1 == 0
     let g:quickrun_no_default_key_mappings = 1
-      " NOTE:上を設定するとデフォルトマップが無効になる
+      " NOTE: 上を設定するとデフォルトマップが無効になる
   endif
   " }}}
 " }}}
@@ -176,7 +176,7 @@ call plug#end()
 " IED like {{{
   " vim-go {{{
     if 1 == 0
-    " NOTE:今は使ってないので読まない様にしておく
+    " NOTE: 今は使ってないので読まない様にしておく
       " highlight
       "let g:go_highlight_functions = 1
       "let g:go_highlight_methods = 1
@@ -279,7 +279,7 @@ call plug#end()
   " sonictemplate
     if isdirectory(glob('~/dotfiles/vim/sonicdir'))
       nnoremap <C-@>w :<C-u>10split ~/dotfiles/vim/sonicdir/%:e/
-        " NOTE:すぐにテンプレートを編集できるように
+        " NOTE: すぐにテンプレートを編集できるように
     endif
 
 

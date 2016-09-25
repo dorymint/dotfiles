@@ -4,8 +4,8 @@
 set encoding=utf-8
 scriptencoding utf-8
 
-" TODO:時間が取れたら整理する
-" TODO:コメント多めに書いていく
+" TODO: 時間が取れたら整理する
+" TODO: コメント多めに書いてく
 
 " NOTE:
 " 設定の詳細は:helpで調べればまず困らない
@@ -16,7 +16,7 @@ scriptencoding utf-8
 "-----| plugin manage |-----"
 if (has('win32') || has('win64')) && isdirectory(glob('~/.vim'))
   set runtimepath^=~/.vim,~/.vim/after
-    " NOTE:linuxの構成に合わせる
+    " NOTE: linuxの構成に合わせる
 endif
 
 "" dein {{{
@@ -42,14 +42,14 @@ endif
   set hidden " bufferを隠せるように
   set autoread  "ファイル内容がvimの外で変更されると自動で読み込む
   set nopaste " 貼付け時の挙動を制御
-    " NOTE:貼り付けで形が崩れる場合は :paste して貼付け後に :nopaste する
+    " NOTE: 貼り付けで形が崩れる場合は :paste して貼付け後に :nopaste する
   set completeopt=menu,preview
 
   syntax on " シンタックスハイライト
   set helplang=ja
   set nospell " spell check
   "set spelllang=en,cjk
-    " NOTE:cjkで東アジア圏の言葉をチェックから除外できるらしい
+    " NOTE: cjkで東アジア圏の言葉をチェックから除外できるらしい
   set title " タイトル
   set ruler " ルーラー使用
   set number " 行番号
@@ -91,7 +91,7 @@ endif
   set incsearch " 検索コマンドでワードを打ち込む間にもマッチする
   set nohlsearch " 前回の検索パターンが存在するとき、マッチテキストを強調
   set ignorecase " 検索パターンで大文字少文字を区別しない
-    " NOTE:置換処理のマッチにも影響するため注意
+    " NOTE: 置換処理のマッチにも影響するため注意
   set smartcase " 検索パターンが大文字を含んでいたらignorecaseを上書きする
 
   " tab
@@ -115,7 +115,6 @@ endif
   " tabline
   set showtabline=2 " tablineを常に表示
   set tabline=%t " statuslineと同じように設定できる
-    " NOTE:use airline. 上の設定はプラグインが効かないときだけ
 
   " New splits open to right and bottom
   set splitbelow " split時カレントウィンドウの下に分割
@@ -153,7 +152,7 @@ endif
 
 
 "-----| color |-----"
-" NOTE:シェルの設定で変わるのでlocalで設定するか分岐を作った方がいいかも
+" NOTE: シェルの設定で変わるのでlocalで設定するか分岐を作った方がいいかも
   "set background=light
   "colorscheme desert
   "colorscheme elflord
@@ -174,7 +173,7 @@ endif
   if has('win32') || has('win64')
     set t_Co=16
     colorscheme desert
-      " NOTE:hybridはgvimrcで設定
+      " NOTE: hybridはgvimrcで設定
   endif
 
 
@@ -185,17 +184,17 @@ endif
 " なるべくデフォルトを消さないようにマップする
 " <C-s>はttyへの入力受付をロックする?<C-q>で復帰、端末制御に使うキーはマップに注意する
 " <C-b>はtmuxと被る、tmuxを変えずにvimでマップしないようにする
-" <C-z>はサスペンド、jobsでサスペンドの確認、fgでフォアグラウンドに
+" <C-z>はサスペンド、jobsでサスペンドの確認、fgでフォアグラウンド
 " <nop>はマップを削除できる
 " コマンドのキーマップは<C-u>で数値の前置を消しておかないと範囲指定される
 
   " ノーマルモードに
-  " NOTE:<C-[> に慣れた方がいいかも
+  " NOTE: <C-[> に慣れた方がいいかも
     inoremap jj <Esc>
     "inoremap jk <Esc>
 
   " インサートモードの前後移動
-    " TODO:使い難い、もう少し考える...無くてもいいかも
+    " TODO: 使い難い、もう少し考える...無くてもいいかも
     inoremap <C-f>   <left>
     "inoremap <C-h>   <left>
     inoremap <C-l>   <right>
@@ -208,16 +207,15 @@ endif
     nnoremap <down>  <nop>
     nnoremap <left>  <nop>
     nnoremap <right> <nop>
-      " NOTE:<nop> で消しておくとリサイズの処理が軽くなるかも
-
+      " NOTE: <nop> で消しておくとリサイズの処理が軽くなる?
     nnoremap <up>    <C-w>+
     nnoremap <down>  <C-w>-
     nnoremap <left>  <C-w><
     nnoremap <right> <C-w>>
 
   " keymap prefix <T> <t> {{{
-  " NOTE:tは移動系で便利っぽいけどfもあるので潰してみる...
-  " TODO:これで良いかはもう少し考える
+  " NOTE: tは移動系で便利っぽいけどfがあるので潰してみる...
+  " TODO: これで良いかはもう少し考える
     nnoremap T  <nop>
     nnoremap t  <nop>
     " tabpage prefix<t>
@@ -249,18 +247,19 @@ endif
 
       nnoremap tj   :<C-u>bnext<nl>
       nnoremap tk   :<C-u>bprev<nl>
-        " NOTE:使用頻度が高いので<tb>から<t>にする
+        " NOTE: 使用頻度が高いので<tb>から<t>にする
 
     " search and move
       nnoremap t;  /}<nl>
 
     " prefix for toggle<T>
-      " NOTE:setのトグルとオプションの補完は T を使う
+      " NOTE: setのトグルとオプションの補完は T を使う
       nnoremap Th   :<C-u>set hlsearch!<nl>
       nnoremap Ts   :<C-u>set spell!<nl>
       nnoremap Tp   :<C-u>set paste!<nl>
       nnoremap Tro  :<C-u>set readonly<nl>
       nnoremap Tf   :<C-u>set ft=
+      nnoremap Tw   :<C-u>set textwidth=
   " }}}
 
   " 行を上下に引っ張る
@@ -272,7 +271,7 @@ endif
 
   " 改行の挿入
     nnoremap <C-m>    o<Esc>k
-      " TODO:このマップはもう少し考える
+      " TODO: このマップはもう少し考える
 
   " 閉じ括弧
   if 1 == 0
@@ -294,11 +293,11 @@ endif
     inoremap [<nl>    []<left><nl><Esc><S-o>
       " NOTE:
       " <enter>と<nl>、違いがよくわかってない
-      " 入力は別扱い、挿入が<eol>、書き込みがff依存ということ?
+      " 入力は別扱い、挿入が<eol>、書き込みがff依存ということなの?
 
   " オムニ補完
     inoremap <S-tab>  <C-x><C-o>
-      " TODO:少し使いづらいので別のマップも考える
+      " TODO: 少し使いづらいので別のマップも考える
 
 
 "-----| tools |-----"
@@ -322,15 +321,15 @@ endif
   filetype indent plugin on
   augroup vimrc
     autocmd!
-      " NOTE:vimrcグループのautocmdを初期化して再設定を防ぐ
+      " NOTE: vimrcグループのautocmdを初期化して再設定を防ぐ
 
     " go
       autocmd Filetype go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
-        " NOTE:goはハードタブが推奨される、noexpandtabとスペースの表示をfmtに合わせて設定
+        " NOTE: goはハードタブが推奨される、noexpandtabとスペースの表示をfmtに合わせて設定
 
       "if isdirectory(glob('~/dotfiles/vim/tmp'))
       "  autocmd Filetype go nnoremap <buffer> <c-@>gorun  :<C-u>!go run  % > ~/dotfiles/vim/tmp/gorunlog.txt 2>&1<nl>
-      "    " NOTE:QuickRunを使うなら定義しなくていい
+      "    " NOTE: QuickRunを使うなら定義しなくていい
       "endif
   augroup END
 
@@ -338,6 +337,6 @@ endif
 "-----| nvim |-----"
   if has('nvim')
     tnoremap <Esc>  <C-\><C-n>
-      " NOTE:nvimのterminal mode
+      " NOTE: nvimのterminal mode
   endif
 " EOF
