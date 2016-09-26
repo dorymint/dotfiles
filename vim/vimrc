@@ -190,7 +190,7 @@ endif
 
   " ノーマルモードに
   " NOTE: <C-[> に慣れた方がいいかも
-    inoremap jj <Esc>
+    "inoremap jj <Esc>
     "inoremap jk <Esc>
 
   " インサートモードの前後移動
