@@ -306,6 +306,7 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
   if executable(glob('$GOPATH/bin/todogotcha'))
     " 長い
     nnoremap <C-@>TODO  :<C-u>!todogotcha > ~/dotfiles/vim/tmp/TODOList.txt 2>&1<nl> :vsplit ~/dotfiles/vim/tmp/TODOList.txt<nl>
+      " NOTE: Listはファイルのフルパスも含んでgfで飛ぶようにする
   else
     echo 'not found "todogotcha"'
   endif

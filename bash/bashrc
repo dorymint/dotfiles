@@ -28,8 +28,8 @@ fi
 # 取り敢えずbashrcで呼ぶようにしておく
 
 # call zsh
-echo "call zsh"
 if [[ -f /bin/zsh ]] && [[ $SHLVL -eq 1 ]]; then
+  echo "call zsh"
   /bin/zsh
 fi
 echo "exit zsh"
