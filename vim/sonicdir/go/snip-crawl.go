@@ -1,25 +1,27 @@
 // Directory crawl model
-func Crawl(/*TODO*/) (/*TODO*/) {
+func Crawl() {
 	mux := new(sync.Mutex)
 	wg := new(sync.WaitGroup)
 
-	var crawl func(/*TODO*/)
-	crawl = func(/*TODO*/) {
+	var crawl func()
+	crawl = func() {
 		defer wg.Done()
 		for {
 			/*
 			wg.Add(1)
-			go crawl(TODO)
+			go crawl()
 			*/
 		}
 	}
 
 	/*
 	wg.Add(1)
-	dirsCrawl(TODO)
+	dirsCrawl()
 	wg.Wait()
+
+	return
 	*/
-	// or return function
+	// or
 	/* return crawl */
 }
 

@@ -6,7 +6,7 @@ func argsCheck() {
 		for _, x := range flag.Args() {
 			fmt.Println(x)
 		}
-		fmt.Printf("\n")
+		fmt.Print("\n")
 		fmt.Println("-----| Usage |-----")
 		flag.PrintDefaults()
 		os.Exit(1)
