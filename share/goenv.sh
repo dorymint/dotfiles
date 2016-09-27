@@ -1,4 +1,4 @@
-#!/bin/bash
+# goenv
 
 if [[ -d $HOME/opt/go ]] && [[ "$GOROOT" = "" ]]; then
   export GOROOT=$HOME/opt/go

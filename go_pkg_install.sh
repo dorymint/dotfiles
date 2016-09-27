@@ -1,5 +1,6 @@
 #!/bin/bash
 # scriptencoding utr-8
+# go package install script
 
 echo "require"
 echo "--gawk-- --go--"
@@ -22,11 +23,11 @@ echo "goroot is $goroot"
 goget="$goroot/bin/go get"
 options="-u -v"
 
-# package set
+# set packages
 pkglist="$DOTFILES_ROOT/go_pkglist.txt"
 awkout=$(gawk '/^[^#].*/ { print $0 }' "$pkglist")
 
-# package show
+# show the packages
 echo "--- install list ---"
 for x in $awkout; do
   echo "$x"

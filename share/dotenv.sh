@@ -1,4 +1,4 @@
-#!/bin/bash
+# envdot
 
 # env
 if [[ -d $HOME/dotfiles ]] && [[ "$DOTFILES_ROOT" = "" ]]; then

@@ -1,4 +1,5 @@
 #!/bin/bash
+# vim install to local enviroment script
 
 echo "hi!"
 echo "Start Local vim install proccess!"
