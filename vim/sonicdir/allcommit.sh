@@ -34,6 +34,6 @@ if [[ -d "$DOTFILES_ROOT/vim/sonicdir" ]]; then
   git push origin master
 
 else
-  echo "do not fnid template directory sonicdir"
+  echo "not found template directory sonicdir"
 fi
 
