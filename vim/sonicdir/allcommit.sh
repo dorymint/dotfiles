@@ -19,7 +19,7 @@ function confirm() {
 
 if [[ -d "$DOTFILES_ROOT/vim/sonicdir" ]]; then
   cd "$DOTFILES_ROOT/vim/sonicdir" &&
-  git status
+  git status || exit 1
 
   confirm 'git add . [yes:no]?' &&
   git add . &&
