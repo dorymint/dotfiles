@@ -35,7 +35,7 @@ if [[ -d "$DOTFILES_ROOT/vim/sonicdir" ]]; then
   git diff origin/master ||
   exit 1
 
-  git status
+  git status &&
   confirm 'git push origin master [yes:no]?' &&
   git push origin master ||
   exit 1
@@ -44,3 +44,4 @@ else
   echo "not found template directory sonicdir"
 fi
 
+# EOF
