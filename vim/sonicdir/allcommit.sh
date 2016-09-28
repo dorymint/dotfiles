@@ -21,20 +21,24 @@ function confirm() {
 
 if [[ -d "$DOTFILES_ROOT/vim/sonicdir" ]]; then
   cd "$DOTFILES_ROOT/vim/sonicdir" &&
-  git diff origin/master || exit 1
-  git status || exit 1
+  git diff origin/master &&
+  git status ||
+  exit 1
 
   confirm 'git add . [yes:no]?' &&
   git add . &&
-  git status ||  exit 1
+  git status ||
+  exit 1
 
   confirm 'git commit [yes:no]?' &&
-  git commit || exit 1
-  git diff origin/master
+  git commit &&
+  git diff origin/master ||
+  exit 1
 
   git status
   confirm 'git push origin master [yes:no]?' &&
-  git push origin master
+  git push origin master ||
+  exit 1
 
 else
   echo "not found template directory sonicdir"
