@@ -19,6 +19,7 @@ function confirm() {
 
 if [[ -d "$DOTFILES_ROOT/vim/sonicdir" ]]; then
   cd "$DOTFILES_ROOT/vim/sonicdir" &&
+  git diff origin/master || exit 1
   git status || exit 1
 
   confirm 'git add . [yes:no]?' &&
@@ -27,9 +28,9 @@ if [[ -d "$DOTFILES_ROOT/vim/sonicdir" ]]; then
 
   confirm 'git commit [yes:no]?' &&
   git commit || exit 1
-  git status
-
   git show
+
+  git status
   confirm 'git push origin master [yes:no]?' &&
   git push origin master
 
