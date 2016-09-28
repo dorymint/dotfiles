@@ -11,7 +11,7 @@ function confirm() {
     fi
     count=$(expr $count + 1)
 
-    echo $1
+    echo "$1"
     read key
   done
   return 0
