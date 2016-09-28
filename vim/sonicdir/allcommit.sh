@@ -28,7 +28,7 @@ if [[ -d "$DOTFILES_ROOT/vim/sonicdir" ]]; then
 
   confirm 'git commit [yes:no]?' &&
   git commit || exit 1
-  git show
+  git diff origin/master
 
   git status
   confirm 'git push origin master [yes:no]?' &&
