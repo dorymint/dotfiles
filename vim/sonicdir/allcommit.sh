@@ -25,6 +25,7 @@ if [[ -d "$DOTFILES_ROOT/vim/sonicdir" ]]; then
   echo "" &&
   git diff &&
   echo "" &&
+  echo "-----| STATUS |-----" &&
   git status &&
   confirm 'git add . [yes:no]?' &&
   git add . &&
