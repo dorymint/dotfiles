@@ -23,13 +23,13 @@ if [[ -d "$DOTFILES_ROOT/vim/sonicdir" ]]; then
 
   confirm 'git add . [yes:no]?' &&
   git add . &&
-  git status ||
-  exit 1
+  git status ||  exit 1
 
   confirm 'git commit [yes:no]?' &&
   git commit || exit 1
   git status
 
+  git show
   confirm 'git push origin master [yes:no]?' &&
   git push origin master
 
