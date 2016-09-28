@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# add modified line test
-
 # confirm
 function confirm() {
   local key=""
@@ -33,12 +31,13 @@ if [[ -d "$DOTFILES_ROOT/vim/sonicdir" ]]; then
   exit 1
 
   echo "" &&
-  git diff origin/master &&
+  git diff --cached &&
   confirm 'git commit [yes:no]?' &&
   git commit ||
   exit 1
 
   echo "" &&
+  git diff origin/master &&
   git status &&
   confirm 'git push origin master [yes:no]?' &&
   git push origin master ||

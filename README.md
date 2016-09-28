@@ -12,7 +12,8 @@
 │   ├── sonicdir
 │   │   ├── cpp
 │   │   ├── go
-│   │   └── markdown
+│   │   ├── markdown
+│   │   └── sh
 │   └── tmp
 │       ├── backup
 │       ├── swap
@@ -21,6 +22,6 @@
 │   └── env
 └── zsh
 
-17 directories
+18 directories
 ```
 
