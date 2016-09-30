@@ -228,14 +228,13 @@ endif
       nnoremap tmn  :<C-u>+tabmove<nl>
       nnoremap tmp  :<C-u>-tabmove<nl>
 
-      nnoremap tf   :<C-u>tabfirst<nl>
-      nnoremap tl   :<C-u>tablast<nl>
+      "nnoremap tf   :<C-u>tabfirst<nl>
+      "nnoremap tl   :<C-u>tablast<nl>
 
-      nnoremap ts   :<C-u>tabs<nl>
+      "nnoremap ts   :<C-u>tabs<nl>
 
     " buffer prefix<tb>
       nnoremap tbl  :<C-u>ls<nl>:buffer<space>
-      nnoremap tbc  :<C-u>ls<nl>:buffer<space>
       nnoremap tbs  :<C-u>ls<nl>:sbuffer<space>
       nnoremap tbd  :<C-u>ls<nl>:bdelete<space>
         " NOTE:
@@ -258,8 +257,10 @@ endif
       nnoremap Ts   :<C-u>set spell!<nl>
       nnoremap Tp   :<C-u>set paste!<nl>
       nnoremap Tro  :<C-u>set readonly<nl>
-      nnoremap Tf   :<C-u>set ft=
+      nnoremap Tf   :<C-u>set filetype=
       nnoremap Tw   :<C-u>set textwidth=
+
+      nnoremap Tm   :<C-u>marks<nl>
   " }}}
 
   " 行を上下に引っ張る
