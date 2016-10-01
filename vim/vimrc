@@ -261,6 +261,15 @@ endif
       nnoremap Tw   :<C-u>set textwidth=
 
       nnoremap Tm   :<C-u>marks<nl>
+
+      " hex
+      if executable('xxd')
+        nnoremap Txxd  :<C-u>set filetype=xxd<nl>:%!xxd -g 1<space>
+        nnoremap TRxxd :<C-u>%!xxd -r<space>
+          " NOTE: 戻す時は xxd -r
+      else
+        echo 'not found xxd'
+      endif
   " }}}
 
   " 行を上下に引っ張る
@@ -307,7 +316,7 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
   if executable(glob('$GOPATH/bin/todogotcha'))
     " 長い
     nnoremap <C-@>TODO  :<C-u>!todogotcha > ~/dotfiles/vim/tmp/TODOList.txt 2>&1<nl> :vsplit ~/dotfiles/vim/tmp/TODOList.txt<nl>
-      " NOTE: Listはファイルのフルパスも含んでgfで飛ぶようにする
+      " NOTE: List内のファイル名からgfで飛べる
   else
     echo 'not found "todogotcha"'
   endif
