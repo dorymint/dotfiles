@@ -30,11 +30,13 @@ fi
 # 取り敢えずbashrcで呼ぶようにしておく
 
 # call zsh
-if [[ -f /bin/zsh ]] && [[ $SHLVL -eq 1 ]]; then
-  echo "call zsh"
-  /bin/zsh
+if [[ -f /bin/zsh ]]; then
+  if [[ $SHLV -eq 1 ]]; then
+    /bin/zsh
+  fi
+else
+  echo 'not found zsh'
 fi
+
 echo "exit zsh"
-
-
 # EOF

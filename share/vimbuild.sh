@@ -13,7 +13,7 @@ if [[ -d "$vimbuilddir" ]]; then
   git fetch || exit 1
   git merge origin/master || exit 1
 else
-  echo "do not find vim src directory"
+  echo "not found vim src directory"
   exit 1
 fi
 
@@ -39,6 +39,6 @@ if [[ -r ./configure ]]; then
   echo ""
 
 else
-  echo "do not find ./configure"
+  echo "not found ./configure"
   exit 1
 fi
