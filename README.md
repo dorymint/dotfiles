@@ -19,9 +19,10 @@
 │       ├── swap
 │       └── undo
 ├── win_bat
-│   └── env
+│   ├── env
+│   └── setup
 └── zsh
 
-18 directories
+19 directories
 ```
 

@@ -108,7 +108,8 @@ call plug#begin('~/.vim/plugged')
 
   " etc
     Plug 'mattn/vim-soundcloud'
-      " require... mplayer ctrlp.vim webapi-vim
+      " NOTE: require... mplayer ctrlp.vim webapi-vim
+    Plug 'vim-jp/vimdoc-ja'
 call plug#end()
 "-----| plug end |-----" }}}
 

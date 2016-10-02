@@ -20,6 +20,8 @@ if [[ "$DOTFILES_ROOT" != "" ]]; then
   # alias
   source $DOTFILES_ROOT/share/alias
   source $DOTFILES_ROOT/bash/alias
+else
+  echo 'DOTFIILES_ROOT=""'
 fi
 
 

@@ -6,7 +6,7 @@ source $HOME/dotfiles/share/dotenv.sh
 # environment
 if [[ -n $DOTFILES_ROOT ]]; then
 
-  # TODO:add any env
+  # TODO: add any env
 
   # use grml zshrc
   source $DOTFILES_ROOT/zsh/zshrc.grml
@@ -15,11 +15,13 @@ if [[ -n $DOTFILES_ROOT ]]; then
   # golang
   source $DOTFILES_ROOT/share/goenv.sh
 
-  # function TODO:
+  # TODO: function
 
   # alias
   source $DOTFILES_ROOT/share/alias
   source $DOTFILES_ROOT/zsh/alias
+else
+  echo 'DOTFILES_ROOT=""'
 fi
 
 

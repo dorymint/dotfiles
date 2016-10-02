@@ -10,7 +10,7 @@ rem
 
 setlocal
 set DOT_VIM_PATH=%USERPROFILE%\dotfiles\vim
-set DOTFILE_SETUP=%USERPROFILE%\dotfiles\setup
+set DOTFILE_SETUP=%USERPROFILE%\dotfiles\win_bat\setup
 
 rem vim 
 if exist %USERPROFILE%\_vimrc (

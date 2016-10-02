@@ -24,8 +24,13 @@ goget="$goroot/bin/go get"
 options="-u -v"
 
 # set packages
-pkglist="$DOTFILES_ROOT/go_pkglist.txt"
-awkout=$(gawk '/^[^#].*/ { print $0 }' "$pkglist")
+if [[ -r $DOTFILES_ROOT/setup/go_pkglist.txt ]]; then
+  pkglist="$DOTFILES_ROOT/setup/go_pkglist.txt"
+  awkout=$(gawk '/^[^#].*/ { print $0 }' "$pkglist")
+else
+  echo 'not found $DOTFILES_ROOT/setup/go_pkglist.txt'
+  exit 1
+fi
 
 # show the packages
 echo "--- install list ---"

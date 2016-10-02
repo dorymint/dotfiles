@@ -1,4 +1,4 @@
-# confirm
+# bash confirm
 function confirm() {
   local key=""
   local count=0

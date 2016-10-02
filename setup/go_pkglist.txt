@@ -9,8 +9,9 @@
 # -v                        " varbose
 # -ldflags -H=windowsgui    " hide window option. for windows os
 
-# go get list begin
 
+# TODO: Add packages
+# go get list begin
 github.com/nsf/gocode
 github.com/alecthomas/gometalinter
 
@@ -31,5 +32,6 @@ golang.org/x/tour/gotour
 
 github.com/dorymint/go-addtree/addtree
 github.com/dorymint/go-TODOGotcha/todogotcha
-
 # go get list end
+
+# EOF
