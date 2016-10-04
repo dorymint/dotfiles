@@ -1,9 +1,10 @@
-func ask() bool {
-	fmt.Println("TODO:is ok?")
+func ask(s string) bool {
+	fmt.Println(s)
 	fmt.Printf("[yes:no]? >>")
 	for sc, i := bufio.NewScanner(os.Stdin), 0;sc.Scan() && i < 2;i++ {
-		if sc.Err() != nil {
+		if err := sc.Err(); err != nil {
 			// TODO: Countermove
+			log.Fatal(err)
 		}
 		switch sc.Text() {
 		case "yes": return true
