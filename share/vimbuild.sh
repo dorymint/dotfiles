@@ -37,7 +37,6 @@ if [[ -r ./configure ]]; then
   echo ""
   echo "Local vim, build and install successful!!"
   echo ""
-
 else
   echo "not found ./configure"
   exit 1
