@@ -23,10 +23,11 @@ github.com/golang/lint/golint
 github.com/rogpeppe/godef
 github.com/kisielk/errcheck
 github.com/jstemmer/gotags
-github.com/klauspost/asmfmt/cmd/asmfmt
-github.com/fatih/motion
+# github.com/klauspost/asmfmt/cmd/asmfmt
+# github.com/fatih/motion
 github.com/zmb3/gogetdoc
 github.com/josharian/impl
+github.com/mibk/dupl
 
 golang.org/x/tour/gotour
 

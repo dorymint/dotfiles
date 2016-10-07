@@ -198,7 +198,8 @@ call plug#end()
     let g:syntastic_mode_map = { 'mode': 'active' }
     " golang
     let g:syntastic_go_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-    let g:syntastic_go_checkers = ['golin', 'govet', 'errcheck', 'gometalinter']
+    let g:syntastic_go_checkers = ['go', 'gofmt', 'golint', 'govet', 'gotype']
+    "let g:syntastic_go_checkers = ['gometalinter']
       " gometalinterは他の多くのパッケージに依存しているので注意
       " といかmeta linter. lintermanagerみたい
       " $gometalinter --install で依存パッケージをインストールできるらしい
