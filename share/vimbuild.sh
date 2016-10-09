@@ -34,6 +34,7 @@ buildoption="--enable-fail-if-missing
 
 # update src
 if [[ -d "$vimbuilddir" ]]; then
+  confirm "update vim source? [yes:no]"
   pushd $vimbuilddir &&
   git checkout build &&
   git fetch &&
