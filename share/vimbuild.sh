@@ -4,34 +4,63 @@
 echo "hi!"
 echo "Start Local vim install proccess!"
 
-vimbuilddir=$HOME/github.com/src/vim/vim
+function confirm() {
+  local key=""
+  local count=0
+  while [[ "$key" != "yes" ]] && [[ "$key" != "y" ]]; do
+    if [[ "$key" = "no" ]] || [[ "$key" = "n" ]] || [[ $count -gt 2 ]]; then
+      echo "ok... stop process"
+      exit 1
+    fi
+    count=$(expr $count + 1)
 
-# test
+    echo "$1"
+    read key
+  done
+  return 0
+}
+
+vimbuilddir="$HOME/github.com/src/vim/vim"
+installdir="$HOME/opt/vim"
+buildoption="--enable-fail-if-missing
+    --enable-luainterp
+    --enable-perlinterp
+    --enable-pythoninterp
+    --enable-python3interp
+    --enable-rubyinterp
+    --prefix=$installdir
+    --with-features=huge
+    --with-luajit"
+
+# update src
 if [[ -d "$vimbuilddir" ]]; then
-  pushd $vimbuilddir || exit 1
-  git checkout build || exit 1
-  git fetch || exit 1
+  pushd $vimbuilddir &&
+  git checkout build &&
+  git fetch &&
   git merge origin/master || exit 1
 else
   echo "not found vim src directory"
   exit 1
 fi
 
+# show configure
+echo 'configure options'
+for x in $buildoption; do
+  echo $x
+done
+confirm "configure? [yes:no]"
+
+# build
 if [[ -r ./configure ]]; then
-  make --version || exit 1
-  make clean || exit 1
-  ./configure \
-    --enable-fail-if-missing \
-    --enable-luainterp \
-    --enable-perlinterp \
-    --enable-pythoninterp \
-    --enable-python3interp \
-    --enable-rubyinterp \
-    --prefix=$HOME/opt/vim \
-    --with-features=huge \
-    --with-luajit \
-    || exit 1
+  make --version &&
+  make clean &&
+  ./configure $buildoption  || exit 1
+
+  confirm "make? [yes:no]"
   make || exit 1
+
+  echo "install to $installdir"
+  confirm "make install? [yes:no]"
   make install || exit 1
 
   echo ""
