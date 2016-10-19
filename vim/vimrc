@@ -313,7 +313,7 @@ endif
 "-----| tools |-----"
 if isdirectory(glob('~/dotfiles/vim/tmp'))
 " go-todogotcha
-  if executable(glob('$GOPATH/bin/todogotcha'))
+  if executable('todogotcha')
     " 長い
     nnoremap <C-@>TODO  :<C-u>!todogotcha > ~/dotfiles/vim/tmp/TODOList.txt 2>&1<nl> :vsplit ~/dotfiles/vim/tmp/TODOList.txt<nl>
       " NOTE: List内のファイル名からgfで飛べる
