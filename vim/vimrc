@@ -314,9 +314,8 @@ endif
 if isdirectory(glob('~/dotfiles/vim/tmp'))
 " go-todogotcha
   if executable('todogotcha')
-    " 長い
     nnoremap <C-@>TODO  :<C-u>!todogotcha > ~/dotfiles/vim/tmp/TODOList.txt 2>&1<nl> :vsplit ~/dotfiles/vim/tmp/TODOList.txt<nl>
-      " NOTE: List内のファイル名からgfで飛べる
+      " NOTE: List内のファイル名からgfで飛べる...長い
   else
     echo 'not found "todogotcha"'
   endif
@@ -343,6 +342,12 @@ endif
       "    " NOTE: QuickRunを使うなら定義しなくていい
       "endif
   augroup END
+
+
+"-----| command |-----"
+if exists("*strftime")
+  command! Timestamp :put=strftime('%Y/%m/%d %H:%M')
+endif
 
 
 "-----| nvim |-----"

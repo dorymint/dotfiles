@@ -15,9 +15,15 @@
 github.com/nsf/gocode
 github.com/alecthomas/gometalinter
 
-golang.org/x/tools/cmd/goimports
-golang.org/x/tools/cmd/guru
-golang.org/x/tools/cmd/gorename
+# golang.org
+golang.org/x/tools/cmd/...
+# golang.org/x/tools/cmd/goimports
+# golang.org/x/tools/cmd/guru
+# golang.org/x/tools/cmd/gorename
+
+# golang.org tour
+golang.org/x/tour/gotour
+
 
 github.com/golang/lint/golint
 github.com/rogpeppe/godef
@@ -29,8 +35,8 @@ github.com/zmb3/gogetdoc
 github.com/josharian/impl
 github.com/mibk/dupl
 
-golang.org/x/tour/gotour
 
+# my tools
 github.com/dorymint/go-addtree/addtree
 github.com/dorymint/go-TODOGotcha/todogotcha
 # go get list end

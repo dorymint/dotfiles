@@ -22,14 +22,14 @@ alias :q='exit'
 if [[ -d "$GOPATH/src/github.com/$USERNAME" ]]; then
   alias gw='pushd $GOPATH/src/github.com/$USERNAME'
 else
-  echo 'not found $GOPATH/src/github.com/$USERNAME'
+  echo 'dotfiles/share/alias: not found $GOPATH/src/github.com/$USERNAME'
 fi
 
 #  goto src golang official pkg
 if [[ -d "$GOROOT/src" ]]; then
   alias goofficial='pushd $GOROOT/src && vim -R . '
 else
-  echo 'not found GOROOT/src'
+  echo 'dotfiles/share/alias: not found GOROOT/src'
 fi
 
 # if exist vim
@@ -37,13 +37,13 @@ if [[ -x "$HOME/opt/vim/bin/vim" ]]; then
   # local build
   alias viml='$HOME/opt/vim/bin/vim'
 else
-  echo 'not found $HOME/opt/vim/bin/vim'
+  echo 'dotfiles/share/alias: not found $HOME/opt/vim/bin/vim'
 fi
 
 # sonictemplate add to commite
 if [[ -n "$DOTFILES_ROOT" ]] && [[ -r "$DOTFILES_ROOT/vim/sonicdir/allcommit.sh" ]]; then
   alias sonic='bash $DOTFILES_ROOT/vim/sonicdir/allcommit.sh'
 else
-  echo "not found sonicdir"
+  echo "dotfiles/share/alias: not found sonicdir"
 fi
 # EOF
