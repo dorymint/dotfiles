@@ -27,14 +27,13 @@ fi
 
 #  goto src golang official pkg
 if [[ -d "$GOROOT/src" ]]; then
-  alias goofficial='pushd $GOROOT/src && vim -R . '
+  alias gofficial='pushd $GOROOT/src && vim -R . '
 else
   echo 'dotfiles/share/alias: not found GOROOT/src'
 fi
 
-# if exist vim
+# local vim
 if [[ -x "$HOME/opt/vim/bin/vim" ]]; then
-  # local build
   alias viml='$HOME/opt/vim/bin/vim'
 else
   echo 'dotfiles/share/alias: not found $HOME/opt/vim/bin/vim'
