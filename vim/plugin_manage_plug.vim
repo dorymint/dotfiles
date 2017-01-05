@@ -82,7 +82,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'thinca/vim-ref'
 
   " IED like
-    Plug 'scrooloose/syntastic'
+    Plug 'vim-syntastic/syntastic'
+    "Plug 'scrooloose/syntastic'
     "Plug 'fatih/vim-go'
       " 少し大きすぎるので今のところコメントアウト
     Plug 'vim-jp/vim-go-extra'
