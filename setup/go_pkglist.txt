@@ -10,8 +10,7 @@
 # -ldflags -H=windowsgui    " hide window option. for windows os
 
 
-# TODO: Add packages
-# go get list begin
+# Add packages
 github.com/nsf/gocode
 github.com/alecthomas/gometalinter
 
@@ -24,7 +23,6 @@ golang.org/x/tools/cmd/...
 # golang.org tour
 golang.org/x/tour/gotour
 
-
 github.com/golang/lint/golint
 github.com/rogpeppe/godef
 github.com/kisielk/errcheck
@@ -35,10 +33,6 @@ github.com/zmb3/gogetdoc
 github.com/josharian/impl
 github.com/mibk/dupl
 
-
-# my tools
 github.com/dorymint/go-addtree/addtree
 github.com/dorymint/go-TODOGotcha/todogotcha
-# go get list end
-
 # EOF
