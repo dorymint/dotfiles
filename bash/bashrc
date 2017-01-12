@@ -9,7 +9,6 @@ if [[ "$DOTFILES_ROOT" != "" ]]; then
   # TODO:add any env
 
   # function
-  source $DOTFILES_ROOT/bash/function/jisho
 
   # pompletion
   source $DOTFILES_ROOT/share/bash_completion_tmux.sh
