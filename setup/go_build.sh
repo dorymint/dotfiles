@@ -47,3 +47,4 @@ cd "$goroot/src" &&
   git checkout "$gover" &&
   ./all.bash 2>&1 | tee "$buildlog" || exit 1
 
+# EOF

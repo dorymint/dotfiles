@@ -2,9 +2,10 @@
 # scriptencoding utf-8
 
 echo $0
-export dotfiles_root=$(cd $(dirname $0)/../; pwd)
+export dotfiles_root=$(cd $(dirname $0)/../; pwd -P )
 echo "$dotfiles_root"
 
+echo ""
 echo "make symlink"
 echo ""
 
