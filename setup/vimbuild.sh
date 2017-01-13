@@ -21,6 +21,7 @@ function confirm() {
 }
 
 vimbuilddir="$HOME/github.com/src/vim/vim"
+vimrepo="https://github.com./vim/vim"
 installdir="$HOME/opt/vim"
 buildoption="--enable-fail-if-missing
     --enable-luainterp
@@ -28,20 +29,21 @@ buildoption="--enable-fail-if-missing
     --enable-pythoninterp
     --enable-python3interp
     --enable-rubyinterp
+    --with-luajit
     --prefix=$installdir
-    --with-features=huge
-    --with-luajit"
+    --with-features=huge"
 
 # update src
 if [[ -d "$vimbuilddir" ]]; then
   confirm "update vim source? [yes:no]"
   pushd $vimbuilddir &&
-  git checkout build &&
+  git checkout master &&
   git fetch &&
   git merge origin/master || exit 1
 else
   echo "not found vim src directory"
-  exit 1
+  confirm "git clone? [yes:no]"
+  git clone $vimrepo $vimbuilddir
 fi
 
 # show configure

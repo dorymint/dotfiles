@@ -3,15 +3,15 @@
 # LOCAL
 
 # GOROOT
-if [[ -d $HOME/github.com/src/go ]] && [[ -d $HOME/github.com/src/go/bin ]]; then
+if [[ -d $HOME/github.com/golang/go ]] && [[ -d $HOME/github.com/golang/go/bin ]]; then
   if [[ "$GOROOT" = "" ]]; then
-    export GOROOT=$HOME/github.com/src/go
+    export GOROOT=$HOME/github.com/golang/go
 # NOTE: Temporary invalid GOROOT 2016/12/23 17:53
 #    export GOROOT=$HOME/go
     export PATH=$PATH:$GOROOT/bin
   fi
 else
-  echo 'not found $HOME/github.com/src/go'
+  echo 'not found $HOME/github.com/golang/go'
 fi
 
 # GOPATH
