@@ -20,8 +20,8 @@ function confirm() {
   return 0
 }
 
-vimbuilddir="$HOME/github.com/src/vim/vim"
-vimrepo="https://github.com./vim/vim"
+vimbuilddir="$HOME/github.com/vim/vim"
+vimrepo="https://github.com/vim/vim"
 installdir="$HOME/opt/vim"
 buildoption="--enable-fail-if-missing
     --enable-luainterp
