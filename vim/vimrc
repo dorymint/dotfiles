@@ -256,7 +256,7 @@ endif
       nnoremap Th   :<C-u>set hlsearch!<nl>
       nnoremap Ts   :<C-u>set spell!<nl>
       nnoremap Tp   :<C-u>set paste!<nl>
-      nnoremap Tro  :<C-u>set readonly<nl>
+      nnoremap Tr   :<C-u>set readonly<nl>
       nnoremap Tf   :<C-u>set filetype=
       nnoremap Tw   :<C-u>set textwidth=
 

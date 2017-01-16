@@ -12,7 +12,7 @@
 
 # Add packages
 github.com/nsf/gocode
-github.com/alecthomas/gometalinter
+# github.com/alecthomas/gometalinter
 
 # golang.org
 golang.org/x/tools/cmd/...
@@ -29,7 +29,7 @@ github.com/kisielk/errcheck
 github.com/jstemmer/gotags
 # github.com/klauspost/asmfmt/cmd/asmfmt
 # github.com/fatih/motion
-github.com/zmb3/gogetdoc
+# github.com/zmb3/gogetdoc
 github.com/josharian/impl
 github.com/mibk/dupl
 
