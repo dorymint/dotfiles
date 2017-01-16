@@ -39,7 +39,14 @@ else
   echo 'dotfiles/share/alias: not found $HOME/opt/vim/bin/vim'
 fi
 
-# sonictemplate add to commite
+# nvim
+if [[ -x "$HOME/opt/neovim/bin/nvim" ]]; then
+  alias nvim='$HOME/opt/neovim/bin/nvim'
+else
+  echo 'dotfiles/share/alias: not found $HOME/opt/neovim/bin/nvim'
+fi
+
+# for vim plugin sonictemplate: add to commite
 if [[ -n "$DOTFILES_ROOT" ]] && [[ -r "$DOTFILES_ROOT/vim/sonicdir/allcommit.sh" ]]; then
   alias sonic='bash $DOTFILES_ROOT/vim/sonicdir/allcommit.sh'
 else
