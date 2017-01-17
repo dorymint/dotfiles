@@ -1,72 +1,15 @@
 scriptencoding utf-8
-"
-" plugin_manage_plug
-"
-
-" plug tuto {{{
-"" vim-plug: Vim plugin manager
-"" ============================
-""   call plug#begin('~/.vim/plugged')
-""
-""   " Make sure you use single quotes
-""   Plug 'junegunn/vim-easy-align'
-""
-""   " Any valid git URL is allowed
-""   Plug 'https://github.com/junegunn/vim-github-dashboard.git'
-""
-""   " Group dependencies, vim-snippets depends on ultisnips
-""   Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-""
-""   " On-demand loading
-""   Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-""   Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-""
-""   " Using a non-master branch
-""   Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
-""
-""   " Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
-""   Plug 'fatih/vim-go', { 'tag': '*' }
-""
-""   " Plugin options
-""   Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
-""
-""   " Plugin outside ~/.vim/plugged with post-update hook
-""   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-""
-""   " Unmanaged plugin (manually installed and updated)
-""   Plug '~/my-prototype-plugin'
-""
-""   " Add plugins to &runtimepath
-""   call plug#end()
-""
-"" Then reload .vimrc and :PlugInstall to install plugins.
-""
-"" Plug options:
-""
-""| Option                  | Description                                      |
-""| ----------------------- | ------------------------------------------------ |
-""| `branch`/`tag`/`commit` | Branch/tag/commit of the repository to use       |
-""| `rtp`                   | Subdirectory that contains Vim plugin            |
-""| `dir`                   | Custom directory for the plugin                  |
-""| `as`                    | Use different name for the plugin                |
-""| `do`                    | Post-update hook (string or funcref)             |
-""| `on`                    | On-demand loading: Commands or `<Plug>`-mappings |
-""| `for`                   | On-demand loading: File types                    |
-""| `frozen`                | Do not update unless explicitly specified        |
-""
-"" More information: https://github.com/junegunn/vim-plug
-"" }}}
-
 
 "-----| plug begin |-----" {{{
 call plug#begin('~/.vim/plugged')
   " edit
-    "Plug 'junegunn/vim-easy-align'
     Plug 'mattn/emmet-vim'
+    "Plug 'junegunn/vim-easy-align'
 
   "status
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
+    "Plug 'itchyny/lightline.vim'
 
   " git
     Plug 'tpope/vim-fugitive'
@@ -78,13 +21,12 @@ call plug#begin('~/.vim/plugged')
 
   " manage
     Plug 'majutsushi/tagbar'
-      " require ctags
+      " NOTE: require ctags
     Plug 'thinca/vim-quickrun'
     Plug 'thinca/vim-ref'
 
   " IED like
     Plug 'vim-syntastic/syntastic'
-    "Plug 'scrooloose/syntastic'
     "Plug 'fatih/vim-go'
       " 少し大きすぎるので今のところコメントアウト
     Plug 'vim-jp/vim-go-extra'
@@ -93,37 +35,44 @@ call plug#begin('~/.vim/plugged')
 
   " snippet
     Plug 'mattn/sonictemplate-vim'
-    "Plug 'SirVer/ultisnips'
-    "Plug 'honza/vim-snippets'
-
-  " syntax
-    "Plug 'tpope/vim-markdown'
-    "Plug 'plasticboy/vim-markdown'
 
   " color
-    "Plug 'altercation/vim-colors-solarized'
     Plug 'w0ng/vim-hybrid'
     Plug 'cocopon/Iceberg.vim'
-
-  " web
-    Plug 'mattn/webapi-vim'
+    "Plug 'altercation/vim-colors-solarized'
 
   " etc
-    Plug 'mattn/vim-soundcloud'
-      " NOTE: require... mplayer ctrlp.vim webapi-vim
     Plug 'vim-jp/vimdoc-ja'
 call plug#end()
 "-----| plug end |-----" }}}
 
 
-"-----| plugin config |-----"{{{
+"-----| config |-----"{{{
 " status {{{
-  " vim-airline {{{
-    "let g:airline_theme='papercolor'
-    "let g:airline_theme='hybrid'
+  " lightline {{{
+  if 1 == 0
+    let g:lightline = {
+        \ 'active': {
+        \   'left': [ [ 'mode', 'paste', 'fugitive' ],
+        \             [ 'readonly', 'filename', 'modified' ] ],
+        \  'right': [ [ 'percent' ],
+        \             [ 'fileformat', 'fileencoding', 'filetype' ],
+        \             [ 'syntastic', 'lineinfo' ] ],
+        \ },
+        \ 'component': {
+        \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+        \ },
+        \ 'component_visible_condition': {
+        \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
+        \ },
+        \ 'component_function': {
+        \   'syntastic': 'SyntasticStatuslineFlag'
+        \ },
+    \ }
+  endif
+  " }}}
+  " airline {{{
     let g:airline#extensions#tabline#enabled = 1
-    "let g:airline#extensions#tabline#show_buffers = 0
-    "let g:airline#extensions#tabline#tab_nr_type = 1
   " }}}
 " }}}
 
@@ -179,7 +128,6 @@ call plug#end()
 " IED like {{{
   " vim-go {{{
     if 1 == 0
-    " NOTE: 今は使ってないので読まない様にしておく
       " highlight
       "let g:go_highlight_functions = 1
       "let g:go_highlight_methods = 1
@@ -202,31 +150,6 @@ call plug#end()
     " golang
     let g:syntastic_go_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
     let g:syntastic_go_checkers = ['go', 'gofmt', 'golint', 'govet', 'gotype']
-    " ['go', 'gofmt', 'golint', 'govet', 'gotype'] :temporary invalid 2016/12/23 17:24
-    " let g:syntastic_go_checkers = ['gometalinter']
-      " gometalinterは他の多くのパッケージに依存しているので注意
-      " といかmeta linter. lintermanagerみたい
-      " $gometalinter --install で依存パッケージをインストールできるらしい
-      " checkerはgometalinterだけ登録すればいいのかよくわかっていない...取り敢えず動く
-        ""Installing:
-        ""  structcheck
-        ""  aligncheck
-        ""  deadcode
-        ""  gocyclo
-        ""  ineffassign
-        ""  dupl
-        ""  golint
-        ""  gotype
-        ""  goimports
-        ""  errcheck
-        ""  varcheck
-        ""  interfacer
-        ""  goconst
-        ""  gosimple
-        ""  staticcheck
-        ""  unused
-        ""  misspell
-        ""  lll
     " cpp
     let g:syntastic_cpp_compiler = 'clang++'
     let g:syntastic_cpp_compiler_options = ' -lstdc++ -std=c++11'
@@ -244,42 +167,18 @@ call plug#end()
       echo "template directory: sonicdir disable"
     endif
   " }}}
-  " ultisnips {{{
-    if 1 == 0
-      let g:UltiSnipsExpandTrigger = "<tab>"
-      let g:UltiSnipsJumpForwardTrigger = "<tab>"
-      let g:UltiSnipsJumpBackwardTrigger = "<S-tab>"
-      let g:UltiSnipsEditSplit = "vertical"
-    endif
-  " }}}
-
-" color
-  " vim-colors-solarized {{{
-    if has('win32') && has('win64')
-    else
-      let g:solarized_termcolors = 256
-    endif
-  " }}}
+" -----| config END |----- }}}
 
 
-" -----| plugin config END |----- }}}
-
-
-"-----| plugin keymap |-----"
+"-----| keymap |-----" {{{
 " NOTE:
 " プラグインのプレフィックスは<C-@>を基本に設定してみる
 " Filetypeでスイッチするマップは次の | autocmd | で定義する
 " CtrlPは<ctrl-p>のまま変えない
-  " easy-alignon
-  if 1 == 0
-    xmap <C-@>ea  <Plug>(EasyAlign)
-    nmap <C-@>ea  <Plug>(EasyAlign)
-  endif
   " syntastic
     nnoremap <C-@>s   :<C-u>SyntasticToggleMode<nl>
-      " NOTE:
-      " 保存時に常に走らせると少し重い時があるのでトグルをマップ
-      " 非同期でチェックできる良いプラグインがあれば乗り換えたい
+      " NOTE: 保存時に常に走らせると少し重い時があるのでトグルをマップ
+      "     : 非同期でチェックできる良いプラグインがあれば乗り換えたい
   " NERDTree
     nnoremap <C-@>n   :<C-u>NERDTreeToggle<nl>
   " tagbar
@@ -289,9 +188,10 @@ call plug#end()
       nnoremap <C-@>w :<C-u>10split ~/dotfiles/vim/sonicdir/%:e/
         " NOTE: すぐにテンプレートを編集できるように
     endif
+"-----| keymap END |-----" }}}
 
 
-"-----| plugin autocmd |-----"
+"-----| autocmd |-----" {{{
 filetype indent plugin on
 augroup plugin_manage_plug
   autocmd!
@@ -299,4 +199,6 @@ augroup plugin_manage_plug
     " Godocのキーマップ
     autocmd Filetype go nnoremap <buffer> <S-k>   :<C-u>Godoc
 augroup END
+"-----| autocmd |-----" }}}
+
 " EOF
