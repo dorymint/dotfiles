@@ -5,12 +5,12 @@ set encoding=utf-8
 scriptencoding utf-8
 
 " TODO: 時間が取れたら整理する
-" TODO: コメント多めに書いてく
+"     : コメント多めに書く
 
 " NOTE:
 " 設定の詳細は:helpで調べればまず困らない
+" setの詳細は :help <setname> で確認
 " setはできるだけ省略せずに書く set nohl --> set nohlsearch
-" コメントをsetの直後に書いてもいいのか若干疑問、オプション指定だと危なそう
 
 
 "-----| plugin manage |-----"
@@ -37,88 +37,93 @@ endif
 
 
 "-----| basic set |-----"
-  set ttyfast " 高速ターミナル接続を使う
-  set nomodeline " 便利だけどsrcに書くがためらわれるので今は無効
-  set hidden " bufferを隠せるように
-  set autoread  "ファイル内容がvimの外で変更されると自動で読み込む
-  set nopaste " 貼付け時の挙動を制御
+  set ttyfast
+  set nomodeline
+  set hidden
+  set autoread
+  set nopaste
     " NOTE: 貼り付けで形が崩れる場合は :paste して貼付け後に :nopaste する
+    "     : keymapでトグル指定
   set completeopt=menu,preview
 
-  syntax on " シンタックスハイライト
+  syntax on
   set helplang=ja
-  set nospell " spell check
+  set nospell
   "set spelllang=en,cjk
     " NOTE: cjkで東アジア圏の言葉をチェックから除外できるらしい
-  set title " タイトル
-  set ruler " ルーラー使用
-  set number " 行番号
-  "set relativenumber " 行の相対位置
-  set scrolloff=2 " 表示するページの上下余白の行数
-  set textwidth=0 " textの最大幅を指定しない
-  set wrap " textがウィンドウに入らなければ折り返す
-  set breakindent " 折り返しのインデントを合わせる,vim8
+  set title
+  set ruler
+  set number
+  "set relativenumber
+  set scrolloff=2
+  set textwidth=0
+  set wrap
+  set breakindent
+    " NOTE: 折り返しのインデントを合わせる,vim8
 
   " cursor
-  set cursorcolumn " カーソル現在位置で縦を強調設定
-  set cursorline " カーソル現在行の強調設定
+  set cursorcolumn
+  set cursorline
 
   " indent
-  set autoindent " 新しい行を現在行と同じインデントに
-  set smartindent " 閉じ括弧でインデントを合わせるよう試みる
-  set shiftwidth=2 " autoindentの幅指定
+  set autoindent
+  set smartindent
+  set shiftwidth=2
 
   " foldmethod
-  set foldmethod=marker " ページの折り込みを使う
-  set foldmarker={,} " 折り込みのマーカー設定
-  set foldlevel=99 " デフォルトは開くように
+  set foldmethod=marker
+  set foldmarker={,}
+  set foldlevel=99
+    " NOTE: デフォルトは開くように設定
 
   " showmatch
-  set showmatch " 閉じ括弧の確認
-  set matchtime=1 " 対応括弧を強調する時間を0.1秒単位で指定
+  set showmatch
+  set matchtime=1
   set matchpairs=(:),{:},[:],<:>
 
   " cmdline
-  set showcmd " 入力中のvimコマンドを表示する
-  set history=1000 " vimコマンドの履歴数
-  set cmdheight=2 "vimコマンドラインの表示に使われる行数
-  set wildmenu " vimコマンドの補完
-  set wildmode=list:longest,full " 補完の挙動を指定
-  set confirm " コマンド実行の確認が必要ならダイアログを出して対話する
+  set showcmd
+  set history=1000
+  set cmdheight=2
+  set wildmenu
+  set wildmode=list:longest,full
+  set confirm
   "set shell " vimから呼ぶシェルを設定, shell=zsh
 
   " search
-  set incsearch " 検索コマンドでワードを打ち込む間にもマッチする
-  set nohlsearch " 前回の検索パターンが存在するとき、マッチテキストを強調
-  set ignorecase " 検索パターンで大文字少文字を区別しない
+  set incsearch
+  set nohlsearch
+    " NOTE: keymapでトグル指定
+  set ignorecase
     " NOTE: 置換処理のマッチにも影響するため注意
-  set smartcase " 検索パターンが大文字を含んでいたらignorecaseを上書きする
+  set smartcase
 
   " tab
-  set tabstop=2 " tabをエディタ内でいくつの空白として表示するか設定
-  set expandtab " vimでtabを挿入した時tabをスペースとして挿入
-  set softtabstop=2 " tabを幾つの空白で挿入するか
-  set backspace=indent,eol,start " バックスペースで特殊文字を削除できるように
+  set tabstop=2
+  set expandtab
+  set softtabstop=2
+  set backspace=indent,eol,start
 
   " list
-  set list " 不可視文字の表示設定
-  set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:< ",eol:↵
-    " listの表示文字を指定
+  set list
+  set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:<
+    " NOTE: eolは考慮中 eol:↵
 
   " statusline
-  set laststatus=2 " 最下層ウィンドウにステータス行を表示するか設定、2は常に表示
+  set laststatus=2
   set statusline=%f%m%r%w%y%{&fileencoding}[%{&fileformat}]%=%(buf[%n]hex[%4B]line[%4l/%4L:%4P]%)
     " NOTE:
     " %[n]?[.] の形式で指定してる、詳細は:help statuslineで確認
     " use airline. 上の設定はプラグインが効かないときだけ
 
   " tabline
-  set showtabline=2 " tablineを常に表示
-  set tabline=%t " statuslineと同じように設定できる
+  set showtabline=2
+  set tabline=%t
+    " NOTE: 設定はstatuslineと似てる :help tabline
 
   " New splits open to right and bottom
-  set splitbelow " split時カレントウィンドウの下に分割
-  set splitright " vsplit時カレントウィンドウの横に分割
+  set splitbelow
+  set splitright
 
   " visualbell
   set visualbell
@@ -128,10 +133,10 @@ endif
     " t_vb= でフラッシュのターミナルコードを空指定してフラッシュさせない
 
   " backup, swap, undo, {{{
-      set nobackup " 書き込み前バックアップ、作ったバックアップは保存される
-      set writebackup " 書き込み成功後は消されるバックアップの設定
-      set noundofile " undo
-      set noswapfile " swap
+      set nobackup
+      set writebackup
+      set noundofile
+      set noswapfile
     " directory
       if isdirectory(glob('~/dotfiles/vim/tmp'))
         set backupdir=~/dotfiles/vim/tmp/backup
@@ -194,7 +199,7 @@ endif
     "inoremap jk <Esc>
 
   " インサートモードの前後移動
-    " TODO: 使い難い、もう少し考える...無くてもいいかも
+    " TODO: 使い難いのでもう少し考える...無くてもいいかも
     inoremap <C-f>   <left>
     "inoremap <C-h>   <left>
     inoremap <C-l>   <right>
@@ -221,32 +226,20 @@ endif
     " tabpage prefix<t>
       nnoremap tn   :<C-u>tabnext<nl>
       nnoremap tp   :<C-u>tabprevious<nl>
-
       nnoremap tN   :<C-u>tabnew<nl>
       nnoremap tC   :<C-u>tabclose<nl>
-
       nnoremap tmn  :<C-u>+tabmove<nl>
       nnoremap tmp  :<C-u>-tabmove<nl>
 
-      "nnoremap tf   :<C-u>tabfirst<nl>
-      "nnoremap tl   :<C-u>tablast<nl>
-
-      "nnoremap ts   :<C-u>tabs<nl>
+      nnoremap tmm  :<C-u>marks<nl>
 
     " buffer prefix<tb>
       nnoremap tbl  :<C-u>ls<nl>:buffer<space>
       nnoremap tbs  :<C-u>ls<nl>:sbuffer<space>
       nnoremap tbd  :<C-u>ls<nl>:bdelete<space>
-        " NOTE:
-        " char verbose
-        " <l>  list
-        " <c>  change
-        " <s>  split
-        " <d>  delete
-
       nnoremap tj   :<C-u>bnext<nl>
       nnoremap tk   :<C-u>bprev<nl>
-        " NOTE: 使用頻度が高いので<tb>から<t>にする
+        " NOTE: next,prevは使用頻度が高いので<tb>から<t>に
 
     " search and move
       nnoremap t;  /}<nl>
@@ -260,13 +253,13 @@ endif
       nnoremap Tf   :<C-u>set filetype=
       nnoremap Tw   :<C-u>set textwidth=
 
-      nnoremap Tm   :<C-u>marks<nl>
 
       " hex
       if executable('xxd')
         nnoremap Txxd  :<C-u>set filetype=xxd<nl>:%!xxd -g 1<space>
         nnoremap TRxxd :<C-u>%!xxd -r<space>
           " NOTE: 戻す時は xxd -r
+          "     : T[rR]xxd みたいに書けない?
       else
         echo 'not found xxd'
       endif
@@ -281,7 +274,7 @@ endif
 
   " 改行の挿入
     nnoremap <C-m>    o<Esc>k
-      " TODO: このマップはもう少し考える
+      " NOTE: このマップはもう少し考えたい
 
   " 閉じ括弧
   if 1 == 0
@@ -303,14 +296,13 @@ endif
     inoremap [<nl>    []<left><nl><Esc><S-o>
       " NOTE:
       " <enter>と<nl>、違いがよくわかってない
-      " 入力は別扱い、挿入が<eol>、書き込みがff依存ということなの?
+      " 入力は別扱い、挿入が<eol>、書き込みがff依存ということ?
 
   " オムニ補完
     inoremap <S-tab>  <C-x><C-o>
-      " TODO: 少し使いづらいので別のマップも考える
 
 
-"-----| tools |-----"
+"-----| tool |-----"
 if isdirectory(glob('~/dotfiles/vim/tmp'))
 " go-todogotcha
   if executable('todogotcha')
@@ -327,8 +319,8 @@ endif
 
 
 "-----| autocmd |-----"
-  " filetypeによる挙動の変化を有効に設定
   filetype indent plugin on
+    " NOTE: filetypeによる挙動の変化を有効に設定
   augroup vimrc
     autocmd!
       " NOTE: vimrcグループのautocmdを初期化して再設定を防ぐ

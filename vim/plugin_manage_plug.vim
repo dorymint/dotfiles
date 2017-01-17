@@ -61,7 +61,8 @@ scriptencoding utf-8
 "-----| plug begin |-----" {{{
 call plug#begin('~/.vim/plugged')
   " edit
-    Plug 'junegunn/vim-easy-align'
+    "Plug 'junegunn/vim-easy-align'
+    Plug 'mattn/emmet-vim'
 
   "status
     Plug 'vim-airline/vim-airline'
@@ -270,8 +271,10 @@ call plug#end()
 " Filetypeでスイッチするマップは次の | autocmd | で定義する
 " CtrlPは<ctrl-p>のまま変えない
   " easy-alignon
+  if 1 == 0
     xmap <C-@>ea  <Plug>(EasyAlign)
     nmap <C-@>ea  <Plug>(EasyAlign)
+  endif
   " syntastic
     nnoremap <C-@>s   :<C-u>SyntasticToggleMode<nl>
       " NOTE:
