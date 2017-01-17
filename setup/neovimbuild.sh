@@ -1,8 +1,9 @@
 #!/bin/bash
 
-echo "nvim: start build process"
-
 set -eu
+
+# make or cmake
+use="make"
 
 repo="https://github.com/neovim/neovim"
 srcroot="$HOME/github.com/neovim/neovim"
@@ -11,28 +12,38 @@ installdir="$HOME/opt/neovim"
 if [[ ! -d "$srcroot" ]]; then
   git clone "$repo" "$srcroot"
 fi
-
 cd "$srcroot"
 git checkout master
 git pull
 
-if [[ ! -d "$srcroot/.deps" ]]; then
-  mkdir ".deps"
-fi
-pushd ".deps"
-cmake "../third-party"
-make
-popd
+case "$use" in
+  "make")
+    rm -r "build"
+    make clean
+    make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$installdir"
+    make install
+  exit 0;;
 
-if [[ ! -d "$srcroot/build" ]]; then
-  mkdir "build"
-fi
-cd "build"
-cmake -DCMAKE_INSTALL_PREFIX="$installdir" ..
-make
-make install
+  "cmake")
+    if [[ ! -d "$srcroot/.deps" ]]; then
+      mkdir ".deps"
+    fi
+    pushd ".deps"
+    cmake "../third-party"
+    make
+    popd
 
-echo "nvim: exit build process"
+    if [[ ! -d "$srcroot/build" ]]; then
+      mkdir "build"
+    else
+      rm -r "build/*"
+    fi
+    cd "build"
+    cmake -DCMAKE_INSTALL_PREFIX="$installdir" ..
+    make
+    make install
+  exit 0;;
+esac
 
 # CREATE: 2017/01/16 09:20
 # EOF
