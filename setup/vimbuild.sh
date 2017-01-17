@@ -41,7 +41,7 @@ case "$(uname)" in
   buildoption="--enable-fail-if-missing
       --prefix=$installdir
       --with-features=huge"
-    echo "undifined platform"
+    echo "undefined platform"
     sleep 5
     ;;
 esac
