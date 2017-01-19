@@ -7,10 +7,9 @@ scriptencoding utf-8
 " TODO: 時間が取れたら整理する
 "     : コメント多めに書く
 
-" NOTE:
-" 設定の詳細は:helpで調べればまず困らない
-" setの詳細は :help <setname> で確認
-" setはできるだけ省略せずに書く set nohl --> set nohlsearch
+" NOTE: 設定の詳細は:helpで調べればまず困らない
+"     : setの詳細は :help <setname> で確認
+"     : setはできるだけ省略せずに書く set nohl --> set nohlsearch
 
 
 "-----| plugin manage |-----"
@@ -237,6 +236,7 @@ endif
       nnoremap tbl  :<C-u>ls<nl>:buffer<space>
       nnoremap tbs  :<C-u>ls<nl>:sbuffer<space>
       nnoremap tbd  :<C-u>ls<nl>:bdelete<space>
+      nnoremap tbk  :<C-u>bdelete<nl>
       nnoremap tj   :<C-u>bnext<nl>
       nnoremap tk   :<C-u>bprev<nl>
         " NOTE: next,prevは使用頻度が高いので<tb>から<t>に
@@ -306,7 +306,8 @@ endif
 if isdirectory(glob('~/dotfiles/vim/tmp'))
 " go-todogotcha
   if executable('todogotcha')
-    nnoremap <C-@>TODO  :<C-u>!todogotcha > ~/dotfiles/vim/tmp/TODOList.txt 2>&1<nl> :vsplit ~/dotfiles/vim/tmp/TODOList.txt<nl>
+    nnoremap <C-@>TODO  :<C-u>!todogotcha -keyword="TODO:" -filetype="go txt vim" -output="$HOME/dotfiles/vim/tmp/TODOList.txt" -force=on<home><C-right><C-right><left>
+    nnoremap <C-@>LIST  :<C-u>vsplit ~/dotfiles/vim/tmp/TODOList.txt<space>
       " NOTE: List内のファイル名からgfで飛べる...長い
   else
     echo 'not found "todogotcha"'
