@@ -15,6 +15,9 @@ ln -s $dotfiles_root/zsh/zshrc $HOME/.zshrc
 echo "bash"
 ln -s $dotfiles_root/bash/bashrc $HOME/.bashrc
 
+echo "git"
+ln -s $dotfiles_root/gitconfig $HOME/.gitconfig
+
 echo "vim"
 ln -s $dotfiles_root/vim/vimrc $HOME/.vimrc
 ln -s $dotfiles_root/vim/gvimrc $HOME/.gvimrc
