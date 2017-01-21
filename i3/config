@@ -20,6 +20,14 @@ font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 # chose a FreeType font, such as:
 # font pango:DejaVu Sans Mono 10
 
+# compton
+# exec /usr/bin/compton --config <path to your config>
+exec /usr/bin/compton --config "$HOME/.i3/compton.conf"
+
+# feh for background image
+exec /usr/bin/feh --recursive --randomize --bg-scale /usr/share/backgrounds/*/*.jpg
+#exec /bin/bash "$HOME/tmp/fehbin.sh"
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 

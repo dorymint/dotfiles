@@ -22,4 +22,7 @@ ln -s $dotfiles_root/vim/gvimrc $HOME/.gvimrc
 echo "tmux"
 ln -s $dotfiles_root/tmux/tmux.conf $HOME/.tmux.conf
 
+echo "i3wm"
+ln -s $dotfiles_root/i3/config $HOME/.i3/config
+
 # EOF

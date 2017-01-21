@@ -14,6 +14,7 @@ alias cp='cp -i'
 alias mv='mv -i -v'
 
 alias tmux='tmux -2'
+alias emacs='emacs -nw'
 
 alias :q='exit'
 
