@@ -49,7 +49,7 @@ esac
 # update src
 if [[ -d "$vimbuilddir" ]]; then
   confirm "update vim source? [yes:no]"
-  pushd $vimbuilddir
+  cd $vimbuilddir
   git checkout master
   git fetch
   git merge origin/master
@@ -57,6 +57,7 @@ else
   echo "not found vim src directory"
   confirm "git clone? [yes:no]"
   git clone $vimrepo $vimbuilddir
+  cd $vimbuilddir
 fi
 
 # show configure
