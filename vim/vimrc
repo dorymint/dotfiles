@@ -20,17 +20,17 @@ endif
 
 "" dein {{{
 "  if isdirectory(glob('~/.vim/dein/repos/github.com/Shougo/dein.vim'))
-"    source ~/dotfiles/vim/plugin_manage_dein.vim
+"    source ~/dotfiles/vim/plugin-manage-dein.vim
 "  else
-"    echo 'not found plugin_manage_dein.vim'
+"    echo 'not found plugin-manage-dein.vim'
 "  endif
 " }}}
 
 " plug {{{
   if filereadable(glob('~/.vim/autoload/plug.vim'))
-    source ~/dotfiles/vim/plugin_manage_plug.vim
+    source ~/dotfiles/vim/plugin-manage-plug.vim
   else
-    echo 'not found plugin_manage_plug.vim'
+    echo 'not found plugin-manage-plug.vim'
   endif
 " }}}
 
@@ -163,6 +163,8 @@ endif
   "colorscheme ron
   "colorscheme solarized
 
+" TODO: add any color term
+if $TERM == "xterm-256color"
   try
     set background=dark
     set t_Co=256
@@ -170,8 +172,11 @@ endif
   catch
     echo 'colorscheme hybrid is disabled'
     set t_Co=8
-    colorscheme desert
+    colorscheme default
   endtry
+else
+  colorscheme default
+endif
 
   " set has win
   if has('win32') || has('win64')

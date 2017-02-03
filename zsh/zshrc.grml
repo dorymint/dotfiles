@@ -1761,7 +1761,13 @@ local batteries bat capacity
 batteries=( /sys/class/power_supply/BAT*(N) )
 if (( $#batteries > 0 )) ; then
     for bat in $batteries ; do
-        capacity=$(< $bat/capacity)
+        if [[ -e $bat/capacity ]]; then
+            capacity=$(< $bat/capacity)
+        else
+            typeset -F energy_full=$(< $bat/energy_full)
+            typeset -F energy_now=$(< $bat/energy_now)
+            typeset -i capacity=$(( 100 * $energy_now / $energy_full))
+        fi
         case $(< $bat/status) in
         Charging)
             GRML_BATTERY_LEVEL+=" ^"
@@ -2542,7 +2548,10 @@ else
     alias l='command ls -l'
 fi
 
-alias mdstat='cat /proc/mdstat'
+if [[ -r /proc/mdstat ]]; then
+    alias mdstat='cat /proc/mdstat'
+fi
+
 alias ...='cd ../../'
 
 # generate alias named "$KERNELVERSION-reboot" so you can use boot with kexec:
@@ -2652,38 +2661,47 @@ Enjoy your grml system with the zsh!$reset_color"
 
 # debian stuff
 if [[ -r /etc/debian_version ]] ; then
-    #a3# Execute \kbd{apt-cache search}
-    alias acs='apt-cache search'
-    #a3# Execute \kbd{apt-cache show}
-    alias acsh='apt-cache show'
-    #a3# Execute \kbd{apt-cache policy}
-    alias acp='apt-cache policy'
-    #a3# Execute \kbd{apt-get dist-upgrade}
-    salias adg="apt-get dist-upgrade"
-    #a3# Execute \kbd{apt-get install}
-    salias agi="apt-get install"
-    #a3# Execute \kbd{aptitude install}
-    salias ati="aptitude install"
-    #a3# Execute \kbd{apt-get upgrade}
-    salias ag="apt-get upgrade"
-    #a3# Execute \kbd{apt-get update}
-    salias au="apt-get update"
-    #a3# Execute \kbd{aptitude update ; aptitude safe-upgrade}
-    salias -a up="aptitude update ; aptitude safe-upgrade"
-    #a3# Execute \kbd{dpkg-buildpackage}
-    alias dbp='dpkg-buildpackage'
-    #a3# Execute \kbd{grep-excuses}
-    alias ge='grep-excuses'
+    if [[ -z "$GRML_NO_APT_ALIASES" ]]; then
+        #a3# Execute \kbd{apt-cache search}
+        alias acs='apt-cache search'
+        #a3# Execute \kbd{apt-cache show}
+        alias acsh='apt-cache show'
+        #a3# Execute \kbd{apt-cache policy}
+        alias acp='apt-cache policy'
+        #a3# Execute \kbd{apt-get dist-upgrade}
+        salias adg="apt-get dist-upgrade"
+        #a3# Execute \kbd{apt-get install}
+        salias agi="apt-get install"
+        #a3# Execute \kbd{aptitude install}
+        salias ati="aptitude install"
+        #a3# Execute \kbd{apt-get upgrade}
+        salias ag="apt-get upgrade"
+        #a3# Execute \kbd{apt-get update}
+        salias au="apt-get update"
+        #a3# Execute \kbd{aptitude update ; aptitude safe-upgrade}
+        salias -a up="aptitude update ; aptitude safe-upgrade"
+        #a3# Execute \kbd{dpkg-buildpackage}
+        alias dbp='dpkg-buildpackage'
+        #a3# Execute \kbd{grep-excuses}
+        alias ge='grep-excuses'
+    fi
 
     # get a root shell as normal user in live-cd mode:
     if isgrmlcd && [[ $UID -ne 0 ]] ; then
        alias su="sudo su"
     fi
 
-    #a1# Take a look at the syslog: \kbd{\$PAGER /var/log/syslog}
-    salias llog="$PAGER /var/log/syslog"     # take a look at the syslog
-    #a1# Take a look at the syslog: \kbd{tail -f /var/log/syslog}
-    salias tlog="tail -f /var/log/syslog"    # follow the syslog
+fi
+
+# use /var/log/syslog iff present, fallback to journalctl otherwise
+if [ -e /var/log/syslog ] ; then
+  #a1# Take a look at the syslog: \kbd{\$PAGER /var/log/syslog || journalctl}
+  salias llog="$PAGER /var/log/syslog"     # take a look at the syslog
+  #a1# Take a look at the syslog: \kbd{tail -f /var/log/syslog || journalctl}
+  salias tlog="tail -f /var/log/syslog"    # follow the syslog
+elif check_com -c journalctl ; then
+  salias llog="journalctl"
+  salias tlog="journalctl -f"
 fi
 
 # sort installed Debian-packages by size
@@ -3115,10 +3133,14 @@ for var in BLUE RED GREEN CYAN YELLOW MAGENTA WHITE ; unset $var
 builtin unset -v var
 
 # "persistent history"
-# just write important commands you always need to ~/.important_commands
+# just write important commands you always need to $GRML_IMPORTANT_COMMANDS
+# defaults for backward compatibility to ~/.important_commands
 if [[ -r ~/.important_commands ]] ; then
-    fc -R ~/.important_commands
+    GRML_IMPORTANT_COMMANDS=~/.important_commands
+else
+    GRML_IMPORTANT_COMMANDS=${GRML_IMPORTANT_COMMANDS:-${ZDOTDIR:-${HOME}}/.important_commands}
 fi
+[[ -r ${GRML_IMPORTANT_COMMANDS} ]] && builtin fc -R ${GRML_IMPORTANT_COMMANDS}
 
 # load the lookup subsystem if it's available on the system
 zrcautoload lookupinit && lookupinit
@@ -3132,7 +3154,7 @@ export COLORTERM="yes"
 
 # general
 #a2# Execute \kbd{du -sch}
-alias da='du -sch'
+[[ -n "$GRML_NO_SMALL_ALIASES" ]] || alias da='du -sch'
 
 # listing stuff
 #a2# Execute \kbd{ls -lSrah}
@@ -3516,7 +3538,7 @@ _simple_extract()
         '*:Archive Or Uri:__archive_or_uri'
 }
 compdef _simple_extract simple-extract
-alias se=simple-extract
+[[ -n "$GRML_NO_SMALL_ALIASES" ]] || alias se=simple-extract
 
 #f5# Change the xterm title from within GNU-screen
 xtrename() {
@@ -3649,7 +3671,7 @@ if check_com -c hg ; then
     alias hbp='hg-buildpackage'
 
     # execute commands on the versioned patch-queue from the current repos
-    alias mq='hg -R $(readlink -f $(hg root)/.hg/patches)'
+    [[ -n "$GRML_NO_SMALL_ALIASES" ]] || alias mq='hg -R $(readlink -f $(hg root)/.hg/patches)'
 
     # diffstat for specific version of a mercurial repository
     #   hgstat      => display diffstat between last revision and tip

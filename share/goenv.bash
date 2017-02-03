@@ -3,11 +3,9 @@
 # LOCAL
 
 # GOROOT
-if [[ -d $HOME/github.com/golang/go ]] && [[ -d $HOME/github.com/golang/go/bin ]]; then
+if [[ -d $HOME/github.com/golang/go ]]; then
   if [[ "$GOROOT" = "" ]]; then
     export GOROOT=$HOME/github.com/golang/go
-# NOTE: Temporary invalid GOROOT 2016/12/23 17:53
-#    export GOROOT=$HOME/go
     export PATH=$PATH:$GOROOT/bin
   fi
 else

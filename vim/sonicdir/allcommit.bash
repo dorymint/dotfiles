@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -eu
+
 # confirm
 function confirm() {
   local key=""
@@ -42,9 +44,5 @@ if [[ -d "$DOTFILES_ROOT/vim/sonicdir" ]]; then
   confirm 'git push origin master [yes:no]?' &&
   git push origin master ||
   exit 1
-
-else
-  echo "not found template directory sonicdir"
 fi
-
 # EOF

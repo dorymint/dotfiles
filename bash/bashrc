@@ -1,32 +1,30 @@
 # bashrc
 
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+# lily
+[[ "$(uname -n)"=="lily" ]] && echo "hello lily"
+
 # define DOTFILES_ROOT
-source $HOME/dotfiles/share/dotenv.sh
+source $HOME/dotfiles/share/dotenv.bash
 
 # environment
-if [[ "$DOTFILES_ROOT" != "" ]]; then
+if [[ "$DOTFILES_ROOT"!="" ]]; then
+  # TODO: add any env
 
-  # TODO:add any env
-
-  # function
-
-  # pompletion
-  source $DOTFILES_ROOT/share/bash_completion_tmux.sh
+  # completion
+  source $DOTFILES_ROOT/bash/bash_completion_tmux.sh
 
   # golang
-  source $DOTFILES_ROOT/share/goenv.sh
+  source $DOTFILES_ROOT/share/goenv.bash
 
   # alias
   source $DOTFILES_ROOT/share/alias
-  source $DOTFILES_ROOT/bash/alias
+  #source $DOTFILES_ROOT/bash/alias
 else
   echo 'DOTFIILES_ROOT=""'
 fi
-
-
-# 環境変数の設定はrcでは登録せず
-# functionをsourceしておいて必要に応じて呼ぶようにするべき?
-# 取り敢えずbashrcで呼ぶようにしておく
 
 # call zsh
 if [[ -x /bin/zsh ]]; then
@@ -34,8 +32,7 @@ if [[ -x /bin/zsh ]]; then
     /bin/zsh
   fi
 else
-  echo 'not found zsh'
+  # remind
+  echo ""
 fi
-
-echo "exit zsh"
 # EOF

@@ -1,32 +1,35 @@
 # zhsrc
 
-# define DOTFILES_ROOT
-source $HOME/dotfiles/share/dotenv.sh
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
 
+# lily
+[[ "$(uname -n)" == "lily" ]] && echo "hello lily"
+
+# define DOTFILES_ROOT
+source $HOME/dotfiles/share/dotenv.bash
 # environment
 if [[ -n $DOTFILES_ROOT ]]; then
-
+  # use grml zshrc, require don't move it
+  if [[ "$(uname -a)" == "*\(ARCH\)\|\(arch\)*" ]] ; then
+    source $DOTFILES_ROOT/zsh/zshrc.grml
+  else
+    echo "recommend: pacman -S grml-zsh-config"
+  fi
   # TODO: add any env
 
-  # use grml zshrc
-  source $DOTFILES_ROOT/zsh/zshrc.grml
-  source $DOTFILES_ROOT/zsh/zshrc.grml.local
-
   # golang
-  source $DOTFILES_ROOT/share/goenv.sh
-
-  # TODO: function
+  source $DOTFILES_ROOT/share/goenv.bash
 
   # alias
   source $DOTFILES_ROOT/share/alias
-  source $DOTFILES_ROOT/zsh/alias
 else
   echo 'DOTFILES_ROOT=""'
 fi
-
 
 # setopt
 setopt autocd
 setopt autopushd
 setopt pushdignoredups
+
 # EOF

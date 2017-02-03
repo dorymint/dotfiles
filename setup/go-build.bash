@@ -3,6 +3,7 @@
 set -eu
 
 protocol="https:"
+#gofrom="//go.googlesource.com/go"
 gofrom="//github.com/golang/go"
 goroot="$HOME/github.com/golang/go"
 bootstrap="$HOME/go1.4"
@@ -32,7 +33,7 @@ git checkout "$strapver"
 # remind go1.4
 
 if [[ "$(git describe --tags)" != "$strapver" ]]; then
-  echo "tag $strapver don't found"
+  echo "tag $strapver : invalid!"
   exit 1
 fi
 
@@ -44,9 +45,8 @@ if [[ ! -x "$bootstrap/bin/go" ]]; then
 fi
 
 # build
-cd "$goroot/src" &&
-  git fetch &&
-  git checkout "$gover" &&
+cd "$goroot/src"
+  [ "$1" = "noup" ] || git fetch
+  git checkout "$gover"
   ./all.bash 2>&1 | tee "$buildlog" || exit 1
-
 # EOF

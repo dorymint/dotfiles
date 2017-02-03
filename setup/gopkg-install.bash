@@ -24,11 +24,11 @@ goget="$goroot/bin/go get"
 options="-u -v"
 
 # set packages
-if [[ -r $DOTFILES_ROOT/setup/go_pkglist.txt ]]; then
-  pkglist="$DOTFILES_ROOT/setup/go_pkglist.txt"
+pkglist="$DOTFILES_ROOT/setup/gopkg-list.txt"
+if [[ -r $pkglist ]]; then
   awkout=$(gawk '/^[^#].*/ { print $0 }' "$pkglist")
 else
-  echo 'not found $DOTFILES_ROOT/setup/go_pkglist.txt'
+  echo 'not found gopkg-list.txt'
   exit 1
 fi
 

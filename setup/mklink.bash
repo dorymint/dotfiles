@@ -2,7 +2,7 @@
 # scriptencoding utf-8
 
 echo $0
-export dotfiles_root=$(cd $(dirname $0)/../; pwd -P )
+dotfiles_root=$(cd $(dirname $0)/../; pwd -P )
 echo "$dotfiles_root"
 
 echo ""
@@ -25,7 +25,7 @@ ln -s $dotfiles_root/vim/gvimrc $HOME/.gvimrc
 echo "tmux"
 ln -s $dotfiles_root/tmux/tmux.conf $HOME/.tmux.conf
 
-echo "i3wm"
-ln -s $dotfiles_root/i3/config $HOME/.i3/config
+echo "i3-wm"
+ln -s $dotfiles_root/i3/ $HOME/.config/
 
 # EOF

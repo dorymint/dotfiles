@@ -90,5 +90,4 @@ else
   echo "not found ./configure"
   exit 1
 fi
-
 # EOF

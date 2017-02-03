@@ -1,25 +1,26 @@
-# alias share
-alias egrep='egrep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias grep='grep --colour=auto'
-
-alias l='ls -CF'
-alias la='ls -A'
-alias ll='ls -alF'
-alias ls='ls --color=auto'
-alias sl='ls'
-
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i -v'
-
-alias tmux='tmux -2'
-alias emacs='emacs -nw'
-
+#
+# common alias share
+#
 alias :q='exit'
+alias mkdir='mkdir -p -v'
+alias ping='ping -c 3'
+alias ..='cd ..'
 
-# local setting
-# change directory go work
+alias rm='rm -I -v'
+alias cp='cp -i'
+alias ln='ln -i'
+alias chown='chown --preserve-root'
+alias chmod='chmod --preserve-root'
+alias chgrp='chgrp --preserve-root'
+
+# Privileged access
+if (( UID != 0 )); then
+  alias sudo='sudo '
+fi
+
+
+## local setting
+# cd go work space
 if [[ -d "$GOPATH/src/github.com/$USERNAME" ]]; then
   alias gw='pushd $GOPATH/src/github.com/$USERNAME'
 else
@@ -33,7 +34,7 @@ else
   echo 'dotfiles/share/alias: not found GOROOT/src'
 fi
 
-# local vim
+# vim
 if [[ -x "$HOME/opt/vim/bin/vim" ]]; then
   alias viml='$HOME/opt/vim/bin/vim'
 else
@@ -48,8 +49,8 @@ else
 fi
 
 # for vim plugin sonictemplate: add to commite
-if [[ -n "$DOTFILES_ROOT" ]] && [[ -r "$DOTFILES_ROOT/vim/sonicdir/allcommit.sh" ]]; then
-  alias sonic='bash $DOTFILES_ROOT/vim/sonicdir/allcommit.sh'
+if [[ -n "$DOTFILES_ROOT" ]] && [[ -r "$DOTFILES_ROOT/vim/sonicdir/allcommit.bash" ]]; then
+  alias sonic='bash $DOTFILES_ROOT/vim/sonicdir/allcommit.bash'
 else
   echo "dotfiles/share/alias: not found sonicdir"
 fi
