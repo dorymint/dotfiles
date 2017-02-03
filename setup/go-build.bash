@@ -1,15 +1,17 @@
 #!/bin/bash
 
-set -eu
+set -e
 
 protocol="https:"
-#gofrom="//go.googlesource.com/go"
-gofrom="//github.com/golang/go"
+gofrom="//go.googlesource.com/go"
+#gofrom="//github.com/golang/go"
 goroot="$HOME/github.com/golang/go"
-bootstrap="$HOME/go1.4"
-strapver="go1.4.3"
-gover="go1.7.4"
-buildlog="$( cd $(dirname "$0") ; pwd -P )/go_build.log"
+gover="go1.7.5"
+buildlog="$( cd $(dirname "$0") ; pwd -P )/go-build.log"
+
+# bootstrap
+go version
+
 
 # check git
 echo 'require "git"'
@@ -21,32 +23,9 @@ if [[ ! -d "$goroot" ]]; then
   git clone "$protocol$gofrom" "$goroot"
 fi
 
-# for bootstrap
-if [[ ! -d "$bootstrap" ]]; then
-  echo "clone bootstrap from $goroot"
-  git clone --no-hardlinks "$goroot" "$bootstrap"
-fi
-
-cd "$bootstrap"
-git fetch
-git checkout "$strapver"
-# remind go1.4
-
-if [[ "$(git describe --tags)" != "$strapver" ]]; then
-  echo "tag $strapver : invalid!"
-  exit 1
-fi
-
-# build bootstrap
-if [[ ! -x "$bootstrap/bin/go" ]]; then
-  pushd ./src
-  ./all.bash
-  popd
-fi
-
 # build
 cd "$goroot/src"
-  [ "$1" = "noup" ] || git fetch
-  git checkout "$gover"
-  ./all.bash 2>&1 | tee "$buildlog" || exit 1
+[ "$1" = "noup" ] || git fetch
+git checkout "$gover"
+GOROOT_BOOTSTRAP=/usr ./all.bash 2>&1 | tee "$buildlog" || exit 1
 # EOF

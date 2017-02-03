@@ -37,6 +37,7 @@ case "$(uname)" in
       --enable-pythoninterp
       --enable-python3interp
       --enable-rubyinterp
+      --disable-gui
       --prefix=$installdir
       --with-features=huge"
     ;;
