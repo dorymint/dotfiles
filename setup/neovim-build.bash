@@ -18,7 +18,7 @@ git pull
 
 case "$use" in
   "make")
-    rm -r "build"
+    test -d "build" && rm -r "build/"
     make clean
     make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$installdir"
     make install

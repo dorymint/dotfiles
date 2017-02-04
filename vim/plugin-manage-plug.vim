@@ -152,10 +152,9 @@ call plug#end()
     let g:syntastic_go_checkers = ['go', 'gofmt', 'golint', 'govet', 'gotype']
     " cpp
     let g:syntastic_cpp_compiler = 'clang++'
-    let g:syntastic_cpp_compiler_options = ' -lstdc++ -std=c++11'
-    let g:syntastic_cpp_checkers = ['clang-tidy', 'clang_checker', 'gcc']
+    let g:syntastic_cpp_compiler_options = '-std=c++1y'
+    let g:syntastic_cpp_checkers = ['clang-check', 'clang-format', 'clang-tblgen']
     let g:syntastic_cpp_mode_map = { 'mode': 'active', 'passive_filetypes': ['cpp'] }
-      " require clang-tidy?
   " }}}
 " }}}
 

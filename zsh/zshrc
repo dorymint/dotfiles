@@ -31,5 +31,4 @@ fi
 setopt autocd
 setopt autopushd
 setopt pushdignoredups
-
 # EOF
