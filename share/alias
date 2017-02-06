@@ -55,4 +55,6 @@ if [[ -n "$DOTFILES_ROOT" ]] && [[ -r "$DOTFILES_ROOT/vim/sonicdir/allcommit.bas
 else
   echo "dotfiles/share/alias: not found sonicdir"
 fi
+
+alias ww='cd $HOME/github.com/$USER'
 # EOF

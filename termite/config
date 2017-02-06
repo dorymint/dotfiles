@@ -1,0 +1,13 @@
+[optios]
+#font = Monospace 9
+#font = Terminus (TTF) 8
+#font = Droid sans Mono 8
+allow_bold = true
+
+[colors]
+#foreground = #dcdccc
+#background = #3f3f3f
+foreground = rgba(255, 255, 255, 1.0)
+background = rgba(0, 0, 0, 0.9)
+#ackground = #1f1f1f
+#oreground = #dddddd
