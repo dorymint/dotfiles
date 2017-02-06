@@ -27,6 +27,7 @@ call plug#begin('~/.vim/plugged')
 
   " IED like
     Plug 'vim-syntastic/syntastic'
+    Plug 'justmao945/vim-clang'
     "Plug 'fatih/vim-go'
       " 少し大きすぎるので今のところコメントアウト
     Plug 'vim-jp/vim-go-extra'
@@ -151,10 +152,15 @@ call plug#end()
     let g:syntastic_go_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
     let g:syntastic_go_checkers = ['go', 'gofmt', 'golint', 'govet', 'gotype']
     " cpp
-    let g:syntastic_cpp_compiler = 'clang++'
-    let g:syntastic_cpp_compiler_options = '-std=c++1y'
-    let g:syntastic_cpp_checkers = ['clang-check', 'clang-format', 'clang-tblgen']
+    let g:syntastic_cpp_compiler = 'clang'
+    let g:syntastic_cpp_compiler_options = '-std=c++1z --pedantic-errors'
+    let g:syntastic_cpp_checkers = ['clang_check']
     let g:syntastic_cpp_mode_map = { 'mode': 'active', 'passive_filetypes': ['cpp'] }
+  " }}}
+
+  " vim-clang {{{
+    let g:clang_c_options = '-std=c11'
+    let g:clang_cpp_options = '-std=c++1z --pedantic-errors'
   " }}}
 " }}}
 

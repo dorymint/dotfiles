@@ -22,14 +22,14 @@ fi
 ## local setting
 # cd go work space
 if [[ -d "$GOPATH/src/github.com/$USERNAME" ]]; then
-  alias gw='pushd $GOPATH/src/github.com/$USERNAME'
+  alias gw='cd $GOPATH/src/github.com/$USERNAME'
 else
   echo 'dotfiles/share/alias: not found $GOPATH/src/github.com/$USERNAME'
 fi
 
 #  goto src golang official pkg
 if [[ -d "$GOROOT/src" ]]; then
-  alias gofficial='pushd $GOROOT/src && vim -R . '
+  alias gofficial='cd $GOROOT/src && vim -R . '
   alias go='$GOROOT/bin/go'
 else
   echo 'dotfiles/share/alias: not found GOROOT/src'
@@ -57,4 +57,5 @@ else
 fi
 
 alias ww='cd $HOME/github.com/$USER'
+alias dotfiles='cd $DOTFILES_ROOT'
 # EOF
