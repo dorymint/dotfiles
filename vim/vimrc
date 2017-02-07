@@ -141,8 +141,8 @@ endif
         set backupdir=~/dotfiles/vim/tmp/backup
         set undodir=~/dotfiles/vim/tmp/undo
         set directory=~/dotfiles/vim/tmp/swap
-        "set undofile
-        "set swapfile
+        set undofile
+        set swapfile
       else
         echo 'not found ~/dotfiles/vim/tmp'
       endif
@@ -334,11 +334,13 @@ endif
     " go
       autocmd Filetype go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
         " NOTE: goはハードタブが推奨される、noexpandtabとスペースの表示をfmtに合わせて設定
-
       "if isdirectory(glob('~/dotfiles/vim/tmp'))
       "  autocmd Filetype go nnoremap <buffer> <c-@>gorun  :<C-u>!go run  % > ~/dotfiles/vim/tmp/gorunlog.txt 2>&1<nl>
       "    " NOTE: QuickRunを使うなら定義しなくていい
       "endif
+
+    " cpp
+      autocmd Filetype cpp setlocal nocindent
   augroup END
 
 

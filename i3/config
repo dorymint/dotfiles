@@ -20,9 +20,11 @@ set $mod Mod4
 # chose a FreeType font, such as:
 font pango:Sans Regular 12px
 
-
 # compton
 exec --no-startup-id bash $HOME/.config/i3/comptonbin.bash &
+
+# display
+exec --no-startup-id bash $HOME/.config/i3/display.bash &
 
 # feh for background image
 #exec --no-startup-id feh --recursive --randomize --bg-scale /usr/share/backgrounds/*/*.jpg &

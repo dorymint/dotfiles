@@ -8,6 +8,9 @@ echo "$dotfiles_root"
 echo ""
 echo "make symlink"
 echo ""
+ 
+[ -d $HOME/.vim ] || mkdir $HOME/.vim
+[ -d $HOME/.config ] || mkdir $HOME/.config
 
 echo "zsh"
 ln -s $dotfiles_root/zsh/zshrc $HOME/.zshrc
@@ -39,4 +42,6 @@ echo "i3-wm"
 ln -s $dotfiles_root/i3/ $HOME/.config/
 echo ""
 
+echo "termite"
+ln -s $dotfiles_root/termite/ $HOME/.config/
 # EOF

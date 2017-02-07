@@ -57,9 +57,9 @@ fi
 # default session
 session=${1:-i3}
 # for laptop
-xran="xrandr --output HDMI1 --primary"
+xran="xrandr --output HDMI1 --primary --output LVDS1 --off"
 case $session in
-  i3|i3wm ) $xran &exec i3;;
+  i3|i3wm ) $xran & exec i3;;
   i3-log|i3wm-log ) $xran & exec i3 -V -d all >> ~/.config/i3/i3log ;;
   i3-debug|i3wm-debug ) $xran & exec i3-with-shmlog;;
   xfce|xfce4 ) $xran & exec startxfce4;;

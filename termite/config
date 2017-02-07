@@ -1,8 +1,9 @@
 [optios]
 #font = Monospace 9
-#font = Terminus (TTF) 8
+#font = Terminus (TTF) 12
 #font = Droid sans Mono 8
-allow_bold = true
+font = DejaVu Sans Mono 8
+#allow_bold = true
 
 [colors]
 #foreground = #dcdccc
