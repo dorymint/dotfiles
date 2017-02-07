@@ -3,13 +3,13 @@
 # LOCAL
 
 # GOROOT
-if [[ -d $HOME/github.com/golang/go ]]; then
+if [[ -d $HOME/github.com/golang/go/bin ]]; then
   if [[ "$GOROOT" = "" ]]; then
     export GOROOT=$HOME/github.com/golang/go
     export PATH=$PATH:$GOROOT/bin
   fi
 else
-  echo 'not found $HOME/github.com/golang/go'
+  echo 'not found $HOME/github.com/golang/go/bin'
 fi
 
 # GOPATH
