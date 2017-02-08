@@ -30,6 +30,7 @@ os-prober
 otf-ipafont
 reflector
 rsync
+screenfetch
 termite
 tig
 tmux
