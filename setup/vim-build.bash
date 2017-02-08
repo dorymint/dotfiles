@@ -31,7 +31,7 @@ vimrepo="https://github.com/vim/vim"
 installdir="$HOME/opt/vim"
 case "$(uname)" in
   "Linux")
-  buildoption="--enable-fail-if-missing
+    buildoption="--enable-fail-if-missing
       --enable-luainterp
       --enable-perlinterp
       --enable-pythoninterp
@@ -40,14 +40,14 @@ case "$(uname)" in
       --disable-gui
       --prefix=$installdir
       --with-features=huge"
-    ;;
+  ;;
   *)
-  buildoption="--enable-fail-if-missing
+    buildoption="--enable-fail-if-missing
       --prefix=$installdir
       --with-features=huge"
     echo "undefined platform"
     sleep 5
-    ;;
+  ;;
 esac
 
 # update src

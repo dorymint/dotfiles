@@ -2,8 +2,10 @@
 #font = Monospace 9
 #font = Terminus (TTF) 12
 #font = Droid sans Mono 8
+geometry = 640x480
 font = DejaVu Sans Mono 8
-#allow_bold = true
+allow_bold = true
+#size_hints = true
 
 [colors]
 #foreground = #dcdccc
@@ -12,3 +14,23 @@ foreground = rgba(255, 255, 255, 1.0)
 background = rgba(12, 12, 12, 0.9)
 #ackground = #1f1f1f
 #oreground = #dddddd
+
+highlight = #2f2f2f
+
+# Colors from color0 to color254 can be set
+color0 = #3f3f3f
+color1 = #705050
+color2 = #60b48a
+color3 = #dfaf8f
+color4 = #506070
+color5 = #dc8cc3
+color6 = #8cd0d3
+color7 = #dcdccc
+color8 = #709080
+color9 = #dca3a3
+color10 = #c3bf9f
+color11 = #f0dfaf
+color12 = #94bff3
+color13 = #ec93d3
+color14 = #93e0e3
+color15 = #ffffff
