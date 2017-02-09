@@ -8,6 +8,7 @@ base
 base-devel
 bash-completion
 chromium
+cmake
 compton
 ctags
 dmenu
