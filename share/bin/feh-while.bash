@@ -1,4 +1,6 @@
 #!/bin/bash
+
+# TODO: reconsider filepath
 filetype='*[\(jpg\)\|\(png\)]'
 wall="/usr/share/archlinux/wallpaper/$filetype
 /usr/share/backgrounds/mate/*/$filetype
@@ -11,3 +13,4 @@ while true; do
   [[ "$key" == "stop" ]] && exit 0
   echo -en "\r"
 done
+# EOF

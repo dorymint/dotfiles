@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# for HDMI
+# for sound output HDMI
+# device number is dependent on environment
 set -eu
 
 rc="$HOME/.asoundrc"

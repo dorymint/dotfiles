@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# fetch reps scripts
+# $1 = <path/to/reps.list>
+
 set -e
 
 [ -z $1 ] && exit 1
