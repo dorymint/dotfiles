@@ -43,7 +43,7 @@ endif
   set nopaste
     " NOTE: 貼り付けで形が崩れる場合は :paste して貼付け後に :nopaste する
     "     : keymapでトグル指定
-  set completeopt=menu,preview
+  set completeopt=menuone,preview
 
   syntax on
   set helplang=ja
