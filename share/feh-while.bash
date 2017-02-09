@@ -1,7 +1,8 @@
 #!/bin/bash
 filetype='*[\(jpg\)\|\(png\)]'
 wall="/usr/share/archlinux/wallpaper/$filetype
-/usr/share/backgrounds/mate/*/$filetype"
+/usr/share/backgrounds/mate/*/$filetype
+/usr/share/backgrounds/xfce/$filetype"
 while true; do
   feh --randomize --bg-scale --no-fehbg $wall
   echo -n "feh loop stop it?[stop:<C-c>]:"
