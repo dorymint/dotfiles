@@ -40,6 +40,8 @@ call plug#begin('~/.vim/plugged')
   " color
     Plug 'w0ng/vim-hybrid'
     Plug 'cocopon/Iceberg.vim'
+    Plug 'nanotech/jellybeans.vim'
+    Plug 'tomasr/molokai'
     "Plug 'altercation/vim-colors-solarized'
 
   " etc

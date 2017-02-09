@@ -157,32 +157,34 @@ endif
 
 "-----| color |-----"
 " NOTE: シェルの設定で変わるのでlocalで設定するか分岐を作った方がいいかも
-  "set background=light
-  "colorscheme desert
-  "colorscheme elflord
-  "colorscheme ron
-  "colorscheme solarized
 
 " TODO: add any color term
 if $TERM == "xterm-256color" || $TERM == "xterm-termite"
   try
     set background=dark
     set t_Co=256
-    colorscheme hybrid
+    "colorscheme hybrid
+    "colorscheme iceberg
+    "colorscheme molokai
+    colorscheme jellybeans
   catch
     echo 'colorscheme hybrid is disabled'
     set t_Co=8
     colorscheme default
   endtry
 else
+  "set background=light
+  "colorscheme desert
+  "colorscheme elflord
+  "colorscheme ron
+  "colorscheme solarized
   colorscheme default
 endif
 
   " set has win
   if has('win32') || has('win64')
     set t_Co=16
-    colorscheme desert
-      " NOTE: hybridはgvimrcで設定
+    colorscheme default
   endif
 
 

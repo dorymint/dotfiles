@@ -3,7 +3,9 @@ VteTerminal, vte-terminal {
   #margin: 2px;
   #font: monospace 12;
   #font: otf-ipafont;
-  font: DeJaVu Sans Mono;
+  #font: DeJaVu Sans Mono;
+  font: noto-fonts-cjk;
+  #font-style: Regular;
   #font-size: 12;
-  #font-size: small;
+  font-size: x-small;
 }
