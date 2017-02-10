@@ -18,7 +18,8 @@ set $mod Mod4
 # clear in small sizes. However, if you need a lot of unicode glyphs or
 # right-to-left text rendering, you should instead use pango for rendering and
 # chose a FreeType font, such as:
-font pango:Sans Regular 12px
+#font pango:Sans Regular 9
+font pango:Orbitron 9
 
 # compton
 exec --no-startup-id bash $HOME/.config/i3/comptonbin.bash &
@@ -154,9 +155,24 @@ mode "resize" {
         # back to normal: Enter or Escape
         bindsym Return mode "default"
         bindsym Escape mode "default"
+        bindsym q      mode "default"
 }
 
 bindsym $mod+r mode "resize"
+
+# Colors
+set $lightgray #AAAAAA
+set $gray      #484848
+set $ggray2    #757575
+set $darkgray  #333333
+set $black     #000000
+set $white     #FFFFFF
+set $red       #FF0000
+set $blue      #005588
+
+client.focused           $darkgray   $darkgray   #FFFFFF   #333333
+client.focused_inactiv   $darkgray   $darkgray   #FFFFFF   #000000
+client.unfocused         $black      $black      #FFFFFF   #000000
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)

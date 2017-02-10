@@ -5,7 +5,10 @@
 
 set -e
 
-[ -z $1 ] && exit 1
+if [ -z $1 ]; then
+  echo "require: fetch-all.bash <path/to/reps.list>"
+  exit 1
+fi
 
 echo "fetch reps"
 
