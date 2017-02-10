@@ -28,11 +28,11 @@ else
 fi
 
 #  goto src golang official pkg
-if [[ -d "$GOROOT/src" ]]; then
-  alias gofficial='cd $GOROOT/src && vim -R . '
+if [[ -d "$GOROOT/src" ]] && [[ -x "$GOROOT/bin/go" ]]; then
+  alias gosrc='cd $GOROOT/src && vim -R . '
   alias go='$GOROOT/bin/go'
 else
-  echo 'dotfiles/share/alias: not found GOROOT/src'
+  echo 'dotfiles/share/alias: not found local go'
 fi
 
 # vim
@@ -50,7 +50,7 @@ else
 fi
 
 # for vim plugin sonictemplate: add to commite
-if [[ -n "$DOTFILES_ROOT" ]] && [[ -r "$DOTFILES_ROOT/vim/sonicdir/allcommit.bash" ]]; then
+if [[ -r "$DOTFILES_ROOT/vim/sonicdir/allcommit.bash" ]]; then
   alias sonic='bash $DOTFILES_ROOT/vim/sonicdir/allcommit.bash'
 else
   echo "dotfiles/share/alias: not found sonicdir"

@@ -184,6 +184,7 @@ bar {
         mode dock
         workspace_buttons yes
         hidden_state show
+        #hidden_state hide
         tray_output primary
 
         #colors {
