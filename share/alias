@@ -30,7 +30,7 @@ fi
 #  goto src golang official pkg
 if [[ -d "$GOROOT/src" ]] && [[ -x "$GOROOT/bin/go" ]]; then
   alias gosrc='cd $GOROOT/src && vim -R . '
-  alias go='$GOROOT/bin/go'
+  #alias go='$GOROOT/bin/go'
 else
   echo 'dotfiles/share/alias: not found local go'
 fi

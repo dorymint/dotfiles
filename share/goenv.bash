@@ -4,7 +4,7 @@
 
 # GOROOT
 if [[ -d $HOME/github.com/golang/go/bin ]]; then
-  if [[ "$GOROOT" = "" ]]; then
+  if [[ "$GOROOT" == "" ]]; then
     export GOROOT=$HOME/github.com/golang/go
     export PATH=$PATH:$GOROOT/bin
   fi
@@ -14,7 +14,7 @@ fi
 
 # GOPATH
 if [[ -d $HOME/gowork ]]; then
-  if [[ "$GOPATH" = "" ]] && [[ "$GOROOT" != "" ]]; then
+  if [[ "$GOPATH" == "" ]] && [[ "$GOROOT" != "" ]]; then
     export GOPATH=$HOME/gowork
     export PATH=$PATH:$GOPATH/bin
   fi

@@ -4,13 +4,15 @@
 [[ $- != *i* ]] && return
 
 # lily
-[[ "$(uname -n)"=="lily" ]] && echo "hello lily"
+[[ "$(uname -n)" == "lily" ]] && echo "hello lily"
+
+# environment
+
 
 # define DOTFILES_ROOT
 source $HOME/dotfiles/share/dotenv.bash
 
-# environment
-if [[ "$DOTFILES_ROOT"!="" ]]; then
+if [[ "$DOTFILES_ROOT" != "" ]]; then
   # TODO: add any env
 
   # completion
@@ -33,5 +35,13 @@ if [[ -x /bin/zsh ]]; then
 else
   # remind
   echo ""
+fi
+
+# for tmux
+alias tmux='OLD_PATH=$PATH tmux'
+if [[ $OLD_PATH != "" ]]; then
+  export PATH=$OLD_PATH
+  export OLD_PATH=""
+  #unset OLD_PATH
 fi
 # EOF
