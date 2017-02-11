@@ -31,8 +31,8 @@ call plug#begin('~/.vim/plugged')
     "Plug 'fatih/vim-go'
       " 少し大きすぎるので今のところコメントアウト
     Plug 'vim-jp/vim-go-extra'
-    Plug 'google/vim-ft-go'
-      " vim-ft-goはvimのversionが新しければ、本体にmergeされているらしい
+    "Plug 'google/vim-ft-go'
+      " NOTE: vim-ft-goはvimのversionが新しければ本体にmergeされているらしい
 
   " snippet
     Plug 'mattn/sonictemplate-vim'
@@ -178,10 +178,9 @@ call plug#end()
 
 
 "-----| keymap |-----" {{{
-" NOTE:
-" プラグインのプレフィックスは<C-@>を基本に設定してみる
-" Filetypeでスイッチするマップは次の | autocmd | で定義する
-" CtrlPは<ctrl-p>のまま変えない
+" NOTE: プラグインのプレフィックスは<C-@>を基本に設定してみる
+"     : Filetypeでスイッチするマップは次の | autocmd | で定義する
+"     : CtrlPは<ctrl-p>のまま変えない
   " syntastic
     nnoremap <C-@>s   :<C-u>SyntasticToggleMode<nl>
       " NOTE: 保存時に常に走らせると少し重い時があるのでトグルをマップ

@@ -56,6 +56,10 @@ else
   echo "dotfiles/share/alias: not found sonicdir"
 fi
 
+if [[ -x "$HOME/bin/peco" ]]; then
+  alias cdp='cd $(find . -type d ! -name "*.git" | peco)'
+fi
+
 alias ww='cd $HOME/github.com/$USER'
 alias dotfiles='cd $DOTFILES_ROOT'
 # EOF

@@ -315,7 +315,7 @@ endif
 if isdirectory(glob('~/dotfiles/vim/tmp'))
 " go-todogotcha
   if executable('todogotcha')
-    nnoremap <C-@>TODO  :<C-u>!todogotcha -keyword="TODO:" -filetype="go txt vim" -output="$HOME/dotfiles/vim/tmp/TODOList.txt" -force=on<home><C-right><C-right><left>
+    nnoremap <C-@>TODO  :<C-u>!todogotcha -keyword="TODO:" -filetype=".go .txt .vim rc" -output="$HOME/dotfiles/vim/tmp/TODOList.txt" -force=on<home><C-right><C-right><left>
     nnoremap <C-@>LIST  :<C-u>vsplit ~/dotfiles/vim/tmp/TODOList.txt<space>
       " NOTE: List内のファイル名からgfで飛べる...長い
   else
