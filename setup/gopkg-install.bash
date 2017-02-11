@@ -16,12 +16,18 @@ fi
 cd "$DOTFILES_ROOT"
 
 # set env goroot
-goroot=$(go env GOROOT)
+localgo="$HOME/github.com/golang/go"
+if [[ -d "$localgo" ]]; then
+  goroot="$localgo"
+else
+  goroot=$(go env GOROOT)
+fi
 echo "goroot is $goroot"
 
 # go command
 goget="$goroot/bin/go get"
-options="-u -v"
+#options="-u -v"
+options="-v"
 
 # set packages
 pkglist="$DOTFILES_ROOT/setup/gopkg-list.txt"
@@ -38,6 +44,11 @@ for x in $awkout; do
   echo "$x"
 done
 echo ""
+
+sleep 1
+
+echo "--- go env ---"
+$goroot/bin/go env
 
 # confirm
 key=""
@@ -59,5 +70,5 @@ for x in $awkout; do
   $goget $options $x
 done
 
-echo "...process exit"
+echo "...done"
 # EOF

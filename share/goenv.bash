@@ -4,7 +4,7 @@
 
 # GOROOT
 if [[ -d $HOME/github.com/golang/go/bin ]]; then
-  if [[ "$GOROOT" == "" ]]; then
+  if [[ -z "$GOROOT" ]]; then
     export GOROOT=$HOME/github.com/golang/go
     export PATH=$PATH:$GOROOT/bin
   fi

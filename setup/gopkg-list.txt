@@ -1,18 +1,25 @@
-# go package list
+##
+## go package list
+##
+# if nead update, use -u
 
 # github.com/alecthomas/gometalinter
 # github.com/fatih/motion
 # github.com/klauspost/asmfmt/cmd/asmfmt
 # github.com/zmb3/gogetdoc
-# golang.org tour
 # golang.org/x/tools/cmd/goimports
 # golang.org/x/tools/cmd/gorename
 # golang.org/x/tools/cmd/guru
+
+# golang.org
+golang.org/x/tools/cmd/...
+golang.org/x/tour/gotour
 
 github.com/dorymint/go-todogotcha/todogotcha
 github.com/dorymint/go-addtree/addtree
 
 github.com/golang/lint/golint
+github.com/golang/example/hello
 
 #github.com/josharian/impl
 github.com/jstemmer/gotags
@@ -20,9 +27,5 @@ github.com/jstemmer/gotags
 #github.com/mibk/dupl
 github.com/nsf/gocode
 github.com/rogpeppe/godef
-
-# golang.org
-golang.org/x/tools/cmd/...
-golang.org/x/tour/gotour
 
 # EOF
