@@ -57,7 +57,7 @@ else
 fi
 
 if [[ -x "$HOME/bin/peco" ]]; then
-  alias cdp='cd $(find . -type d ! -name "*.git" | peco)'
+  alias cdp='cd $(find . -type d ! -path "*.git*" !  -path "*.deps*" | peco)'
 fi
 
 alias ww='cd $HOME/github.com/$USER'
