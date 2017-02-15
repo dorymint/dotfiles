@@ -24,7 +24,7 @@ fi
 if [[ -d "$GOPATH/src/github.com/$USERNAME" ]]; then
   alias gw='cd $GOPATH/src/github.com/$USERNAME'
 else
-  echo 'dotfiles/share/alias: not found $GOPATH/src/github.com/$USERNAME'
+  echo 'alias: not found $GOPATH/src/github.com/$USERNAME'
 fi
 
 #  goto src golang official pkg
@@ -32,28 +32,28 @@ if [[ -d "$GOROOT/src" ]] && [[ -x "$GOROOT/bin/go" ]]; then
   alias gosrc='cd $GOROOT/src && vim -R . '
   alias go='$GOROOT/bin/go'
 else
-  echo 'dotfiles/share/alias: not found local go'
+  echo 'alias: not found local go'
 fi
 
 # vim
 if [[ -x "$HOME/opt/vim/bin/vim" ]]; then
   alias viml='$HOME/opt/vim/bin/vim'
 else
-  echo 'dotfiles/share/alias: not found $HOME/opt/vim/bin/vim'
+  echo 'alias: not found $HOME/opt/vim/bin/vim'
 fi
 
 # nvim
 if [[ -x "$HOME/opt/neovim/bin/nvim" ]]; then
   alias nvim='$HOME/opt/neovim/bin/nvim'
 else
-  echo 'dotfiles/share/alias: not found $HOME/opt/neovim/bin/nvim'
+  echo 'alias: not found $HOME/opt/neovim/bin/nvim'
 fi
 
 # for vim plugin sonictemplate: add to commite
 if [[ -r "$DOTFILES_ROOT/vim/sonicdir/allcommit.bash" ]]; then
   alias sonic='bash $DOTFILES_ROOT/vim/sonicdir/allcommit.bash'
 else
-  echo "dotfiles/share/alias: not found sonicdir"
+  echo "alias: not found sonicdir"
 fi
 
 if [[ -x "$HOME/bin/peco" ]]; then

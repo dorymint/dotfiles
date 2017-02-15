@@ -36,12 +36,4 @@ else
   # remind
   echo ""
 fi
-
-# for tmux
-alias tmux='OLD_PATH=$PATH tmux'
-if [[ $OLD_PATH != "" ]]; then
-  export PATH=$OLD_PATH
-  #export OLD_PATH=""
-  unset OLD_PATH
-fi
 # EOF
