@@ -170,13 +170,14 @@ set $white     #FFFFFF
 set $red       #FF0000
 set $blue      #005588
 
+# class                  border      backgr      txt       indicator   child_border
 client.focused           $darkgray   $darkgray   #FFFFFF   #333333
 client.focused_inactiv   $darkgray   $darkgray   #FFFFFF   #000000
 client.unfocused         $black      $black      #FFFFFF   #000000
 
 # border
 bindsym $mod+t border normal 0
-bindsym $mod+y border pixel 3
+bindsym $mod+y border pixel 15
 bindsym $mod+u border none
 
 bindsym $mod+b bar mode toggle
