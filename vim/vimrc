@@ -353,6 +353,12 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
     echo 'not found "todogotcha"'
   endif
 
+  if executable('xclip')
+    nnoremap <C-@>paste :<C-u>read !xclip -o<nl>
+  else
+    echo 'not found xclip'
+  endif
+
 else
   echo 'not found "~/dotfiles/vim/tmp"'
   echo 'disable tool'
