@@ -10,6 +10,16 @@
 # golang.org/x/tools/cmd/goimports
 # golang.org/x/tools/cmd/gorename
 # golang.org/x/tools/cmd/guru
+#github.com/josharian/impl
+#github.com/kisielk/errcheck
+#github.com/mibk/dupl
+
+github.com/nsf/gocode
+github.com/rogpeppe/godef
+github.com/jstemmer/gotags
+
+github.com/golang/lint/golint
+#github.com/golang/example/hello
 
 # golang.org
 golang.org/x/tools/cmd/...
@@ -17,15 +27,5 @@ golang.org/x/tour/gotour
 
 github.com/dorymint/go-todogotcha/todogotcha
 github.com/dorymint/go-addtree/addtree
-
-github.com/golang/lint/golint
-github.com/golang/example/hello
-
-#github.com/josharian/impl
-github.com/jstemmer/gotags
-#github.com/kisielk/errcheck
-#github.com/mibk/dupl
-github.com/nsf/gocode
-github.com/rogpeppe/godef
 
 # EOF

@@ -42,6 +42,8 @@ endif
   set ttimeout
   set modeline
   set modelines=5
+    " NOTE: modeline ファイル頭と尻尾のコメントを書くとき注意する
+    "     : {vi:|vim:|Vim:|ex:}でぶつかる
   set hidden
   set autoread
   set nopaste
@@ -268,7 +270,7 @@ endif
     nnoremap Tr   :<C-u>set readonly<nl>
       " NOTE: readonly は toggle しない
     nnoremap Tf   :<C-u>set filetype=
-    nnoremap Tw   :<C-u>set textwidth=
+    nnoremap Tw   :<C-u>set textwidth=0
 
   " hex
   if executable('xxd')
@@ -319,6 +321,7 @@ endif
   inoremap <S-tab>  <C-x><C-o>
 
 " 全角を半角に
+  " NOTE: :help i_ctrl-v
   inoremap 　 <space>
   inoremap （ (
   inoremap ） )
@@ -347,6 +350,8 @@ endif
   inoremap ８ 8
   inoremap ９ 9
   inoremap 〜 ~
+  inoremap ？ ?
+  inoremap ！ !
 
 
 "-----| tool |-----"
@@ -354,7 +359,7 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
 
   " go-todogotcha
   if executable('todogotcha')
-    nnoremap <C-@>todo  :<C-u>!todogotcha -keyword="TODO:" -filetype=".go .txt .vim rc" -output="~/dotfiles/vim/tmp/TODOList.txt" -force=on<home><C-right><C-right><left>
+    nnoremap <C-@>todo  :<C-u>!todogotcha -keyword="TODO: " -filetype=".go .txt .vim rc" -output="~/dotfiles/vim/tmp/TODOList.txt" -force=true<home><C-right><C-right><left>
     nnoremap <C-@>list  :<C-u>vsplit ~/dotfiles/vim/tmp/TODOList.txt<space>
       " NOTE: List内のファイル名からgfで飛べる...長い
   else
@@ -382,14 +387,15 @@ augroup nyan-vimrc
     " NOTE: vimrcグループのautocmdを初期化して再設定を防ぐ
 
   " vim
-    autocmd Filetype vim setlocal textwidth=0
-      " NOTE: (# ﾟДﾟ)つ どこで textwidth が set されたかわかんない!
+    "autocmd Filetype vim setlocal textwidth=0
+      " NOTE: (# ﾟДﾟ)つ textwidth がどこで set されたかわかんない!
       "     : おとなしく modeline 使った方が良さそう
 
   " go
-    autocmd Filetype go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4 listchars+=tab:\ \ ,
+    autocmd Filetype go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4 listchars=tab:\ \ ,trail:-,nbsp:%,extends:>,precedes:<,
       " NOTE: goはハードタブが推奨される、noexpandtabとスペースの表示をfmtに合わせて設定
-      "     : listchars-=tab したいけど動かなかった
+      "     : listchars-=tab したかったけど動かなかった
+      "     : lictchars+=tab:\ \ , でもいいけどtabが重複する
     " NOTE: QuickRunを使うなら下はいらない
     "if isdirectory(glob('~/dotfiles/vim/tmp'))
     "  autocmd Filetype go nnoremap <buffer> <c-@>gorun  :<C-u>!go run  % > ~/dotfiles/vim/tmp/gorunlog.txt 2>&1<nl>

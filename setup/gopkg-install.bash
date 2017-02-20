@@ -26,8 +26,8 @@ echo "goroot is $goroot"
 
 # go command
 goget="$goroot/bin/go get"
-#options="-u -v"
-options="-v"
+options="-u -v"
+#options="-v"
 
 # set packages
 pkglist="$DOTFILES_ROOT/setup/gopkg-list.txt"

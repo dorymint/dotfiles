@@ -8,11 +8,11 @@ gofrom="//go.googlesource.com/go"
 goroot="$HOME/github.com/golang/go"
 
 goversion="go1.8"
-buildlog="$( cd $(dirname "$0") ; pwd -P )/go-build.log"
+#buildlog="$( cd $(dirname "$0") ; pwd -P )/go-build.log"
 
-#bootstrap="gcc-go"
+bootstrap="gcc-go"
 #bootstrap="go1.4.3"
-bootstrap="release-branch.go1.4"
+#bootstrap="release-branch.go1.4"
 bootup="yes"
 
 
@@ -49,9 +49,9 @@ fi
 cd "$goroot/src"
 git checkout "$goversion"
 case "$bootstrap" in
-  "gcc-go") GOROOT_BOOTSTRAP="/usr" ./all.bash 2>&1 | tee "$buildlog" || exit 1;;
-  "go1.4.3") GOROOT_BOOTSTRAP="$HOME/$bootstrap" ./all.bash 2>&1 | tee "$buildlog" || exit 1;;
-  "release-branch.go1.4") GOROOT_BOOTSTRAP="$HOME/$bootstrap" ./all.bash 2>&1 | tee "$buildlog" || exit 1;;
+  "gcc-go") GOROOT_BOOTSTRAP="/usr" ./all.bash;;
+  "go1.4.3") GOROOT_BOOTSTRAP="$HOME/$bootstrap" ./all.bash;;
+  "release-branch.go1.4") GOROOT_BOOTSTRAP="$HOME/$bootstrap" ./all.bash;;
   *) echo "bootstrap = $bootstrap is invalid"; exit 1;;
 esac
 # EOF
