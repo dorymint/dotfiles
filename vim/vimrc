@@ -1,6 +1,6 @@
 " vimrc
-
 "-----| fileencoding |-----"
+
 set encoding=utf-8
 scriptencoding utf-8
 
@@ -30,7 +30,7 @@ endif
   if filereadable(glob('~/.vim/autoload/plug.vim'))
     source ~/dotfiles/vim/plugin-manage-plug.vim
   else
-    echo 'not found plugin-manage-plug.vim'
+    echo 'not found: autoload/plug.vim'
   endif
 " }}}
 
@@ -40,15 +40,15 @@ endif
   set notimeout
   "set timeoutlen=1000
   set ttimeout
-  set nomodeline
-  "set modelines=5
+  set modeline
+  set modelines=5
   set hidden
   set autoread
   set nopaste
     " NOTE: 貼り付けで形が崩れる場合は :paste して貼付け後に :nopaste する
     "     : keymapでトグル指定
+  set backspace=indent,eol,start
   set completeopt=menuone,preview
-  syntax on
   set helplang=ja
   set nospell
   set spelllang=en,cjk
@@ -66,12 +66,6 @@ endif
 " cursor
   set nocursorcolumn
   set nocursorline
-
-" indent
-  set autoindent
-  set smartindent
-  set shiftwidth=2
-  set smarttab
 
 " foldmethod
   set foldmethod=marker
@@ -99,14 +93,21 @@ endif
   set nohlsearch
     " NOTE: keymapでトグル指定
   set ignorecase
-    " NOTE: 置換処理のマッチにも影響するため注意
   set smartcase
+    " NOTE: 置換処理のマッチにも影響するため注意
+    "     : ignorecase 大文字少文字を区別しない
+    "     : smartcase 検索条件に大文字が含まれると noignorecase
+
+" indent
+  set autoindent
+  set smartindent
+  set shiftwidth=2
+  set smarttab
 
 " tab
   set tabstop=2
   set expandtab
   set softtabstop=2
-  set backspace=indent,eol,start
 
 " list
   set list
@@ -124,7 +125,7 @@ endif
   set tabline=%t
     " NOTE: 設定はstatuslineと似てる :help tabline
 
-" New splits open to right and bottom
+" split
   set splitbelow
   set splitright
 
@@ -139,28 +140,30 @@ endif
   set writebackup
   set noundofile
   set noswapfile
-" directory
-  if isdirectory(glob('~/dotfiles/vim/tmp'))
-    set backupdir=~/dotfiles/vim/tmp/backup
-    set undodir=~/dotfiles/vim/tmp/undo
-    set directory=~/dotfiles/vim/tmp/swap
-    set undofile
-    set swapfile
-  else
-    echo 'not found ~/dotfiles/vim/tmp'
-  endif
+
+  " tmp directory
+    if isdirectory(glob('~/dotfiles/vim/tmp'))
+      set backupdir=~/dotfiles/vim/tmp/backup
+      set undodir=~/dotfiles/vim/tmp/undo
+      set directory=~/dotfiles/vim/tmp/swap
+      set undofile
+      set swapfile
+    else
+      echo 'not found ~/dotfiles/vim/tmp'
+    endif
 " }}}
 
 " set has win
-  if has('win32') || has('win64')
-    set nocursorline
-    set nocursorcolumn
-  endif
+if has('win32') || has('win64')
+  set nocursorline
+  set nocursorcolumn
+endif
 
 
 "-----| color |-----"
-" NOTE: シェルの設定で変わるのでlocalで設定するか分岐を作った方がいいかも
+syntax on
 
+" NOTE: シェルの設定で変わるのでlocalで設定するか分岐を作った方がいいかも
 if $TERM == "xterm-256color" || $TERM == "xterm-termite" || $TERM == "screen-256color"
   try
     set background=dark
@@ -170,7 +173,7 @@ if $TERM == "xterm-256color" || $TERM == "xterm-termite" || $TERM == "screen-256
     "colorscheme molokai
     colorscheme jellybeans
   catch
-    echo 'colorscheme hybrid is disabled'
+    echo 'colorscheme t_Co=256 try error: use default'
     set t_Co=8
     colorscheme default
   endtry
@@ -230,6 +233,7 @@ endif
   " NOTE: tは移動系で便利っぽいけどfがあるので潰してみる
   nnoremap T  <nop>
   nnoremap t  <nop>
+
   " tabpage prefix<t>
     nnoremap tn   :<C-u>tabnext<nl>
     nnoremap tp   :<C-u>tabprevious<nl>
@@ -267,14 +271,14 @@ endif
     nnoremap Tw   :<C-u>set textwidth=
 
   " hex
-    if executable('xxd')
-      nnoremap Txxd  :<C-u>set filetype=xxd<nl>:%!xxd -g 1<space>
-      nnoremap TRxxd :<C-u>%!xxd -r<space>
-        " NOTE: 戻す時は xxd -r
-        "     : T[rR]xxd みたいに書けない?
-    else
-      echo 'not found xxd'
-    endif
+  if executable('xxd')
+    nnoremap Txxd  :<C-u>set filetype=xxd<nl>:%!xxd -g 1<space>
+    nnoremap TRxxd :<C-u>%!xxd -r<space>
+      " NOTE: 戻す時は xxd -r
+      "     : T[rR]xxd みたいに書けない?
+  else
+    echo 'not found xxd'
+  endif
 " }}}
 
 " 行を上下に引っ張る
@@ -347,7 +351,8 @@ endif
 
 "-----| tool |-----"
 if isdirectory(glob('~/dotfiles/vim/tmp'))
-" go-todogotcha
+
+  " go-todogotcha
   if executable('todogotcha')
     nnoremap <C-@>todo  :<C-u>!todogotcha -keyword="TODO:" -filetype=".go .txt .vim rc" -output="~/dotfiles/vim/tmp/TODOList.txt" -force=on<home><C-right><C-right><left>
     nnoremap <C-@>list  :<C-u>vsplit ~/dotfiles/vim/tmp/TODOList.txt<space>
@@ -356,6 +361,7 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
     echo 'not found "todogotcha"'
   endif
 
+  " xclip
   if executable('xclip')
     nnoremap <C-@>paste :<C-u>read !xclip -o<nl>
   else
@@ -369,16 +375,21 @@ endif
 
 
 "-----| autocmd |-----"
-filetype indent plugin on
+filetype plugin indent on
   " NOTE: filetypeによる挙動の変化を有効に設定
-augroup vimrc
+augroup nyan-vimrc
   autocmd!
     " NOTE: vimrcグループのautocmdを初期化して再設定を防ぐ
+
+  " vim
+    autocmd Filetype vim setlocal textwidth=0
+      " NOTE: (# ﾟДﾟ)つ どこで textwidth が set されたかわかんない!
+      "     : おとなしく modeline 使った方が良さそう
 
   " go
     autocmd Filetype go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4 listchars+=tab:\ \ ,
       " NOTE: goはハードタブが推奨される、noexpandtabとスペースの表示をfmtに合わせて設定
-
+      "     : listchars-=tab したいけど動かなかった
     " NOTE: QuickRunを使うなら下はいらない
     "if isdirectory(glob('~/dotfiles/vim/tmp'))
     "  autocmd Filetype go nnoremap <buffer> <c-@>gorun  :<C-u>!go run  % > ~/dotfiles/vim/tmp/gorunlog.txt 2>&1<nl>
@@ -409,4 +420,6 @@ if has('nvim')
   tnoremap <Esc>  <C-\><C-n>
     " NOTE: nvimのterminal mode
 endif
+
+" vim: set textwidth=0 :
 " EOF

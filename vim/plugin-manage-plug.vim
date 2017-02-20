@@ -198,7 +198,8 @@ call plug#end()
 
 
 "-----| autocmd |-----" {{{
-filetype indent plugin on
+filetype plugin indent on
+  " NOTE: plug begin end で含まれてるはずだけど一応
 augroup plugin_manage_plug
   autocmd!
   " vim-go-extra
