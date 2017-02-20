@@ -359,8 +359,11 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
 
   " go-todogotcha
   if executable('todogotcha')
-    nnoremap <C-@>todo  :<C-u>!todogotcha -keyword="TODO: " -filetype=".go .txt .vim rc" -output="~/dotfiles/vim/tmp/TODOList.txt" -force=true<home><C-right><C-right><left>
-    nnoremap <C-@>list  :<C-u>vsplit ~/dotfiles/vim/tmp/TODOList.txt<space>
+    command! Todo  :!todogotcha -keyword="TODO: " -filetype=".go .txt .vim rc" -output="$HOME/dotfiles/vim/tmp/TODOList.txt" -force=true
+    command! List  :vsplit ~/dotfiles/vim/tmp/TODOList.txt
+
+    "nnoremap <C-@>todo  :<C-u>!todogotcha -keyword="TODO: " -filetype=".go .txt .vim rc" -output="$HOME/dotfiles/vim/tmp/TODOList.txt" -force=true <home><C-right><C-right><left>
+    "nnoremap <C-@>list  :<C-u>vsplit ~/dotfiles/vim/tmp/TODOList.txt<space>
       " NOTE: List内のファイル名からgfで飛べる...長い
   else
     echo 'not found "todogotcha"'
