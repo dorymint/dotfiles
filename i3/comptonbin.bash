@@ -1,4 +1,8 @@
 #!/bin/bash
 # for i3-wm
-compton --config $HOME/.config/i3/compton.conf
+if [[ -f $HOME/dotfiles/i3/compton.conf ]]; then
+  compton --config $HOME/dotfiles/i3/compton.conf
+else
+  compton
+fi
 # EOF

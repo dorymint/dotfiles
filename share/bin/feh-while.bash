@@ -7,13 +7,14 @@ filetype='*[\(jpg\)\|\(png\)]'
 wall="/usr/share/archlinux/wallpaper/$filetype
 /usr/share/backgrounds/mate/*/$filetype
 /usr/share/backgrounds/xfce/$filetype"
-if [[ -d "$HOME/Pictures/wall" ]]; then
-  wall="$HOME/Pictures/wall/$filetype"
+if [[ -d "$HOME"/Pictures/wall ]]; then
+  # override
+  wall="$HOME"/Pictures/wall
 fi
 
-echo "feh loop stop it?[<C-c>]:"
-while true; do
-  feh --randomize --bg-center --no-fehbg $wall || echo "feh: fallthrough"
-  sleep 1m
+feh --image-bg black --recursive --randomize --bg-center --no-fehbg "$wall" || echo "feh: fallthrough"
+echo 'feh loop stop it?[<C-c>]:'
+while sleep 1m; do
+  feh --image-bg black --recursive --randomize --bg-center --no-fehbg "$wall" || echo "feh: fallthrough"
 done
 # EOF

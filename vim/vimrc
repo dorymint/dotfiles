@@ -37,6 +37,9 @@ endif
 
 "-----| set |-----"
   set ttyfast
+  set notimeout
+  "set timeoutlen=1000
+  set ttimeout
   set nomodeline
   "set modelines=5
   set hidden
@@ -346,7 +349,7 @@ endif
 if isdirectory(glob('~/dotfiles/vim/tmp'))
 " go-todogotcha
   if executable('todogotcha')
-    nnoremap <C-@>todo  :<C-u>!todogotcha -keyword="TODO:" -filetype=".go .txt .vim rc" -output="$HOME/dotfiles/vim/tmp/TODOList.txt" -force=on<home><C-right><C-right><left>
+    nnoremap <C-@>todo  :<C-u>!todogotcha -keyword="TODO:" -filetype=".go .txt .vim rc" -output="~/dotfiles/vim/tmp/TODOList.txt" -force=on<home><C-right><C-right><left>
     nnoremap <C-@>list  :<C-u>vsplit ~/dotfiles/vim/tmp/TODOList.txt<space>
       " NOTE: List内のファイル名からgfで飛べる...長い
   else

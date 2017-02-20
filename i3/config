@@ -21,18 +21,21 @@ set $mod Mod4
 #font pango:Sans Regular 9
 font pango:Orbitron 9
 
+# path to config dir
+set $i3dir $HOME/.i3
+
 # compton
-exec --no-startup-id bash $HOME/.config/i3/comptonbin.bash &
+exec --no-startup-id bash $i3dir/comptonbin.bash &
 
 # display
-exec --no-startup-id bash $HOME/.config/i3/display.bash &
+exec --no-startup-id bash $i3dir/display.bash &
 
 # feh for background image
 #exec --no-startup-id feh --recursive --randomize --bg-scale /usr/share/backgrounds/*/*.jpg &
-exec --no-startup-id bash /$HOME/.config/i3/fehbg.bash &
+exec --no-startup-id bash $i3dir/fehbg.bash &
 
 # for fcitx
-exec --no-startup-id bash $HOME/.config/i3/inputmethod.bash &
+exec --no-startup-id bash $i3dir/inputmethod.bash &
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -152,7 +155,7 @@ mode "resize" {
         bindsym Up resize shrink height 10 px or 10 ppt
         bindsym Right resize grow width 10 px or 10 ppt
 
-        # back to normal: Enter or Escape
+        # back to njrmal: Enter or Escape
         bindsym Return mode "default"
         bindsym Escape mode "default"
         bindsym q      mode "default"

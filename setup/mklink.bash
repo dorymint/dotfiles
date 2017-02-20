@@ -40,7 +40,7 @@ ln -s $dotfiles_root/tmux/tmux.conf $HOME/.tmux.conf
 echo ""
 
 echo "i3-wm"
-ln -s $dotfiles_root/i3/ $HOME/.config/
+ln -s $dotfiles_root/i3/ $HOME/.i3
 echo ""
 
 echo "termite"

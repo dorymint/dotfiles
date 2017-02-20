@@ -1,8 +1,9 @@
 #!/bin/bash
 # for i3-wm
-dirs="/usr/share/backgrounds /usr/share/archlinux"
-if [[ -d "$HOME/Pictures/wall" ]];then
-  dirs="$dirs $HOME/Pictures/wall"
+wall="/usr/share/backgrounds /usr/share/archlinux"
+if [[ -d "$HOME"/Pictures/wall ]];then
+  # override
+  wall="$HOME"/Pictures/wall
 fi
-feh --recursive --randomize --bg-scale $dirs
+feh --image-bg black --recursive --randomize --bg-center "$wall"
 # EOF
