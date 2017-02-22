@@ -4,6 +4,6 @@ set -e
 
 go=$GOROOT/bin/go
 prof=$(pwd)/cover.prof
-$go test -cover -coverprofile "$prof"
+$go test -race -cover -coverprofile "$prof"
 $go tool cover -html "$prof"
 # EOF
