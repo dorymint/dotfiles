@@ -20,7 +20,8 @@ case "$use" in
   "make")
     test -d "build" && rm -r "build/"
     make clean
-    make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$installdir"
+    make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$installdir" \
+      CMAKE_BUILD_TYPE="RelWithDebInfo"
     make install
   exit 0;;
 

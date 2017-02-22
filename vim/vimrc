@@ -40,6 +40,7 @@ endif
   set notimeout
   "set timeoutlen=1000
   set ttimeout
+  "set ttimeoutlen=100
   set modeline
   set modelines=5
     " NOTE: modeline ファイル頭と尻尾のコメントを書くとき注意する
@@ -51,6 +52,8 @@ endif
     "     : keymapでトグル指定
   set backspace=indent,eol,start
   set completeopt=menuone,preview
+  set display=truncate
+  set nrformats=bin,octal,hex
   set helplang=ja
   set nospell
   set spelllang=en,cjk
@@ -320,6 +323,10 @@ endif
 " オムニ補完
   inoremap <S-tab>  <C-x><C-o>
 
+" undo
+  inoremap <C-u>    <C-g>u<C-u>
+  inoremap <C-w>    <C-g>u<C-w>
+
 " 全角を半角に
   " NOTE: :help i_ctrl-v
   inoremap 　 <space>
@@ -354,31 +361,36 @@ endif
   inoremap ！ !
 
 
-"-----| tool |-----"
+"-----| tool command |-----"
 if isdirectory(glob('~/dotfiles/vim/tmp'))
 
   " go-todogotcha
   if executable('todogotcha')
     command! Todo  :!todogotcha -keyword="TODO: " -filetype=".go .txt .vim rc" -output="$HOME/dotfiles/vim/tmp/TODOList.txt" -force=true
     command! List  :vsplit ~/dotfiles/vim/tmp/TODOList.txt
-
-    "nnoremap <C-@>todo  :<C-u>!todogotcha -keyword="TODO: " -filetype=".go .txt .vim rc" -output="$HOME/dotfiles/vim/tmp/TODOList.txt" -force=true <home><C-right><C-right><left>
-    "nnoremap <C-@>list  :<C-u>vsplit ~/dotfiles/vim/tmp/TODOList.txt<space>
       " NOTE: List内のファイル名からgfで飛べる...長い
   else
     echo 'not found "todogotcha"'
   endif
 
-  " xclip
-  if executable('xclip')
-    nnoremap <C-@>paste :<C-u>read !xclip -o<nl>
-  else
-    echo 'not found xclip'
-  endif
-
 else
   echo 'not found "~/dotfiles/vim/tmp"'
   echo 'disable tool'
+endif
+
+" xclip
+if executable('xclip')
+  command! Paste read !xclip -o
+
+  " TODO: fix 2017/02/21 05:21
+  "command! -range Xcopy !xclip && xclip -o
+else
+  echo 'not found xclip'
+endif
+
+" timestamp
+if exists('*strftime')
+  command! Timestamp :put=strftime('%Y/%m/%d %H:%M')
 endif
 
 
@@ -399,7 +411,7 @@ augroup nyan-vimrc
       " NOTE: goはハードタブが推奨される、noexpandtabとスペースの表示をfmtに合わせて設定
       "     : listchars-=tab したかったけど動かなかった
       "     : lictchars+=tab:\ \ , でもいいけどtabが重複する
-    " NOTE: QuickRunを使うなら下はいらない
+    " NOTE: QuickRunを使うなら以下は無効
     "if isdirectory(glob('~/dotfiles/vim/tmp'))
     "  autocmd Filetype go nnoremap <buffer> <c-@>gorun  :<C-u>!go run  % > ~/dotfiles/vim/tmp/gorunlog.txt 2>&1<nl>
     "endif
@@ -416,12 +428,6 @@ augroup nyan-vimrc
     autocmd VimEnter,ColorScheme * highlight CursorLineNr ctermbg=NONE
   endif
 augroup END
-
-
-"-----| command |-----"
-if exists('*strftime')
-  command! Timestamp :put=strftime('%Y/%m/%d %H:%M')
-endif
 
 
 "-----| nvim |-----"
