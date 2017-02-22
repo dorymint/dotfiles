@@ -366,8 +366,8 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
 
   " go-todogotcha
   if executable('todogotcha')
-    command! Todo  :!todogotcha -keyword="TODO: " -filetype=".go .txt .vim rc" -output="$HOME/dotfiles/vim/tmp/TODOList.txt" -force=true
-    command! List  :vsplit ~/dotfiles/vim/tmp/TODOList.txt
+    command! Todo  :!todogotcha -word="TODO: " -type=".go .txt .vim vimrc" -out="$HOME/dotfiles/vim/tmp/todogotcha.log" -force=true
+    command! List  :vsplit ~/dotfiles/vim/tmp/todogotcha.log
       " NOTE: List内のファイル名からgfで飛べる...長い
   else
     echo 'not found "todogotcha"'
