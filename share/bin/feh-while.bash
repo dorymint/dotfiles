@@ -12,9 +12,11 @@ if [[ -d "$HOME"/Pictures/wall ]]; then
   wall="$HOME"/Pictures/wall
 fi
 
-feh --image-bg black --recursive --randomize --bg-center --no-fehbg "$wall" || echo "feh: fallthrough"
+option="--image-bg black --recursive --randomize --bg-max --no-fehbg"
+
+feh $option "$wall" || echo "feh: fallthrough"
 echo 'feh loop stop it?[<C-c>]:'
 while sleep 1m; do
-  feh --image-bg black --recursive --randomize --bg-center --no-fehbg "$wall" || echo "feh: fallthrough"
+  feh $option "$wall" || echo "feh: fallthrough"
 done
 # EOF

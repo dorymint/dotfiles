@@ -7,11 +7,13 @@ atom
 base
 base-devel
 bash-completion
+bc
 chromium
 cmake
 compton
 ctags
 dmenu
+docbook-xsl
 fcitx-im
 fcitx-mozc
 feh
@@ -49,6 +51,7 @@ wget
 xclip
 xf86-video-intel
 xf86-video-vesa
+xmlto
 xorg-server
 xorg-server-utils
 xorg-twm

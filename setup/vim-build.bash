@@ -34,11 +34,11 @@ case "$(uname)" in
     buildoption="--enable-fail-if-missing
       --enable-luainterp
       --enable-perlinterp
-      --enable-pythoninterp
       --enable-python3interp
       --enable-rubyinterp
       --disable-gui
       --prefix=$installdir
+      --without-x
       --with-features=huge"
   ;;
   *)
