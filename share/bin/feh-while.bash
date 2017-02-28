@@ -2,11 +2,8 @@
 
 set -e
 
-# TODO: reconsider filepath
-filetype='*[\(jpg\)\|\(png\)]'
-wall="/usr/share/archlinux/wallpaper/$filetype
-/usr/share/backgrounds/mate/*/$filetype
-/usr/share/backgrounds/xfce/$filetype"
+# NOTE: all wallpaper are use symlink
+wall=""
 if [[ -d "$HOME"/Pictures/wall ]]; then
   # override
   wall="$HOME"/Pictures/wall

@@ -13,7 +13,7 @@ if [ ! -r $1 ] && [ ! -r "$replist" ]; then
   exit 1
 fi
 
-echo "path to replist... $replist"
+echo "replist=$replist"
 echo -e "fetch reps\n"
 for x in `cat "$replist"`; do
   [ -z "$x" ] && continue

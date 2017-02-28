@@ -2,7 +2,6 @@ alsa-plugins
 alsa-tools
 alsa-utils
 arch-install-scripts
-archlinux-wallpaper
 atom
 base
 base-devel
@@ -23,9 +22,7 @@ grml-zsh-config
 grub
 i3
 intel-ucode
-mate-backgrounds
 mesa
-mlocate
 mplayer
 nethack
 noto-fonts
