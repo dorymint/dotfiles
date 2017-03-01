@@ -10,6 +10,7 @@ scriptencoding utf-8
 " NOTE: 設定の詳細は:helpで調べればまず困らない
 "     : setの詳細は :help <setname> で確認
 "     : setはできるだけ省略せずに書く set nohl --> set nohlsearch
+"     : Vim script は最初の非空白文字を \ にすることで前の行と連結できる
 
 
 "-----| plugin manage |-----"
@@ -140,23 +141,23 @@ endif
     " NOTE: set visualbell でbeep音を画面のフラッシュと置き換える
     "     : t_vb= でフラッシュのターミナルコードを空指定してフラッシュさせない
 
-" backup, swap, undo, {{{
+" backup, swap, undo
   set nobackup
   set writebackup
   set noundofile
   set noswapfile
 
-  " tmp directory
-    if isdirectory(glob('~/dotfiles/vim/tmp'))
-      set backupdir=~/dotfiles/vim/tmp/backup
-      set undodir=~/dotfiles/vim/tmp/undo
-      set directory=~/dotfiles/vim/tmp/swap
-      set undofile
-      set swapfile
-    else
-      echo 'not found ~/dotfiles/vim/tmp'
-    endif
-" }}}
+" tmp directory
+if isdirectory(glob('~/dotfiles/vim/tmp'))
+  set backupdir=~/dotfiles/vim/tmp/backup
+  set undodir=~/dotfiles/vim/tmp/undo
+  set directory=~/dotfiles/vim/tmp/swap
+  set undofile
+  set swapfile
+else
+  echo 'not found ~/dotfiles/vim/tmp'
+endif
+
 
 " set has win
 if has('win32') || has('win64')
@@ -166,9 +167,9 @@ endif
 
 
 "-----| color |-----"
-syntax on
-
 " NOTE: シェルの設定で変わるのでlocalで設定するか分岐を作った方がいいかも
+
+syntax on
 if $TERM == "xterm-256color" || $TERM == "xterm-termite" || $TERM == "screen-256color"
   try
     set background=dark
@@ -280,7 +281,7 @@ endif
     nnoremap Txxd  :<C-u>set filetype=xxd<nl>:%!xxd -g 1<space>
     nnoremap TRxxd :<C-u>%!xxd -r<space>
       " NOTE: 戻す時は xxd -r
-      "     : T[rR]xxd みたいに書けない?
+      "     : T[rR]xxd みたいに書きたい
   else
     echo 'not found xxd'
   endif
@@ -290,10 +291,10 @@ endif
   "nnoremap <C-j>    ddp
   "nnoremap <C-k>    ddkP
     " NOTE: 上の<C-k>はファイルの先頭で入れると行が消える、挙動の理由がよくわかってない
-    "     : ddまでは動いて、kが失敗するとPが入力されないっぽい? dd && k && P
+    "     : ddまでは動いて、kが失敗すると止まるっぽい? dd && k && P
   nnoremap <C-j>    :<C-u>. move +1<nl>
   nnoremap <C-k>    :<C-u>. move -2<nl>
-    " NOTE: reg を汚さない . は現在行
+    " NOTE: reg を汚さない . は現在行、こちらなら行は消えない
 
 " 改行の挿入
   nnoremap <C-m>    o<Esc>k
@@ -366,9 +367,14 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
 
   " go-todogotcha
   if executable('todogotcha')
-    command! Todo  :!todogotcha -word="TODO: " -type=".go .txt .vim vimrc" -out="$HOME/dotfiles/vim/tmp/todogotcha.log" -force=true
+    command! Todo  :!todogotcha
+          \ -word="TODO: "
+          \ -type=".go .txt .vim"
+          \ -file="$MYVIMRC"
+          \ -force=true
+          \ -out="$HOME/dotfiles/vim/tmp/todogotcha.log"
     command! List  :vsplit ~/dotfiles/vim/tmp/todogotcha.log
-      " NOTE: List内のファイル名からgfで飛べる...長い
+      " NOTE: List内のファイル名からgfで飛べる
   else
     echo 'not found "todogotcha"'
   endif
@@ -407,7 +413,8 @@ augroup nyan-vimrc
       "     : おとなしく modeline 使った方が良さそう
 
   " go
-    autocmd Filetype go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4 listchars=tab:\ \ ,trail:-,nbsp:%,extends:>,precedes:<,
+    autocmd Filetype go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
+          \ listchars=tab:\ \ ,trail:-,nbsp:%,extends:>,precedes:<,
       " NOTE: goはハードタブが推奨される、noexpandtabとスペースの表示をfmtに合わせて設定
       "     : listchars-=tab したかったけど動かなかった
       "     : lictchars+=tab:\ \ , でもいいけどtabが重複する
@@ -427,6 +434,14 @@ augroup nyan-vimrc
     autocmd VimEnter,ColorScheme * highlight LineNr ctermbg=NONE
     autocmd VimEnter,ColorScheme * highlight CursorLineNr ctermbg=NONE
   endif
+
+  " comment
+    " NOTE: i_<C-u>, i_<C-t>, i_<C-d>
+    "function! s:sleeping_comments()
+    "  setlocal formatoptions-=r
+    "  setlocal formatoptions-=o
+    "endfunction
+    "autocmd FileType * call <SID>sleeping_comments()
 augroup END
 
 
