@@ -3,8 +3,12 @@
 # for sound output HDMI
 # device number is dependent on environment
 set -e
+if test ! -r "$HOME"/.asoundrc; then
+  echo "not found $HOME/.asoundrc"
+  exit 1
+fi
 
-rc="$HOME/.asoundrc"
+rc="$HOME"/.asoundrc
 
 case "$1" in
   "show") grep 'device' "$rc"; exit 0;;
