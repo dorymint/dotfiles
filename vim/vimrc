@@ -1,6 +1,7 @@
+"
 " vimrc
+"
 "-----| fileencoding |-----"
-
 set encoding=utf-8
 scriptencoding utf-8
 
@@ -379,6 +380,14 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
     echo 'not found "todogotcha"'
   endif
 
+  " reps.bash
+  if executable('reps.bash')
+    command! RepsUpdate :!reps.bash status > ~/dotfiles/vim/tmp/reps.log
+    command! RepsList :vsplit ~/dotfiles/vim/tmp/reps.log
+  else
+    echo 'not found "reps.bash"'
+  endif
+
 else
   echo 'not found "~/dotfiles/vim/tmp"'
   echo 'disable tool'
@@ -403,7 +412,7 @@ endif
 "-----| autocmd |-----"
 filetype plugin indent on
   " NOTE: filetypeによる挙動の変化を有効に設定
-augroup nyan-vimrc
+augroup nyan_vimrc
   autocmd!
     " NOTE: vimrcグループのautocmdを初期化して再設定を防ぐ
 
