@@ -70,7 +70,7 @@ if [ -r "$HOME"/.i3/compton.conf ]; then
 fi
 
 # fcitx
-if false; then
+if true; then
   if [ -x /bin/fcitx-autostart ]; then
     fcitx-autostart
     export GTK_IM_MODULE=fcitx
