@@ -65,4 +65,5 @@ fi
 
 alias ww='cd $HOME/github.com/$USER'
 alias dotfiles='cd $DOTFILES_ROOT'
+alias dot='cd $DOTFILES_ROOT'
 # EOF

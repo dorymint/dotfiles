@@ -54,16 +54,40 @@ fi
 #xterm -geometry 80x20+494-0 &
 #exec xterm -geometry 80x66+0+0 -name login
 
+# for laptop
+if xrandr --query | grep "HDMI1 connected" &> /dev/null; then
+  xran="xrandr --output HDMI1 --primary --output LVDS1 --off"
+fi
+
+# for i3
+if [ -d "$HOME"/Pictures/wall ]; then
+  wall="$HOME"/Pictures/wall
+  fehbg="feh --randomize --recursive --bg-max"
+fi
+if [ -r "$HOME"/.i3/compton.conf ]; then
+  comp="compton --config"
+  conf="$HOME"/.i3/compton.conf
+fi
+
+# fcitx
+if false; then
+  if [ -x /bin/fcitx-autostart ]; then
+    fcitx-autostart
+    export GTK_IM_MODULE=fcitx
+    export QT_IM_MODULE=fcitx
+    export XMODIFIERS=@im=fcitx
+  fi
+fi
+
 # default session
 session=${1:-i3}
-# for laptop
-xran="xrandr --output HDMI1 --primary --output LVDS1 --off"
 case $session in
-  i3|i3wm ) $xran & exec i3;;
-  i3-log|i3wm-log ) $xran & exec i3 -V -d all >> ~/.config/i3/i3log ;;
+  i3|i3wm ) $xran & $fehbg "$wall" & $comp $conf & exec i3;;
+  #i3-log|i3wm-log ) $xran & exec i3 -V -d all >> ~/.config/i3/i3log ;;
   #i3-log|i3wm-log ) $xran & exec i3 -V  >> ~/.config/i3/i3log 2>&1 ;;
-  i3-debug|i3wm-debug ) $xran & exec i3-with-shmlog;;
-  xfce|xfce4 ) $xran & exec startxfce4;;
-  plasma ) $xran & exec startkde;;
-  *) $xran & exec $1;;
+  #i3-debug|i3wm-debug ) $xran & exec i3-with-shmlog;;
+  #xfce|xfce4 ) $xran & exec startxfce4;;
+  #plasma ) $xran & exec startkde;;
+  #*) exec $1;;
+  *) $xran & $fehbg "$wall" & $comp $conf & exec i3;;
 esac

@@ -2,10 +2,7 @@
 set -e
 # for i3-wm
 wall=""
-option="--image-bg black \
-  --recursive \
-  --randomize \
-  --bg-max"
+option="--bg-max --randomize --recursive"
 if [ -d "$HOME"/Pictures/wall ];then
   # override
   wall="$HOME"/Pictures/wall
