@@ -15,7 +15,6 @@ option="--image-bg black \
   --bg-max \
   --no-fehbg"
 feh $option "$wall"
-echo 'feh loop stop it?[<C-c>]:'
 while sleep 1m; do
   feh $option "$wall"
 done

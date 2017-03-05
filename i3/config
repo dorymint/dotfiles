@@ -24,18 +24,18 @@ font pango:Orbitron 9
 # path to i3
 set $i3dir $HOME/.i3
 
+# reconsider
+##########
 # display
 #exec --no-startup-id sh $i3dir/display.sh &
-
 # compton
 #exec --no-startup-id sh $i3dir/comptonbin.sh &
-
 # feh for background image
 #exec --no-startup-id sh $i3dir/fehbg.sh &
 #exec --no-startup-id feh --recursive --randomize --bg-max $HOME/Pictures/wall
-
 # for fcitx
 #exec --no-startup-id sh $i3dir/inputmethod.sh
+###########
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
