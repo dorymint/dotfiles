@@ -6,23 +6,26 @@ unset -f helpmsg
 helpmsg() {
   cat >&1 <<END
 make symbolic link for wallpaper
+
   ln-wall [from] [dst]
+
     [from] wallpaper directory
     [dst] destination directory
-  -h --help
-    show help
+
+    -h --help
+      show help
 END
 }
-case "$1" in
+case "${1:-}" in
   "-h"|"--help") helpmsg; exit 0;;
 esac
 unset -f helpmsg
 
-walldir=${1:-invalidstate}
-dst=${2:-invalidstate}
-if [[ "$walldir" == "invalidstate" ]] || [[ "$dst" == "invalidstate" ]];then
+walldir=${1:-}
+dst=${2:-}
+if [[ "$walldir" == "" ]] || [[ "$dst" == "" ]];then
   echo "invalid state"
-  echo '$1=walldir $2=dst'
+  echo 'require $1=walldir $2=dst'
   exit 1
 fi
 

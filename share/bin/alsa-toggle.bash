@@ -3,6 +3,8 @@
 # for sound output HDMI
 # device number is dependent on environment
 set -eu
+rc="$HOME"/.asoundrc
+
 helpmsg() {
   cat >&1 <<END
 toggle output sound device for HDMI
@@ -23,7 +25,6 @@ if test ! -r "$HOME"/.asoundrc; then
   exit 1
 fi
 
-rc="$HOME"/.asoundrc
 if grep 'device 0' "$rc" > /dev/null ; then
   sed -i -e 's/device 0/device 3/' "$rc"
   echo "enable device 3"
