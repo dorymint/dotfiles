@@ -2,7 +2,7 @@
 
 set -eu
 
-# confirm
+# confirm $1="confirm messsage"
 function confirm() {
   local key=""
   local count=0
@@ -14,35 +14,31 @@ function confirm() {
     count=$(expr $count + 1)
 
     echo "$1"
-    read key
+    read -t 60 key
   done
   return 0
 }
 
 if [[ -d "$DOTFILES_ROOT/vim/sonicdir" ]]; then
-  cd "$DOTFILES_ROOT/vim/sonicdir" || exit 1
+  cd "$DOTFILES_ROOT/vim/sonicdir"
+  echo
+  git diff
+  echo
+  echo "-----| STATUS |-----"
+  git status
+  confirm 'git add . [yes:no]?'
+  git add .
+  git status
 
-  echo "" &&
-  git diff &&
-  echo "" &&
-  echo "-----| STATUS |-----" &&
-  git status &&
-  confirm 'git add . [yes:no]?' &&
-  git add . &&
-  git status ||
-  exit 1
+  echo ""
+  git diff --cached
+  confirm 'git commit [yes:no]?'
+  git commit
 
-  echo "" &&
-  git diff --cached &&
-  confirm 'git commit [yes:no]?' &&
-  git commit ||
-  exit 1
-
-  echo "" &&
-  git diff origin/master &&
-  git status &&
-  confirm 'git push origin master [yes:no]?' &&
-  git push origin master ||
-  exit 1
+  echo
+  git diff origin/master
+  git status
+  confirm 'git push origin master [yes:no]?'
+  git push origin master
 fi
 # EOF
