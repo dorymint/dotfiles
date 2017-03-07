@@ -2,9 +2,9 @@
 function confirm() {
   local key=""
   local count=0
-  while [[ "$key" != "yes" ]] && [[ "$key" != "y" ]]; do
-    if [[ "$key" = "no" ]] || [[ "$key" = "n" ]] || [[ $count -gt 2 ]]; then
-      echo "ok... stop process"
+  while [ "$key" != "yes" ] && [ "$key" != "y" ]; do
+    if [ "$key" = "no" ] || [ "$key" = "n" ] || [ $count -gt 2 ]; then
+      echo "... stop process"
       exit 1
     fi
     count=$(expr $count + 1)

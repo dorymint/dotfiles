@@ -1,5 +1,4 @@
-case "" in
-  "") ;;
+case "{{_cursor_}}" in
   ""|"") ;;
   *) ;;
 esac
