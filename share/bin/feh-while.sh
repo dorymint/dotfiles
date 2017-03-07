@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -e
+set -eu
 
 # NOTE: all wallpaper are use symlink
 wall=""

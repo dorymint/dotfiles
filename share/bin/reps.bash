@@ -1,13 +1,30 @@
 #!/bin/bash
 
-set -e
+set -eu
 
-# bind for git
-# fetch
-# status
-# list
-# $1 = command
-# $2 = <path/to/reps.list>
+# help
+unset -f helpmsg
+helpmsg() {
+  cat >&1 <<'END'
+bind for git
+
+  reps.bash [command] [/path/to/reps.list]
+
+    [commnad]
+      f -f fetch
+      s -s status
+      l -l list
+      h -h help
+
+    [/path/to/reps.list]
+      $HOME/local/reps.list (default)
+
+END
+}
+case "${1:-}" in
+  "h"|"-h"|"help"|"") helpmsg; exit 0;;
+esac
+unset -f helpmsg
 
 replist="${2:-$HOME/local/reps.list}"
 [ -f "$replist" ] || exit 1

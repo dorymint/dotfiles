@@ -1,8 +1,24 @@
 #!/bin/bash
+
+set -e
+
 cd $(dirname "$0")
+result=""
 dst="$HOME"/bin
+unset x
 for x in *; do
   [ ! -x "$x" ] && continue
-  ln -s "$(pwd)/$x" "$dst"
+
+  # fallthrough
+  ln -s "$(pwd)/$x" "$dst" &&
+    result="$result""$x " ||
+    true
 done
+
+echo "--- result ---"
+unset x
+for x in $result; do
+  echo "$x"
+done
+echo "--- created symlink to $dst ---"
 # EOF
