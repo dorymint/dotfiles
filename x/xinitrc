@@ -8,15 +8,7 @@ sysmodmap=/etc/X11/xinit/.Xmodmap
 # merge in defaults and keymaps
 
 if [ -f $sysresources ]; then
-
-
-
-
-
-
-
     xrdb -merge $sysresources
-
 fi
 
 if [ -f $sysmodmap ]; then
@@ -24,15 +16,7 @@ if [ -f $sysmodmap ]; then
 fi
 
 if [ -f "$userresources" ]; then
-
-
-
-
-
-
-
     xrdb -merge "$userresources"
-
 fi
 
 if [ -f "$usermodmap" ]; then
@@ -48,25 +32,19 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  unset f
 fi
 
-#twm &
-#xclock -geometry 50x50-1+1 &
-#xterm -geometry 80x50+494+51 &
-#xterm -geometry 80x20+494-0 &
-#exec xterm -geometry 80x66+0+0 -name login
-
-# for laptop
+# for laptop with broken screen
 if xrandr --query | grep "HDMI1 connected" &> /dev/null; then
-  xran="xrandr --output HDMI1 --primary --output LVDS1 --off"
+  xrandr="xrandr --output HDMI1 --primary --output LVDS1 --off"
 fi
 
-# for i3
-if [ -d "$HOME"/Pictures/wall ]; then
-  wall="$HOME"/Pictures/wall
-  fehbg="feh --randomize --recursive --bg-max"
-fi
-if [ -r "$HOME"/.i3/compton.conf ]; then
-  comp="compton --config"
-  conf="$HOME"/.i3/compton.conf
+if true; then
+  export LANG=ja_JP.UTF-8
+  export LANGUAGE=ja_JP:en_US
+  export LC_MESSAGES=C
+else
+  export LANG=en_US.UTF-8
+  export LANGUAGE=en_US
+  export LC_MESSAGES=C
 fi
 
 # fcitx
@@ -79,15 +57,25 @@ if true; then
   fi
 fi
 
+# for i3
+unset fehbg wall
+if [ -d "$HOME"/Pictures/wall ] &&  which feh &> /dev/null ; then
+  fehbg="feh --randomize --recursive --bg-max"
+  wall="$HOME"/Pictures/wall
+fi
+unset compton conf
+if [ -r "$HOME"/.i3/compton.conf ] && which compton &> /dev/null ; then
+  compton="compton --config"
+  conf="$HOME"/.i3/compton.conf
+fi
+
 # default session
 session=${1:-i3}
 case $session in
-  i3|i3wm ) $xran & $fehbg "$wall" & $comp $conf & exec i3;;
+  i3|i3wm ) $xrandr & $fehbg "$wall" & $compton "$conf" & exec i3;;
   #i3-log|i3wm-log ) $xran & exec i3 -V -d all >> ~/.config/i3/i3log ;;
-  #i3-log|i3wm-log ) $xran & exec i3 -V  >> ~/.config/i3/i3log 2>&1 ;;
-  #i3-debug|i3wm-debug ) $xran & exec i3-with-shmlog;;
   #xfce|xfce4 ) $xran & exec startxfce4;;
   #plasma ) $xran & exec startkde;;
   #*) exec $1;;
-  *) $xran & $fehbg "$wall" & $comp $conf & exec i3;;
+  *) $xrandr & $fehbg "$wall" & $compton "$conf" & exec i3;;
 esac

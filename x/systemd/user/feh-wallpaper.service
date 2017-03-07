@@ -1,0 +1,10 @@
+[Unit]
+Description=rotate wallpaper use feh
+
+[Service]
+Type=oneshot
+EnvironmentFile=%h/.wallenv
+ExecStart=/bin/bash -c '/usr/bin/feh --no-fehbg --bg-max --randomize "${WALLPATH}"'
+
+[Install]
+WantedBy=graphical-session.target

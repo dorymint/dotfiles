@@ -1,0 +1,9 @@
+[Unit]
+Description=for feh-wallpaper.service
+
+[Timer]
+OnUnitActiveSec=1m
+Unit=feh-wallpaper.service
+
+[Install]
+WantedBy=graphical-session.target
