@@ -21,21 +21,19 @@ function confirm() {
 
 if [[ -d "$DOTFILES_ROOT/vim/sonicdir" ]]; then
   cd "$DOTFILES_ROOT/vim/sonicdir"
-  echo
+  echo "--- git diff ---"
   git diff
-  echo
-  echo "-----| STATUS |-----"
   git status
   confirm 'git add . [yes:no]?'
   git add .
   git status
 
-  echo ""
+  echo "--- git diff --cached ---"
   git diff --cached
   confirm 'git commit [yes:no]?'
   git commit
 
-  echo
+  echo "--- git diff origin/master ---"
   git diff origin/master
   git status
   confirm 'git push origin master [yes:no]?'
