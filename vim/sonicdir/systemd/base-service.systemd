@@ -1,0 +1,10 @@
+[Unit]
+Description={{_cursor_}}
+
+[Service]
+Type=
+#EnvironmentFile=%h/path/to/localenv
+ExecStart=/bin/bash -c 'TODO'
+
+[Install]
+WantedBy=

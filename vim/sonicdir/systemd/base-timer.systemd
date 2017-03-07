@@ -1,0 +1,9 @@
+[Unit]
+Description={{_cursor_}}
+
+[Timer]
+OnUnitActiveSec=
+Unit=
+
+[Install]
+WantedBy=
