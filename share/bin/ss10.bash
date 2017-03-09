@@ -18,7 +18,7 @@ case "${1:-}" in
 esac
 unset -f helpmsg
 
-word=${1-:}
+word=${1:-}
 if [ -z "$word" ];then
   for x in `seq 100`; do ss -a && echo "$x" && sleep 10; done
 else

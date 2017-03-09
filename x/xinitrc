@@ -60,7 +60,7 @@ fi
 # for i3
 unset fehbg wall
 if [ -d "$HOME"/Pictures/wall ] &&  which feh &> /dev/null ; then
-  fehbg="feh --randomize --recursive --bg-max"
+  fehbg="feh --randomize --bg-max"
   wall="$HOME"/Pictures/wall
 fi
 unset compton conf
