@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -eu
-pushd "$(dirname "$(readlink -f "$0")")"
+cd "$(dirname "$(readlink -f "$0")")"
 
 [ -d ./new ]
 # wget -O is override
@@ -22,5 +22,4 @@ diff -u --color=always zshrc.grml.local ./new/zshrc.grml.local | less -R
 echo "----- update -----"
 sh ./update.sh
 
-popd
 # EOF
