@@ -32,9 +32,13 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  unset f
 fi
 
+# disable display power management signaling
+if [ -x /usr/bin/xset ]; then
+  xset="xset s off -dpms"
+fi
 # for laptop with broken screen
 if xrandr --query | grep "HDMI1 connected" &> /dev/null; then
-  xrandr="xrandr --output HDMI1 --primary --output LVDS1 --off"
+  xrandr="xrandr --output HDMI1 --primary --auto --output LVDS1 --off"
 fi
 
 if true; then
@@ -72,10 +76,19 @@ fi
 # default session
 session=${1:-i3}
 case $session in
-  i3|i3wm ) $xrandr & $fehbg "$wall" & $compton "$conf" & exec i3;;
+  i3|i3wm )
+    $xset &
+    $xrandr &
+    $fehbg "$wall" &
+    $compton "$conf" &
+    exec i3;;
   #i3-log|i3wm-log ) $xran & exec i3 -V -d all >> ~/.config/i3/i3log ;;
   #xfce|xfce4 ) $xran & exec startxfce4;;
   #plasma ) $xran & exec startkde;;
-  #*) exec $1;;
-  *) $xrandr & $fehbg "$wall" & $compton "$conf" & exec i3;;
+  *)
+    $xset &
+    $xrandr &
+    $fehbg "$wall" &
+    $compton "$conf" &
+    exec i3;;
 esac
