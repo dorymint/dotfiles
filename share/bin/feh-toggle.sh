@@ -4,7 +4,7 @@ set -eu
 unset -f helpmsg
 helpmsg() {
   cat >&1 <<END
-  rotate wallpapaer
+  toggle systemctl --user feh-wallpaper.timer
 END
 }
 
