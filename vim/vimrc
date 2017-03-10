@@ -364,6 +364,7 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
 
   " go-todogotcha
   if executable('todogotcha')
+    " TODO: fix for win
     command! Todo  :!todogotcha
           \ -word="TODO: "
           \ -type=".go .txt .vim"
