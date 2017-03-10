@@ -1,6 +1,9 @@
+vim/tmp/*
+!vim/tmp/swap
+!vim/tmp/backup
+!vim/tmp/undo
 vim/tmp/swap/*
 vim/tmp/backup/*
 vim/tmp/undo/*
-vim/tmp
 
 !.gitkeep
