@@ -1,0 +1,8 @@
+language: go
+go:
+  - 1.8
+  - master
+before_install:
+  - go get {{_cursor_}}{{_expr_:expand("%:p")}}
+script:
+  - 
