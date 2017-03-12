@@ -23,7 +23,7 @@ if [ -z "$word" ];then
   for x in `seq 100`; do ss -a && echo "$x" && sleep 10; done
 else
   for x in `seq 100`; do
-    ss -a | grep "$word"
+    ss -a | grep "$word" || echo "not found $word"
     echo "count $x"
     sleep 10
   done
