@@ -9,6 +9,7 @@ bash-completion
 bc
 chromium
 cmake
+cmatrix
 compton
 ctags
 dmenu
@@ -17,6 +18,7 @@ fcitx-im
 fcitx-mozc
 feh
 firefox
+fortune-mod
 git
 grml-zsh-config
 grub
