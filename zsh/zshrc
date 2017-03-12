@@ -11,10 +11,12 @@ source $HOME/dotfiles/share/dotenv.bash
 # environment
 if [[ -n $DOTFILES_ROOT ]]; then
   # use grml zshrc, require don't move it
-  if [[ "$(uname -a)" == "*\(ARCH\)\|\(arch\)*" ]] ; then
+  if [[ "$(uname -r)" == "*\(ARCH\)\|\(arch\)*" ]] ; then
+    echo "use grml in dotfiles"
     source $DOTFILES_ROOT/zsh/zshrc.grml
   else
-    echo "recommend: pacman -S grml-zsh-config"
+    pacman -Q grml-zsh-config &> /dev/null ||
+      echo "recommend: pacman -S grml-zsh-config"
   fi
   # TODO: add any env
 
