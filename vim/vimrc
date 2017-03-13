@@ -77,9 +77,15 @@ endif
 
 " foldmethod
   set foldmethod=marker
-  set foldmarker={,}
-  set foldlevel=99
-    " NOTE: デフォルトは開くように設定
+  set foldmarker={{{,}}}
+  set foldlevel=0
+  set nofoldenable
+    " NOTE: デフォルトは開くように
+    "     : :help zi
+  function! Gikof()
+    return ' (,,ﾟДﾟ)' . foldtext()
+  endfunction
+  set foldtext=Gikof()
 
 " showmatch
   set showmatch
@@ -205,6 +211,10 @@ endif
 " <nop>はマップを削除できる
 " コマンドのキーマップは<C-u>で数値の前置を消しておかないと範囲指定される
 
+" nop
+  "nnoremap zE <nop>
+  " NOTE: disable all erase? reconsider
+
 " ノーマルモードに
   "inoremap jj <Esc>
   "inoremap jk <Esc>
@@ -294,7 +304,7 @@ endif
     " NOTE: reg を汚さない . は現在行、こちらなら行は消えない
 
 " 改行の挿入
-  nnoremap <C-m>    o<Esc>k
+  "nnoremap <C-m>    o<Esc>k
     " NOTE: このマップはもう少し考えたい
 
 " 閉じ括弧
@@ -365,7 +375,7 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
   " go-todogotcha
   if executable('todogotcha')
     " TODO: fix for win
-    command! Todo  :!todogotcha
+    command! Todo :!todogotcha
           \ -word="TODO: "
           \ -type=".go .txt .vim"
           \ -file="$MYVIMRC"
