@@ -10,7 +10,7 @@
 
 
 # define DOTFILES_ROOT
-source $HOME/dotfiles/share/dotenv.bash
+source $HOME/dotfiles/share/dotenv.sh
 
 if [[ "$DOTFILES_ROOT" != "" ]]; then
   # TODO: add any env
@@ -19,7 +19,7 @@ if [[ "$DOTFILES_ROOT" != "" ]]; then
   source $DOTFILES_ROOT/bash/bash_completion_tmux.sh
 
   # golang
-  source $DOTFILES_ROOT/share/goenv.bash
+  source $DOTFILES_ROOT/share/goenv.sh
 
   # alias
   source $DOTFILES_ROOT/share/alias
