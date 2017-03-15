@@ -190,7 +190,7 @@ else
   "colorscheme elflord
   "colorscheme ron
   "colorscheme solarized
-  colorscheme default
+  "colorscheme default
 endif
 
 " set has win
@@ -421,7 +421,7 @@ filetype plugin indent on
   " NOTE: filetypeによる挙動の変化を有効に設定
 augroup nyan_vimrc
   autocmd!
-    " NOTE: vimrcグループのautocmdを初期化して再設定を防ぐ
+    " NOTE: nyan_vimrcグループのautocmdを初期化して再設定を防ぐ
 
   " vim
     "autocmd Filetype vim setlocal textwidth=0
