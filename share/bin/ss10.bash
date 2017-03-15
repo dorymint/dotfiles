@@ -18,14 +18,22 @@ case "${1:-}" in
 esac
 unset -f helpmsg
 
+delay=20
+limit=100
 word=${1:-}
 if [ -z "$word" ];then
-  for x in `seq 100`; do ss -a && echo "$x" && sleep 10; done
+  for x in `seq $limit`; do
+    ss -a
+    echo "$x"
+    which "fortune" &> /dev/null && fortune -a
+    sleep $delay
+  done
 else
-  for x in `seq 100`; do
+  for x in `seq $limit`; do
     ss -a | grep "$word" || echo "not found $word"
     echo "count $x"
-    sleep 10
+    which "fortune" &> /dev/null && fortune -a
+    sleep $delay
   done
 fi
 # EOF

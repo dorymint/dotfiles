@@ -40,8 +40,10 @@ if systemctl --user is-active $service &> /dev/null; then
   echo "please wait for stop VM process"
   systemctl --user stop $service
   echo "inactivate"
+  which "fortune" &> /dev/null && fortune -a
 else
   systemctl --user start $service
   echo "activate"
+  which "fortune" &> /dev/null && fortune -a
 fi
 # EOF
