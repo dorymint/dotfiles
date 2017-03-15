@@ -11,8 +11,7 @@ echo ""
  
 [ -d "$HOME"/.vim ] || mkdir "$HOME"/.vim
 [ -d "$HOME"/.config ] || mkdir "$HOME"/.config
-[ -d "$HOME"/gowork ] || mkdir -p "$HOME"/gowork/{bin,pkg,src}
-#[ -d "$HOME"/go ] || mkdir -p "$HOME"/go/{bin,pkg,src}
+[ -d "$HOME"/go ] || mkdir -p "$HOME"/go/{bin,pkg,src}
 
 echo "zsh"
 ln -sn "$dotfiles_root"/zsh/zshrc "$HOME"/.zshrc
