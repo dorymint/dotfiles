@@ -7,7 +7,7 @@
 [[ "$(uname -n)" == "lily" ]] && echo "hello lily"
 
 # define DOTFILES_ROOT
-source $HOME/dotfiles/share/dotenv.bash
+source $HOME/dotfiles/share/dotenv.sh
 # environment
 if [[ -n $DOTFILES_ROOT ]]; then
   # use grml zshrc, require don't move it
@@ -21,7 +21,7 @@ if [[ -n $DOTFILES_ROOT ]]; then
   # TODO: add any env
 
   # golang
-  source $DOTFILES_ROOT/share/goenv.bash
+  source $DOTFILES_ROOT/share/goenv.sh
 
   # alias
   source $DOTFILES_ROOT/share/alias
