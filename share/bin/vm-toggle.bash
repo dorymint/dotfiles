@@ -38,9 +38,9 @@ unset -f helpmsg
 systemctl --user show $service &> /dev/null
 if systemctl --user is-active $service &> /dev/null; then
   echo "please wait for stop VM process"
+  which "fortune" &> /dev/null && fortune -a
   systemctl --user stop $service
   echo "inactivate"
-  which "fortune" &> /dev/null && fortune -a
 else
   systemctl --user start $service
   echo "activate"

@@ -11,12 +11,12 @@ else
 fi
 
 # GOPATH
-if [ -d "$HOME"/gowork ]; then
+if [ -d "$HOME"/go ]; then
   if [ "$GOPATH" = "" ] && [ "$GOROOT" != "" ]; then
-    export GOPATH="$HOME"/gowork
+    export GOPATH="$HOME"/go
     export PATH="$PATH":"$GOPATH"/bin
   fi
 else
-  echo 'not found $HOME/gowork'
+  echo 'not found $HOME/go'
 fi
 # EOF
