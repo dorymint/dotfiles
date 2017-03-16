@@ -5,7 +5,10 @@ helpmsg() {
   {{_cursor_}}
 END
 }
-case "${1:-}" in
-  ""|"-h"|"--help") helpmsg; exit 0;;
-esac
+while [ -n "${1:-}" ]; do
+  case "$1" in
+   "help"|"-h"|"--help") helpmsg; exit 0;;
+  esac
+  shift
+done
 unset -f helpmsg
