@@ -4,7 +4,7 @@ Description=virtualbox headless
 [Service]
 Type=simple
 ExecStart=/usr/bin/bash -c '/usr/bin/vboxheadless --startvm "vm-name"'
-ExecStop=/usr/bin/vboxmanage controlvm 'vm-name' poweroff
+ExecStop=/usr/bin/bash -c '/usr/bin/vboxmanage controlvm "vm-name" poweroff'
 
 [Install]
 WantedBy=default.target

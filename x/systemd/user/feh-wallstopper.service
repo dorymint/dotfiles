@@ -1,0 +1,9 @@
+[Unit]
+Description=stopper of feh-wallpapaer.timer
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/systemctl --user stop feh-wallpaper.timer
+
+[Install]
+WantedBy=

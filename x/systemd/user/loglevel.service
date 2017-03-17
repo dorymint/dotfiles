@@ -1,11 +1,11 @@
 [Unit]
-Description=exchange loglevel for user
+Description=exchange loglevel to notice
 
 [Service]
 Type=oneshot
 RemainAfterExit=yes
 ExecStart=/usr/bin/systemd-analyze --user set-log-level notice
-ExecStop=/usr/bin/systemd-analyze --user set-log-level info'
+ExecStop=/usr/bin/systemd-analyze --user set-log-level info
 
 [Install]
 WantedBy=default.target
