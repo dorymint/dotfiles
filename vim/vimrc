@@ -285,7 +285,7 @@ endif
 
   " hex
   if executable('xxd')
-    nnoremap Txxd  :<C-u>setlocal filetype=xxd<nl>:%!xxd -g 1<space>
+    nnoremap Txxd  :<C-u>setlocal filetype=xxd<nl>:%!xxd<space>
     nnoremap TRxxd :<C-u>%!xxd -r<space>
       " NOTE: 戻す時は xxd -r
       "     : T[rR]xxd みたいに書きたい

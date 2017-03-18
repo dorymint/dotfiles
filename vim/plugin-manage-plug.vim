@@ -33,6 +33,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'vim-jp/vim-go-extra'
   "Plug 'google/vim-ft-go'
     " NOTE: vim-ft-goはvimのversionが新しければ本体にmergeされているらしい
+  Plug 'dart-lang/dart-vim-plugin'
 
 " color
   Plug 'w0ng/vim-hybrid'
