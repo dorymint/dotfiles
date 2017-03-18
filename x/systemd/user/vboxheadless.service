@@ -5,6 +5,7 @@ Description=virtualbox headless
 Type=simple
 ExecStart=/usr/bin/bash -c '/usr/bin/vboxheadless --startvm "vm-name"'
 ExecStop=/usr/bin/bash -c '/usr/bin/vboxmanage controlvm "vm-name" poweroff'
+PrivateTmp=true
 
 [Install]
 WantedBy=default.target
