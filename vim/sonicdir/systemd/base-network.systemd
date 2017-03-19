@@ -1,0 +1,6 @@
+# simple .network
+[Match]
+Name=see ip link
+
+[Network]
+DHCP=yes or ipv4
