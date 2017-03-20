@@ -10,6 +10,8 @@ END
 
 case "${1:-}" in
   "-h"|"--help") helpmsg; exit 0;;
+  "");;
+  *)echo "unknown option: ${*}"; exit 1;;
 esac
 
 if systemctl --user is-active feh-wallpaper.timer &> /dev/null; then
