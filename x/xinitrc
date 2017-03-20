@@ -81,6 +81,6 @@ case "$session" in
   i3-log|i3wm-log )
     $fehbg "$wall" &
     $compton "$conf" &
-    exec usr/bin/i3 -V -d all >> ~/.i3/i3"$(date "+%Y-%m-%d")".log;;
+    exec /usr/bin/i3 -V -d all >> ~/.i3/i3-"$(date "+%Y-%m-%d")".log;;
   * ) exec /usr/bin/i3;;
 esac
