@@ -34,11 +34,11 @@ fi
 
 # disable display power management signaling
 if [ -x /usr/bin/xset ]; then
-  xset="xset s off -dpms -b r rate 200 30"
+  xset s off -dpms -b r rate 200 30
 fi
-# for laptop with broken screen
-if xrandr --query | grep "HDMI1 connected" &> /dev/null; then
-  xrandr="xrandr --output HDMI1 --primary --auto --output LVDS1 --off"
+# for laptop with broken screen :P
+if [ -x /usr/bin/xrandr ] && xrandr --query | grep "HDMI1 connected" &> /dev/null; then
+  xrandr --output HDMI1 --primary --auto --output LVDS1 --off
 fi
 
 if true; then
@@ -53,7 +53,7 @@ fi
 
 # fcitx
 if true; then
-  if [ -x /bin/fcitx-autostart ]; then
+  if [ -x /usr/bin/fcitx-autostart ]; then
     fcitx-autostart
     export GTK_IM_MODULE=fcitx
     export QT_IM_MODULE=fcitx
@@ -62,13 +62,11 @@ if true; then
 fi
 
 # for i3
-unset fehbg wall
-if [ -d "$HOME"/Pictures/wall ] &&  which feh &> /dev/null ; then
+if [ -d "$HOME"/Pictures/wall ] && [ -x /usr/bin/feh ]; then
   fehbg="feh --randomize --bg-max"
   wall="$HOME"/Pictures/wall
 fi
-unset compton conf
-if [ -r "$HOME"/.i3/compton.conf ] && which compton &> /dev/null ; then
+if [ -r "$HOME"/.i3/compton.conf ] && [ -x /usr/bin/compton ]; then
   compton="compton --config"
   conf="$HOME"/.i3/compton.conf
 fi
@@ -77,21 +75,12 @@ fi
 session="${1:-i3}"
 case "$session" in
   i3|i3wm )
-    $xset &
-    $xrandr &
     $fehbg "$wall" &
     $compton "$conf" &
     exec /usr/bin/i3;;
   i3-log|i3wm-log )
-    $xset &
-    $xrandr &
     $fehbg "$wall" &
     $compton "$conf" &
     exec usr/bin/i3 -V -d all >> ~/.i3/i3"$(date "+%Y-%m-%d")".log;;
-  *)
-    $xset &
-    $xrandr &
-    $fehbg "$wall" &
-    $compton "$conf" &
-    exec /usr/bin/i3;;
+  * ) exec /usr/bin/i3;;
 esac
