@@ -34,7 +34,7 @@ fi
 
 # disable display power management signaling
 if [ -x /usr/bin/xset ]; then
-  xset="xset s off -dpms r rate 200 30"
+  xset="xset s off -dpms -b r rate 200 30"
 fi
 # for laptop with broken screen
 if xrandr --query | grep "HDMI1 connected" &> /dev/null; then
@@ -74,21 +74,24 @@ if [ -r "$HOME"/.i3/compton.conf ] && which compton &> /dev/null ; then
 fi
 
 # default session
-session=${1:-i3}
-case $session in
+session="${1:-i3}"
+case "$session" in
   i3|i3wm )
     $xset &
     $xrandr &
     $fehbg "$wall" &
     $compton "$conf" &
-    exec i3;;
-  #i3-log|i3wm-log ) $xran & exec i3 -V -d all >> ~/.config/i3/i3log ;;
-  #xfce|xfce4 ) $xran & exec startxfce4;;
-  #plasma ) $xran & exec startkde;;
+    exec /usr/bin/i3;;
+  i3-log|i3wm-log )
+    $xset &
+    $xrandr &
+    $fehbg "$wall" &
+    $compton "$conf" &
+    exec usr/bin/i3 -V -d all >> ~/.i3/i3"$(date "+%Y-%m-%d")".log;;
   *)
     $xset &
     $xrandr &
     $fehbg "$wall" &
     $compton "$conf" &
-    exec i3;;
+    exec /usr/bin/i3;;
 esac
