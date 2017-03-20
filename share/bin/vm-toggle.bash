@@ -2,6 +2,7 @@
 set -eu
 
 service=vboxheadless.service
+systemctl --user show $service &> /dev/null
 
 # help
 unset -f helpmsg
@@ -20,12 +21,20 @@ END
 }
 case "${1:-}" in
   "-h"|"--help") helpmsg; exit 0 ;;
-  "-s"|"--status") systemctl --user status ${service}; exit 0 ;;
+  "-s"|"--status")
+    systemctl --user status ${service}
+    echo "--- list vms ---"
+    vboxmanage list vms
+    cat "$HOME"/local/currentvm
+    exit 0 ;;
   "-n"|"--name")
-    systemctl --user is-active $service 1> /dev/null && exit 5
     shift
-    [ "${1}" = "" ] && exit 6
-    echo "currentvm=${1}" > "$HOME"/local/currentvm ;;
+    if [ -z "${1:-}" ]; then
+      cat "$HOME"/local/currentvm
+      exit 0
+    fi
+    systemctl --user is-active $service 1> /dev/null && exit 2
+    echo "currentvm=${1}" > "$HOME"/local/currentvm;;
   "");;
   *)  cat <<END
 --- invalid argument ---
@@ -35,7 +44,6 @@ END
 esac
 unset -f helpmsg
 
-systemctl --user show $service &> /dev/null
 if systemctl --user is-active $service &> /dev/null; then
   echo "please wait for stop VM process"
   which "fortune" &> /dev/null && fortune -a
