@@ -1,4 +1,4 @@
-while [ -n "$1" ]; do
+while [ -n "${1:-}" ]; do
   case "$1" in
     "{{_cursor_}}") ;;
   esac

@@ -9,7 +9,11 @@ END
 }
 
 case "${1:-}" in
-  "-h"|"--help") helpmsg; exit 0;;
+  "-h"|"--help")
+    helpmsg
+    systemctl --user status feh-wallpaper.timer
+    systemctl --user list-timers
+    exit 0;;
   "");;
   *)echo "unknown option: ${*}"; exit 1;;
 esac
