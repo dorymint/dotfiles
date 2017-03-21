@@ -19,23 +19,11 @@ set $mod Mod4
 # right-to-left text rendering, you should instead use pango for rendering and
 # chose a FreeType font, such as:
 #font pango:Sans Regular 9
+#font Noto Sans Mono CJK JP, pango:Orbitron 9
 font pango:Orbitron 9
 
 # path to i3
 set $i3dir $HOME/.i3
-
-# reconsider
-##########
-# display
-#exec --no-startup-id sh $i3dir/display.sh &
-# compton
-#exec --no-startup-id sh $i3dir/comptonbin.sh &
-# feh for background image
-#exec --no-startup-id sh $i3dir/fehbg.sh &
-#exec --no-startup-id feh --recursive --randomize --bg-max $HOME/Pictures/wall
-# for fcitx
-#exec --no-startup-id sh $i3dir/inputmethod.sh
-###########
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -138,32 +126,38 @@ bindsym $mod+Shift+q exec "i3-msg exit"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
+  # These bindings trigger as soon as you enter the resize mode
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 5 px or 5 ppt
-        bindsym k resize grow height 5 px or 5 ppt
-        bindsym l resize shrink height 5 px or 5 ppt
-        bindsym semicolon resize grow width 5 px or 5 ppt
+  # Pressing left will shrink the window’s width.
+  # Pressing right will grow the window’s width.
+  # Pressing up will shrink the window’s height.
+  # Pressing down will grow the window’s height.
+  bindsym j resize shrink width 5 px or 5 ppt
+  bindsym k resize grow height 5 px or 5 ppt
+  bindsym l resize shrink height 5 px or 5 ppt
+  bindsym semicolon resize grow width 5 px or 5 ppt
 
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+  # same bindings, but for the arrow keys
+  bindsym Left resize shrink width 10 px or 10 ppt
+  bindsym Down resize grow height 10 px or 10 ppt
+  bindsym Up resize shrink height 10 px or 10 ppt
+  bindsym Right resize grow width 10 px or 10 ppt
 
-        # back to njrmal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-        bindsym q      mode "default"
+  # back to njrmal: Enter or Escape
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+  bindsym q      mode "default"
 }
-
 bindsym $mod+r mode "resize"
 
-# Colors
+# border
+bindsym $mod+t border normal 0
+bindsym $mod+y border pixel 15
+bindsym $mod+u border none
+
+bindsym $mod+b bar mode toggle
+
+# reconsider: Colors
 set $lightgray #AAAAAA
 set $gray      #484848
 set $ggray2    #757575
@@ -178,37 +172,16 @@ client.focused           $darkgray   $darkgray   #FFFFFF   #333333
 client.focused_inactiv   $darkgray   $darkgray   #FFFFFF   #000000
 client.unfocused         $black      $black      #FFFFFF   #000000
 
-# border
-bindsym $mod+t border normal 0
-bindsym $mod+y border pixel 15
-bindsym $mod+u border none
-
-bindsym $mod+b bar mode toggle
-
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        output  HDMI1
-        status_command i3status
-        font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-        position bottom
-        #mode dock
-        mode hide
-        workspace_buttons yes
-        #hidden_state show
-        hidden_state hide
-        tray_output primary
-
-        #colors {
-        #    background #000000
-        #    statusline #ffffff
-        #    separator #666666
-        #
-        #focused_workspace  #4c7899 #285577 #ffffff
-        #active_workspace   #333333 #5f676a #ffffff
-        #inactive_workspace #333333 #222222 #888888
-        #urgent_workspace   #2f343a #900000 #ffffff
-        #binding_mode       #2f343a #900000 #ffffff
-        #
-        #}
+  output  HDMI1
+  status_command i3status
+  position bottom
+  #mode dock
+  mode hide
+  workspace_buttons yes
+  #hidden_state show
+  hidden_state hide
+  tray_output primary
 }
