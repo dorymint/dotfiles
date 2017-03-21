@@ -26,6 +26,10 @@ case "${1:-}" in
     echo "--- list vms ---"
     vboxmanage list vms
     cat "$HOME"/local/currentvm
+    echo "--- bind ports ---"
+    # maybe deprecation, bug: case currentvm=foo=bar
+    vboxmanage showvminfo "$(cat "$HOME"/local/currentvm | cut -d "=" -f 2)" | \
+      grep NIC
     exit 0 ;;
   "-n"|"--name")
     shift
