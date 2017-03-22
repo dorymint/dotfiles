@@ -14,52 +14,52 @@ alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
 
 # Privileged access
-if (( UID != 0 )); then
+if [ ${EUID:-${UID}} != 0 ]; then
   alias sudo='sudo '
 fi
 
 
 ## local setting
 # cd go work space
-if [[ -d "$GOPATH/src/github.com/$USERNAME" ]]; then
+if [ -d "$GOPATH"/src/github.com/"$USERNAME" ]; then
   alias gw='cd $GOPATH/src/github.com/$USERNAME'
 else
   echo 'alias: not found $GOPATH/src/github.com/$USERNAME'
 fi
 
 #  goto src golang official pkg
-if [[ -d "$GOROOT/src" ]] && [[ -x "$GOROOT/bin/go" ]]; then
+if [ -d "$GOROOT"/src ] && [ -x "$GOROOT"/bin/go ]; then
   alias gosrc='cd $GOROOT/src && vim -R . '
 else
   echo 'alias: not found local go'
 fi
 
 # vim
-if [[ -x "$HOME/opt/vim/bin/vim" ]]; then
+if [ -x "$HOME"/opt/vim/bin/vim ]; then
   alias viml='$HOME/opt/vim/bin/vim'
 else
   echo 'alias: not found $HOME/opt/vim/bin/vim'
 fi
 
 # nvim
-if [[ -x "$HOME/opt/neovim/bin/nvim" ]]; then
+if [ -x "$HOME"/opt/neovim/bin/nvim ]; then
   alias nvim='$HOME/opt/neovim/bin/nvim'
 else
   echo 'alias: not found $HOME/opt/neovim/bin/nvim'
 fi
 
 # for vim plugin sonictemplate: add to commite
-if [[ -r "$DOTFILES_ROOT/vim/sonicdir/allcommit.bash" ]]; then
+if [ -r "$DOTFILES_ROOT"/vim/sonicdir/allcommit.bash ]; then
   alias sonic='bash $DOTFILES_ROOT/vim/sonicdir/allcommit.bash'
 else
   echo "alias: not found sonicdir"
 fi
 
-if [[ -x "$HOME/bin/peco" ]]; then
+if [ -x "$HOME"/bin/peco ]; then
   alias cdp='cd $(find . -type d ! -path "*.git*" !  -path "*.deps*" | peco)'
 fi
 
-if [[ "$TERM" == "xterm-termite" ]]; then
+if [ "$TERM" = "xterm-termite" ]; then
   alias ssh='TERM=xterm-256color ssh'
 fi
 
