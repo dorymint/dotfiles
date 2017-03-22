@@ -43,7 +43,7 @@ endif
   set notimeout
   "set timeoutlen=1000
   set ttimeout
-  "set ttimeoutlen=100
+  set ttimeoutlen=100
   set modeline
   set modelines=5
     " NOTE: modeline ファイル頭と尻尾のコメントを書くとき注意する
@@ -65,7 +65,7 @@ endif
   set ruler
   set number
   "set relativenumber
-  set scrolloff=2
+  set scrolloff=5
   set textwidth=0
   set wrap
   set breakindent
