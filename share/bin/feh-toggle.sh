@@ -9,7 +9,7 @@ END
 }
 
 case "${1:-}" in
-  "-h"|"--help")
+  "-h"|"--help"|"-s"|"--status")
     helpmsg
     systemctl --user status feh-wallpaper.timer
     systemctl --user list-timers
