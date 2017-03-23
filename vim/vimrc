@@ -430,7 +430,7 @@ augroup nyan_vimrc
 
   " go
     autocmd Filetype go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
-          \ listchars=tab:\ \ ,trail:-,nbsp:%,extends:>,precedes:<,
+      "    \ listchars=tab:\ \ ,trail:-,nbsp:%,extends:>,precedes:<,
       " NOTE: goはハードタブが推奨される、noexpandtabとスペースの表示をfmtに合わせて設定
       "     : listchars-=tab したかったけど動かなかった
       "     : lictchars+=tab:\ \ , でもいいけどtabが重複する
