@@ -1,6 +1,6 @@
 # help
 unset -f helpmsg
-helpmsg() {
+function helpmsg () {
   cat >&1 <<END
   {{_cursor_}}
 END

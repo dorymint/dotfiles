@@ -7,12 +7,28 @@ if ! systemctl --user cat $service &> /dev/null; then
   exit 1
 fi
 
+# confirm $1=msg return bool
+function confirm () {
+  local key=""
+  local counter=0
+  while [ $counter -lt 3 ]; do
+    counter=`expr $counter + 1`
+    echo -n "$1 [yes:no]?>"
+    read -t 60 key || return 1
+    case "$key" in
+      "no"|"n") return 1;;
+      "yes"|"y") return 0;;
+    esac
+  done
+  return 1
+}
+
 # help
 unset -f helpmsg
-helpmsg() {
+function helpmsg () {
   cat >&1 <<END
   toggle vboxeadless.service
-  
+
   -h --help
     show this help
   -s --status
@@ -49,7 +65,7 @@ case "${1:-}" in
     cat "$HOME"/local/currentvm
     exit 0;;
   "");;
-  *)  cat <<END
+  *) cat <<END
 --- invalid argument ---
 $*
 END
@@ -58,11 +74,13 @@ esac
 unset -f helpmsg
 
 if systemctl --user is-active $service &> /dev/null; then
+  confirm "STOP $(cat "$HOME"/local/currentvm)"
   echo "please wait for stop VM process"
   which "fortune" &> /dev/null && fortune -a
   systemctl --user stop $service
   echo "inactivate"
 else
+  confirm "START $(cat "$HOME"/local/currentvm)"
   systemctl --user start $service
   echo "activate"
   which "fortune" &> /dev/null && fortune -a
