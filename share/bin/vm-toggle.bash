@@ -2,7 +2,10 @@
 set -eu
 
 service=vboxheadless.service
-systemctl --user show $service &> /dev/null
+if ! systemctl --user cat $service &> /dev/null; then
+  echo "not found: systemctl --user $service"
+  exit 1
+fi
 
 # help
 unset -f helpmsg
@@ -22,11 +25,12 @@ END
 case "${1:-}" in
   "--help"|"-h") helpmsg; exit 0;;
   "--status"|"-s")
-    systemctl --user status ${service}
-    echo "--- list vms ---"
+    echo "----- STATUS -----"
+    systemctl --user status ${service} || true
+    echo "----- LIST VMS -----"
     vboxmanage list vms
     cat "$HOME"/local/currentvm
-    echo "--- bind ports ---"
+    echo "----- BIND PORTS -----"
     # maybe deprecation, bug: case currentvm=foo=bar
     vboxmanage showvminfo "$(cat "$HOME"/local/currentvm | cut -d "=" -f 2)" | grep NIC
     exit 0;;
