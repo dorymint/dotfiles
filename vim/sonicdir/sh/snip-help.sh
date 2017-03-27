@@ -7,7 +7,7 @@ END
 }
 while [ -n "${1:-}" ]; do
   case "$1" in
-   "help"|"-h"|"--help") helpmsg; exit 0;;
+   "help"|"--help"|"-h") helpmsg; exit 0;;
   esac
   shift
 done
