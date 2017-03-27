@@ -20,24 +20,27 @@ helpmsg() {
 END
 }
 case "${1:-}" in
-  "-h"|"--help") helpmsg; exit 0;;
-  "-s"|"--status")
+  "--help"|"-h") helpmsg; exit 0;;
+  "--status"|"-s")
     systemctl --user status ${service}
     echo "--- list vms ---"
     vboxmanage list vms
     cat "$HOME"/local/currentvm
     echo "--- bind ports ---"
     # maybe deprecation, bug: case currentvm=foo=bar
-    vboxmanage showvminfo "$(cat "$HOME"/local/currentvm | cut -d "=" -f 2)" | \
-      grep NIC
+    vboxmanage showvminfo "$(cat "$HOME"/local/currentvm | cut -d "=" -f 2)" | grep NIC
     exit 0;;
-  "-n"|"--name")
+  "--name"|"-n")
     shift
     if [ -z "${1:-}" ]; then
       cat "$HOME"/local/currentvm
       exit 0
     fi
     systemctl --user is-active $service 1> /dev/null && exit 2
+    if ! vboxmanage list vms | grep "^\"${1}\" "; then
+      echo "invalid: $1"
+      exit 3
+    fi
     echo "currentvm=${1}" > "$HOME"/local/currentvm
     cat "$HOME"/local/currentvm
     exit 0;;
