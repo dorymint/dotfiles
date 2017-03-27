@@ -20,7 +20,7 @@ helpmsg() {
 END
 }
 case "${1:-}" in
-  "-h"|"--help") helpmsg; exit 0 ;;
+  "-h"|"--help") helpmsg; exit 0;;
   "-s"|"--status")
     systemctl --user status ${service}
     echo "--- list vms ---"
@@ -30,7 +30,7 @@ case "${1:-}" in
     # maybe deprecation, bug: case currentvm=foo=bar
     vboxmanage showvminfo "$(cat "$HOME"/local/currentvm | cut -d "=" -f 2)" | \
       grep NIC
-    exit 0 ;;
+    exit 0;;
   "-n"|"--name")
     shift
     if [ -z "${1:-}" ]; then
@@ -38,13 +38,15 @@ case "${1:-}" in
       exit 0
     fi
     systemctl --user is-active $service 1> /dev/null && exit 2
-    echo "currentvm=${1}" > "$HOME"/local/currentvm;;
+    echo "currentvm=${1}" > "$HOME"/local/currentvm
+    cat "$HOME"/local/currentvm
+    exit 0;;
   "");;
   *)  cat <<END
 --- invalid argument ---
 $*
 END
-    exit 1 ;;
+    exit 1;;
 esac
 unset -f helpmsg
 
