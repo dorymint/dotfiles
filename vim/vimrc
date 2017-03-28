@@ -403,9 +403,7 @@ endif
 " xclip
 if executable('xclip')
   command! Paste read !xclip -o
-
-  " TODO: fix 2017/02/21 05:21
-  "command! -range Xcopy !xclip && xclip -o
+  command! -range Cut <line1>,<line2>!xclip
 else
   echo 'not found xclip'
 endif
