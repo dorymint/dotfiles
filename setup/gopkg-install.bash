@@ -40,23 +40,23 @@ function confirm () {
   return 1
 }
 
+# check
 split "require"
 type go
 type gawk
 
-# go
+# variable
 goget="go get"
 options="-u -v"
-# list packages
 cd "$(dirname "$(readlink -f "$0")")"
-pkglist="./gopkg-list.txt"
+pkglist="./gopkg.list"
 if  [ ! -r "$pkglist" ]; then
   echo "can't read $pkglist"
   exit 1
 fi
 awkout=$(gawk '/^[^#].*/ { print $0 }' "$pkglist")
 
-# show info
+# info && confirm
 split "go env"
 go version
 go env
@@ -68,7 +68,7 @@ done
 split "confirm"
 confirm "install and update packages?"
 
-# install && update packages
+# install && update
 echo "START install && update"
 for x in $awkout; do
   $goget $options $x
