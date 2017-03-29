@@ -277,6 +277,7 @@ endif
     nnoremap Tc   :<C-u>set cursorcolumn! cursorline!<nl>
     nnoremap Tn   :<C-u>set number!<nl>
 
+    nnoremap Te   :<C-u>setlocal expandtab!<nl>
     nnoremap Ts   :<C-u>setlocal spell!<nl>
     nnoremap Tp   :<C-u>setlocal paste!<nl>
     nnoremap Tr   :<C-u>setlocal readonly!

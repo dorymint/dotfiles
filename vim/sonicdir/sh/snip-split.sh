@@ -1,3 +1,3 @@
-function nyan_split() {
-  echo "(,,ﾟДﾟ) $1 -------"
+function split () {
+  echo "------- $1 -------"
 }
