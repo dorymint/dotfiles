@@ -1,48 +1,61 @@
-#!bin/sh
+#!/bin/sh
 # scriptencoding utf-8
+set -u
 
-echo $0
-dotfiles_root=$(cd "$(dirname "$(readlink -f "$0")")"/../; pwd -P)
-echo "$dotfiles_root"
+function split () {
+  echo "------- $1 -------"
+}
 
-echo ""
-echo "make symlink"
-echo ""
- 
+# help
+function helpmsg () {
+  cat >&1 <<END
+  make directory and symlink
+  --help -h
+  --force -f
+    allow override exists files
+END
+}
+while [ -n "${1:-}" ]; do
+  case "$1" in
+   help|--help|-h) helpmsg; exit 0;;
+   --force|-f) option="-f "
+  esac
+  shift
+done
+unset -f helpmsg
+
+cd "$(dirname "$(readlink -f "$0")")" && cd ../
+dotroot=$(pwd -P)
+option="${option:-}"" -sn"
+
 [ -d "$HOME"/.vim ] || mkdir "$HOME"/.vim
 [ -d "$HOME"/.config ] || mkdir "$HOME"/.config
 [ -d "$HOME"/go ] || mkdir -p "$HOME"/go/{bin,pkg,src}
 
-echo "zsh"
-ln -sn "$dotfiles_root"/zsh/zshrc "$HOME"/.zshrc
-echo ""
+split "zsh"
+ln $option "$dotroot"/zsh/zshrc "$HOME"/.zshrc
 
-echo "bash"
-ln -sn "$dotfiles_root"/bash/bashrc "$HOME"/.bashrc
-echo ""
+split "bash"
+ln $option "$dotroot"/bash/bashrc "$HOME"/.bashrc
 
-echo "git"
-ln -sn "$dotfiles_root"/gitconfig "$HOME"/.gitconfig
-echo ""
+split "git"
+ln $option "$dotroot"/gitconfig "$HOME"/.gitconfig
 
-echo "vim"
-ln -sn "$dotfiles_root"/vim/vimrc "$HOME"/.vimrc
-ln -sn "$dotfiles_root"/vim/gvimrc "$HOME"/.gvimrc
-echo ""
+split "vim"
+ln $option "$dotroot"/vim/vimrc "$HOME"/.vimrc
+ln $option "$dotroot"/vim/gvimrc "$HOME"/.gvimrc
 
-echo "neovim"
-ln -sn "$HOME"/.vim/ "$HOME"/.config/nvim
-ln -sn "$dotfiles_root"/vim/vimrc "$HOME"/.vim/init.vim
-echo ""
+split "neovim"
+ln $option "$HOME"/.vim/ "$HOME"/.config/nvim
+ln $option "$dotroot"/vim/vimrc "$HOME"/.vim/init.vim
 
-echo "tmux"
-ln -sn "$dotfiles_root"/tmux/tmux.conf "$HOME"/.tmux.conf
-echo ""
+split "tmux"
+ln $option "$dotroot"/tmux/tmux.conf "$HOME"/.tmux.conf
 
-echo "i3-wm"
-ln -sn "$dotfiles_root"/i3/ "$HOME"/.i3
-echo ""
+split "i3-wm"
+ln $option "$dotroot"/i3/ "$HOME"/.i3
 
-echo "termite"
-ln -sn "$dotfiles_root"/termite/ "$HOME"/.config/
+split "termite"
+ln $option "$dotroot"/termite/ "$HOME"/.config/
+
 # EOF
