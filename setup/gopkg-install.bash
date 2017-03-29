@@ -1,74 +1,78 @@
 #!/bin/bash
 # scriptencoding utr-8
-# go package install script
+set -eu
 
-echo "require"
-echo "--gawk-- --go--"
-echo "--git-- or any version cotrol systems"
-echo ""
+function split () {
+  echo "------- $1 -------"
+}
 
-# env check
-if [[ -z $DOTFILES_ROOT ]]; then
-  echo "do not find dotfiles directory"
-  echo "please set environment"
-  exit 1
-fi
-cd "$DOTFILES_ROOT"
+# help
+function helpmsg () {
+  cat >&1 <<END
+  go pkg install scripts
 
-# set env goroot
-localgo="$HOME/github.com/golang/go"
-if [[ -d "$localgo" ]]; then
-  goroot="$localgo"
-else
-  goroot=$(go env GOROOT)
-fi
-echo "goroot is $goroot"
+  help --help -h
+    show help message
+END
+}
+while [ -n "${1:-}" ]; do
+  case "$1" in
+   help|--help|-h) helpmsg; exit 0;;
+   # TODO: make flags for exchange variable
+  esac
+  shift
+done
+unset -f helpmsg
 
-# go command
-goget="$goroot/bin/go get"
+# confirm $1=msg return bool
+function confirm () {
+  local key=""
+  local counter=0
+  while [ $counter -lt 3 ]; do
+    counter=`expr $counter + 1`
+    echo -n "$1 [yes:no]?>"
+    read -t 60 key || return 1
+    case "$key" in
+      "no"|"n") return 1;;
+      "yes"|"y") return 0;;
+    esac
+  done
+  return 1
+}
+
+split "require"
+type go
+type gawk
+
+# go
+goget="go get"
 options="-u -v"
-#options="-v"
-
-# set packages
-pkglist="$DOTFILES_ROOT/setup/gopkg-list.txt"
-if [[ -r $pkglist ]]; then
-  awkout=$(gawk '/^[^#].*/ { print $0 }' "$pkglist")
-else
-  echo 'not found gopkg-list.txt'
+# list packages
+cd "$(dirname "$(readlink -f "$0")")"
+pkglist="./gopkg-list.txt"
+if  [ ! -r "$pkglist" ]; then
+  echo "can't read $pkglist"
   exit 1
 fi
+awkout=$(gawk '/^[^#].*/ { print $0 }' "$pkglist")
 
-# show the packages
-echo "--- install list ---"
+# show info
+split "go env"
+go version
+go env
+sleep 1
+split "install list"
 for x in $awkout; do
   echo "$x"
 done
-echo ""
+split "confirm"
+confirm "install and update packages?"
 
-sleep 1
-
-echo "--- go env ---"
-$goroot/bin/go env
-
-# confirm
-key=""
-count=0
-while [[ "$key" != "yes" ]]; do
-  if [[ "$key" = "no" ]] || [[ "$key" = "n" ]] || [[ $count -gt 2 ]]; then
-    echo "ok... stop install process"
-    exit 1
-  fi
-  count=$(expr $count + 1)
-
-  echo "install and update packages[yes:no]?"
-  read key
-done
-
-# install packages
-echo "ok...start install"
+# install && update packages
+echo "START install && update"
 for x in $awkout; do
   $goget $options $x
 done
+echo "...DONE"
 
-echo "...done"
 # EOF
