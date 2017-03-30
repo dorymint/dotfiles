@@ -11,7 +11,7 @@ source $HOME/dotfiles/share/dotenv.sh
 # environment
 if [[ -n $DOTFILES_ROOT ]]; then
   # use grml zshrc, require don't move it
-  if [[ "$(uname -r)" == "*\(ARCH\)\|\(arch\)*" ]] ; then
+  if [[ "$(uname -r)" == "*\(ARCH\)\|\(arch\)*" ]]; then
     echo "use grml in dotfiles"
     source $DOTFILES_ROOT/zsh/zshrc.grml
   else
