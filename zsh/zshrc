@@ -25,6 +25,7 @@ if [[ -n $DOTFILES_ROOT ]]; then
 
   # alias
   source $DOTFILES_ROOT/share/alias
+  [ -r "$HOME"/local/alias ] && source "$HOME"/local/alias
 else
   echo 'DOTFILES_ROOT=""'
 fi

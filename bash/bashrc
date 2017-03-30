@@ -23,6 +23,7 @@ if [[ "$DOTFILES_ROOT" != "" ]]; then
 
   # alias
   source $DOTFILES_ROOT/share/alias
+  [ -r "$HOME"/local/alias ] && source "$HOME"/local/alias
 else
   echo 'DOTFIILES_ROOT=""'
 fi
