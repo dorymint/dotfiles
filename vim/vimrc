@@ -119,8 +119,8 @@ endif
   set smarttab
 
 " tab
-  set tabstop=2
   set expandtab
+  set tabstop=2
   set softtabstop=2
 
 " list
