@@ -26,7 +26,7 @@ unset -f helpmsg
 
 utilsmd="${utilsmd:-"$HOME"/github.com/"$USER"/hello-world/md/utils.md}"
 context="${context:--A 5}"
-option="${option:-${context:-} -n --color=auto -e}"
+option="${option:-${context:-} -n --color=auto -i -e}"
 word="${word:-}"
 [ -r "$utilsmd" ]
 grep $option "$word" "$utilsmd"
