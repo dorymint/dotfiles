@@ -43,13 +43,11 @@ case "$1" in
 esac
 
 echo "replist=$replist"
-echo -e "reps.bash do ...\n\n"
 for x in `cat "$replist"`; do
   [ -z "$x" ] && continue
   echo "-----| $x |-----"
   # NOTE: use eval for environment variable
   cd "$(eval echo "$x")" && git $sub || continue
-  echo -e "-----| done |-----\n\n"
+  echo -e "-----| done |-----\n"
 done
-echo "reps.bash done ..."
 # EOF
