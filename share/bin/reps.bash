@@ -38,7 +38,7 @@ sub=""
 case "$1" in
   "status"|"-s"|"s") sub="status";;
   "fetch"|"-f"|"f") sub="fetch";;
-  "list"|"-l"|"l") less -N "$replist"; exit 0;;
+  "list"|"-l"|"l") cat "$replist"; exit 0;;
   *) exit 3;;
 esac
 
