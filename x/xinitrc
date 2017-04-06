@@ -63,8 +63,9 @@ fi
 
 # for i3
 if [ -d "$HOME"/Pictures/wall ] && [ -x /usr/bin/feh ]; then
-  fehbg="feh --randomize --bg-max"
-  wall="$HOME"/Pictures/wall
+  wallpath="$HOME"/Pictures/wall
+  fehbg="feh --bg-max"
+  wall="$wallpath"/"$(ls "$wallpath" | shuf -n 1)"
 fi
 if [ -r "$HOME"/.i3/compton.conf ] && [ -x /usr/bin/compton ]; then
   compton="compton --config"
