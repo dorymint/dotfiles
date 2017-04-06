@@ -7,7 +7,6 @@ import (
 	"os"
 )
 
-// Return do not close channel
 func displayDaemon() chan<- string {
 	ch := make(chan string)
 	go func() {
@@ -18,7 +17,6 @@ func displayDaemon() chan<- string {
 	return ch
 }
 
-// {Input > modify > Output}
 func modifyDaemon(output chan<- string, prefix string) chan<- string {
 	input := make(chan string)
 	go func() {
@@ -29,19 +27,19 @@ func modifyDaemon(output chan<- string, prefix string) chan<- string {
 	return input
 }
 
-// Proc!!
-func proc() {
+// {Input > modify > Output}
+func interactive() {
 	outch := displayDaemon()
 	ch := modifyDaemon(outch, "hello channel")
 
 	for sc := bufio.NewScanner(os.Stdin); sc.Scan(); {
 		if sc.Err() != nil {
-			log.Fatalf("proc:%v", sc.Err())
+			log.Fatalf("interactive:%v", sc.Err())
 		}
 		ch <- sc.Text()
 	}
 }
 
 func main() {
-	proc()
+	interactive()
 }

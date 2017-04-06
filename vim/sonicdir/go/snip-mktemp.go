@@ -1,6 +1,6 @@
 
 // Create temp file, Return filename.
-func tmpFile(content string) (string, error) {
+func mktemp(content string) (string, error) {
 	// use os temp directory
 	f, err := ioutil.TempFile("", "prefix")
 	if err != nil {
