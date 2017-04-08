@@ -46,9 +46,7 @@ echo "replist=$replist"
 for x in `cat "$replist"`; do
   [ -z "$x" ] && continue
   echo "-----| $x |-----"
-  # NOTE: use eval for environment variable
-  # TODO: reconsider eval 2017/04/07 01:58
-  cd "$(eval echo "$x")" && git $sub || continue
+  cd "$x" && git $sub || continue
   echo -e "-----| done |-----\n"
 done
 # EOF
