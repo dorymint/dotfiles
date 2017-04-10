@@ -1,57 +1,74 @@
 #!/bin/bash
-
-set -e
+set -eu
 
 protocol="https:"
-gofrom="//go.googlesource.com/go"
-#gofrom="//github.com/golang/go"
+repo="//go.googlesource.com/go"
+#repo="//github.com/golang/go"
 goroot="$HOME/github.com/golang/go"
 
 goversion="go1.8.1"
-#buildlog="$( cd $(dirname "$0") ; pwd -P )/go-build.log"
 
 #bootstrap="gcc-go"
 bootstrap="go1.4.3"
-#bootstrap="release-branch.go1.4"
-bootup="yes"
 
+# confirm $1=msg return bool
+function confirm () {
+  local key=""
+  local counter=0
+  while [ $counter -lt 3 ]; do
+    counter=`expr $counter + 1`
+    echo -n "$1 [yes:no]>"
+    read -t 60 key || return 1
+    case "$key" in
+      "no"|"n") return 1;;
+      "yes"|"y") return 0;;
+    esac
+  done
+  return 1
+}
 
-# check git
-echo 'require "git"'
+# git
 git version
 
 # check goroot
 if [[ ! -d "$goroot" ]]; then
-  echo -e "from\n  $protocol$gofrom\nto\n  $goroot"
-  git clone "$protocol$gofrom" "$goroot"
-elif [[ "$1" != "noup" ]]; then
-  # update src
+  echo "from : $protocol$repo"
+  echo "clone: $goroot"
+  confirm "git clone ?"
+  git clone "$protocol$repo" "$goroot"
+fi
+
+# update src
+if confirm "update $goroot ?"; then
   cd "$goroot/src"
   git checkout master
   git pull
 fi
 
-# bootstrap
-if [[ "$bootstrap" == "go1.4.3" ]] || [[ "$bootstrap" == "release-branch.go1.4" ]]; then
-  [[ ! -d "$HOME/$bootstrap" ]] && git clone --no-local $goroot $HOME/$bootstrap
-  if [[ ! -f "$HOME/$bootstrap/bin/go" ]] || [[ "$bootup" == "yes" ]]; then
-    cd $HOME/$bootstrap/src
-    git checkout master
-    git pull
-    git checkout $bootstrap
-    #./make.bash
-    CC=clang CXX=clang++ ./make.bash
-  fi
-fi
-
-
 # build
-cd "$goroot/src"
-git checkout "$goversion"
+echo "bootstrap=$bootstrap"
+confirm "build $goversion ?"
 case "$bootstrap" in
-  "gcc-go") GOROOT_BOOTSTRAP="/usr" ./all.bash;;
-  "go1.4.3") GOROOT_BOOTSTRAP="$HOME/$bootstrap" ./all.bash;;
-  "release-branch.go1.4") GOROOT_BOOTSTRAP="$HOME/$bootstrap" ./all.bash;;
-  *) echo "bootstrap = $bootstrap is invalid"; exit 1;;
+  "go1.4.3")
+    [[ ! -d "$HOME/$bootstrap" ]] && git clone --no-local "$goroot" "$HOME/$bootstrap"
+    if confirm "build/update go1.4.3 ?"; then
+      cd "$HOME/$bootstrap/src"
+      git checkout master
+      git pull
+      git checkout $bootstrap
+      # build go1.4.3
+      clang --version > /dev/null
+      clang++ --version > /dev/null
+      CC=clang CXX=clang++ ./make.bash
+    fi
+    cd "$goroot/src"
+    git checkout "$goversion"
+    GOROOT_BOOTSTRAP="$HOME/$bootstrap" ./all.bash ;;
+  "gcc-go")
+    cd "$goroot/src"
+    git checkout "$goversion"
+    GOROOT_BOOTSTRAP="/usr" ./all.bash ;;
+  *) echo "bootstrap=$bootstrap is invalid"; exit 1 ;;
 esac
+
 # EOF
