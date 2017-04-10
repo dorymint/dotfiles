@@ -45,7 +45,7 @@ split "require"
 type go
 type gawk
 
-# variable
+# set variable
 goget="go get"
 options="-u -v"
 cd "$(dirname "$(readlink -f "$0")")"
