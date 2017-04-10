@@ -453,11 +453,11 @@ augroup nyan_vimrc
 
   " comment
     " NOTE: i_<C-u>, i_<C-t>, i_<C-d>
-    "function! s:sleeping_comments()
+    "function! Sleeping_comments()
     "  setlocal formatoptions-=r
     "  setlocal formatoptions-=o
     "endfunction
-    "autocmd FileType * call <SID>sleeping_comments()
+    "autocmd FileType * call Sleeping_comments()
 augroup END
 
 
