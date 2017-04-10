@@ -7,11 +7,11 @@ gofrom="//go.googlesource.com/go"
 #gofrom="//github.com/golang/go"
 goroot="$HOME/github.com/golang/go"
 
-goversion="go1.8"
+goversion="go1.8.1"
 #buildlog="$( cd $(dirname "$0") ; pwd -P )/go-build.log"
 
-bootstrap="gcc-go"
-#bootstrap="go1.4.3"
+#bootstrap="gcc-go"
+bootstrap="go1.4.3"
 #bootstrap="release-branch.go1.4"
 bootup="yes"
 

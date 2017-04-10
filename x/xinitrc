@@ -34,13 +34,14 @@ fi
 
 # disable display power management signaling
 if [ -x /usr/bin/xset ]; then
-  xset s off -dpms -b r rate 200 30
+  sleep 1 && xset s off -dpms r rate 200 30
 fi
 # for laptop with broken screen :P
 if [ -x /usr/bin/xrandr ] && xrandr --query | grep "HDMI1 connected" &> /dev/null; then
-  xrandr --output HDMI1 --primary --auto --output LVDS1 --off
+  sleep 1 && xrandr --output HDMI1 --primary --auto --output LVDS1 --off
 fi
 
+# lang
 if true; then
   export LANG=ja_JP.UTF-8
   export LANGUAGE=ja_JP:en_US
@@ -52,9 +53,11 @@ else
 fi
 
 # fcitx
-if true; then
+# temporary invalid: 2017/04/10
+if false; then
   if [ -x /usr/bin/fcitx-autostart ]; then
-    fcitx-autostart
+    # temporary invalid: 2017/04/10
+    #fcitx-autostart
     export GTK_IM_MODULE=fcitx
     export QT_IM_MODULE=fcitx
     export XMODIFIERS=@im=fcitx
@@ -72,7 +75,7 @@ if [ -r "$HOME"/.i3/compton.conf ] && [ -x /usr/bin/compton ]; then
   conf="$HOME"/.i3/compton.conf
 fi
 
-# default session
+# session
 session="${1:-i3}"
 case "$session" in
   i3|i3wm )

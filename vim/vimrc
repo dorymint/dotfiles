@@ -412,7 +412,7 @@ endif
 
 " timestamp
 if exists('*strftime')
-  command! Timestamp :put=strftime('%Y/%m/%d %H:%M')
+  command! Timestamp :put=strftime('%Y/%m/%d')
 endif
 
 
