@@ -272,6 +272,7 @@ endif
     nnoremap t>  /><nl>
     nnoremap tol /\%80v.\+<nl>
       " NOTE: match over 80 characters
+      "     : :help pattern
 
   " prefix for toggle<T>
     " NOTE: setのトグルとオプションの補完は T を使う
