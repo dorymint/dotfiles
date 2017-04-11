@@ -7,6 +7,7 @@ helpmsg() {
   grep utils.md
 
   -h --help	show help then exit
+  -f --file path to target file (default utils.md)
   -B [N]	before context
   -A [N]	after context
   -C [N]	context
@@ -15,6 +16,7 @@ END
 while [ -n "${1:-}" ]; do
   case "$1" in
     "-h"|"--help")helpmsg; exit 0;;
+    "-f"|"--file")shift; utilsmd="$1";;
     "-A")shift;context="-A $1";;
     "-B")shift;context="-B $1";;
     "-C")shift;context="-C $1";;
