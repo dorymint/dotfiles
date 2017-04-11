@@ -39,6 +39,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'cocopon/Iceberg.vim'
   Plug 'nanotech/jellybeans.vim'
   Plug 'tomasr/molokai'
+  Plug 'trusktr/seti.vim'
 
 " etc
   Plug 'vim-jp/vimdoc-ja'
