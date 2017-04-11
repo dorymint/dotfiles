@@ -265,11 +265,13 @@ endif
       " NOTE: next,prevは使用頻度が高いので<tb>から<t>に
 
   " search and move
+    " NOTE: autocmd Filetype で設定したほうがよさそう
     nnoremap t;  /}<nl>
     nnoremap t:  /)<nl>
     nnoremap te  /end<nl>
     nnoremap t>  /><nl>
-      " NOTE: autocmd Filetype で設定したほうがよさそう
+    nnoremap tol /\%80v.\+<nl>
+      " NOTE: match over 80 characters
 
   " prefix for toggle<T>
     " NOTE: setのトグルとオプションの補完は T を使う
