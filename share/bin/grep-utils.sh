@@ -1,5 +1,8 @@
 #!/bin/sh
 set -eu
+
+# TODO: add flag for modify in grep-utils.path
+
 # help
 unset -f helpmsg
 helpmsg() {
