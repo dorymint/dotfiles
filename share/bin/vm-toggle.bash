@@ -45,7 +45,7 @@ case "${1:-}" in
     systemctl --user status ${service} || true
     echo "----- LIST VMS -----"
     vboxmanage list vms
-    cat "$HOME"/dotfiles/etc/currentvm
+    echo "currentvm=$(cat "$HOME"/dotfiles/etc/currentvm)"
     echo "----- BIND PORTS -----"
     vboxmanage showvminfo "$(cat "$HOME"/dotfiles/etc/currentvm)" | grep NIC
     exit 0;;
