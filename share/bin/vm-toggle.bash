@@ -35,7 +35,7 @@ function helpmsg () {
     show status ${service}
   -n --name
     modify target VM name
-    $HOME/local/currentvm
+    $HOME/dotfiles/etc/currentvm
 END
 }
 case "${1:-}" in
@@ -45,15 +45,14 @@ case "${1:-}" in
     systemctl --user status ${service} || true
     echo "----- LIST VMS -----"
     vboxmanage list vms
-    cat "$HOME"/local/currentvm
+    cat "$HOME"/dotfiles/etc/currentvm
     echo "----- BIND PORTS -----"
-    # maybe deprecation, bug: case currentvm=foo=bar
-    vboxmanage showvminfo "$(cat "$HOME"/local/currentvm | cut -d "=" -f 2)" | grep NIC
+    vboxmanage showvminfo "$(cat "$HOME"/dotfiles/etc/currentvm)" | grep NIC
     exit 0;;
   "--name"|"-n")
     shift
     if [ -z "${1:-}" ]; then
-      cat "$HOME"/local/currentvm
+      cat "$HOME"/dotfiles/etc/currentvm
       exit 0
     fi
     systemctl --user is-active $service 1> /dev/null && exit 2
@@ -61,8 +60,8 @@ case "${1:-}" in
       echo "invalid: $1"
       exit 3
     fi
-    echo "currentvm=${1}" > "$HOME"/local/currentvm
-    cat "$HOME"/local/currentvm
+    echo "${1}" > "$HOME"/dotfiles/etc/currentvm
+    cat "$HOME"/dotfiles/etc/currentvm
     exit 0;;
   "");;
   *) cat <<END
@@ -74,13 +73,13 @@ esac
 unset -f helpmsg
 
 if systemctl --user is-active $service &> /dev/null; then
-  confirm "STOP $(cat "$HOME"/local/currentvm)"
+  confirm "STOP $(cat "$HOME"/dotfiles/etc/currentvm)"
   echo "please wait for stop VM process"
   which "fortune" &> /dev/null && fortune -a
   systemctl --user stop $service
   echo "inactivate"
 else
-  confirm "START $(cat "$HOME"/local/currentvm)"
+  confirm "START $(cat "$HOME"/dotfiles/etc/currentvm)"
   systemctl --user start $service
   echo "activate"
   which "fortune" &> /dev/null && fortune -a

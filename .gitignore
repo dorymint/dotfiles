@@ -6,5 +6,7 @@ vim/tmp/swap/*
 vim/tmp/backup/*
 vim/tmp/undo/*
 
+etc/*
+
 *.log
 !.gitkeep

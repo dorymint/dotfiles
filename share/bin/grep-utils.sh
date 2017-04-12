@@ -8,6 +8,7 @@ helpmsg() {
 
   -h --help	show help then exit
   -f --file path to target file (default utils.md)
+  -l --local use seved target file path ($HOME/dotfiles/etc/grep-utils.path)
   -B [N]	before context
   -A [N]	after context
   -C [N]	context
@@ -17,6 +18,7 @@ while [ -n "${1:-}" ]; do
   case "$1" in
     "-h"|"--help")helpmsg; exit 0;;
     "-f"|"--file")shift; utilsmd="$1";;
+    "-l"|"--local")utilsmd="$(cat "$HOME"/dotfiles/etc/grep-utils.path)";;
     "-A")shift;context="-A $1";;
     "-B")shift;context="-B $1";;
     "-C")shift;context="-C $1";;

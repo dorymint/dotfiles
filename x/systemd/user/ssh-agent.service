@@ -6,6 +6,7 @@ Type=forking
 Environment=SSH_AUTH_SOCK=%t/ssh-agent.socket
 ExecStart=/usr/bin/ssh-agent -a $SSH_AUTH_SOCK
 ExecStop=/usr/bin/ssh-agent -k
+PrivateTmp=true
 
 [Install]
 WantedBy=default.target

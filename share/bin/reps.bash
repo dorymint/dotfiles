@@ -17,7 +17,7 @@ bind for git
       h -h help
 
     [/path/to/reps.list]
-      $HOME/local/reps.list (default)
+      $HOME/dotfiels/etc/reps.list (default)
 
 END
 }
@@ -26,7 +26,7 @@ case "${1:-}" in
 esac
 unset -f helpmsg
 
-replist="${2:-$HOME/local/reps.list}"
+replist="${2:-$HOME/dotfiles/etc/reps.list}"
 [ -f "$replist" ] || exit 1
 
 if [ ! -r "$1" ] && [ ! -r "$replist" ]; then
