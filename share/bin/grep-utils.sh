@@ -6,7 +6,7 @@ set -eu
 utilsmd="$HOME"/github.com/"$USER"/hello-world/md/utils.md
 utilspath="$HOME"/dotfiles/etc/grep-utils.path
 context="-A 5"
-option="${context} -n --color=auto -i -e"
+option="$context -n --color=auto -i -e"
 word=""
 
 # help
@@ -38,6 +38,8 @@ while [ -n "${1:-}" ]; do
   shift
 done
 unset -f helpmsg
+# update option for context
+option="$context -n --color=auto -i -e"
 
 if [ ! -r "$utilsmd" ] || [ ! -f "$utilsmd" ]; then
   echo "invalid filepath: $utilsmd"
