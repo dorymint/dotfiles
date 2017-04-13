@@ -45,9 +45,10 @@ split "vim"
 ln $option "$dotroot"/vim/vimrc "$HOME"/.vimrc
 ln $option "$dotroot"/vim/gvimrc "$HOME"/.gvimrc
 
-split "neovim"
-ln $option "$HOME"/.vim/ "$HOME"/.config/nvim
-ln $option "$dotroot"/vim/vimrc "$HOME"/.vim/init.vim
+# reconsider
+#split "neovim"
+#ln $option "$HOME"/.vim/ "$HOME"/.config/nvim
+#ln $option "$dotroot"/vim/vimrc "$HOME"/.vim/init.vim
 
 split "tmux"
 ln $option "$dotroot"/tmux/tmux.conf "$HOME"/.tmux.conf
