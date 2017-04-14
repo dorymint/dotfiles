@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -eu
 
 # help
@@ -31,7 +30,7 @@ replist="${2:-$HOME/dotfiles/etc/reps.list}"
 
 if [ ! -r "$1" ] && [ ! -r "$replist" ]; then
   echo "require: reps.bash [sf] <path/to/reps.list>"
-  exit 2
+  exit 1
 fi
 
 sub=""
@@ -39,14 +38,16 @@ case "$1" in
   "status"|"-s"|"s") sub="status";;
   "fetch"|"-f"|"f") sub="fetch";;
   "list"|"-l"|"l") cat "$replist"; exit 0;;
-  *) exit 3;;
+  *) exit 1;;
 esac
 
 echo "replist=$replist"
+# NOTE: 79
+echo -e "-------------------------------------------------------------------------------\n"
 for x in `cat "$replist"`; do
   [ -z "$x" ] && continue
-  echo "-----| $x |-----"
+  echo "$x"
   cd "$x" && git $sub || continue
-  echo -e "-----| done |-----\n"
+  echo -e "-------------------------------------------------------------------------------\n"
 done
 # EOF
