@@ -39,6 +39,7 @@ rsync
 screenfetch
 tcpdump
 termite
+termite-terminfo
 tig
 tmux
 ttf-arphic-uming
