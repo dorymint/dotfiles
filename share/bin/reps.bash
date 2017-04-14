@@ -5,19 +5,18 @@ set -eu
 unset -f helpmsg
 helpmsg() {
   cat >&1 <<'END'
-bind for git
+watch for git repositores
 
   reps.bash [command] [/path/to/reps.list]
 
     [commnad]
-      f -f fetch
-      s -s status
-      l -l list
-      h -h help
+      f -f fetch	git fetch
+      s -s status	git status
+      l -l list	show watch list
+      h -h help	show this help
 
     [/path/to/reps.list]
       $HOME/dotfiels/etc/reps.list (default)
-
 END
 }
 case "${1:-}" in
