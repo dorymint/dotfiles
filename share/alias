@@ -16,7 +16,7 @@ alias chgrp='chgrp --preserve-root'
 alias sudo='sudo '
 
 
-## local setting
+## local
 # cd go work space
 if [ -d "$GOPATH"/src/github.com/"$USERNAME" ]; then
   alias gw='cd $GOPATH/src/github.com/$USERNAME'
@@ -46,8 +46,8 @@ else
 fi
 
 # for vim plugin sonictemplate: add to commite
-if [ -r "$DOTFILES_ROOT"/vim/sonicdir/allcommit.bash ]; then
-  alias sonic='bash $DOTFILES_ROOT/vim/sonicdir/allcommit.bash'
+if [ -x "$DOTFILES_ROOT"/vim/sonicdir/allcommit.bash ]; then
+  alias sonic='$DOTFILES_ROOT/vim/sonicdir/allcommit.bash'
 else
   echo "alias: not found sonicdir"
 fi
@@ -58,10 +58,10 @@ if [ -x "$HOME"/bin/peco ]; then
   [ -x $(which reps.bash) ] && alias reps='cd "$(reps.bash status | peco)"'
 fi
 
-# termite
-if [ "$TERM" = "xterm-termite" ]; then
-  alias ssh='TERM=xterm-256color ssh'
-fi
+# for termite
+[ "$TERM" = "xterm-termite" ] && alias ssh='TERM=xterm-256color ssh'
+
+[ -x $(which mplayer) ] && alias mplayerbgm='mplayer -ao pulse -vo null '
 
 alias ww='cd $HOME/github.com/$USER'
 alias dotfiles='cd $DOTFILES_ROOT'
