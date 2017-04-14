@@ -43,6 +43,7 @@ call plug#begin('~/.vim/plugged')
 
 " etc
   Plug 'vim-jp/vimdoc-ja'
+  Plug 'deris/vim-duzzle'
 call plug#end()
 
 "-----| let |-----"

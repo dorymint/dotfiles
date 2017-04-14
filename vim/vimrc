@@ -428,7 +428,7 @@ endif
 
 if !empty(s:disable)
   call insert(s:disable, { 'text': 'vimrc tool: disable list' })
-  call setqflist(s:disable)
+  call setqflist(s:disable, 'r')
   copen
 endif
 
