@@ -82,10 +82,10 @@ endif
   set nofoldenable
     " NOTE: デフォルトは開くように
     "     : :help zi
-  function! Gikof()
+  function! Giko()
     return ' (,,ﾟДﾟ)' . foldtext()
   endfunction
-  set foldtext=Gikof()
+  set foldtext=Giko()
 
 " showmatch
   set showmatch
@@ -260,6 +260,7 @@ endif
     nnoremap tbs  :<C-u>ls<nl>:sbuffer<space>
     nnoremap tbd  :<C-u>ls<nl>:bdelete<space>
     nnoremap tbk  :<C-u>bdelete<nl>
+    nnoremap tbn  :<C-u>enew<nl>
     nnoremap tj   :<C-u>bnext<nl>
     nnoremap tk   :<C-u>bprev<nl>
       " NOTE: next,prevは使用頻度が高いので<tb>から<t>に
@@ -354,7 +355,7 @@ endif
   inoremap ＞ >
   inoremap ＊ *
   inoremap ＠ @
-  inoremap ー -
+  "inoremap ー -
   inoremap ％ %
   inoremap ＃ #
   inoremap ’ '
@@ -375,11 +376,12 @@ endif
 
 
 "-----| tool command |-----"
+let s:disable = []
 if isdirectory(glob('~/dotfiles/vim/tmp'))
+" TODO: fix for win
 
   " go-todogotcha
   if executable('todogotcha')
-    " TODO: fix for win
     command! Todo :!todogotcha
           \ -word="TODO: "
           \ -type=".go .txt .vim"
@@ -389,20 +391,24 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
     command! List  :vsplit ~/dotfiles/vim/tmp/todogotcha.log
       " NOTE: List内のファイル名からgfで飛べる
   else
-    echo 'not found "todogotcha"'
+    call add(s:disable, { 'text': 'todogotcha' })
   endif
 
   " reps.bash
   if executable('reps.bash')
-    command! RepsStatus :!reps.bash status > ~/dotfiles/vim/tmp/reps.log
-    command! RepsList :vsplit ~/dotfiles/vim/tmp/reps.log
+    function! s:repsStatus() abort
+      split ~/dotfiles/vim/tmp/reps.log
+      % delete "~
+      read !reps.bash status
+      write
+    endfunction
+    command! Reps call s:repsStatus()
   else
-    echo 'not found "reps.bash"'
+    call add(s:disable, { 'text': 'reps.bash' })
   endif
 
 else
-  echo 'not found "~/dotfiles/vim/tmp"'
-  echo 'disable tool'
+  call add(s:disable, { 'text': 'not found ~/dotfiles/vim/tmp' })
 endif
 
 " xclip
@@ -410,12 +416,20 @@ if executable('xclip')
   command! Paste read !xclip -o
   command! -range Cut <line1>,<line2>!xclip
 else
-  echo 'not found xclip'
+  call add(s:disable, { 'text': 'xclip' })
 endif
 
 " timestamp
 if exists('*strftime')
   command! Timestamp :put=strftime('%Y/%m/%d')
+else
+  call add(s:disable, { 'text': 'strftime' })
+endif
+
+if !empty(s:disable)
+  call insert(s:disable, { 'text': 'vimrc tool: disable list' })
+  call setqflist(s:disable)
+  copen
 endif
 
 
