@@ -55,6 +55,7 @@ fi
 # peco
 if [ -x "$HOME"/bin/peco ]; then
   alias cdp='cd $(find . -type d ! -path "*.git*" !  -path "*.deps*" | peco)'
+  [ -x $(which reps.bash) ] && alias reps='reps.bash status | peco | cd'
 fi
 
 # termite
