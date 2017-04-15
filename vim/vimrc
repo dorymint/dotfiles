@@ -395,11 +395,11 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
   endif
 
   " reps.bash
-  if executable('reps.bash')
+  if executable('reps.sh')
     function! s:repsStatus() abort
       split ~/dotfiles/vim/tmp/reps.log
       % delete "~
-      read !reps.bash status
+      read !reps.sh status
       write
     endfunction
     command! Reps call s:repsStatus()
