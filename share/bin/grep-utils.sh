@@ -23,7 +23,6 @@ helpmsg() {
   -l --local	use seved target file path (default $utilspath)
   -e --edit	edit target file, (default editor is vim)
   -u --update	git add && commit for $utilsmd
-  -s --show	show path to target file
   -B [N]	before context
   -A [N]	after context
   -C [N]	context
@@ -35,7 +34,6 @@ while [ -n "${1:-}" ]; do
     "-f"|"--file")shift; utilsmd="$1";;
     "-l"|"--local")utilsmd="$(cat "$utilspath")";;
     "-e"|"--edit")vim "$utilsmd"; exit 0;;
-    "-s"|"--show")echo "$utilsmd"; exit 0;;
     "-u"|"--update")
       cd "$(dirname "$utilsmd")"
       git add "$utilsmd"
