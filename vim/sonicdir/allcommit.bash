@@ -23,19 +23,19 @@ if [[ -d "$DOTFILES_ROOT/vim/sonicdir" ]]; then
   echo "git diff ."
   git diff .
   git status
-  confirm 'git add . [yes:no]?'
+  confirm 'git add . [yes:no]?>'
   git add .
   git status
 
   echo "git diff --cached -- ."
   git diff --cached -- .
-  confirm 'git commit -- . [yes:no]?'
+  confirm 'git commit -- . [yes:no]?>'
   git commit -m "update sonic" -- .
 
   echo "git diff origin/master"
   git diff origin/master
   git status
-  confirm 'git push origin master [yes:no]?'
+  confirm 'git push origin master [yes:no]?>'
   git push origin master
 fi
 # EOF
