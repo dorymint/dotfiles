@@ -39,7 +39,7 @@ while [ -n "${1:-}" ]; do
     "-u"|"--update")
       cd "$(dirname "$utilsmd")"
       git add "$utilsmd"
-      git commit -m "up $(basename "$utilsmd")"
+      git commit -m "up $(basename "$utilsmd")" -- "$utilsmd"
       exit 0;;
     "-A")shift;context="-A $1";;
     "-B")shift;context="-B $1";;
