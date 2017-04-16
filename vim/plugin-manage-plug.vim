@@ -24,7 +24,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'kannokanno/previm'
   Plug 'easymotion/vim-easymotion'
 
-" IDE like
+" language
   Plug 'vim-syntastic/syntastic'
   Plug 'justmao945/vim-clang'
   "Plug 'fatih/vim-go'
