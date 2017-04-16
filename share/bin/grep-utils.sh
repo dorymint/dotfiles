@@ -26,6 +26,7 @@ helpmsg() {
   -B [N]	before context
   -A [N]	after context
   -C [N]	context
+  --dir	show target files directory
 END
 }
 while [ -n "${1:-}" ]; do
@@ -42,7 +43,14 @@ while [ -n "${1:-}" ]; do
     "-A")shift;context="-A $1";;
     "-B")shift;context="-B $1";;
     "-C")shift;context="-C $1";;
-    *)word="$1";;
+    # TODO: reconsider --dir
+    "--dir")echo "$(dirname "$utilsmd")"; exit 0;;
+    *)
+      if [ -n "$word" ]; then
+        echo "invalid argument: $*"
+        exit 1
+      fi
+      word="$1";;
   esac
   shift
 done
