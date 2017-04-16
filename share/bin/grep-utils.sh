@@ -3,9 +3,9 @@ set -eu
 
 # TODO: add flag for modify in grep-utils.path
 
-# TODO: reconsider, exchange $USER
+# TODO: reconsider exchange $USER
 utilsmd="$HOME"/github.com/"$USER"/hello-world/md/utils.md
-# TODO: reconsider, bit confused, utilsmd utilspath
+# TODO: reconsider, bit confused utilsmd utilspath
 # for reset utilsmd, see --local
 utilspath="$HOME"/dotfiles/etc/grep-utils.path
 context="-A 5"
