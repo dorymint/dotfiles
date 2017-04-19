@@ -1,13 +1,16 @@
 #!/bin/sh
 set -eu
 
+replist="$HOME/dotfiles/etc/reps.list"
+sub="status"
+
 # help
 unset -f helpmsg
 helpmsg() {
-  cat >&1 <<'END'
+  cat >&1 <<END
 watch for git repositores
 
-  reps.bash [command] [/path/to/reps.list]
+  reps.bash [command]
 
     [commnad]
       f -f fetch	git fetch
@@ -15,30 +18,30 @@ watch for git repositores
       l -l list	show watch list
       h -h help	show this help
 
+      --file	specify path/to/reps.list
+
     [/path/to/reps.list]
-      $HOME/dotfiels/etc/reps.list (default)
+      $replist (default)
 END
 }
-case "${1:-}" in
-  "h"|"-h"|"help"|"") helpmsg; exit 0;;
-esac
+while [ -n "${1:-}" ]; do
+  case "${1}" in
+    "help"|"-h"|"h") helpmsg; exit 0;;
+    "status"|"-s"|"s") sub="status";;
+    "fetch"|"-f"|"f") sub="fetch";;
+    "list"|"-l"|"l") cat "$replist"; exit 0;;
+    "--file") shift; replist="$1";;
+    "");;
+    *)echo "invalid: $*"; helpmsg; exit 1;;
+  esac
+  shift
+done
 unset -f helpmsg
 
-replist="${2:-$HOME/dotfiles/etc/reps.list}"
-[ -f "$replist" ] || exit 1
-
-if [ ! -r "$1" ] && [ ! -r "$replist" ]; then
-  echo "require: reps.bash [sf] <path/to/reps.list>"
+if [ ! -f "$replist" ] || [ ! -r "$replist" ]; then
+  echo "can not read $replist"
   exit 1
 fi
-
-sub=""
-case "$1" in
-  "status"|"-s"|"s") sub="status";;
-  "fetch"|"-f"|"f") sub="fetch";;
-  "list"|"-l"|"l") cat "$replist"; exit 0;;
-  *) exit 1;;
-esac
 
 echo "replist=$replist"
 # NOTE: 79
@@ -46,7 +49,7 @@ echo -e "-----------------------------------------------------------------------
 for x in `cat "$replist"`; do
   [ -z "$x" ] && continue
   echo "$x"
-  cd "$x" && git $sub || continue
+  cd "$x" && git "$sub" || continue
   echo -e "-------------------------------------------------------------------------------\n"
 done
 # EOF
