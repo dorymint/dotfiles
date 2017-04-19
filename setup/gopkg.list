@@ -5,6 +5,7 @@ github.com/rogpeppe/godef
 github.com/jstemmer/gotags
 github.com/golang/lint/golint
 github.com/google/gops
+github.com/mattn/go-tty
 
 golang.org/x/tools/cmd/...
 golang.org/x/tour/gotour
