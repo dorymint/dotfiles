@@ -19,6 +19,7 @@ while [ -n "${1:-}" ]; do
   case "$1" in
    help|--help|-h) helpmsg; exit 0;;
    # TODO: make flags for exchange variable
+   "");;
   esac
   shift
 done
@@ -50,10 +51,11 @@ goget="go get"
 options="-u -v"
 cd "$(dirname "$(readlink -f "$0")")"
 pkglist="./gopkg.list"
-if  [ ! -r "$pkglist" ]; then
+if  [ ! -r "$pkglist" ] || [ ! -f "$pkglist" ]; then
   echo "can't read $pkglist"
   exit 1
 fi
+
 awkout=$(gawk '/^[^#].*/ { print $0 }' "$pkglist")
 
 # info && confirm
