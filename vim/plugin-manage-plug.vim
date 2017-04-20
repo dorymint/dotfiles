@@ -32,6 +32,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'vim-jp/vim-go-extra'
   "Plug 'google/vim-ft-go'
     " NOTE: vim-ft-goはvimのversionが新しければ本体にmergeされているらしい
+  Plug 'rhysd/vim-go-impl'
   Plug 'dart-lang/dart-vim-plugin'
 
 " color
@@ -43,7 +44,7 @@ call plug#begin('~/.vim/plugged')
 
 " etc
   Plug 'vim-jp/vimdoc-ja'
-  Plug 'deris/vim-duzzle'
+  Plug 'deris/vim-duzzle', { 'on': 'DuzzleStart' }
 call plug#end()
 
 "-----| let |-----"
