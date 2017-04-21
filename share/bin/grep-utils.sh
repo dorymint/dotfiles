@@ -23,7 +23,7 @@ helpmsg() {
   -l --local	use seved target file path (default $utilspath)
   -e --edit	edit target file, (default editor is vim)
   -c --commit	git add && commit for $utilsmd
-  -w --word	specify search words
+  -w --word	specify search word
   -B [N]	before context
   -A [N]	after context
   -C [N]	context
