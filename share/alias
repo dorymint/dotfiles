@@ -13,6 +13,7 @@ alias chown='chown --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
 
+# for carry of alias
 alias sudo='sudo '
 
 
