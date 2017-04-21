@@ -22,7 +22,8 @@ helpmsg() {
   -f --file	path to target file (default $utilsmd)
   -l --local	use seved target file path (default $utilspath)
   -e --edit	edit target file, (default editor is vim)
-  -u --update	git add && commit for $utilsmd
+  -c --commit	git add && commit for $utilsmd
+  -w --word	specify search words
   -B [N]	before context
   -A [N]	after context
   -C [N]	context
@@ -35,7 +36,7 @@ while [ -n "${1:-}" ]; do
     "-f"|"--file")shift; utilsmd="$1";;
     "-l"|"--local")utilsmd="$(cat "$utilspath")";;
     "-e"|"--edit")vim "$utilsmd"; exit 0;;
-    "-u"|"--update")
+    "-c"|"--commit")
       cd "$(dirname "$utilsmd")"
       git add "$utilsmd"
       git commit -m "up $(basename "$utilsmd")" -- "$utilsmd"
@@ -45,8 +46,8 @@ while [ -n "${1:-}" ]; do
     "-C")shift;context="-C $1";;
     # TODO: reconsider --dir
     "--dir")echo "$(dirname "$utilsmd")"; exit 0;;
-    *)
-      if [ -n "$word" ]; then
+    "-w"|"--word")shift; word="$1";;
+    *)if [ -n "$word" ]; then
         echo "invalid argument: $*"
         exit 1
       fi
