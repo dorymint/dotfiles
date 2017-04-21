@@ -1,15 +1,20 @@
 
-func outcha(out io.Writer) chan<- string {
+func outcha(w *os.File) (chan<- string, <-chan error) {
 	ch := make(chan string)
+	writed := make(chan error)
 	go func() {
 		for {
-			_, err := fmt.Fprintf(out, "%s\n", <-ch)
-			if err != nil {
-				close(ch)
-				log.Println("outcah:", err, "outchannel closed")
-				return
+			select {
+			//case <-quit:return
+			case s := <-ch:
+				_, err := fmt.Fprintln(w, s)
+				if err != nil {
+					writed <- err
+					close(ch)
+					return
+				}
 			}
 		}
 	}()
-	return ch
+	return ch, writed
 }
