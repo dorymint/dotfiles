@@ -1,6 +1,6 @@
 #!/bin/sh
 # scriptencoding utf-8
-set -u
+set -eu
 
 function split () {
   echo "------- $1 -------"
@@ -32,6 +32,9 @@ option="${option:-}"" -sn"
 [ -d "$HOME"/.config ] || mkdir "$HOME"/.config
 [ -d "$HOME"/go ] || mkdir -p "$HOME"/go/{bin,pkg,src}
 
+# fallthrough
+set +e
+
 split "zsh"
 ln $option "$dotroot"/zsh/zshrc "$HOME"/.zshrc
 
@@ -58,5 +61,7 @@ ln $option "$dotroot"/i3/ "$HOME"/.i3
 
 split "termite"
 ln $option "$dotroot"/termite/ "$HOME"/.config/
+
+set -e
 
 # EOF
