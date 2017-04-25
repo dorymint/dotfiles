@@ -8,6 +8,11 @@ xft.hintstyle: hitslight
 urxvt.saveLines: 512
 urxvt.scrollBar: false
 
+! do not need iso insert mode
+! for release ctrl+shift
+urxvt*iso14755: false
+urxvt*iso14755_52: false
+
 urxvt.depth: 32
 !urxvt.background: #0f0f0f
 urxvt.background: [95]#000000
