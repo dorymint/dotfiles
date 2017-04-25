@@ -13,6 +13,14 @@ urxvt.scrollBar: false
 urxvt*iso14755: false
 urxvt*iso14755_52: false
 
+! disable Perl extension
+urxvt.perl-ext:
+urxvt.perl-ext-common:
+
+! inputmethods
+!urxvt.inputMethod: fctix
+!urxvt.preeditType: OnTheSpot
+
 urxvt.depth: 32
 !urxvt.background: #0f0f0f
 urxvt.background: [95]#000000
