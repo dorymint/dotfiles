@@ -37,6 +37,7 @@ pulseaudio
 reflector
 rsync
 screenfetch
+sway
 tcpdump
 termite
 termite-terminfo
@@ -49,6 +50,8 @@ ttf-indic-otf
 ttf-liberation
 unzip
 vim
+wayland
+weston
 wget
 xclip
 xf86-video-intel
@@ -56,6 +59,7 @@ xf86-video-vesa
 xmlto
 xorg-server
 xorg-server-utils
+xorg-server-xwayland
 xorg-twm
 xorg-xclock
 xorg-xinit

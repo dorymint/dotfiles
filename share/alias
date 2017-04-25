@@ -62,10 +62,11 @@ fi
 # for termite
 [ "$TERM" = "xterm-termite" ] && alias ssh='TERM=xterm-256color ssh'
 
-[ -x $(which mplayer) ] && alias mplayerbgm='mplayer -ao pulse -vo null '
+[ -x "$(which mplayer)" ] && alias mplayerbgm='mplayer -ao pulse -vo null '
 
 alias ww='cd $HOME/github.com/$USER'
 alias dotfiles='cd $DOTFILES_ROOT'
 alias dot='cd $DOTFILES_ROOT'
+[ -x "$(which sway)" ] && alias sway='XKB_DEFAULT_LAYOUT=jp sway'
 
 # EOF
