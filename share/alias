@@ -50,13 +50,15 @@ fi
 if [ -x "$DOTFILES_ROOT"/vim/sonicdir/allcommit.bash ]; then
   alias sonic='$DOTFILES_ROOT/vim/sonicdir/allcommit.bash'
 else
-  echo "alias: not found sonicdir"
+  echo "alias: not found sonicdir/allcommit.bash"
 fi
 
 # peco
 if [ -x "$HOME"/bin/peco ]; then
   alias cdp='cd "$(find . -type d ! -path "*.git*" !  -path "*.deps*" | peco)"'
   [ -x $(which reps.sh) ] && alias reps='cd "$(reps.sh status | peco)"'
+else
+  echo 'alias: not found $HOME/bin/peco'
 fi
 
 # for termite
