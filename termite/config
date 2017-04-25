@@ -1,10 +1,7 @@
 [optios]
-#font = Monospace 9
-#font = Terminus (TTF) 12
+font = Monospace 9
 #font = Droid sans Mono 8
-#font = DejaVu Sans Mono 8
-
-#font = Noto Sans CJK JP
+font = DejaVu Sans Mono 8
 
 #geometry = 640x480
 #geometry = 1920x1080
