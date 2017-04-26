@@ -5,12 +5,14 @@ unset -f helpmsg
 helpmsg() {
   cat >&1 <<END
   toggle systemctl --user feh-wallpaper.timer
+  -h --help	show this help
+  -s --status	show status
 END
 }
 
 case "${1:-}" in
-  "-h"|"--help"|"-s"|"--status")
-    helpmsg
+  "-h"|"--help")helpmsg; exit 0;;
+  "-s"|"--status")
     systemctl --user status feh-wallpaper.timer
     systemctl --user list-timers
     exit 0;;
