@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# use gm(graphicsmagick) convert $in -strip $out
+# use gm(graphicsmagick) mogrify -strip ./*
 echo "be carefull. remove auther, copyright, license"
 set -eu
 
@@ -21,9 +21,22 @@ function confirm () {
 }
 
 cd "$1"
-confirm "gm convert -strip all files? in $(pwd)" || exit 1
-for x in *; do
-  gm convert "$x" -strip "$x"
-done
+
+set +e
+invalid="$(ls | \
+  grep -v ".*.jpg" | \
+  grep -v ".*.jpeg" | \
+  grep -v ".*.png")"
+set -e
+if [ -n "$invalid" ]; then
+  echo "find invalid filename:"
+  echo "$invalid"
+  exit 1
+fi
+
+confirm "gm mogrify -strip ./* ? pwd=$(pwd)" || exit 1
+echo "please wait ..."
+/usr/bin/gm mogrify -strip ./*
+echo "done!"
 
 # EOF
