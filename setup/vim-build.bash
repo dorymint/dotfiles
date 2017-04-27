@@ -20,7 +20,7 @@ function confirm() {
     fi
     count=$(expr $count + 1)
 
-    echo "$1"
+    echo -n "$1"
     read key
   done
   return 0
@@ -54,13 +54,13 @@ esac
 if [[ -d "$vimbuilddir" ]]; then
   cd $vimbuilddir
   git checkout master
-  if confirm "update vim source? [yes:no]" ""; then
+  if confirm "update vim source? [yes:no]:>" ""; then
     git fetch
     git merge origin/master
   fi
 else
   echo "not found vim src directory"
-  confirm "git clone? [yes:no]" "stop process"
+  confirm "git clone? [yes:no]:>" "stop process"
   git clone $vimrepo $vimbuilddir
   cd $vimbuilddir
   git checkout master
@@ -71,17 +71,17 @@ echo 'configure options'
 for x in $buildoption; do
   echo $x
 done
-confirm "configure? [yes:no]" "stop process"
+confirm "configure? [yes:no]:>" "stop process"
 
 # build
 if [[ -r ./configure ]]; then
   make clean
   ./configure $buildoption
 
-  confirm "make? [yes:no]" "stop process"
+  confirm "make? [yes:no]:>" "stop process"
   make
   echo "install to $installdir"
-  confirm "make install? [yes:no]" "stop process"
+  confirm "make install? [yes:no]:>" "stop process"
   make install
 
   echo ""
