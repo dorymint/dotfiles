@@ -1,0 +1,11 @@
+etc/
+!etc/.gitignore
+
+vim/tmp/
+!vim/tmp/.gitignore
+!vim/tmp/undo/.gitignore
+!vim/tmp/swap/.gitignore
+!vim/tmp/backup/.gitignore
+
+zsh/new/
+!zsh/new/.gitignore
