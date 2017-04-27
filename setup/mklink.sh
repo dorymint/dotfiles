@@ -1,6 +1,6 @@
 #!/bin/sh
 # scriptencoding utf-8
-set -eu
+set -euB
 
 function split () {
   echo "------- $1 -------"
