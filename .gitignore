@@ -9,3 +9,5 @@ vim/tmp/
 
 zsh/new/
 !zsh/new/.gitignore
+
+i3/*.log
