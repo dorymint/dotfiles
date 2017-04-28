@@ -70,5 +70,6 @@ alias ww='cd $HOME/github.com/$USER'
 alias dotfiles='cd $DOTFILES_ROOT'
 alias dot='cd $DOTFILES_ROOT'
 [ -x "$(which sway)" ] && alias sway='XKB_DEFAULT_LAYOUT=jp sway'
+[ -x "$(which emacs)" ] && alias emacs='command emacs -nw '
 
 # EOF
