@@ -1,4 +1,5 @@
 VteTerminal, vte-terminal {
   padding: 2px;
+  font: Inconsolata;
   font-size: small;
 }
