@@ -21,21 +21,19 @@ if (has('win32') || has('win64')) && isdirectory(glob('~/.vim'))
     " NOTE: linuxに合わせる
 endif
 
-"" dein {{{
+"" dein
 "  if isdirectory(glob('~/.vim/dein/repos/github.com/Shougo/dein.vim'))
 "    source ~/dotfiles/vim/plugin-manage-dein.vim
 "  else
 "    echo 'not found plugin-manage-dein.vim'
 "  endif
-" }}}
 
-" plug {{{
-  if filereadable(glob('~/.vim/autoload/plug.vim'))
-    source ~/dotfiles/vim/plugin-manage-plug.vim
-  else
-    echo 'not found: autoload/plug.vim'
-  endif
-" }}}
+" plug
+if filereadable(glob('~/.vim/autoload/plug.vim'))
+  source ~/dotfiles/vim/plugin-manage-plug.vim
+else
+  echo 'not found: autoload/plug.vim'
+endif
 
 
 "-----| set |-----"
@@ -171,7 +169,10 @@ endif
 " NOTE: シェルの設定で変わるのでlocalで設定するか分岐を作った方がいいかも
 
 syntax on
-if $TERM == "xterm-256color" || $TERM == "xterm-termite" || $TERM == "screen-256color" || $TERM == "rxvt-unicode-256color"
+if $TERM == "xterm-256color" ||
+      \ $TERM == "xterm-termite" ||
+      \ $TERM == "screen-256color" ||
+      \ $TERM == "rxvt-unicode-256color"
   try
     set background=dark
     set t_Co=256
@@ -254,6 +255,7 @@ endif
     nnoremap tmp  :<C-u>-tabmove<nl>
 
     nnoremap tmm  :<C-u>marks<nl>
+      " NOTE: :help mark-motions
 
   " buffer prefix<tb>
     nnoremap tbl  :<C-u>ls<nl>:buffer<space>
@@ -267,6 +269,7 @@ endif
 
   " search and move
     " NOTE: autocmd Filetype で設定したほうがよさそう
+    "     : :help object-motions
     nnoremap t;  /}<nl>
     nnoremap t:  /)<nl>
     nnoremap te  /end<nl>
@@ -295,6 +298,7 @@ endif
     nnoremap TRxxd :<C-u>%!xxd -r<space>
       " NOTE: 戻す時は xxd -r
       "     : T[rR]xxd みたいに書きたい
+      "     : Trxxd conflict readonly!
   else
     echo 'not found xxd'
   endif
@@ -370,7 +374,7 @@ endif
   inoremap ７ 7
   inoremap ８ 8
   inoremap ９ 9
-  inoremap 〜 ~
+  "inoremap 〜 ~
   inoremap ？ ?
   inoremap ！ !
 
