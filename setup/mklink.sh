@@ -3,7 +3,7 @@
 set -euB
 
 function split () {
-  echo "------- $1 -------"
+  echo "------- setup $1 -------"
 }
 
 # help
@@ -31,10 +31,10 @@ option="${option:-}"" -sn"
 [ -d "$HOME"/.vim ] || mkdir "$HOME"/.vim
 [ -d "$HOME"/.config ] || mkdir "$HOME"/.config
 [ -d "$HOME"/go ] || mkdir -p "$HOME"/go/{bin,pkg,src}
+[ -d "$HOME"/.config/nvim ] || mkdir -p "$HOME"/.config/nvim
 
 # fallthrough
 set +e
-
 split "zsh"
 ln $option "$dotroot"/zsh/zshrc "$HOME"/.zshrc
 
@@ -48,10 +48,9 @@ split "vim"
 ln $option "$dotroot"/vim/vimrc "$HOME"/.vimrc
 ln $option "$dotroot"/vim/gvimrc "$HOME"/.gvimrc
 
-# reconsider
-#split "neovim"
-#ln $option "$HOME"/.vim/ "$HOME"/.config/nvim
-#ln $option "$dotroot"/vim/vimrc "$HOME"/.vim/init.vim
+# RECONSIDER: neovim
+split "neovim"
+cp -i "$dotroot"/vim/vimrc "$HOME"/.config/nvim/init.vim
 
 split "tmux"
 ln $option "$dotroot"/tmux/tmux.conf "$HOME"/.tmux.conf
@@ -61,7 +60,6 @@ ln $option "$dotroot"/i3/ "$HOME"/.i3
 
 split "termite"
 ln $option "$dotroot"/termite/ "$HOME"/.config/
-
 set -e
 
 # EOF

@@ -4,14 +4,15 @@ set -eu
 
 # make or cmake
 use="make"
-
+#use="cmake"
 repo="https://github.com/neovim/neovim"
 srcroot="$HOME/github.com/neovim/neovim"
 installdir="$HOME/opt/neovim"
 
-if [[ ! -d "$srcroot" ]]; then
+if [ ! -d "$srcroot" ]; then
   git clone "$repo" "$srcroot"
 fi
+
 cd "$srcroot"
 git checkout master
 git pull
@@ -20,13 +21,12 @@ case "$use" in
   "make")
     test -d "build" && rm -r "build/"
     make clean
-    make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$installdir" \
-      CMAKE_BUILD_TYPE="RelWithDebInfo"
+    make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$installdir" CMAKE_BUILD_TYPE="RelWithDebInfo"
     make install
   exit 0;;
 
   "cmake")
-    if [[ ! -d "$srcroot/.deps" ]]; then
+    if [ ! -d "$srcroot/.deps" ]; then
       mkdir ".deps"
     fi
     pushd ".deps"
@@ -34,7 +34,7 @@ case "$use" in
     make
     popd
 
-    if [[ ! -d "$srcroot/build" ]]; then
+    if [ ! -d "$srcroot/build" ]; then
       mkdir "build"
     else
       rm -r "build/*"
@@ -46,5 +46,4 @@ case "$use" in
   exit 0;;
 esac
 
-# CREATE: 2017/01/16 09:20
 # EOF
