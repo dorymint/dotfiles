@@ -9,14 +9,34 @@ repo="https://github.com/neovim/neovim"
 srcroot="$HOME/github.com/neovim/neovim"
 installdir="$HOME/opt/neovim"
 
+# confirm $1=msg return bool
+function confirm () {
+  local key=""
+  local counter=0
+  while [ $counter -lt 3 ]; do
+    counter=`expr $counter + 1`
+    echo -n "$1 [yes:no]?>"
+    read -t 60 key || return 1
+    case "$key" in
+      "no"|"n") return 1;;
+      "yes"|"y") return 0;;
+    esac
+  done
+  return 1
+}
+
 if [ ! -d "$srcroot" ]; then
   git clone "$repo" "$srcroot"
 fi
 
 cd "$srcroot"
 git checkout master
+
+confirm "update src?"
 git pull
 
+echo "use=$use"
+confirm "build?"
 case "$use" in
   "make")
     test -d "build" && rm -r "build/"
