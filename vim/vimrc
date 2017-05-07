@@ -14,6 +14,7 @@ scriptencoding utf-8
 "     : setはできるだけ省略せずに書く set nohl --> set nohlsearch
 "     : Vim script は最初の非空白文字を \ にすることで前の行と連結できる
 "     : :help scriptnames
+"     : :help set-option
 
 
 "-----| plugin manage |-----"
@@ -380,10 +381,11 @@ endif
   inoremap ！ !
 
 
-"-----| tool command |-----"
+"-----| tool |-----"
+" TODO: reconsider copen
+"     : fix for win
 let s:disable = []
 if isdirectory(glob('~/dotfiles/vim/tmp'))
-" TODO: fix for win
 
   " go-todogotcha
   if executable('todogotcha')
@@ -446,23 +448,23 @@ augroup nyan_vimrc
     " NOTE: nyan_vimrcグループのautocmdを初期化して再設定を防ぐ
 
   " vim
-    "autocmd Filetype vim setlocal textwidth=0
-      " NOTE: (# ﾟДﾟ)つ textwidth がどこで set されたかわかんない!
-      "     : おとなしく modeline 使った方が良さそう
+  "autocmd Filetype vim setlocal textwidth=0
+    " NOTE: (# ﾟДﾟ)つ textwidth がどこで set されたかわかんない!
+    "     : おとなしく modeline 使った方が良さそう
 
   " go
-    autocmd Filetype go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
-      "    \ listchars=tab:\ \ ,trail:-,nbsp:%,extends:>,precedes:<,
-      " NOTE: goはハードタブが推奨される、noexpandtabとスペースの表示をfmtに合わせて設定
-      "     : listchars-=tab したかったけど動かなかった
-      "     : lictchars+=tab:\ \ , でもいいけどtabが重複する
-    " NOTE: QuickRunを使うなら以下は無効
-    "if isdirectory(glob('~/dotfiles/vim/tmp'))
-    "  autocmd Filetype go nnoremap <buffer> <c-@>gorun  :<C-u>!go run  % > ~/dotfiles/vim/tmp/gorunlog.txt 2>&1<nl>
-    "endif
+  autocmd Filetype go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
+    "    \ listchars=tab:\ \ ,trail:-,nbsp:%,extends:>,precedes:<,
+    " NOTE: goはハードタブが推奨される、noexpandtabとスペースの表示をfmtに合わせて設定
+    "     : listchars-=tab したかったけど動かなかった
+    "     : lictchars+=tab:\ \ , でもいいけどtabが重複する
+  " NOTE: QuickRunを使うなら以下は無効
+  "if isdirectory(glob('~/dotfiles/vim/tmp'))
+  "  autocmd Filetype go nnoremap <buffer> <c-@>gorun  :<C-u>!go run  % > ~/dotfiles/vim/tmp/gorunlog.txt 2>&1<nl>
+  "endif
 
   " cpp
-    "autocmd Filetype cpp setlocal nocindent
+  "autocmd Filetype cpp setlocal nocindent
 
   " background
   if 0 == 0
@@ -472,14 +474,6 @@ augroup nyan_vimrc
     autocmd VimEnter,ColorScheme * highlight LineNr ctermbg=NONE
     autocmd VimEnter,ColorScheme * highlight CursorLineNr ctermbg=NONE
   endif
-
-  " comment
-    " NOTE: i_<C-u>, i_<C-t>, i_<C-d>
-    "function! Sleeping_comments()
-    "  setlocal formatoptions-=r
-    "  setlocal formatoptions-=o
-    "endfunction
-    "autocmd FileType * call Sleeping_comments()
 augroup END
 
 
