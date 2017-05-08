@@ -1,29 +1,19 @@
 #!/bin/bash
-# scriptencoding utr-8
 set -eu
+
+# set variable
+goget="go get"
+options="-v"
+cd "$(dirname "$(readlink -f "$0")")"
+pkglist="./gopkg.list"
+if  [ ! -r "$pkglist" ] || [ ! -f "$pkglist" ]; then
+  echo "can't read $pkglist"
+  exit 1
+fi
 
 function split () {
   echo "------- $1 -------"
 }
-
-# help
-function helpmsg () {
-  cat >&1 <<END
-  go pkg install scripts
-
-  help --help -h
-    show help message
-END
-}
-while [ -n "${1:-}" ]; do
-  case "$1" in
-   help|--help|-h) helpmsg; exit 0;;
-   # TODO: make flags for exchange variable
-   "");;
-  esac
-  shift
-done
-unset -f helpmsg
 
 # confirm $1=msg return bool
 function confirm () {
@@ -41,21 +31,34 @@ function confirm () {
   return 1
 }
 
+# help
+function helpmsg () {
+  cat >&1 <<END
+go pkg install scripts
+
+  help --help -h
+    show help message
+  update --update -u
+    add flag -u for go get
+END
+}
+while [ -n "${1:-}" ]; do
+  case "$1" in
+   help|--help|-h) helpmsg; exit 0;;
+   # TODO: make flags for exchange variable
+   update|--update|-u) options="-v -u";;
+   "");;
+  esac
+  shift
+done
+unset -f helpmsg
+
 # check
 split "require"
 type go
 type gawk
 
-# set variable
-goget="go get"
-options="-u -v"
-cd "$(dirname "$(readlink -f "$0")")"
-pkglist="./gopkg.list"
-if  [ ! -r "$pkglist" ] || [ ! -f "$pkglist" ]; then
-  echo "can't read $pkglist"
-  exit 1
-fi
-
+# parse
 awkout=$(gawk '/^[^#].*/ { print $0 }' "$pkglist")
 
 # info && confirm
@@ -68,13 +71,13 @@ for x in $awkout; do
   echo "$x"
 done
 split "confirm"
-confirm "install and update packages?"
+confirm "install packages? Run: ${goget} ${options}"
 
 # install && update
-echo "START install && update"
+echo "Run: $goget $options pkg"
 for x in $awkout; do
   $goget $options $x
 done
-echo "...DONE"
+echo "...finish"
 
 # EOF

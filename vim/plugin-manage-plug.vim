@@ -26,14 +26,12 @@ call plug#begin('~/.vim/plugged')
 
 " language
   Plug 'vim-syntastic/syntastic'
+  Plug 'dart-lang/dart-vim-plugin'
   Plug 'justmao945/vim-clang'
   "Plug 'fatih/vim-go'
     " NOTE: 少し大きすぎる
   Plug 'vim-jp/vim-go-extra'
-  "Plug 'google/vim-ft-go'
-    " NOTE: vim-ft-goはvimのversionが新しければ本体にmergeされているらしい
   Plug 'rhysd/vim-go-impl'
-  Plug 'dart-lang/dart-vim-plugin'
 
 " color
   Plug 'w0ng/vim-hybrid'
