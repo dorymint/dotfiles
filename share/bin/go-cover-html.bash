@@ -1,6 +1,5 @@
 #!/bin/bash
 set -eu
-#cd `dirname $0`
 
 helpmsg() {
   cat >&1 <<END
@@ -24,7 +23,6 @@ if [ -f "$prof" ]; then
   [ "$key" = "yes" ] || exit 1
 fi
 
-go="$GOROOT"/bin/go
-"$go" test -race -cover -coverprofile "$prof"
-"$go" tool cover -html "$prof"
+go test -race -cover -coverprofile "$prof"
+go tool cover -html "$prof"
 # EOF

@@ -132,11 +132,11 @@ endif
   set laststatus=2
   set statusline=%f%m%r%w%y%{&fileencoding}[%{&fileformat}]%=%(buf[%n]hex[%4B]line[%4l/%4L:%4P]%)
     " NOTE: %[n]?[.] の形式で指定してる、詳細は:help statuslineで確認
-    "     : use airline. 上の設定はプラグインが効かないときだけ
+    "     : use plugin. 上の設定はプラグインが効かないときだけ
 
 " tabline
-  set showtabline=2
-  set tabline=%t
+  set showtabline=1
+  "set tabline=
     " NOTE: 設定はstatuslineと似てる :help tabline
 
 " split
@@ -249,6 +249,7 @@ endif
   nnoremap t  <nop>
 
   " tabpage prefix<t>
+    " NOTE: help: tab-page
     nnoremap tn   :<C-u>tabnext<nl>
     nnoremap tp   :<C-u>tabprevious<nl>
     nnoremap tN   :<C-u>tabnew<nl>
