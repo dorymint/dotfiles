@@ -152,6 +152,7 @@ endif
 " NOTE: プラグインのプレフィックスは<Leader>を基本に設定してみる
 "     : Filetypeでスイッチするマップは次の autocmd で定義する
 "     : CtrlP emmet sonictemplate はそのまま
+"     : help: ctrlp-mappings
 
   nnoremap <Leader>s   :<C-u>SyntasticToggleMode<nl>
     " NOTE: 保存時に常に走らせると少し重い時があるのでトグルをマップ

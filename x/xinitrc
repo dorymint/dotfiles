@@ -53,11 +53,9 @@ else
 fi
 
 # fcitx
-# temporary invalid: 2017/04/10
-if false; then
+if true; then
   if [ -x /usr/bin/fcitx-autostart ]; then
-    # temporary invalid: 2017/04/10
-    #fcitx-autostart
+    fcitx-autostart
     export GTK_IM_MODULE=fcitx
     export QT_IM_MODULE=fcitx
     export XMODIFIERS=@im=fcitx
