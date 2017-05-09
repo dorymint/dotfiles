@@ -383,14 +383,14 @@ endif
 
 
 "-----| tool |-----"
-" TODO: reconsider copen
+" TODO: reconsider copen, to simple
 "     : fix for win
 let s:disable = []
 if isdirectory(glob('~/dotfiles/vim/tmp'))
 
   " go-todogotcha
   if executable('todogotcha')
-    command! Todo :!todogotcha
+    command! TodoCache :!todogotcha
           \ -word="TODO: "
           \ -type=".go .txt .vim"
           \ -file="$MYVIMRC"
