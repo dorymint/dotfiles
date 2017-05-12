@@ -170,6 +170,6 @@ filetype plugin indent on
 augroup plugin_manage_plug
   autocmd!
   " vim-go-extra
-  autocmd Filetype go nnoremap <buffer> <S-k> :<C-u>Godoc
+  "autocmd Filetype go nnoremap <buffer> <S-k> :<C-u>Godoc
 augroup END
 " EOF
