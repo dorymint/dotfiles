@@ -27,9 +27,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'justmao945/vim-clang'
   " go
     Plug 'fatih/vim-go'
-      " NOTE: 少し大きすぎる
-    "Plug 'vim-jp/vim-go-extra'
-    "Plug 'rhysd/vim-go-impl'
+    " TODO: reconsider golang
+    Plug 'vim-jp/vim-go-extra'
+    Plug 'rhysd/vim-go-impl'
 
 " color
   Plug 'w0ng/vim-hybrid'
@@ -139,7 +139,7 @@ endif
 
 " vim-go
 if isdirectory(glob('~/dotfiles/vim/tmp/bin'))
-  let g:go_bin_path = '~/dotfiles/vim/tmp/bin'
+  let g:go_bin_path = glob('~/dotfiles/vim/tmp/bin')
 endif
 
 
@@ -170,6 +170,6 @@ filetype plugin indent on
 augroup plugin_manage_plug
   autocmd!
   " vim-go-extra
-  "autocmd Filetype go nnoremap <buffer> <S-k> :<C-u>Godoc
+  autocmd Filetype go nnoremap <buffer> <S-k> :<C-u>Godoc
 augroup END
 " EOF
