@@ -1,14 +1,14 @@
-etc/
+etc/*
 !etc/.gitignore
 
-vim/tmp/
+vim/tmp/*
 !vim/tmp/.gitignore
 !vim/tmp/undo/.gitignore
 !vim/tmp/swap/.gitignore
 !vim/tmp/backup/.gitignore
 !vim/tmp/bin/.gitignore
 
-zsh/new/
+zsh/new/*
 !zsh/new/.gitignore
 
 i3/*.log
