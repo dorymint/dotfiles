@@ -53,12 +53,12 @@ else
 fi
 
 # fcitx
-if true; then
+if false; then
   if [ -x /usr/bin/fcitx-autostart ]; then
-    fcitx-autostart
     export GTK_IM_MODULE=fcitx
     export QT_IM_MODULE=fcitx
-    export XMODIFIERS=@im=fcitx
+    export XMODIFIERS="@im=fcitx"
+    fcitx-autostart
   fi
 fi
 

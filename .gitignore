@@ -6,6 +6,7 @@ vim/tmp/
 !vim/tmp/undo/.gitignore
 !vim/tmp/swap/.gitignore
 !vim/tmp/backup/.gitignore
+!vim/tmp/bin/.gitignore
 
 zsh/new/
 !zsh/new/.gitignore

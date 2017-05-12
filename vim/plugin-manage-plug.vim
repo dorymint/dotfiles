@@ -5,13 +5,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'mattn/sonictemplate-vim'
 
 " status
-  if 1 == 0
-    Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
-  else
-    Plug 'itchyny/lightline.vim'
-  endif
-    " NOTE: 少し考える
+  Plug 'itchyny/lightline.vim'
 
 " git
   Plug 'tpope/vim-fugitive'
@@ -26,15 +20,16 @@ call plug#begin('~/.vim/plugged')
   Plug 'thinca/vim-ref'
   Plug 'kannokanno/previm'
   Plug 'easymotion/vim-easymotion'
+  Plug 'vim-syntastic/syntastic'
 
 " language
-  Plug 'vim-syntastic/syntastic'
   Plug 'dart-lang/dart-vim-plugin'
   Plug 'justmao945/vim-clang'
-  "Plug 'fatih/vim-go'
-    " NOTE: 少し大きすぎる
-  Plug 'vim-jp/vim-go-extra'
-  Plug 'rhysd/vim-go-impl'
+  " go
+    Plug 'fatih/vim-go'
+      " NOTE: 少し大きすぎる
+    "Plug 'vim-jp/vim-go-extra'
+    "Plug 'rhysd/vim-go-impl'
 
 " color
   Plug 'w0ng/vim-hybrid'
@@ -58,10 +53,6 @@ else
 endif
 
 " status
-if 1 == 0
-  " airline
-  let g:airline#extensions#tabline#enabled = 1
-else
   " lightline
   let g:lightline = {
     \ 'colorscheme': 'jellybeans',
@@ -78,7 +69,6 @@ else
     \ 'component_function': {
     \   'syntastic': 'SyntasticStatuslineFlag' },
   \ }
-endif
 
 " tagbar
 if (has('win32') || has('win64'))
@@ -147,6 +137,11 @@ endif
   let g:clang_c_options = '-std=c11'
   let g:clang_cpp_options = '-std=c++1z --pedantic-errors'
 
+" vim-go
+if isdirectory(glob('~/dotfiles/vim/tmp/bin'))
+  let g:go_bin_path = '~/dotfiles/vim/tmp/bin'
+endif
+
 
 "-----| keymap |-----"
 " NOTE: プラグインのプレフィックスは<Leader>を基本に設定してみる
@@ -175,6 +170,6 @@ filetype plugin indent on
 augroup plugin_manage_plug
   autocmd!
   " vim-go-extra
-  autocmd Filetype go nnoremap <buffer> <S-k> :<C-u>Godoc
+  "autocmd Filetype go nnoremap <buffer> <S-k> :<C-u>Godoc
 augroup END
 " EOF
