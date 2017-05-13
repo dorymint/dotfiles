@@ -141,6 +141,8 @@ endif
 if isdirectory(glob('~/dotfiles/vim/tmp/bin'))
   let g:go_bin_path = glob('~/dotfiles/vim/tmp/bin')
 endif
+  let g:go_play_open_browser = 0
+  let g:go_fmt_autosave = 0
 
 
 "-----| keymap |-----"

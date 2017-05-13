@@ -34,7 +34,7 @@ fi
 
 # disable display power management signaling
 if [ -x /usr/bin/xset ]; then
-  sleep 1 && xset s off -dpms r rate 200 30
+  sleep 1 && xset s off r rate 200 30
 fi
 # for laptop with broken screen :P
 if [ -x /usr/bin/xrandr ] && xrandr --query | grep "HDMI1 connected" &> /dev/null; then
