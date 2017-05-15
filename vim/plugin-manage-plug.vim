@@ -28,15 +28,15 @@ call plug#begin('~/.vim/plugged')
   " go
     Plug 'fatih/vim-go'
     " TODO: reconsider golang
-    Plug 'vim-jp/vim-go-extra'
-    Plug 'rhysd/vim-go-impl'
+    "Plug 'vim-jp/vim-go-extra'
+    "Plug 'rhysd/vim-go-impl'
 
 " color
-  Plug 'w0ng/vim-hybrid'
-  Plug 'cocopon/Iceberg.vim'
   Plug 'nanotech/jellybeans.vim'
-  Plug 'tomasr/molokai'
-  Plug 'trusktr/seti.vim'
+  "Plug 'w0ng/vim-hybrid'
+  "Plug 'cocopon/Iceberg.vim'
+  "Plug 'tomasr/molokai'
+  "Plug 'trusktr/seti.vim'
 
 " etc
   Plug 'vim-jp/vimdoc-ja'
@@ -52,8 +52,7 @@ else
   echo "template directory: sonicdir disable"
 endif
 
-" status
-  " lightline
+" lightline.vim
   let g:lightline = {
     \ 'colorscheme': 'jellybeans',
     \ 'active': {
@@ -106,23 +105,22 @@ endif
   \ }
 
 " vim-quickrun
-if 1 == 0
-  let g:quickrun_no_default_key_mappings = 1
+  "let g:quickrun_no_default_key_mappings = 1
     " NOTE: 上を設定するとデフォルトマップが無効になる
-endif
   let g:quickrun_config = {}
-  let g:quickrun_config['gotest'] = {'command': 'go', 'exec': ['%c test -race']}
-    " NOTE: go test $(pwd)
+  let g:quickrun_config['gotest'] = { 'command': 'go', 'exec': ['%c test -race'] }
+    " NOTE: :QuickRun gotest
+    "     : go test -race $(pwd)
 
 " previm
 if has('unix') && executable('chromium')
   let g:previm_open_cmd = 'exec chromium'
 endif
 
-" easymotion
+" vim-easymotion
   let g:EasyMotion_do_mapping = 0
 
-" sytastic
+" syntastic
   let g:syntastic_mode_map = { 'mode': 'active' }
   " golang
     let g:syntastic_go_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
@@ -151,17 +149,24 @@ endif
 "     : CtrlP emmet sonictemplate はそのまま
 "     : help: ctrlp-mappings
 
-  nnoremap <Leader>s   :<C-u>SyntasticToggleMode<nl>
+" syntastic
+  nnoremap <Leader>s :<C-u>SyntasticToggleMode<nl>
     " NOTE: 保存時に常に走らせると少し重い時があるのでトグルをマップ
     "     : 非同期でチェックできる良いプラグインがあれば乗り換えたい
-  nnoremap <Leader>n   :<C-u>NERDTreeToggle<nl>
-  nnoremap <Leader>t   :<C-u>TagbarToggle<nl>
 
+" nerdtree
+  nnoremap <Leader>n :<C-u>NERDTreeToggle<nl>
+
+" tagbar
+  nnoremap <Leader>t :<C-u>TagbarToggle<nl>
+
+" sonictemplate-vim
   " すぐにテンプレートを編集できるように
   if isdirectory(glob('~/dotfiles/vim/sonicdir'))
-    nnoremap <Leader>w   :<C-u>10split ~/dotfiles/vim/sonicdir/%:e/
+    nnoremap <Leader>w :<C-u>10split ~/dotfiles/vim/sonicdir/%:e/
   endif
 
+" vim-easymotion
   map  <Leader>f <Plug>(easymotion-bd-w)
   nmap <Leader>f <Plug>(easymotion-overwin-w)
 
@@ -171,7 +176,11 @@ filetype plugin indent on
   " NOTE: plug begin end で含まれてるはずだけど一応
 augroup plugin_manage_plug
   autocmd!
-  " vim-go-extra
+" vim-go-extra
   "autocmd Filetype go nnoremap <buffer> <S-k> :<C-u>Godoc
+
+" vim-go
+  autocmd Filetype go nnoremap <buffer> <Leader>i :<C-u>GoImport<space>
+  autocmd Filetype go nnoremap <buffer> <Leader>d :<C-u>GoDrop<space>
 augroup END
 " EOF

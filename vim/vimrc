@@ -183,17 +183,12 @@ if $TERM == "xterm-256color" ||
     "colorscheme molokai
     colorscheme jellybeans
   catch
-    echo 'colorscheme t_Co=256 try error: use default'
+    echo 'colorscheme: t_Co=256 & jellybeans; try error: use t_Co=8 & default'
     set t_Co=8
     colorscheme default
   endtry
 else
-  "set background=light
-  "colorscheme desert
-  "colorscheme elflord
-  "colorscheme ron
-  "colorscheme solarized
-  "colorscheme default
+  " NOTE: use default
 endif
 
 " set has win
@@ -362,7 +357,6 @@ endif
   inoremap ＞ >
   inoremap ＊ *
   inoremap ＠ @
-  "inoremap ー -
   inoremap ％ %
   inoremap ＃ #
   inoremap ’ '
@@ -377,17 +371,28 @@ endif
   inoremap ７ 7
   inoremap ８ 8
   inoremap ９ 9
-  "inoremap 〜 ~
   inoremap ？ ?
   inoremap ！ !
+  "inoremap ー -
+  "inoremap 〜 ~
 
 
 "-----| tool |-----"
 " TODO: reconsider copen, to simple
 "     : fix for win
-let s:disable = []
+let s:errlist = []
+let s:spath = expand('<sfile>')
+let s:errnum = 1
+function! s:adderr(msg, ...) abort
+  call add(s:errlist, {
+        \ 'nr': s:errnum ,
+        \ 'type': 'W' ,
+        \ 'filename': s:spath ,
+        \ 'pattern': a:0 == 0 ? a:msg : a:1 ,
+        \ 'text': a:msg ,
+        \ })
+endfunction
 if isdirectory(glob('~/dotfiles/vim/tmp'))
-
   " go-todogotcha
   if executable('todogotcha')
     command! TodoCache :!todogotcha
@@ -399,7 +404,7 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
     command! List  :vsplit ~/dotfiles/vim/tmp/todogotcha.log
       " NOTE: List内のファイル名からgfで飛べる
   else
-    call add(s:disable, { 'text': 'todogotcha' })
+    call s:adderr('todogotcha')
   endif
 
   " reps.bash
@@ -412,11 +417,10 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
     endfunction
     command! Reps call s:repsStatus()
   else
-    call add(s:disable, { 'text': 'reps.bash' })
+    call s:adderr('reps.bash')
   endif
-
 else
-  call add(s:disable, { 'text': 'not found ~/dotfiles/vim/tmp' })
+  call s:adderr('not found ~/dotfiles/vim/tmp/')
 endif
 
 " xclip
@@ -424,19 +428,19 @@ if executable('xclip')
   command! Paste read !xclip -o
   command! -range Cut <line1>,<line2>!xclip
 else
-  call add(s:disable, { 'text': 'xclip' })
+  call s:adderr('xclip')
 endif
 
 " timestamp
 if exists('*strftime')
   command! Timestamp :put=strftime('%Y/%m/%d')
 else
-  call add(s:disable, { 'text': 'strftime' })
+  call s:adderr('strftime')
 endif
 
-if !empty(s:disable)
-  call insert(s:disable, { 'text': 'vimrc tool: disable list' })
-  call setqflist(s:disable, 'r')
+if !empty(s:errlist)
+  call setqflist(s:errlist, 'r', { 'nr': s:errnum, 'title': 'vimrc tool errlist'})
+  call setqflist(s:errlist, 'a')
   copen
 endif
 
