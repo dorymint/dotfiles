@@ -392,16 +392,22 @@ function! s:adderr(msg, ...) abort
         \ 'text': a:msg ,
         \ })
 endfunction
+
 if isdirectory(glob('~/dotfiles/vim/tmp'))
   " go-todogotcha
   if executable('todogotcha')
-    command! TodoCache :!todogotcha
-          \ -word="TODO: "
-          \ -type=".go .txt .vim"
-          \ -file="$MYVIMRC"
-          \ -force=true
-          \ -out="$HOME/dotfiles/vim/tmp/todogotcha.log"
-    command! List  :vsplit ~/dotfiles/vim/tmp/todogotcha.log
+    function! s:todogotcha(...) abort
+      split ~/dotfiles/vim/tmp/todogotcha.log
+      % delete "_
+      let l:word = a:0 == 0 ? "TODO: " : a:1
+      let l:opt = '-word=' . l:word . ' ' .
+            \ '-type=".go .txt .vim" ' .
+            \ '-result '
+      let l:cmd = 'todogotcha ' . l:opt
+      put =system(l:cmd)
+      write
+    endfunction
+    command! -nargs=? TodoGotcah call s:todogotcha(<f-args>)
       " NOTE: List内のファイル名からgfで飛べる
   else
     call s:adderr('todogotcha')
@@ -411,7 +417,7 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
   if executable('reps.sh')
     function! s:repsStatus() abort
       split ~/dotfiles/vim/tmp/reps.log
-      % delete "~
+      % delete "_
       read !reps.sh status
       write
     endfunction
@@ -419,24 +425,25 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
   else
     call s:adderr('reps.bash')
   endif
+
 else
   call s:adderr('not found ~/dotfiles/vim/tmp/')
 endif
 
-" xclip
-if executable('xclip')
-  command! Paste read !xclip -o
-  command! -range Cut <line1>,<line2>!xclip
-else
-  call s:adderr('xclip')
-endif
+  " xclip
+  if executable('xclip')
+    command! Paste read !xclip -o
+    command! -range Cut <line1>,<line2>!xclip
+  else
+    call s:adderr('xclip')
+  endif
 
-" timestamp
-if exists('*strftime')
-  command! Timestamp :put=strftime('%Y/%m/%d')
-else
-  call s:adderr('strftime')
-endif
+  " timestamp
+  if exists('*strftime')
+    command! Timestamp :put=strftime('%Y/%m/%d')
+  else
+    call s:adderr('strftime')
+  endif
 
 if !empty(s:errlist)
   call setqflist(s:errlist, 'r', { 'nr': s:errnum, 'title': 'vimrc tool errlist'})

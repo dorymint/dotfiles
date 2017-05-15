@@ -1,3 +1,3 @@
 if err != nil {
-	log.Fatal(err)
+	log.Fatal({{_cursor_}}err)
 }
