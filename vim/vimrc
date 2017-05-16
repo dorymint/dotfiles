@@ -381,13 +381,13 @@ endif
 " TODO: reconsider copen, to simple
 "     : fix for win
 let s:errlist = []
-let s:spath = expand('<sfile>')
+let s:sfile = expand('<sfile>')
 let s:errnum = 1
 function! s:adderr(msg, ...) abort
   call add(s:errlist, {
         \ 'nr': s:errnum ,
         \ 'type': 'W' ,
-        \ 'filename': s:spath ,
+        \ 'filename': s:sfile ,
         \ 'pattern': a:0 == 0 ? a:msg : a:1 ,
         \ 'text': a:msg ,
         \ })
@@ -477,16 +477,38 @@ augroup nyan_vimrc
 
   " cpp
   "autocmd Filetype cpp setlocal nocindent
-
-  " background
-  if 0 == 0
-    autocmd VimEnter,ColorScheme * highlight Normal ctermbg=NONE
-    autocmd VimEnter,ColorScheme * highlight NonText ctermbg=NONE
-    autocmd VimEnter,ColorScheme * highlight TablineSel ctermbg=NONE
-    autocmd VimEnter,ColorScheme * highlight LineNr ctermbg=NONE
-    autocmd VimEnter,ColorScheme * highlight CursorLineNr ctermbg=NONE
-  endif
 augroup END
+
+" for background
+augroup nyan_vimrc_bg
+  autocmd!
+  autocmd VimEnter,ColorScheme * highlight Normal ctermbg=NONE
+  autocmd VimEnter,ColorScheme * highlight NonText ctermbg=NONE
+  autocmd VimEnter,ColorScheme * highlight TablineSel ctermbg=NONE
+  autocmd VimEnter,ColorScheme * highlight LineNr ctermbg=NONE
+  autocmd VimEnter,ColorScheme * highlight CursorLineNr ctermbg=NONE
+augroup END
+let s:toggle_bg_state = 1
+function! Togglebg() abort
+  if s:toggle_bg_state == 1
+    augroup nyan_vimrc_bg
+      autocmd!
+    augroup END
+    let s:toggle_bg_state = 0
+    execute 'colorscheme ' . g:colors_name
+  else
+    augroup nyan_vimrc_bg
+      autocmd!
+      autocmd ColorScheme * highlight Normal ctermbg=NONE
+      autocmd ColorScheme * highlight NonText ctermbg=NONE
+      autocmd ColorScheme * highlight TablineSel ctermbg=NONE
+      autocmd ColorScheme * highlight LineNr ctermbg=NONE
+      autocmd ColorScheme * highlight CursorLineNr ctermbg=NONE
+    augroup END
+    let s:toggle_bg_state = 1
+    execute 'colorscheme ' . g:colors_name
+  endif
+endfunction
 
 
 "-----| nvim |-----"
