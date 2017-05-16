@@ -151,8 +151,19 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
+# for modify volume
+mode "volume" {
+  bindsym j exec amixer -q set Master 2dB- unmute
+  bindsym k exec amixer -q set Master 2dB+ unmute
+
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+  bindsym q      mode "default"
+}
+bindsym $mod+Shift+v mode "volume"
+
 # border
-bindsym $mod+t border normal 0
+bindsym $mod+t border normal 2
 bindsym $mod+y border pixel 15
 bindsym $mod+u border none
 
@@ -161,7 +172,7 @@ bindsym $mod+b bar mode toggle
 # reconsider: Colors
 set $lightgray #AAAAAA
 set $gray      #484848
-set $ggray2    #757575
+set $gray2     #757575
 set $darkgray  #333333
 set $black     #000000
 set $white     #FFFFFF

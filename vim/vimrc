@@ -160,6 +160,7 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
   set backupdir=~/dotfiles/vim/tmp/backup
   set undodir=~/dotfiles/vim/tmp/undo
   set directory=~/dotfiles/vim/tmp/swap
+  set backup
   set undofile
   set swapfile
 else
