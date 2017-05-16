@@ -1,12 +1,14 @@
 # go package list
 
+github.com/josharian/impl
+github.com/jstemmer/gotags
+github.com/mattn/go-tty
 github.com/nsf/gocode
 github.com/rogpeppe/godef
-github.com/jstemmer/gotags
-github.com/golang/lint/golint
+
 github.com/google/gops
-github.com/mattn/go-tty
-github.com/josharian/impl
+github.com/golang/lint/golint
+github.com/golang/dep/cmd/dep
 
 golang.org/x/tools/cmd/...
 golang.org/x/tour/gotour
