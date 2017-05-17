@@ -15,5 +15,6 @@ golang.org/x/tour/gotour
 
 github.com/dorymint/go-todogotcha/todogotcha
 github.com/dorymint/go-addtree/addtree
+github.com/dorymint/expfunc
 
 # EOF
