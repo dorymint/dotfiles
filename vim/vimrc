@@ -399,7 +399,7 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
   if executable('todogotcha')
     function! s:todogotcha(...) abort
       split ~/dotfiles/vim/tmp/todogotcha.log
-      % delete "_
+      % delete _
       let l:word = a:0 == 0 ? "TODO: " : a:1
       let l:opt = '-word=' . l:word . ' ' .
             \ '-type=".go .txt .vim" ' .
@@ -418,7 +418,7 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
   if executable('reps.sh')
     function! s:repsStatus() abort
       split ~/dotfiles/vim/tmp/reps.log
-      % delete "_
+      % delete _
       read !reps.sh status
       write
     endfunction
@@ -426,7 +426,6 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
   else
     call s:adderr('reps.bash')
   endif
-
 else
   call s:adderr('not found ~/dotfiles/vim/tmp/')
 endif
@@ -441,7 +440,7 @@ endif
 
   " timestamp
   if exists('*strftime')
-    command! Timestamp :put=strftime('%Y/%m/%d')
+    command! Timestamp :put =strftime('%Y/%m/%d')
   else
     call s:adderr('strftime')
   endif
