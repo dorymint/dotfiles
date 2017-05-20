@@ -108,7 +108,7 @@ endif
   "let g:quickrun_no_default_key_mappings = 1
     " NOTE: 上を設定するとデフォルトマップが無効になる
   let g:quickrun_config = {}
-  let g:quickrun_config['gotest'] = { 'command': 'go', 'exec': ['%c test -race'] }
+  let g:quickrun_config['gotest'] = { 'command': 'go', 'exec': ['%c test -v -race'] }
     " NOTE: :QuickRun gotest
     "     : go test -race $(pwd)
 
