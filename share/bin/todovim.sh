@@ -14,9 +14,11 @@ function helpmsg () {
   cat >&1 <<'END'
   todovim.sh
     vim "$(todogotcha | peco)"
-    $1=-root
+    root --root -r
     word --wrod -w
     types --types -t
+
+    $1 is same -root
 END
 }
 while [ -n "${1:-}" ]; do
@@ -24,6 +26,7 @@ while [ -n "${1:-}" ]; do
    help|--help|-h)helpmsg; exit 0;;
    word|--word|-w)shift; word="$1";;
    types|--types|-t)shift; types="$1";;
+   root|-root|-r)shift; root="$1";;
    *)root="$1";;
   esac
   shift
