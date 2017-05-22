@@ -1,11 +1,11 @@
 #!/bin/sh
 set -eu
-option="-s "
+lnopt="-s "
 # for accept override
-[ "${1:-}" == "-f" ] && option="${option}-f "
+[ "${1:-}" == "-f" ] && lnopt="${lnopt}-f "
 set +e
-ln $option "$HOME"/dotfiles/x/xinitrc "$HOME"/.xinitrc
-ln $option "$HOME"/dotfiles/x/xserverrc "$HOME"/.xserverrc
-ln $option "$HOME"/dotfiles/x/Xresources "$HOME"/.Xresources
+ln $lnopt "$HOME"/dotfiles/x/xinitrc "$HOME"/.xinitrc
+ln $lnopt "$HOME"/dotfiles/x/xserverrc "$HOME"/.xserverrc
+ln $lnopt "$HOME"/dotfiles/x/Xresources "$HOME"/.Xresources
 set -e
 # EOF

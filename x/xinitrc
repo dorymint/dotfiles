@@ -41,17 +41,6 @@ if [ -x /usr/bin/xrandr ] && xrandr --query | grep "HDMI1 connected" &> /dev/nul
   sleep 1 && xrandr --output HDMI1 --primary --auto --output LVDS1 --off
 fi
 
-# lang
-if true; then
-  export LANG=ja_JP.UTF-8
-  export LANGUAGE=ja_JP:en_US
-  export LC_MESSAGES=C
-else
-  export LANG=en_US.UTF-8
-  export LANGUAGE=en_US
-  export LC_MESSAGES=C
-fi
-
 # fcitx
 if false; then
   if [ -x /usr/bin/fcitx-autostart ]; then

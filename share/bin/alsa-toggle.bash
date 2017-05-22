@@ -20,10 +20,12 @@ case "${1:-}" in
   "-s"|"--show") grep 'device' "$rc"; exit 0;;
 esac
 
-if test ! -r "$HOME"/.asoundrc; then
-  echo "not found $HOME/.asoundrc"
+
+if [ ! -f "$rc" ]; then
+  echo "not found $rc"
   exit 1
 fi
+
 
 if grep 'device 0' "$rc" > /dev/null ; then
   sed -i -e 's/device 0/device 3/' "$rc"

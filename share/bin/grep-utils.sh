@@ -1,7 +1,6 @@
 #!/bin/sh
 set -eu
 
-# TODO: add flag for modify in grep-utils.path
 
 # TODO: reconsider exchange $USER
 utilsmd="$HOME"/github.com/"$USER"/hello-world/md/utils.md

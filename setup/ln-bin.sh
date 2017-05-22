@@ -1,12 +1,17 @@
 #!/bin/sh
 set -eu
 
-cd $(dirname "$0")
+# cds(change to script directory)
+cd "$(dirname "$(readlink -f "$0")")"
+cd ../share/bin
+
 result=""
 dst="$HOME"/bin
 unset x
 for x in *; do
-  [ ! -x "$x" ] && continue
+  if [ ! -x "$x" ] || [ ! -f "$x" ]; then
+    continue
+  fi
 
   # fallthrough
   ln -s "$(pwd)/$x" "$dst" &&

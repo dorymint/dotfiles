@@ -1,0 +1,18 @@
+# zprofile
+
+
+## define $DOTFILES_ROOT
+source "$HOME"/dotfiles/share/dotenv.sh
+if [ -z "$DOTFILES_ROOT" ]; then
+  echo 'can not define $DOTFILES_ROOT'
+  return
+fi
+
+
+## environments
+source "$DOTFILES_ROOT"/share/lang.sh
+source "$DOTFILES_ROOT"/share/nodeenv.sh
+source "$DOTFILES_ROOT"/share/goenv.sh
+### priority local bin
+[ -d "$HOME"/bin ] && export "$HOME"/bin:PATH="$PATH"
+# EOF

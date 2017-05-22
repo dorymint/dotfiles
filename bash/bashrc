@@ -1,40 +1,28 @@
 # bashrc
 
+
+## check interactive
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# lily
-[[ "$(uname -n)" == "lily" ]] && echo "hello lily"
 
-# environment
-
-
-# define DOTFILES_ROOT
-source $HOME/dotfiles/share/dotenv.sh
-
-if [[ "$DOTFILES_ROOT" != "" ]]; then
-  # TODO: add any env
-
-  # completion
-  source $DOTFILES_ROOT/bash/bash_completion_tmux.sh
-
-  # golang
-  source $DOTFILES_ROOT/share/goenv.sh
-
-  # alias
-  source $DOTFILES_ROOT/share/alias
-  [ -r "$DOTFILES_ROOT"/etc/alias ] && source "$DOTFILES_ROOT"/etc/alias
-else
-  echo 'DOTFIILES_ROOT=""'
+## alias
+if [ -n "$DOTFILES_ROOT" ]; then
+  source "$DOTFILES_ROOT"/share/alias
+  [ -f "$DOTFILES_ROOT"/etc/alias ] && source "$DOTFILES_ROOT"/etc/alias
 fi
 
-# call zsh
-if [[ -x /bin/zsh ]]; then
-  if [[ $SHLVL -eq 1 ]]; then
+
+## lily
+if [[ "$(uname -n)" == *lily* ]] && [ "$SHLVL" -eq 1 ]; then
+  echo "hello lily"
+fi
+
+
+## call zsh
+if [ -x /bin/zsh ] && [ -f "$HOME"/.zshrc ]; then
+  if [ "$SHLVL" -eq 1 ]; then
     /bin/zsh
   fi
-else
-  # remind
-  echo ""
 fi
 # EOF

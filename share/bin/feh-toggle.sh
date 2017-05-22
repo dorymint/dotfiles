@@ -24,7 +24,9 @@ if systemctl --user is-active feh-wallpaper.timer &> /dev/null; then
   systemctl --user stop feh-wallpaper.timer
   echo "feh-wallpaper.timer deactivated"
 else
-  systemctl --user start feh-wallpaper.timer feh-wallpaper.service
+  systemctl --user start feh-wallpaper.timer
+  sleep 1
+  systemctl --user start feh-wallpaper.service
   echo "feh-wallpaper.timer activated"
 fi
 # EOF

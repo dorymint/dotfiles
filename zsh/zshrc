@@ -1,37 +1,34 @@
 # zhsrc
 
+
+## check interactive
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# lily
-[[ "$(uname -n)" == "lily" ]] && echo "hello lily"
 
-# define DOTFILES_ROOT
-source $HOME/dotfiles/share/dotenv.sh
-# environment
-if [[ -n $DOTFILES_ROOT ]]; then
-  # use grml zshrc, require don't move it
-  if [[ "$(uname -r)" == "*\(ARCH\)\|\(arch\)*" ]]; then
-    echo "use grml in dotfiles"
-    source $DOTFILES_ROOT/zsh/zshrc.grml
-  else
-    pacman -Q grml-zsh-config &> /dev/null ||
-      echo "recommend: pacman -S grml-zsh-config"
-  fi
-  # TODO: add any env
-
-  # golang
-  source $DOTFILES_ROOT/share/goenv.sh
-
-  # alias
-  source $DOTFILES_ROOT/share/alias
-  [ -r "$DOTFILES_ROOT"/etc/alias ] && source "$DOTFILES_ROOT"/etc/alias
+## grml zshrc
+if [[ "$(uname -r)" == *ARCH* ]]; then
+  pacman -Q grml-zsh-config &> /dev/null ||
+    echo "recommend: pacman -S grml-zsh-config"
 else
-  echo 'DOTFILES_ROOT=""'
+  echo "warning: use grml in dotfiles"
+  source "$DOTFILES_ROOT"/zsh/grml/zshrc.grml
 fi
 
-# setopt
+
+## alias
+source "$DOTFILES_ROOT"/share/alias
+[ -f "$DOTFILES_ROOT"/etc/alias ] && source "$DOTFILES_ROOT"/etc/alias
+
+
+## setopt
 setopt autocd
 setopt autopushd
 setopt pushdignoredups
+
+
+## lily
+if [[ "$(uname -n)" == *lily* ]] && [ "$SHLVL" -eq 1 ]; then
+  echo "hello lily"
+fi
 # EOF

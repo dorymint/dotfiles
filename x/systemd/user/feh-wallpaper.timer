@@ -1,7 +1,5 @@
 [Unit]
 Description=rotate feh-wallpaper.service
-Befor=feh-wallpaper.service
-OnFilure=feh-stopper.service
 
 [Timer]
 OnUnitActiveSec=1m

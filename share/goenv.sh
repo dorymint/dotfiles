@@ -4,7 +4,8 @@
 if [ -x "$HOME"/github.com/golang/go/bin/go ]; then
   if [ -z "$GOROOT" ]; then
     export GOROOT="$HOME"/github.com/golang/go
-    export PATH="$PATH":"$GOROOT"/bin
+    # priority up
+    export PATH="$GOROOT"/bin:"$PATH"
   fi
 else
   echo 'not found $HOME/github.com/golang/go/bin'
