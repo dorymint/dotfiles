@@ -17,6 +17,7 @@ watch for git repositores
       s -s status	git status
       l -l list	show watch list
       h -h help	show this help
+      e -e edit	edit reps.list
 
       --file	specify path/to/reps.list
 
@@ -30,6 +31,7 @@ while [ -n "${1:-}" ]; do
     "status"|"-s"|"s") sub="status";;
     "fetch"|"-f"|"f") sub="fetch";;
     "list"|"-l"|"l") cat "$replist"; exit 0;;
+    "edit"|"-e"|"e") ${EDITOR:-vim} "$replist"; exit 0;;
     "--file") shift; replist="$1";;
     "");;
     *)echo "invalid: $*"; helpmsg; exit 1;;
