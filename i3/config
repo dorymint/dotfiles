@@ -155,6 +155,7 @@ bindsym $mod+r mode "resize"
 mode "volume" {
   bindsym j exec amixer -q set Master 2dB- unmute
   bindsym k exec amixer -q set Master 2dB+ unmute
+  bindsym m exec amixer -q set Master mute
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
