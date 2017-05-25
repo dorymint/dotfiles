@@ -57,8 +57,8 @@ fi
 ## peco
 if [ -x "$(which peco)" ]; then
   [ -x "$(which reps.sh)" ] && ! [ which reps 2> /dev/null ] && alias reps='cd "$(reps.sh status | peco)"'
-  [ which pcd 2> /dev/null ] || alias pcd='cd "$(find . -type d ! -path "*.git*" !  -path "*.deps*" | peco)"'
-  [ which pgw 2> /dev/null ] || alias pgw='gw;cdp'
+  [ which cdp 2> /dev/null ] || alias cdp='cd "$(find . -type d ! -path "*.git*" !  -path "*.deps*" | peco)"'
+  [ which gwp 2> /dev/null ] || alias gwp='gw && cdp'
 else
   echo 'alias: not found peco'
 fi
