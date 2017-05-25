@@ -64,7 +64,7 @@ endif
   set title
   set ruler
   set number
-  "set relativenumber
+  set norelativenumber
   set scrolloff=5
   set textwidth=0
   set wrap
@@ -132,7 +132,7 @@ endif
   set laststatus=2
   set statusline=%f%m%r%w%y%{&fileencoding}[%{&fileformat}]%=%(buf[%n]hex[%4B]line[%4l/%4L:%4P]%)
     " NOTE: %[n]?[.] の形式で指定してる、詳細は:help statuslineで確認
-    "     : use plugin. 上の設定はプラグインが効かないときだけ
+    "     : 上の設定はプラグインが効かないときだけ
 
 " tabline
   set showtabline=1

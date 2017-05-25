@@ -59,6 +59,9 @@ if [ -x "$(which peco)" ]; then
   [ -x "$(which reps.sh)" ] && ! [ which reps 2> /dev/null ] && alias reps='cd "$(reps.sh status | peco)"'
   [ which cdp 2> /dev/null ] || alias cdp='cd "$(find . -type d ! -path "*.git*" !  -path "*.deps*" | peco)"'
   [ which gwp 2> /dev/null ] || alias gwp='gw && cdp'
+  [ -x "$(which todogotcha)" ] &&
+    ! [ which gwtodo 2> /dev/null ] &&
+    alias gwtodo='gw && viml "$(todogotcha -trim=false | peco)"'
 else
   echo 'alias: not found peco'
 fi
