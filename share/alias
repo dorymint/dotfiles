@@ -21,13 +21,13 @@ alias sudo='command sudo '
 
 # local
 ## cd
-[ which gw 2> /dev/null ] || alias gw='cd "$GOPATH/src/github.com/$USERNAME"'
-[ which ww 2> /dev/null ] || alias ww='cd "$HOME/github.com/$USER"'
-[ which dot 2> /dev/null ] || alias dot='cd "$DOTFILES_ROOT"'
+command which gw 2> /dev/null || alias gw='cd "$GOPATH/src/github.com/$USERNAME"'
+command which ww 2> /dev/null || alias ww='cd "$HOME/github.com/$USER"'
+command which dot 2> /dev/null || alias dot='cd "$DOTFILES_ROOT"'
 alias dotfiles='cd "$DOTFILES_ROOT"'
 
 ##  goto src golang official pkg
-if [ -d "$GOROOT"/src ] && [ -x "$(which vim)" ]; then
+if [ -d "$GOROOT"/src ] && [ -x "$(command which vim)" ]; then
   alias gosrc='cd "$GOROOT/src" && vim -R . '
 else
   echo 'alias: not found local go or vim'
@@ -55,12 +55,12 @@ else
 fi
 
 ## peco
-if [ -x "$(which peco)" ]; then
-  [ -x "$(which reps.sh)" ] && ! [ which reps 2> /dev/null ] && alias reps='cd "$(reps.sh status | peco)"'
-  [ which cdp 2> /dev/null ] || alias cdp='cd "$(find . -type d ! -path "*.git*" !  -path "*.deps*" | peco)"'
-  [ which gwp 2> /dev/null ] || alias gwp='gw && cdp'
+if [ -x "$(command which peco)" ]; then
+  [ -x "$(which reps.sh)" ] && alias reps='cd "$(reps.sh status | peco)"'
+  alias cdp 2> /dev/null || alias cdp='cd "$(find . -type d ! -path "*.git*" !  -path "*.deps*" | peco)"'
+  alias gwp 2> /dev/null || alias gwp='gw && cdp'
   [ -x "$(which todogotcha)" ] &&
-    ! [ which gwtodo 2> /dev/null ] &&
+    ! command which gwtodo 2> /dev/null &&
     alias gwtodo='gw && viml "$(todogotcha -trim=false | peco)"'
 else
   echo 'alias: not found peco'
@@ -68,9 +68,9 @@ fi
 
 ## etc
 [ "$TERM" = "xterm-termite" ] && alias ssh='TERM=xterm-256color ssh'
-[ -x "$(which mplayer)" ] && alias mplayerbgm='command mplayer -ao pulse -vo null '
-[ -x "$(which sway)" ] && alias sway='XKB_DEFAULT_LAYOUT=jp sway'
-[ -x "$(which emacs)" ] && alias emacs='command emacs -nw'
+[ -x "$(command which mplayer)" ] && alias mplayerbgm='command mplayer -ao pulse -vo null '
+[ -x "$(command which sway)" ] && alias sway='XKB_DEFAULT_LAYOUT=jp sway'
+[ -x "$(command which emacs)" ] && alias emacs='command emacs -nw'
 
 
 # EOF
