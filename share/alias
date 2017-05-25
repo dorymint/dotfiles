@@ -1,6 +1,7 @@
-#
-# common share alias
-#
+# share/alias
+
+
+# common
 alias la='command ls -lah --color=auto'
 alias :q='exit'
 alias mkdir='command mkdir -p -v'
@@ -14,63 +15,59 @@ alias chown='command chown --preserve-root'
 alias chmod='command chmod --preserve-root'
 alias chgrp='command chgrp --preserve-root'
 
-# for carry of alias
+## for carry of alias
 alias sudo='command sudo '
 
 
-## local
-# cd go work space
-if [ -d "$GOPATH"/src/github.com/"$USERNAME" ]; then
-  alias gw='cd $GOPATH/src/github.com/$USERNAME'
+# local
+## cd
+alias gw='cd "$GOPATH/src/github.com/$USERNAME"'
+alias ww='cd "$HOME/github.com/$USER"'
+alias dotfiles='cd "$DOTFILES_ROOT"'
+alias dot='cd "$DOTFILES_ROOT"'
+
+##  goto src golang official pkg
+if [ -d "$GOROOT"/src ] && [ -x "$(which vim)" ]; then
+  alias gosrc='cd "$GOROOT/src" && vim -R . '
 else
-  echo 'alias: not found $GOPATH/src/github.com/$USERNAME'
+  echo 'alias: not found local go or vim'
 fi
 
-#  goto src golang official pkg
-if [ -d "$GOROOT"/src ] && [ -x "$GOROOT"/bin/go ]; then
-  alias gosrc='cd $GOROOT/src && vim -R . '
-else
-  echo 'alias: not found local go'
-fi
-
-# vim
+## vim
 if [ -x "$HOME"/opt/vim/bin/vim ]; then
-  alias viml='$HOME/opt/vim/bin/vim'
+  alias viml='"$HOME"/opt/vim/bin/vim'
 else
   echo 'alias: not found $HOME/opt/vim/bin/vim'
 fi
 
-# nvim
+## nvim
 if [ -x "$HOME"/opt/neovim/bin/nvim ]; then
-  alias nvim='$HOME/opt/neovim/bin/nvim'
+  alias nvim='"$HOME"/opt/neovim/bin/nvim'
 else
   echo 'alias: not found $HOME/opt/neovim/bin/nvim'
 fi
 
-# for vim plugin sonictemplate: add to commite
+## for vim plugin sonictemplate: add to commite
 if [ -x "$DOTFILES_ROOT"/vim/sonicdir/allcommit.bash ]; then
-  alias sonic='$DOTFILES_ROOT/vim/sonicdir/allcommit.bash'
+  alias sonic='"$DOTFILES_ROOT"/vim/sonicdir/allcommit.bash'
 else
   echo "alias: not found sonicdir/allcommit.bash"
 fi
 
-# peco
-if [ -x "$HOME"/bin/peco ]; then
-  alias cdp='cd "$(find . -type d ! -path "*.git*" !  -path "*.deps*" | peco)"'
+## peco
+if [ -x "$(which peco)" ]; then
   [ -x "$(which reps.sh)" ] && alias reps='cd "$(reps.sh status | peco)"'
+  alias cdp='cd "$(find . -type d ! -path "*.git*" !  -path "*.deps*" | peco)"'
+  alias cdgw='gw;cdp'
 else
-  echo 'alias: not found $HOME/bin/peco'
+  echo 'alias: not found peco'
 fi
 
-# for termite
+## etc
 [ "$TERM" = "xterm-termite" ] && alias ssh='TERM=xterm-256color ssh'
-
 [ -x "$(which mplayer)" ] && alias mplayerbgm='command mplayer -ao pulse -vo null '
-
-alias ww='cd $HOME/github.com/$USER'
-alias dotfiles='cd $DOTFILES_ROOT'
-alias dot='cd $DOTFILES_ROOT'
 [ -x "$(which sway)" ] && alias sway='XKB_DEFAULT_LAYOUT=jp sway'
 [ -x "$(which emacs)" ] && alias emacs='command emacs -nw'
+
 
 # EOF
