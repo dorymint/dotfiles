@@ -13,7 +13,7 @@ call plug#begin('~/.vim/plugged')
 
 " manage
   Plug 'ctrlpvim/ctrlp.vim'
-  Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+  Plug 'scrooloose/nerdtree'
   Plug 'majutsushi/tagbar'
     " NOTE: require ctags
   Plug 'thinca/vim-quickrun'
