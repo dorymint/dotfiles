@@ -6,7 +6,7 @@ repo="//go.googlesource.com/go"
 #repo="//github.com/golang/go"
 goroot="$HOME/github.com/golang/go"
 
-goversion="go1.8.1"
+goversion="go1.8.3"
 
 #bootstrap="gcc-go"
 bootstrap="go1.4.3"
