@@ -16,5 +16,6 @@ golang.org/x/tour/gotour
 github.com/kamisari/go-todogotcha/todogotcha
 github.com/kamisari/go-addtree/addtree
 github.com/kamisari/expfunc
+github.com/kamisari/tree
 
 # EOF
