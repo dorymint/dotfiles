@@ -1,6 +1,6 @@
 #!/bin/sh
 set -eu
-
-[ -x "getter" ]
-
+[ -x "$(command which getter)" ]
+[ -x "$(command which feh)" ]
+feh --scale-down "$(getter)"
 # EOF
