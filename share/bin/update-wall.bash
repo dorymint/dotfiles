@@ -4,19 +4,22 @@ set -eu
 echo "change directory for update wallpaper"
 cd "$(dirname "$(readlink -f "$0")" )"
 pwd
-wall="$HOME"/Pictures/wall
+links="$HOME"/Pictures/links
 wallpaper="$HOME"/Pictures/wallpaper
-[ -d "$wall" ]
+getter="$HOME"/Pictures/getter
+[ -d "$links" ]
 [ -d "$wallpaper" ]
+[ -d "$getter" ]
 
 [ -f ./unlink-all.bash ]
 [ -f ./ln-wall.bash ]
 
-echo "unlink in $wall"
-bash ./unlink-all.bash "$wall"
+echo "unlink in $links"
+bash ./unlink-all.bash "$links"
 
-echo "mklink $wallpaper to $wall"
-bash ./ln-wall.bash "$wallpaper" "$wall"
+echo "mklink $wallpaper and $getter to $links"
+bash ./ln-wall.bash "$wallpaper" "$links"
+bash ./ln-wall.bash "$getter" "$links"
 
 echo "done"
 # EOF
