@@ -15,7 +15,9 @@ fi
 source "$DOTFILES_ROOT"/share/lang.sh
 source "$DOTFILES_ROOT"/share/nodeenv.sh
 source "$DOTFILES_ROOT"/share/goenv.sh
+### priority local bin
 [ -d "$HOME"/bin ] && export PATH="$PATH":"$HOME"/bin
+[ -d "$HOME"/bin/dev ] && export PATH="$HOME"/bin/dev:"$PATH"
 
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc

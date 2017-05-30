@@ -31,6 +31,7 @@ lnopt="${lnopt:-}"" -sn"
 [ -d "$HOME"/.vim ] || mkdir "$HOME"/.vim
 [ -d "$HOME"/go ] || mkdir -p "$HOME"/go/{bin,pkg,src}
 [ -d "$HOME"/bin ] || mkdir "$HOME"/bin
+[ -d "$HOME"/bin/dev ] || mkdir "$HOME"/bin/dev
 [ -d "$HOME"/.config ] || mkdir "$HOME"/.config
 [ -d "$HOME"/.config/nvim ] || mkdir -p "$HOME"/.config/nvim
 [ -d "$HOME"/.config/systemd/user ] || mkdir -p "$HOME"/.config/systemd/user
