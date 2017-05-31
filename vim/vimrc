@@ -270,8 +270,6 @@ endif
     " NOTE: autocmd Filetype で設定したほうがよさそう
     "     : :help object-motions
     nnoremap t;  /}<nl>
-    nnoremap t:  /)<nl>
-    nnoremap te  /end<nl>
     nnoremap t>  /><nl>
     nnoremap tol /\%80v.\+<nl>
       " NOTE: match over 80 characters
@@ -290,6 +288,7 @@ endif
     nnoremap Tr   :<C-u>setlocal readonly!
     nnoremap Tf   :<C-u>setlocal filetype=
     nnoremap Tw   :<C-u>setlocal textwidth=0
+    nnoremap TENC :<C-u>e ++enc=shift_jis<space>
 
   " hex
   if executable('xxd')
