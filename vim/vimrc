@@ -63,6 +63,8 @@ endif
   set wrap
   set breakindent
     " NOTE: 折り返しのインデントを合わせる,vim8
+  set norevins
+    " NOTE: :help revins :)
 
 " cursor
   set nocursorcolumn
@@ -203,25 +205,11 @@ endif
 " <nop>はマップを削除できる
 " コマンドのキーマップは<C-u>で数値の前置を消しておかないと範囲指定される
 
-" nop
+" normal map
   "nnoremap zE <nop>
-  " NOTE: disable all erase? reconsider
+    " NOTE: disable all erase?
 
-" ノーマルモードに
-  "inoremap jj <Esc>
-  "inoremap jk <Esc>
-  "inoremap kj <Esc>
-    " NOTE: <C-[> に慣れた方がいいかも
-
-" インサートモードの前後移動
-  inoremap <C-f>   <left>
-  "inoremap <C-h>   <left>
-  inoremap <C-l>   <right>
-    " TODO: 使い難いのでもう少し考える...無くてもいいかも
-    " NOTE: <C-f> 直感に反する
-    "     : <C-h> 削除はbackspaceで割り切るか考える
-
-" Resize window
+  " Resize window
   nnoremap <up>    <nop>
   nnoremap <down>  <nop>
   nnoremap <left>  <nop>
@@ -232,34 +220,47 @@ endif
   nnoremap <left>  <C-w><
   nnoremap <right> <C-w>>
 
+  " 行を上下に引っ張る
+  "nnoremap <C-j>    ddp
+  "nnoremap <C-k>    ddkP
+    " NOTE: 上の<C-k>はファイルの先頭で入れると行が消える、挙動の理由がよくわかってない
+    "     : ddまでは動いて、kが失敗すると止まるっぽい? dd && k && P
+  nnoremap <C-j>    :<C-u>. move +1<nl>
+  nnoremap <C-k>    :<C-u>. move -2<nl>
+    " NOTE: reg を汚さない . は現在行、こちらなら行は消えない
+
+  " 改行の挿入
+  "nnoremap <C-m>    o<Esc>k
+    " NOTE: このマップはもう少し考えたい
+
 " keymap prefix <T> <t> {{{
-  " NOTE: tは移動系で便利っぽいけどfがあるので潰してみる
+    " NOTE: tは移動系で便利っぽいけどfがあるので潰してみる
   nnoremap T  <nop>
   nnoremap t  <nop>
 
-  " tabpage prefix<t>
-    " NOTE: help: tab-page
-    nnoremap tn   :<C-u>tabnext<nl>
-    nnoremap tp   :<C-u>tabprevious<nl>
-    nnoremap tN   :<C-u>tabnew<nl>
-    nnoremap tC   :<C-u>tabclose<nl>
-    nnoremap tmn  :<C-u>+tabmove<nl>
-    nnoremap tmp  :<C-u>-tabmove<nl>
+    " tabpage prefix<t>
+      " NOTE: help: tab-page
+    nnoremap tn  :<C-u>tabnext<nl>
+    nnoremap tp  :<C-u>tabprevious<nl>
+    nnoremap tN  :<C-u>tabnew<nl>
+    nnoremap tC  :<C-u>tabclose<nl>
+    nnoremap tmn :<C-u>+tabmove<nl>
+    nnoremap tmp :<C-u>-tabmove<nl>
 
     nnoremap tmm  :<C-u>marks<nl>
       " NOTE: :help mark-motions
 
-  " buffer prefix<tb>
-    nnoremap tbl  :<C-u>ls<nl>:buffer<space>
-    nnoremap tbs  :<C-u>ls<nl>:sbuffer<space>
-    nnoremap tbd  :<C-u>ls<nl>:bdelete<space>
-    nnoremap tbk  :<C-u>bdelete<nl>
-    nnoremap tbn  :<C-u>enew<nl>
-    nnoremap tj   :<C-u>bnext<nl>
-    nnoremap tk   :<C-u>bprev<nl>
+    " buffer prefix<tb>
+    nnoremap tbl :<C-u>ls<nl>:buffer<space>
+    nnoremap tbs :<C-u>ls<nl>:sbuffer<space>
+    nnoremap tbd :<C-u>ls<nl>:bdelete<space>
+    nnoremap tbk :<C-u>bdelete<nl>
+    nnoremap tbn :<C-u>enew<nl>
+    nnoremap tj  :<C-u>bnext<nl>
+    nnoremap tk  :<C-u>bprev<nl>
       " NOTE: next,prevは使用頻度が高いので<tb>から<t>に
 
-  " search and move
+    " search and move
     " NOTE: autocmd Filetype で設定したほうがよさそう
     "     : :help object-motions
     nnoremap t;  /}<nl>
@@ -268,7 +269,7 @@ endif
       " NOTE: match over 80 characters
       "     : :help pattern
 
-  " prefix for toggle<T>
+    " prefix for toggle<T>
     " NOTE: setのトグルとオプションの補完は T を使う
     nnoremap Th   :<C-u>set hlsearch!<nl>
     nnoremap Tl   :<C-u>set list!<nl>
@@ -295,21 +296,32 @@ endif
   endif
 " }}}
 
-" 行を上下に引っ張る
-  "nnoremap <C-j>    ddp
-  "nnoremap <C-k>    ddkP
-    " NOTE: 上の<C-k>はファイルの先頭で入れると行が消える、挙動の理由がよくわかってない
-    "     : ddまでは動いて、kが失敗すると止まるっぽい? dd && k && P
-  nnoremap <C-j>    :<C-u>. move +1<nl>
-  nnoremap <C-k>    :<C-u>. move -2<nl>
-    " NOTE: reg を汚さない . は現在行、こちらなら行は消えない
 
-" 改行の挿入
-  "nnoremap <C-m>    o<Esc>k
-    " NOTE: このマップはもう少し考えたい
+" insert map
+  " ノーマルモードに
+  "inoremap jj <Esc>
+  "inoremap jk <Esc>
+  "inoremap kj <Esc>
+    " NOTE: <C-[> に慣れた方がいいかも
 
-" 閉じ括弧
+  " インサートモードの移動
+  "inoremap <C-f> <left>
+  "inoremap <C-h> <left>
+  inoremap <C-l> <right>
+  inoremap <C-b> <left>
+    " TODO: 使い難いのでもう少し考える...無くてもいいかも
+    " NOTE: <C-f> 直感に反する
+    "     : <C-h> 削除はbackspaceで割り切るか考える
+  " emacs
+  "inoremap <C-a> <home>
+  "inoremap <C-e> <end>
+  "inoremap <C-b> <left>
+  "inoremap <C-a> <right>
+  "inoremap <C-p> <up>
+  "inoremap <C-n> <down>
+
 if 1 == 0
+  " 閉じ括弧
   inoremap {} {}<C-g>U<left>
   inoremap () ()<C-g>U<left>
   inoremap [] []<C-g>U<left>
@@ -317,27 +329,24 @@ if 1 == 0
   inoremap "" ""<C-g>U<left>
   inoremap '' ''<C-g>U<left>
 endif
-
   inoremap {<enter> {}<left><enter><Esc><S-o>
   inoremap {<nl>    {}<left><nl><Esc><S-o>
-
   inoremap (<enter> ()<left><enter><Esc><S-o>
   inoremap (<nl>    ()<left><nl><Esc><S-o>
-
   inoremap [<enter> []<left><enter><Esc><S-o>
   inoremap [<nl>    []<left><nl><Esc><S-o>
     " NOTE: <enter>と<nl>、違いがよくわかってない
     "     : 入力は別扱い、挿入が<eol>、書き込みがff依存?
 
-" オムニ補完
-  inoremap <S-tab>  <C-x><C-o>
+  " オムニ補完
+  inoremap <S-tab> <C-x><C-o>
 
-" undo
-  inoremap <C-u>    <C-g>u<C-u>
-  inoremap <C-w>    <C-g>u<C-w>
+  " undo
+  inoremap <C-u> <C-g>u<C-u>
+  inoremap <C-w> <C-g>u<C-w>
 
-" 全角を半角に
-  " NOTE: :help i_ctrl-v
+  " 全角を半角に
+    " NOTE: :help i_ctrl-v
   inoremap 　 <space>
   inoremap （ (
   inoremap ） )
@@ -372,7 +381,7 @@ endif
 
 "-----| tool |-----"
 " TODO: reconsider copen, to simple
-"     : fix for win
+"     : fix for os windows
 let s:errlist = []
 let s:sfile = expand('<sfile>')
 let s:errnum = 1
