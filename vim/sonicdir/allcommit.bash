@@ -18,8 +18,8 @@ function confirm() {
   return 0
 }
 
-if [[ -d "$DOTFILES_ROOT/vim/sonicdir" ]]; then
-  cd "$DOTFILES_ROOT/vim/sonicdir"
+if [[ -d "$DOTFILES_ROOT/vim/sonicdir/pretempl" ]]; then
+  cd "$DOTFILES_ROOT/vim/sonicdir/pretempl"
   echo "git diff ."
   git diff .
   git status
