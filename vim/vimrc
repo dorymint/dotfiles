@@ -23,13 +23,6 @@ if (has('win32') || has('win64')) && isdirectory(glob('~/.vim'))
     " NOTE: linuxに合わせる
 endif
 
-"" dein
-"  if isdirectory(glob('~/.vim/dein/repos/github.com/Shougo/dein.vim'))
-"    source ~/dotfiles/vim/plugin-manage-dein.vim
-"  else
-"    echo 'not found plugin-manage-dein.vim'
-"  endif
-
 " plug
 if filereadable(glob('~/.vim/autoload/plug.vim'))
   source ~/dotfiles/vim/plugin-manage-plug.vim
