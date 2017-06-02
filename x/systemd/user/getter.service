@@ -1,0 +1,10 @@
+[Unit]
+Description=wall getter
+
+[Service]
+Type=oneshot
+EnvironmentFile=%h/dotfiles/etc/getter/systemd-service-env
+ExecStart=/bin/bash -c 'feh --bg-max "$($getter -conf=$conf)"'
+
+[Install]
+WantedBy=
