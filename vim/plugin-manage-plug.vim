@@ -47,7 +47,10 @@ call plug#end()
 "-----| let |-----"
 " sonictemplate-vim
 if isdirectory(glob('~/dotfiles/vim/sonicdir'))
-  let g:sonictemplate_vim_template_dir = '~/dotfiles/vim/sonicdir'
+  let g:sonictemplate_vim_template_dir = [
+    \ '~/dotfiles/vim/sonicdir/pretempl',
+    \ '~/dotfiles/vim/sonicdir/templ',
+  \ ]
 else
   echo "template directory: sonicdir disable"
 endif
@@ -141,6 +144,7 @@ if isdirectory(glob('~/dotfiles/vim/tmp/bin'))
 endif
   let g:go_play_open_browser = 0
   let g:go_fmt_autosave = 0
+  let g:go_template_autocreate = 0
 
 
 "-----| keymap |-----"
@@ -162,8 +166,8 @@ endif
 
 " sonictemplate-vim
   " すぐにテンプレートを編集できるように
-  if isdirectory(glob('~/dotfiles/vim/sonicdir'))
-    nnoremap <Leader>w :<C-u>10split ~/dotfiles/vim/sonicdir/%:e/
+  if isdirectory(glob('~/dotfiles/vim/sonicdir/pretempl'))
+    nnoremap <Leader>w :<C-u>10split ~/dotfiles/vim/sonicdir/pretempl/%:e/
   endif
 
 " vim-easymotion
