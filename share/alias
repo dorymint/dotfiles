@@ -18,7 +18,6 @@ alias chgrp='command chgrp --preserve-root'
 ## for carry of alias
 alias sudo='command sudo '
 
-
 # local
 ## cd
 command which gw 2> /dev/null || alias gw='cd "$GOPATH/src/github.com/$USER"'
@@ -71,6 +70,7 @@ fi
 [ -x "$(command which mplayer)" ] && alias mplayerbgm='command mplayer -ao pulse -vo null '
 [ -x "$(command which sway)" ] && alias sway='XKB_DEFAULT_LAYOUT=jp sway'
 [ -x "$(command which emacs)" ] && alias emacs='command emacs -nw'
+alias timers || alias timers='systemctl --user list-timers'
 
 
 # EOF
