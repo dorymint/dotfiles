@@ -1,17 +1,17 @@
 scriptencoding utf-8
 call plug#begin('~/.vim/plugged')
-" edit
+  " edit
   Plug 'mattn/emmet-vim'
   Plug 'mattn/sonictemplate-vim'
 
-" status
+  " status
   Plug 'itchyny/lightline.vim'
 
-" git
+  " git
   Plug 'tpope/vim-fugitive'
   Plug 'airblade/vim-gitgutter'
 
-" manage
+  " manage
   Plug 'ctrlpvim/ctrlp.vim'
   Plug 'scrooloose/nerdtree'
   Plug 'majutsushi/tagbar'
@@ -22,23 +22,22 @@ call plug#begin('~/.vim/plugged')
   Plug 'easymotion/vim-easymotion'
   Plug 'vim-syntastic/syntastic'
 
-" language
+  " language
   Plug 'dart-lang/dart-vim-plugin'
   Plug 'justmao945/vim-clang'
-  " go
-    Plug 'fatih/vim-go'
-    " TODO: reconsider golang
-    "Plug 'vim-jp/vim-go-extra'
-    "Plug 'rhysd/vim-go-impl'
+  Plug 'fatih/vim-go'
+  " TODO: reconsider golang
+  "Plug 'vim-jp/vim-go-extra'
+  "Plug 'rhysd/vim-go-impl'
 
-" color
+  " color
   Plug 'nanotech/jellybeans.vim'
   "Plug 'w0ng/vim-hybrid'
   "Plug 'cocopon/Iceberg.vim'
   "Plug 'tomasr/molokai'
   "Plug 'trusktr/seti.vim'
 
-" etc
+  " etc
   Plug 'vim-jp/vimdoc-ja'
   Plug 'deris/vim-duzzle', { 'on': 'DuzzleStart' }
 call plug#end()
@@ -125,10 +124,10 @@ endif
 
 " syntastic
   let g:syntastic_mode_map = { 'mode': 'active' }
-  " golang
+    " golang
     let g:syntastic_go_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
     let g:syntastic_go_checkers = ['go', 'gofmt', 'govet', 'golint']
-  " cpp
+    " cpp
     let g:syntastic_cpp_compiler = 'clang'
     let g:syntastic_cpp_compiler_options = '-std=c++1z --pedantic-errors'
     let g:syntastic_cpp_checkers = ['clang_check']
@@ -167,7 +166,8 @@ endif
 " sonictemplate-vim
   " すぐにテンプレートを編集できるように
   if isdirectory(glob('~/dotfiles/vim/sonicdir/pretempl'))
-    nnoremap <Leader>w :<C-u>10split ~/dotfiles/vim/sonicdir/pretempl/%:e/
+    nnoremap <Leader>wp :<C-u>10split ~/dotfiles/vim/sonicdir/pretempl/%:e/
+    nnoremap <Leader>ww :<C-u>10split ~/dotfiles/vim/sonicdir/templ/%:e/
   endif
 
 " vim-easymotion
@@ -176,15 +176,18 @@ endif
 
 
 "-----| autocmd |-----"
+function! s:ftgo()
+  " vim-go-extra
+  "nnoremap <buffer> <S-k> :<C-u>Godoc
+  " vim-go
+  nnoremap <buffer> <Leader>i :<C-u>GoImport<space>
+  nnoremap <buffer> <Leader>d :<C-u>GoDrop<space>
+endfunction
+
 filetype plugin indent on
   " NOTE: plug begin end で含まれてるはずだけど一応
 augroup plugin_manage_plug
   autocmd!
-" vim-go-extra
-  "autocmd Filetype go nnoremap <buffer> <S-k> :<C-u>Godoc
-
-" vim-go
-  autocmd Filetype go nnoremap <buffer> <Leader>i :<C-u>GoImport<space>
-  autocmd Filetype go nnoremap <buffer> <Leader>d :<C-u>GoDrop<space>
+  autocmd Filetype go call s:ftgo()
 augroup END
 " EOF
