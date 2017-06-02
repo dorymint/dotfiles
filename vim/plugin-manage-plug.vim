@@ -182,7 +182,7 @@ function! s:ftgo()
   " vim-go
   nnoremap <buffer> <Leader>i :<C-u>GoImport<space>
   nnoremap <buffer> <Leader>d :<C-u>GoDrop<space>
-  nnoremap <buffer> <Leader>h :<C-u>GoDoc<space>
+  nnoremap <buffer> <Leader>gd :<C-u>GoDoc<space>
 endfunction
 
 filetype plugin indent on
