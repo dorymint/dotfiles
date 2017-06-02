@@ -1,14 +1,12 @@
 #!/bin/bash
 set -eu
-
 # confirm $1="confirm messsage"
 function confirm() {
   local key=""
   local count=0
   while [[ "$key" != "yes" ]] && [[ "$key" != "y" ]]; do
     if [[ "$key" = "no" ]] || [[ "$key" = "n" ]] || [[ $count -gt 2 ]]; then
-      echo "stop allcommit"
-      exit 1
+      return 1
     fi
     count=$(expr $count + 1)
 
@@ -17,25 +15,33 @@ function confirm() {
   done
   return 0
 }
+function commit() {
+  if [[ -d "$1" ]]; then
+    cd "$1"; pwd
+    echo "git diff ."
+    git diff .
+    git status .
+    confirm 'git add . [yes:no]?>' || return 0
+    git add .
+    git status
 
-if [[ -d "$DOTFILES_ROOT/vim/sonicdir/pretempl" ]]; then
-  cd "$DOTFILES_ROOT/vim/sonicdir/pretempl"
-  echo "git diff ."
-  git diff .
-  git status
-  confirm 'git add . [yes:no]?>'
-  git add .
-  git status
+    echo "git diff --cached -- ."
+    git diff --cached -- .
+    confirm 'git commit -- . [yes:no]?>' || return 0
+    git commit -m "update sonic" -- .
 
-  echo "git diff --cached -- ."
-  git diff --cached -- .
-  confirm 'git commit -- . [yes:no]?>'
-  git commit -m "update sonic" -- .
-
-  echo "git diff origin/master"
-  git diff origin/master
-  git status
-  confirm 'git push origin master [yes:no]?>'
-  git push origin master
-fi
+    echo "git diff origin/master"
+    git diff origin/master
+    git status
+    confirm 'git push origin master [yes:no]?>' || return 0
+    git push origin master
+  fi
+}
+function split () {
+  echo "------- $1 -------"
+  commit "$1"
+  echo ""
+}
+split "$DOTFILES_ROOT/vim/sonicdir/pretempl"
+split "$DOTFILES_ROOT/vim/sonicdir/templ"
 # EOF
