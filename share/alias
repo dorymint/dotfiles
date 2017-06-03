@@ -70,7 +70,7 @@ fi
 [ -x "$(command which mplayer)" ] && alias mplayerbgm='command mplayer -ao pulse -vo null '
 [ -x "$(command which sway)" ] && alias sway='XKB_DEFAULT_LAYOUT=jp sway'
 [ -x "$(command which emacs)" ] && alias emacs='command emacs -nw'
-alias timers 2> /dev/null || alias timers='systemctl --user list-timers'
+alias timers 2> /dev/null || alias timers='systemctl --no-pager --user list-timers'
 
 
 # EOF
