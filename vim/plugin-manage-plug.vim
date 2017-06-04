@@ -153,15 +153,15 @@ endif
 "     : help: ctrlp-mappings
 
 " syntastic
-  nnoremap <Leader>s :<C-u>SyntasticToggleMode<nl>
+  nnoremap <Leader>s :<C-u>SyntasticToggleMode<CR>
     " NOTE: 保存時に常に走らせると少し重い時があるのでトグルをマップ
     "     : 非同期でチェックできる良いプラグインがあれば乗り換えたい
 
 " nerdtree
-  nnoremap <Leader>n :<C-u>NERDTreeToggle<nl>
+  nnoremap <Leader>n :<C-u>NERDTreeToggle<CR>
 
 " tagbar
-  nnoremap <Leader>t :<C-u>TagbarToggle<nl>
+  nnoremap <Leader>t :<C-u>TagbarToggle<CR>
 
 " sonictemplate-vim
   " すぐにテンプレートを編集できるように
@@ -173,6 +173,9 @@ endif
 " vim-easymotion
   map  <Leader>f <Plug>(easymotion-bd-w)
   nmap <Leader>f <Plug>(easymotion-overwin-w)
+
+" vim-gitgutter
+  nnoremap <Leader>ggt :<C-u>GitGutterToggle<CR>
 
 
 "-----| autocmd |-----"

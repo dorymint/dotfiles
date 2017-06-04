@@ -225,8 +225,8 @@ endif
   "nnoremap <C-k>    ddkP
     " NOTE: 上の<C-k>はファイルの先頭で入れると行が消える、挙動の理由がよくわかってない
     "     : ddまでは動いて、kが失敗すると止まるっぽい? dd && k && P
-  nnoremap <C-j>    :<C-u>. move +1<nl>
-  nnoremap <C-k>    :<C-u>. move -2<nl>
+  nnoremap <C-j>    :<C-u>. move +1<CR>
+  nnoremap <C-k>    :<C-u>. move -2<CR>
     " NOTE: reg を汚さない . は現在行、こちらなら行は消えない
 
   " 改行の挿入
@@ -240,45 +240,45 @@ endif
 
     " tabpage prefix<t>
       " NOTE: help: tab-page
-    nnoremap tn  :<C-u>tabnext<nl>
-    nnoremap tp  :<C-u>tabprevious<nl>
-    nnoremap tN  :<C-u>tabnew<nl>
-    nnoremap tC  :<C-u>tabclose<nl>
-    nnoremap tmn :<C-u>+tabmove<nl>
-    nnoremap tmp :<C-u>-tabmove<nl>
+    nnoremap tn  :<C-u>tabnext<CR>
+    nnoremap tp  :<C-u>tabprevious<CR>
+    nnoremap tN  :<C-u>tabnew<CR>
+    nnoremap tC  :<C-u>tabclose<CR>
+    nnoremap tmn :<C-u>+tabmove<CR>
+    nnoremap tmp :<C-u>-tabmove<CR>
 
-    nnoremap tmm  :<C-u>marks<nl>
+    nnoremap tmm  :<C-u>marks<CR>
       " NOTE: :help mark-motions
 
     " buffer prefix<tb>
-    nnoremap tbl :<C-u>ls<nl>:buffer<space>
-    nnoremap tbs :<C-u>ls<nl>:sbuffer<space>
-    nnoremap tbd :<C-u>ls<nl>:bdelete<space>
-    nnoremap tbk :<C-u>bdelete<nl>
-    nnoremap tbn :<C-u>enew<nl>
-    nnoremap tj  :<C-u>bnext<nl>
-    nnoremap tk  :<C-u>bprev<nl>
+    nnoremap tbl :<C-u>ls<CR>:buffer<space>
+    nnoremap tbs :<C-u>ls<CR>:sbuffer<space>
+    nnoremap tbd :<C-u>ls<CR>:bdelete<space>
+    nnoremap tbk :<C-u>bdelete<CR>
+    nnoremap tbn :<C-u>enew<CR>
+    nnoremap tj  :<C-u>bnext<CR>
+    nnoremap tk  :<C-u>bprev<CR>
       " NOTE: next,prevは使用頻度が高いので<tb>から<t>に
 
     " search and move
     " NOTE: autocmd Filetype で設定したほうがよさそう
     "     : :help object-motions
-    nnoremap t;  /}<nl>
-    nnoremap t>  /><nl>
-    nnoremap tol /\%80v.\+<nl>
+    nnoremap t;  /}<CR>
+    nnoremap t>  /><CR>
+    nnoremap tol /\%80v.\+<CR>
       " NOTE: match over 80 characters
       "     : :help pattern
 
     " prefix for toggle<T>
     " NOTE: setのトグルとオプションの補完は T を使う
-    nnoremap Th   :<C-u>set hlsearch!<nl>
-    nnoremap Tl   :<C-u>set list!<nl>
-    nnoremap Tc   :<C-u>set cursorcolumn! cursorline!<nl>
-    nnoremap Tn   :<C-u>set number!<nl>
+    nnoremap Th   :<C-u>set hlsearch!<CR>
+    nnoremap Tl   :<C-u>set list!<CR>
+    nnoremap Tc   :<C-u>set cursorcolumn! cursorline!<CR>
+    nnoremap Tn   :<C-u>set number!<CR>
 
-    nnoremap Te   :<C-u>setlocal expandtab!<nl>
-    nnoremap Ts   :<C-u>setlocal spell!<nl>
-    nnoremap Tp   :<C-u>setlocal paste!<nl>
+    nnoremap Te   :<C-u>setlocal expandtab!<CR>
+    nnoremap Ts   :<C-u>setlocal spell!<CR>
+    nnoremap Tp   :<C-u>setlocal paste!<CR>
     nnoremap Tr   :<C-u>setlocal readonly!
     nnoremap Tf   :<C-u>setlocal filetype=
     nnoremap Tw   :<C-u>setlocal textwidth=0
@@ -286,7 +286,7 @@ endif
 
   " hex
   if executable('xxd')
-    nnoremap Txxd  :<C-u>setlocal filetype=xxd<nl>:%!xxd<space>
+    nnoremap Txxd  :<C-u>setlocal filetype=xxd<CR>:%!xxd<space>
     nnoremap TRxxd :<C-u>%!xxd -r<space>
       " NOTE: 戻す時は xxd -r
       "     : T[rR]xxd みたいに書きたい
@@ -330,12 +330,12 @@ if 1 == 0
   inoremap '' ''<C-g>U<left>
 endif
   inoremap {<enter> {}<left><enter><Esc><S-o>
-  inoremap {<nl>    {}<left><nl><Esc><S-o>
+  inoremap {<CR>    {}<left><CR><Esc><S-o>
   inoremap (<enter> ()<left><enter><Esc><S-o>
-  inoremap (<nl>    ()<left><nl><Esc><S-o>
+  inoremap (<CR>    ()<left><CR><Esc><S-o>
   inoremap [<enter> []<left><enter><Esc><S-o>
-  inoremap [<nl>    []<left><nl><Esc><S-o>
-    " NOTE: <enter>と<nl>、違いがよくわかってない
+  inoremap [<CR>    []<left><CR><Esc><S-o>
+    " NOTE: <enter>と<CR>、違いがよくわかってない
     "     : 入力は別扱い、挿入が<eol>、書き込みがff依存?
 
   " オムニ補完
@@ -473,7 +473,7 @@ augroup nyan_vimrc
     "     : lictchars+=tab:\ \ , でもいいけどtabが重複する
   " NOTE: QuickRunを使うなら以下は無効
   "if isdirectory(glob('~/dotfiles/vim/tmp'))
-  "  autocmd Filetype go nnoremap <buffer> <c-@>gorun  :<C-u>!go run  % > ~/dotfiles/vim/tmp/gorunlog.txt 2>&1<nl>
+  "  autocmd Filetype go nnoremap <buffer> <c-@>gorun  :<C-u>!go run  % > ~/dotfiles/vim/tmp/gorunlog.txt 2>&1<CR>
   "endif
 
   " cpp
