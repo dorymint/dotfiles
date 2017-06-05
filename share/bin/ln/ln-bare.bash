@@ -1,8 +1,6 @@
 #!/bin/bash
 set -eu
-
 bare=""
-
 # help
 function helpmsg () {
   cat >&1 <<END
@@ -20,7 +18,6 @@ while [ -n "${1:-}" ]; do
   shift
 done
 unset -f helpmsg
-
 if [ ! -d "$bare" ]; then
   echo "not directory: $bare"
   exit 1
@@ -29,7 +26,5 @@ if [[ "$bare" != *.git ]]; then
   echo "not *.git: $bare"
   exit 1
 fi
-
 ln -s "$bare" "$(echo "$bare" | sed -e 's/\.git$//')"
-
 # EOF

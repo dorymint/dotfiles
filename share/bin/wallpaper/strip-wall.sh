@@ -38,5 +38,4 @@ confirm "gm mogrify -strip ./* ? pwd=$(pwd)" || exit 1
 echo "please wait ..."
 /usr/bin/gm mogrify -strip ./*
 echo "done!"
-
 # EOF

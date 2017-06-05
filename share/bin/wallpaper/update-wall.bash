@@ -11,15 +11,15 @@ getter="$HOME"/Pictures/getter
 [ -d "$wallpaper" ]
 [ -d "$getter" ]
 
-[ -f ./unlink-all.bash ]
-[ -f ./ln-wall.bash ]
+[ -f ../ln/unlink-all.bash ] && unlink="../ln/unlink-all.bash"
+[ -f ./ln-wall.bash ] && linkwall="./ln-wall.bash"
 
 echo "unlink in $links"
-bash ./unlink-all.bash "$links"
+bash $unlink "$links"
 
 echo "mklink $wallpaper and $getter to $links"
-bash ./ln-wall.bash "$wallpaper" "$links"
-bash ./ln-wall.bash "$getter" "$links"
+bash $linkwall "$wallpaper" "$links"
+bash $linkwall "$getter" "$links"
 
 echo "done"
 # EOF

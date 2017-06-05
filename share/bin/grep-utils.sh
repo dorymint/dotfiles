@@ -1,7 +1,6 @@
 #!/bin/sh
 set -eu
 
-
 # TODO: reconsider exchange $USER
 utilsmd="$HOME"/github.com/"$USER"/hello-world/md/utils.md
 # TODO: reconsider, bit confused utilsmd utilspath
