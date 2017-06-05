@@ -4,7 +4,23 @@ set -eu
 # cds(change to script directory)
 cd "$(dirname "$(readlink -f "$0")")"
 result=""
+option="-s "
 dst="$HOME"/bin
+
+# help
+function helpmsg () {
+  cat >&1 <<END
+  -f	accept override exists files
+END
+}
+while [ -n "${1:-}" ]; do
+  case "$1" in
+   help|--help|-h) helpmsg; exit 0;;
+   -f) option="$option"" -f "
+  esac
+  shift
+done
+unset -f helpmsg
 
 function links() {
   [ -d "$1" ]
@@ -19,7 +35,7 @@ function links() {
     fi
 
     # make link fallthrough
-    ln -s "$(pwd)/$x" "$dst" &&
+    ln $option "$(pwd)/$x" "$dst" &&
       result="$result""$x " ||
       true
   done
