@@ -3,21 +3,31 @@ set -eu
 
 # cds(change to script directory)
 cd "$(dirname "$(readlink -f "$0")")"
-cd ../share/bin
-
 result=""
 dst="$HOME"/bin
-unset x
-for x in *; do
-  if [ ! -x "$x" ] || [ ! -f "$x" ]; then
-    continue
-  fi
 
-  # fallthrough
-  ln -s "$(pwd)/$x" "$dst" &&
-    result="$result""$x " ||
-    true
-done
+function links() {
+  [ -d "$1" ]
+  pushd "$1" 1> /dev/null
+  unset x
+  for x in *; do
+    if [ -d "$x" ]; then
+      links "$x"
+    fi
+    if [ ! -x "$x" ] || [ ! -f "$x" ]; then
+      continue
+    fi
+
+    # make link fallthrough
+    ln -s "$(pwd)/$x" "$dst" &&
+      result="$result""$x " ||
+      true
+  done
+  popd 1> /dev/null
+}
+
+# path to utils
+links ../share/bin
 
 echo "--- result ---"
 unset x
