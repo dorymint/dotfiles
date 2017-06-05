@@ -17,13 +17,15 @@ getter="$HOME"/Pictures/getter
 echo "unlink in $links"
 bash $unlink "$links"
 
-echo "mklink in $wallpaper and in $getter to $links"
+echo "ln from: $wallpaper"
+echo "ln from: $getter"
+echo "ln to: $links"
 bash $linkwall "$wallpaper" "$links"
 bash $linkwall "$getter" "$links"
 echo "read sub directory in $getter"
 for x in $getter/*; do
-  echo "find sub directory $x"
   if [ -d "$x" ]; then
+    echo "find sub directory [ $(basename "$x") ] make links"
     bash $linkwall "${x}" "$links"
   fi
 done
