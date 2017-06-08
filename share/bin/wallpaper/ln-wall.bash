@@ -34,7 +34,8 @@ count=$(find "$dst" -type l | wc -l)
 walldir=$(cd "$walldir" && pwd)
 cd "$walldir"
 for x in * ; do
-  ln -s "$walldir/$x" "$dst/$count"
-  count=$(expr $count + 1)
+  [ -f "$x" ] &&
+    ln -s "$walldir/$x" "$dst/$count" &&
+    count=$(expr $count + 1)
 done
 # EOF

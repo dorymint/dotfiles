@@ -6,12 +6,16 @@ github.com/mattn/go-tty
 github.com/nsf/gocode
 github.com/rogpeppe/godef
 
+honner.co/go/tools/cmd/gosimple
+honner.co/go/tools/cmd/unused
+honner.co/go/tools/cmd/staticcheck
+
 github.com/google/gops
 github.com/golang/lint/golint
 github.com/golang/dep/cmd/dep
 
 golang.org/x/tools/cmd/...
-golang.org/x/tour/gotour
+#golang.org/x/tour/gotour
 
 github.com/kamisari/go-todogotcha/todogotcha
 github.com/kamisari/go-addtree/addtree
