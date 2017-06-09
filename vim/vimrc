@@ -339,7 +339,7 @@ endif
     "     : 入力は別扱い、挿入が<eol>、書き込みがff依存?
 
   " オムニ補完
-  inoremap <S-tab> <C-x><C-o>
+  "inoremap <S-tab> <C-x><C-o>
 
   " undo
   inoremap <C-u> <C-g>u<C-u>
