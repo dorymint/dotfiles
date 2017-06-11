@@ -34,7 +34,10 @@ fi
 
 # disable display power management signaling
 if [ -x /usr/bin/xset ]; then
-  sleep 1 && xset s off r rate 200 30
+  sleep 1 && xset s off
+  sleep 1 && xset -dpms
+  sleep 1 && xset r rate 200 30
+
 fi
 # for laptop with broken screen :P
 if [ -x /usr/bin/xrandr ] && xrandr --query | grep "HDMI1 connected" &> /dev/null; then
@@ -52,9 +55,9 @@ if false; then
 fi
 
 # TODO: reconsider ssh-agent
-if [ -x /usr/bin/ssh-agent ]; then
-  eval $(ssh-agent)
-fi
+#if [ -x /usr/bin/ssh-agent ]; then
+#  eval $(ssh-agent)
+#fi
 
 # for i3
 if [ -d "$HOME"/Pictures/links ] && [ -x /usr/bin/feh ]; then
