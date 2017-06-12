@@ -22,6 +22,7 @@ helpmsg() {
   -e --edit	edit target file, (default editor is vim)
   -c --commit	git add && commit for $utilsmd
   -w --word	specify search word
+  -d --diff	show diff $utilsmd
   -B [N]	before context
   -A [N]	after context
   -C [N]	context
@@ -39,12 +40,16 @@ while [ -n "${1:-}" ]; do
       git add "$utilsmd"
       git commit -m "up $(basename "$utilsmd")" -- "$utilsmd"
       exit 0;;
+    "-w"|"--word")shift; word="$1";;
+    "-d"|"--diff")
+      cd "$(dirname "$utilsmd")"
+      git diff "$(basename "$utilsmd")"
+      exit 0;;
     "-A")shift;context="-A $1";;
     "-B")shift;context="-B $1";;
     "-C")shift;context="-C $1";;
     # TODO: reconsider --dir
     "--dir")echo "$(dirname "$utilsmd")"; exit 0;;
-    "-w"|"--word")shift; word="$1";;
     *)if [ -n "$word" ]; then
         echo "invalid argument: $*"
         exit 1
