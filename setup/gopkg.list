@@ -6,9 +6,9 @@ github.com/mattn/go-tty
 github.com/nsf/gocode
 github.com/rogpeppe/godef
 
-honner.co/go/tools/cmd/gosimple
-honner.co/go/tools/cmd/unused
-honner.co/go/tools/cmd/staticcheck
+honnef.co/go/tools/cmd/gosimple
+honnef.co/go/tools/cmd/unused
+honnef.co/go/tools/cmd/staticcheck
 
 github.com/google/gops
 github.com/golang/lint/golint
