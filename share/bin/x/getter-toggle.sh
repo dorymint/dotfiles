@@ -23,6 +23,7 @@ if systemctl --user is-active getter.timer &> /dev/null; then
   systemctl --user stop getter.timer
   echo "timer deactivated"
 else
+  echo "starting getter.service ..."
   systemctl --user start getter.timer
   sleep 1
   systemctl --user start getter.service
