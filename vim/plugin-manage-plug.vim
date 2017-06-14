@@ -40,6 +40,10 @@ call plug#begin('~/.vim/plugged')
   " etc
   Plug 'vim-jp/vimdoc-ja'
   Plug 'deris/vim-duzzle', { 'on': 'DuzzleStart' }
+
+  Plug 'google/vim-maktaba'
+  Plug 'google/vim-codefmt'
+  Plug 'google/vim-glaive'
 call plug#end()
 
 
