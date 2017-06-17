@@ -1,3 +1,3 @@
 # for xorg-server
 
-aflter copy, modify for local environment
+after copy, modify for local environment
