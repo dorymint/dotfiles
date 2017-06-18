@@ -83,6 +83,7 @@ if [[ -r ./configure ]]; then
   echo "install to $installdir"
   confirm "make install? [yes:no]:>" "stop process"
   make install
+  make clean
 
   echo ""
   echo "Local vim, build and install successful!!"
