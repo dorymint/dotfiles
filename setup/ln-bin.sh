@@ -1,8 +1,6 @@
 #!/bin/sh
 set -eu
 
-# cds(change to script directory)
-cd "$(dirname "$(readlink -f "$0")")"
 result=""
 option="-s "
 dst="$HOME"/bin
@@ -24,11 +22,12 @@ unset -f helpmsg
 
 function links() {
   [ -d "$1" ]
-  pushd "$1" 1> /dev/null
-  unset x
+  cd "$1" 1> /dev/null
+  local result=""
+  local x
   for x in *; do
     if [ -d "$x" ]; then
-      links "$x"
+      result="$result""$(links "$x")"
     fi
     if [ ! -x "$x" ] || [ ! -f "$x" ]; then
       continue
@@ -39,11 +38,13 @@ function links() {
       result="$result""$x " ||
       true
   done
-  popd 1> /dev/null
+  return $result
 }
 
-# path to utils
-links ../share/bin
+# cds(change to script directory)
+cd "$(dirname "$(readlink -f "$0")")"
+# make links
+result="$(links ../share/bin)"
 
 echo "--- result ---"
 unset x
