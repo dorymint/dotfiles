@@ -56,6 +56,7 @@ fi
 ## peco
 if [ -x "$(command which peco)" ]; then
   [ -x "$(which reps.sh)" ] && alias reps='cd "$(reps.sh status | peco)"'
+  alias cdl 2> /dev/null || alias cdl='cd "$(dirs -p | peco)"'
   alias cdp 2> /dev/null || alias cdp='cd "$(find . -type d ! -path "*.git*" !  -path "*.deps*" | peco)"'
   alias gwp 2> /dev/null || alias gwp='gw && cdp'
   [ -x "$(which todogotcha)" ] &&

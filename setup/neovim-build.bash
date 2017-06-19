@@ -49,10 +49,10 @@ case "$use" in
     if [ ! -d "$srcroot/.deps" ]; then
       mkdir ".deps"
     fi
-    pushd ".deps"
+    cd ".deps"
     cmake "../third-party"
     make
-    popd
+    cd ..
 
     if [ ! -d "$srcroot/build" ]; then
       mkdir "build"
