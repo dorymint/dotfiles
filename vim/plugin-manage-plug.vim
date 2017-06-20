@@ -25,6 +25,8 @@ call plug#begin('~/.vim/plugged')
   " language
   Plug 'dart-lang/dart-vim-plugin'
   Plug 'justmao945/vim-clang'
+  Plug 'heavenshell/vim-jsdoc'
+  Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
   Plug 'fatih/vim-go'
   " TODO: reconsider golang
   "Plug 'vim-jp/vim-go-extra'
@@ -134,8 +136,10 @@ endif
     " cpp
     let g:syntastic_cpp_compiler = 'clang'
     let g:syntastic_cpp_compiler_options = '-std=c++1z --pedantic-errors'
-    let g:syntastic_cpp_checkers = ['clang_check']
     let g:syntastic_cpp_mode_map = { 'mode': 'active', 'passive_filetypes': ['cpp'] }
+    let g:syntastic_cpp_checkers = ['clang_check']
+    " javascript
+    let g:syntastic_javascript_checkers = ['eslint']
 
 " vim-clang
   let g:clang_c_options = '-std=c11'
