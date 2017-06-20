@@ -14,7 +14,7 @@ word=""
 unset -f helpmsg
 helpmsg() {
   cat >&1 <<END
-  grep utils.md
+  grep-utils.sh [flags] ["grep word"]
 
   -h --help	show help then exit
   -f --file	path to target file (default $utilsmd)
