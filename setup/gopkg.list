@@ -1,11 +1,12 @@
 # go package list
-
 github.com/josharian/impl
 github.com/jstemmer/gotags
-github.com/mattn/go-tty
 github.com/nsf/gocode
 github.com/rogpeppe/godef
 github.com/alecthomas/gometalinter
+
+# use vendor
+#github.com/mattn/go-tty
 
 honnef.co/go/tools/cmd/gosimple
 honnef.co/go/tools/cmd/unused
@@ -22,5 +23,4 @@ golang.org/x/tools/cmd/...
 #github.com/kamisari/go-addtree/addtree
 #github.com/kamisari/expfunc
 #github.com/kamisari/tree
-
 # EOF
