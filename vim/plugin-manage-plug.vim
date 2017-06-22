@@ -20,7 +20,15 @@ call plug#begin('~/.vim/plugged')
   Plug 'thinca/vim-ref'
   Plug 'kannokanno/previm'
   Plug 'easymotion/vim-easymotion'
+
+" TODO: trim syntastic?
+if 0 == 1
   Plug 'vim-syntastic/syntastic'
+  let s:useALE = 0
+else
+  Plug 'w0rp/ale'
+  let s:useALE = 1
+endif
 
   " language
   Plug 'dart-lang/dart-vim-plugin'
@@ -28,9 +36,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'heavenshell/vim-jsdoc'
   Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
   Plug 'fatih/vim-go'
-  " TODO: reconsider golang
-  "Plug 'vim-jp/vim-go-extra'
-  "Plug 'rhysd/vim-go-impl'
 
   " color
   Plug 'nanotech/jellybeans.vim'
@@ -64,18 +69,37 @@ endif
   let g:lightline = {
     \ 'colorscheme': 'jellybeans',
     \ 'active': {
-    \   'left': [ [ 'mode', 'paste', 'fugitive' ],
-    \             [ 'readonly', 'filename', 'modified' ] ],
-    \   'right': [ [ 'lineinfo', 'percent' ],
-    \             [ 'fileformat', 'fileencoding', 'filetype' ],
-    \             [ 'syntastic' ] ] },
+    \   'left': [
+    \     [ 'mode', 'paste', 'fugitive' ],
+    \     [ 'readonly', 'filename', 'modified' ],
+    \   ],
+    \   'right': [
+    \     [ 'lineinfo', 'percent' ],
+    \     [ 'fileformat', 'fileencoding', 'filetype' ],
+    \     [ 'syntastic', 'ale' ],
+    \   ],
+    \ },
     \ 'component': {
-    \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}' },
+    \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}',
+    \ },
     \ 'component_visible_condition': {
-    \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())' },
+    \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())',
+    \ },
     \ 'component_function': {
-    \   'syntastic': 'SyntasticStatuslineFlag' },
+    \   'syntastic': 'SyntasticStatuslineFlag',
+    \   'ale': 'ALEGetStatusLine',
+    \ },
   \ }
+"  function! AleLintStatus() abort
+"    let l:counts = ale#statusline#Count(bufnr(''))
+"    let l:all_errors = l:counts.error + l:counts.style_error
+"    let l:all_non_errors = l:counts.total - l:all_errors
+"    return l:counts.total == 0 ? 'ALE:[OK]' : printf(
+"          \ 'ALE:[%dW %dE]',
+"          \ all_non_errors,
+"          \ all_errors,
+"          \)
+"  endfunction
 
 " tagbar
 if (has('win32') || has('win64'))
@@ -128,6 +152,12 @@ endif
 " vim-easymotion
   let g:EasyMotion_do_mapping = 0
 
+" TODO: fix
+if s:useALE
+" ale
+  let g:ale_linters = {'go': ['gometalinter', 'gofmt', 'go build']}
+  let g:ale_go_gometalinter_options = '--fast'
+else
 " syntastic
   let g:syntastic_mode_map = { 'mode': 'active' }
     " golang
@@ -140,6 +170,7 @@ endif
     let g:syntastic_cpp_checkers = ['clang_check']
     " javascript
     let g:syntastic_javascript_checkers = ['eslint']
+endif
 
 " vim-clang
   let g:clang_c_options = '-std=c11'
@@ -160,10 +191,19 @@ endif
 "     : CtrlP emmet sonictemplate はそのまま
 "     : help: ctrlp-mappings
 
+" TODO: fix
+if s:useALE
+" ale
+  nnoremap <Leader>at :<C-u>ALEToggle<CR>
+  nnoremap <Leader>ad :<C-u>ALEDetail<CR>
+  nnoremap <Leader>j :<C-u>ALENextWrap<CR>
+  nnoremap <Leader>k :<C-u>ALEPreviousWrap<CR>
+else
 " syntastic
   nnoremap <Leader>s :<C-u>SyntasticToggleMode<CR>
     " NOTE: 保存時に常に走らせると少し重い時があるのでトグルをマップ
     "     : 非同期でチェックできる良いプラグインがあれば乗り換えたい
+endif
 
 " nerdtree
   nnoremap <Leader>n :<C-u>NERDTreeToggle<CR>
@@ -188,8 +228,6 @@ endif
 
 "-----| autocmd |-----"
 function! s:ftgo()
-  " vim-go-extra
-  "nnoremap <buffer> <S-k> :<C-u>Godoc
   " vim-go
   nnoremap <buffer> <Leader>i :<C-u>GoImport<space>
   nnoremap <buffer> <Leader>d :<C-u>GoDrop<space>

@@ -5,6 +5,7 @@ github.com/jstemmer/gotags
 github.com/mattn/go-tty
 github.com/nsf/gocode
 github.com/rogpeppe/godef
+github.com/alecthomas/gometalinter
 
 honnef.co/go/tools/cmd/gosimple
 honnef.co/go/tools/cmd/unused
