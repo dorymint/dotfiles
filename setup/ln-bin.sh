@@ -22,29 +22,31 @@ unset -f helpmsg
 
 function links() {
   [ -d "$1" ]
-  cd "$1" 1> /dev/null
-  local result=""
-  local x
+  command pushd "$1" 1> /dev/null
+  echo "link directory: $(pwd)"
+  unset x
   for x in *; do
-    if [ -d "$x" ]; then
-      result="$result""$(links "$x")"
-    fi
     if [ ! -x "$x" ] || [ ! -f "$x" ]; then
       continue
     fi
-
     # make link fallthrough
-    ln $option "$(pwd)/$x" "$dst" &&
-      result="$result""$x " ||
-      true
+    if ln $option "$(pwd)/$x" "$dst"; then
+      result="$result""$x "
+    fi
   done
-  return $result
+  unset x
+  for x in *; do
+    if [ -d "$x" ]; then
+      links "$x"
+    fi
+  done
+  command popd 1> /dev/null
 }
 
 # cds(change to script directory)
 cd "$(dirname "$(readlink -f "$0")")"
 # make links
-result="$(links ../share/bin)"
+links ../share/bin
 
 echo "--- result ---"
 unset x

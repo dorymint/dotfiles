@@ -7,7 +7,7 @@
 
 
 ## grml zshrc
-if [[ "$(uname -r)" == *ARCH* ]]; then
+if command -v pacman &> /dev/null; then
   pacman -Q grml-zsh-config &> /dev/null ||
     echo "recommend: pacman -S grml-zsh-config"
 else
