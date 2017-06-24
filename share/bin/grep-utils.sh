@@ -10,6 +10,21 @@ context="-A 5"
 option="$context -n --color=auto -i -e"
 word=""
 
+# confirm $1=msg return bool
+function confirm () {
+  local key=""
+  local counter=0
+  while [ $counter -lt 3 ]; do
+    counter=`expr $counter + 1`
+    echo -n "$1 [yes:no]?>"
+    read -t 60 key || return 1
+    case "$key" in
+      "no"|"n") return 1;;
+      "yes"|"y") return 0;;
+    esac
+  done
+  return 1
+}
 # help
 unset -f helpmsg
 helpmsg() {
@@ -21,6 +36,7 @@ helpmsg() {
   -l --local	use seved target file path (default $utilspath)
   -e --edit	edit target file, (default editor is vim)
   -c --commit	git add && commit for $utilsmd
+  -p --push-master	git push origin master
   -w --word	specify search word
   -d --diff	show diff $utilsmd
   -B [N]	before context
@@ -40,6 +56,13 @@ while [ -n "${1:-}" ]; do
       git add "$utilsmd"
       git commit -m "up $(basename "$utilsmd")" -- "$utilsmd"
       exit 0;;
+    "-p"|"--push-master")
+      cd "$(dirname "$utilsmd")"
+      git status
+      git diff origin master
+      confirm "run [git push origin master]"
+      git push origin master
+     exit 0 ;;
     "-w"|"--word")shift; word="$1";;
     "-d"|"--diff")
       cd "$(dirname "$utilsmd")"
