@@ -37,9 +37,7 @@ echo "ln-wall: walldir=$walldir"
 cd "$walldir"
 for x in *; do
   if [ -f "$x" ]; then
-    ln -s "$walldir/$x" "$dst/$count" &&
-    count=$(expr $count + 1) ||
-    echo "ln-wall: link failed $x"
+    ln -s "$walldir/$x" "$dst/$count" && count=$(expr $count + 1)
   fi
 done
 # EOF
