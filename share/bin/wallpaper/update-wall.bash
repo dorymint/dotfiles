@@ -15,18 +15,18 @@ getter="$HOME"/Pictures/getter
 [ -f ./ln-wall.bash ] && linkwall="./ln-wall.bash"
 
 echo "unlink in $links"
-bash $unlink "$links"
+bash "$unlink" "$links"
 
 echo "ln from: $wallpaper"
 echo "ln from: $getter"
 echo "ln to: $links"
-bash $linkwall "$wallpaper" "$links"
-bash $linkwall "$getter" "$links"
+bash "$linkwall" "$wallpaper" "$links" || echo "update-wall failed: $wallpaper"
+bash "$linkwall" "$getter" "$links" || echo "update-wall failed: failed $getter"
 echo "read sub directory in $getter"
 for x in $getter/*; do
   if [ -d "$x" ]; then
     echo "find sub directory [ $(basename "$x") ] make links"
-    bash $linkwall "${x}" "$links"
+    bash "$linkwall" "${x}" "$links" || echo "update-wall failed: failed $x"
   fi
 done
 echo "done"

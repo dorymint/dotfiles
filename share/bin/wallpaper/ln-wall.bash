@@ -29,13 +29,17 @@ if [[ "$walldir" == "" ]] || [[ "$dst" == "" ]];then
 fi
 
 dst=$(cd "$dst" && pwd)
+echo "ln-wall: dst=$dst"
 count=$(find "$dst" -type l | wc -l)
 
 walldir=$(cd "$walldir" && pwd)
+echo "ln-wall: walldir=$walldir"
 cd "$walldir"
-for x in * ; do
-  [ -f "$x" ] &&
+for x in *; do
+  if [ -f "$x" ]; then
     ln -s "$walldir/$x" "$dst/$count" &&
-    count=$(expr $count + 1)
+    count=$(expr $count + 1) ||
+    echo "ln-wall: link failed $x"
+  fi
 done
 # EOF
