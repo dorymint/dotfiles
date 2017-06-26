@@ -20,13 +20,13 @@ bash "$unlink" "$links"
 echo "ln from: $wallpaper"
 echo "ln from: $getter"
 echo "ln to: $links"
-bash "$linkwall" "$wallpaper" "$links" || echo "update-wall failed: $wallpaper"
-bash "$linkwall" "$getter" "$links" || echo "update-wall failed: failed $getter"
+bash "$linkwall" "$wallpaper" "$links"
+bash "$linkwall" "$getter" "$links"
 echo "read sub directory in $getter"
 for x in $getter/*; do
   if [ -d "$x" ]; then
     echo "find sub directory [ $(basename "$x") ] make links"
-    bash "$linkwall" "${x}" "$links" || echo "update-wall failed: failed $x"
+    bash "$linkwall" "${x}" "$links"
   fi
 done
 echo "done"
