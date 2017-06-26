@@ -26,6 +26,7 @@ setopt autocd
 setopt autopushd
 setopt pushdignoredups
 
+[ -f "$DOTFILES_ROOT"/etc/zsh/localrc.zsh ] && source "$DOTFILES_ROOT"/etc/zsh/localrc.zsh
 
 ## lily
 if [[ "$(uname -n)" == *lily* ]] && [ "$SHLVL" -eq 1 ]; then

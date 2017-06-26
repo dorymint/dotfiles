@@ -3,8 +3,8 @@ Description=virtualbox headless
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/bash -c '/usr/bin/vboxheadless --startvm "vm-name"'
-ExecStop=/usr/bin/bash -c '/usr/bin/vboxmanage controlvm "vm-name" poweroff'
+ExecStart=/usr/bin/bash -c '/usr/bin/vboxheadless --startvm "$(cat "$HOME"/dotfiles/etc/systemd/currentvm)"'
+ExecStop=/usr/bin/bash -c '/usr/bin/vboxmanage controlvm "$(cat "$HOME"/dotfiles/etc/systemd/currentvm)" poweroff'
 PrivateTmp=true
 
 [Install]

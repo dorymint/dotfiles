@@ -22,7 +22,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'easymotion/vim-easymotion'
 
 " TODO: trim syntastic?
-if 0 == 1
+if 1 == 1
   Plug 'vim-syntastic/syntastic'
   let s:useALE = 0
 else
