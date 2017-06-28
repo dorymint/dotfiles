@@ -72,6 +72,7 @@ fi
 [ -x "$(builtin command which sway)" ] && alias sway='XKB_DEFAULT_LAYOUT=jp sway'
 [ -x "$(builtin command which emacs)" ] && alias emacs='command emacs -nw'
 alias timers 2> /dev/null || alias timers='systemctl --no-pager --user list-timers'
+alias tmux='tmux -2'
 
 
 # EOF
