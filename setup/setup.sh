@@ -18,7 +18,7 @@ END
 while [ -n "${1:-}" ]; do
   case "$1" in
    help|--help|-h) helpmsg; exit 0;;
-   --force|-f) lnopt="-f "
+   --force|-f) lnopt="-f"
   esac
   shift
 done
@@ -26,7 +26,7 @@ unset -f helpmsg
 
 cd "$(dirname "$(readlink -f "$0")")" && cd ../
 dotroot=$(pwd -P)
-lnopt="${lnopt:-}"" -sn"
+lnopt="-sn ""${lnopt:-}"
 
 [ -d "$HOME"/.vim ] || mkdir "$HOME"/.vim
 [ -d "$HOME"/go ] || mkdir -p "$HOME"/go/{bin,pkg,src}
@@ -59,12 +59,6 @@ set +e
 
   split "tmux"
   ln $lnopt "$dotroot"/tmux/tmux.conf "$HOME"/.tmux.conf
-
-  split "i3-wm"
-  ln $lnopt "$dotroot"/i3/ "$HOME"/.i3
-
-  split "termite"
-  ln $lnopt "$dotroot"/termite/ "$HOME"/.config/
 set -e
 
 # EOF
