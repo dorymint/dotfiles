@@ -1,8 +1,9 @@
 xft.dpi: 96
 xft.antialias: true
 xft.rgba: rgb
-xft.hinting: true
-xft.hintstyle: hitslight
+
+xft.hinting: false
+!xft.hintstyle: hitslight
 
 urxvt.saveLines: 512
 urxvt.scrollBar: false
@@ -47,5 +48,6 @@ urxvt*color15: #ffffff
 !            -misc-fixed-medium-r-semicondensed-*-12-90-100-*-c-60-iso8859-1
 !
 
-urxvt*font: xft:Inconsolata:size=10
+!urxvt*font: xft:Inconsolata:size=10
 !urxvt*font: xft:Ricty:size=10
+urxvt*font: xft:Noto Sanse Mono CJK JP:size=10
