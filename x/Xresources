@@ -1,4 +1,3 @@
-
 xft.dpi: 96
 xft.antialias: true
 xft.rgba: rgb
@@ -49,4 +48,4 @@ urxvt*color15: #ffffff
 !
 
 urxvt*font: xft:Inconsolata:size=10
-!urxvt*font: xft:Ricty:size=8
+!urxvt*font: xft:Ricty:size=10

@@ -6,7 +6,6 @@ atom
 base
 base-devel
 bash-completion
-bc
 bind-tools
 chromium
 cmake
@@ -14,7 +13,6 @@ cmatrix
 compton
 ctags
 dmenu
-docbook-xsl
 emacs
 fcitx-im
 fcitx-mozc
@@ -36,7 +34,6 @@ openssh
 os-prober
 pavucontrol
 pulseaudio
-reflector
 rsync
 rxvt-unicode
 rxvt-unicode-terminfo
@@ -50,18 +47,17 @@ tmux
 ttf-arphic-uming
 ttf-baekmuk
 ttf-freefont
+ttf-inconsolata
 ttf-indic-otf
 ttf-liberation
 unzip
 vim
-w3m
 wayland
 weston
 wget
 xclip
 xf86-video-intel
 xf86-video-vesa
-xmlto
 xorg-server
 xorg-server-utils
 xorg-server-xwayland
