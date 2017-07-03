@@ -162,7 +162,7 @@ else
   let g:syntastic_mode_map = { 'mode': 'active' }
     " golang
     let g:syntastic_go_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-    let g:syntastic_go_checkers = ['go', 'gofmt', 'govet', 'golint']
+    let g:syntastic_go_checkers = ['gofmt', 'govet', 'golint']
     " cpp
     let g:syntastic_cpp_compiler = 'clang'
     let g:syntastic_cpp_compiler_options = '-std=c++1z --pedantic-errors'

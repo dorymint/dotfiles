@@ -9,5 +9,6 @@ ln $lnopt "$HOME"/dotfiles/x/xserverrc "$HOME"/.xserverrc
 ln $lnopt "$HOME"/dotfiles/x/Xresources "$HOME"/.Xresources
 ln $lnopt "$HOME"/dotfiles/x/i3/ "$HOME"/.i3
 ln $lnopt "$HOME"/dotfiles/x/termite/ "$HOME"/.config/termite
+ln $lnopt "$HOME"/dotfiles/x/fontconfig/ "$HOME"/.config/fontconfig
 set -e
 # EOF

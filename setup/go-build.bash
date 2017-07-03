@@ -6,10 +6,12 @@ repo="//go.googlesource.com/go"
 #repo="//github.com/golang/go"
 goroot="$HOME/github.com/golang/go"
 
-goversion="go1.8.3"
+#goversion="go1.8.3"
+goversion="master"
 
 #bootstrap="gcc-go"
 bootstrap="go1.4.3"
+#bootstrap="go1.4-bootstrap"
 
 # confirm $1=msg return bool
 function confirm () {
@@ -39,23 +41,21 @@ if [[ ! -d "$goroot" ]]; then
 fi
 
 # update src
-if confirm "update $goroot ?"; then
+if confirm "fetch $goroot ?"; then
   cd "$goroot/src"
-  git checkout master
-  git pull
+  git fetch
 fi
 
 # build
 echo "bootstrap=$bootstrap"
-confirm "build $goversion ?"
 case "$bootstrap" in
   "go1.4.3")
-    [[ ! -d "$HOME/$bootstrap" ]] && git clone --no-local "$goroot" "$HOME/$bootstrap"
-    if confirm "build/update go1.4.3 ?"; then
+    [[ ! -d "$HOME/$bootstrap" ]] && git clone --no-local  --branch="$bootstrap" "$goroot" "$HOME/$bootstrap"
+    if confirm "build/update $bootstrap ?"; then
       cd "$HOME/$bootstrap/src"
-      git checkout master
-      git pull
+      git fetch
       git checkout $bootstrap
+      git clean --force
       # build go1.4.3
       clang --version > /dev/null
       clang++ --version > /dev/null
@@ -63,12 +63,31 @@ case "$bootstrap" in
     fi
     cd "$goroot/src"
     git checkout "$goversion"
-    GOROOT_BOOTSTRAP="$HOME/$bootstrap" ./all.bash ;;
+    git pull
+    confirm "build $goversion ?"
+    if confirm "$goversion prebuild: git clean ?"; then
+      git clean --force
+    fi
+    GOROOT_BOOTSTRAP="$HOME/$bootstrap" ./all.bash;;
+  "go1.4-bootstrap")
+    if confirm "make go boot strap ?"; then
+      cd "$HOME/$bootstrap/src"
+      clang --version > /dev/null
+      clang++ --version > /dev/null
+      CC=clang CXX=clang++ ./make.bash
+    fi
+    cd "$goroot/src"
+    git checkout "$goversion"
+    confirm "build $goversion ?"
+    if confirm "$goversion prebuild: git clean ?"; then
+      git clean --force
+    fi
+    GOROOT_BOOTSTRAP="$HOME/$bootstrap" ./all.bash;;
   "gcc-go")
+    confirm "build $goversion ?"
     cd "$goroot/src"
     git checkout "$goversion"
     GOROOT_BOOTSTRAP="/usr" ./all.bash ;;
   *) echo "bootstrap=$bootstrap is invalid"; exit 1 ;;
 esac
-
 # EOF
