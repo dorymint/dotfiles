@@ -4,17 +4,22 @@ set -eu
 result=""
 option="-s "
 dst="$HOME"/bin
+withoutx="no"
 
 # help
 function helpmsg () {
   cat >&1 <<END
   -f	accept override exists files
+  --without-x	yes/no
 END
 }
 while [ -n "${1:-}" ]; do
   case "$1" in
    help|--help|-h) helpmsg; exit 0;;
-   -f) option="$option"" -f "
+   -f) option="-sf ";;
+   --without-x) withoutx="yes";;
+   "") ;;
+   *) echo "invalid argument $*"; exit 1;;
   esac
   shift
 done
@@ -37,6 +42,9 @@ function links() {
   unset x
   for x in *; do
     if [ -d "$x" ]; then
+      if [ "$x" = "x" ] && [ "$withoutx" = "yes" ];then
+         continue
+      fi
       links "$x"
     fi
   done
