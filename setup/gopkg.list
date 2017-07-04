@@ -18,11 +18,4 @@ github.com/golang/dep/cmd/dep
 
 golang.org/x/tools/cmd/...
 #golang.org/x/tour/gotour
-
-#github.com/kamisari/go-todogotcha/todogotcha
-#github.com/kamisari/go-addtree/addtree
-#github.com/kamisari/expfunc
-#github.com/kamisari/tree
-#github.com/kamisari/gomem/cmd/gomem
-#github.com/kamisari/gits
 # EOF

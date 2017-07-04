@@ -4,12 +4,7 @@ set -eu
 # set variable
 goget="go get"
 options="-v"
-cd "$(dirname "$(readlink -f "$0")")"
-pkglist="./gopkg.list"
-if  [ ! -r "$pkglist" ] || [ ! -f "$pkglist" ]; then
-  echo "can't read $pkglist"
-  exit 1
-fi
+pkglist="$HOME/dotfiles/setup/gopkg.list"
 
 function split () {
   echo "------- $1 -------"
@@ -40,13 +35,15 @@ go pkg install scripts
     show help message
   update --update -u
     add flag -u for go get
+  file --file -f
+    specify path to gopkg.list(default: $pkglist)
 END
 }
 while [ -n "${1:-}" ]; do
   case "$1" in
    help|--help|-h) helpmsg; exit 0;;
-   # TODO: make flags for exchange variable
    update|--update|-u) options="-v -u";;
+   file|--file|-f) shift; pkglist="$1";;
    "");;
   esac
   shift
@@ -57,6 +54,10 @@ unset -f helpmsg
 split "require"
 type go
 type gawk
+if  [ ! -r "$pkglist" ] || [ ! -f "$pkglist" ]; then
+  echo "can't read $pkglist"
+  exit 1
+fi
 
 # parse
 awkout=$(gawk '/^[^#].*/ { print $0 }' "$pkglist")
@@ -79,5 +80,4 @@ for x in $awkout; do
   $goget $options $x
 done
 echo "...finish"
-
 # EOF

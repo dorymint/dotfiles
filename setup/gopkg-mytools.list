@@ -1,0 +1,10 @@
+# go package list
+# my tools
+github.com/kamisari/go-todogotcha/todogotcha
+#github.com/kamisari/go-addtree/addtree
+github.com/kamisari/expfunc
+github.com/kamisari/tree
+github.com/kamisari/gomem/cmd/gomem
+github.com/kamisari/getter
+github.com/kamisari/gits
+# EOF
