@@ -68,3 +68,4 @@ xorg-xinit
 xterm
 zsh
 zsh-completions
+zsh-syntax-highlighting
