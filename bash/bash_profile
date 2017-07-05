@@ -10,6 +10,10 @@ if [ -z "$DOTFILES_ROOT" ]; then
   return
 fi
 
+# keychain
+if command -v keychain > /dev/null; then
+  eval $(keychain --eval --quiet)
+fi
 
 ## environments
 source "$DOTFILES_ROOT"/share/lang.sh
