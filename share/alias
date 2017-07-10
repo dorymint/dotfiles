@@ -1,6 +1,4 @@
 # share/alias
-
-
 # common
 alias la='command ls -lah --color=auto'
 alias :q='exit'
@@ -20,59 +18,53 @@ alias sudo='command sudo '
 
 # local
 ## cd
-builtin command -v gw 2> /dev/null || alias gw='cd "$GOPATH/src/github.com/$USER"'
-builtin command -v ww 2> /dev/null || alias ww='cd "$HOME/github.com/$USER"'
-builtin command -v dot 2> /dev/null || alias dot='cd "$DOTFILES_ROOT"'
+alias gw='cd "$GOPATH/src/github.com/$USER"'
+alias ww='cd "$HOME/github.com/$USER"'
+alias dot='cd "$DOTFILES_ROOT"'
 alias dotfiles='cd "$DOTFILES_ROOT"'
 
 ##  goto src golang official pkg
 if [ -d "$GOROOT"/src ] && [ -x "$(command which vim)" ]; then
   alias gosrc='cd "$GOROOT/src" && vim -R . '
-else
-  echo 'alias: not found local go or vim'
 fi
 
 ## vim
 if [ -x "$HOME"/opt/vim/bin/vim ]; then
   alias viml='"$HOME"/opt/vim/bin/vim'
-else
-  echo 'alias: not found $HOME/opt/vim/bin/vim'
 fi
 
 ## nvim
 if [ -x "$HOME"/opt/neovim/bin/nvim ]; then
   alias nvim='"$HOME"/opt/neovim/bin/nvim'
-else
-  echo 'alias: not found $HOME/opt/neovim/bin/nvim'
 fi
 
 ## for vim plugin sonictemplate: add to commite
 if [ -x "$DOTFILES_ROOT"/vim/sonicdir/allcommit.bash ]; then
   alias sonic='"$DOTFILES_ROOT"/vim/sonicdir/allcommit.bash'
-else
-  echo "alias: not found sonicdir/allcommit.bash"
 fi
 
 ## peco
-if [ -x "$(builtin command which peco)" ]; then
-  [ -x "$(builtin command which reps.sh)" ] && alias reps='cd "$(reps.sh status | peco)"'
-  alias cdl 2> /dev/null || alias cdl='cd "$(dirs -pl | peco)"'
-  alias cdp 2> /dev/null || alias cdp='cd "$(find . -type d ! -path "*.git*" !  -path "*.deps*" | peco)"'
-  alias gwp 2> /dev/null || alias gwp='gw && cdp'
-  [ -x "$(builtin command which todogotcha)" ] &&
-    ! builtin command which gwtodo 2> /dev/null &&
-    alias gwtodo='gw && viml "$(todogotcha -trim=false | peco)"'
-else
-  echo 'alias: not found peco'
+if [ -x "$(builtin command -v peco)" ]; then
+  if [ -x "$(builtin command -v reps.sh)" ]; then
+    alias reps='cd "$(reps.sh status | peco)"'
+  fi
+  alias cdl='cd "$(dirs -pl | peco)"'
+  alias cdp='cd "$(find . -type d ! -path "*.git*" !  -path "*.deps*" | peco)"'
+  alias gwp='gw && cdp'
+  if [ -x "$(builtin command -v todogotcha)" ]; then
+    if alias viml &> /dev/null; then
+      alias gwtodo='gw && viml "$(todogotcha -trim=false | peco)"'
+    else
+      alias gwtodo='gw && vim "$(todogotcha -trim=false | peco)"'
+    fi
+  fi
 fi
 
 ## etc
 [ "$TERM" = "xterm-termite" ] && alias ssh='TERM=xterm-256color ssh'
-[ -x "$(builtin command which mplayer)" ] && alias mplayerbgm='command mplayer -ao pulse -vo null '
-[ -x "$(builtin command which sway)" ] && alias sway='XKB_DEFAULT_LAYOUT=jp sway'
-[ -x "$(builtin command which emacs)" ] && alias emacs='command emacs -nw'
+[ -x "$(builtin command -v mplayer)" ] && alias mplayerbgm='command mplayer -ao pulse -vo null '
+[ -x "$(builtin command -v sway)" ] && alias sway='XKB_DEFAULT_LAYOUT=jp sway'
+[ -x "$(builtin command -v emacs)" ] && alias emacs='command emacs -nw'
 alias timers 2> /dev/null || alias timers='systemctl --no-pager --user list-timers'
 alias tmux='tmux -2'
-
-
 # EOF
