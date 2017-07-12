@@ -19,6 +19,7 @@ fi
 source "$DOTFILES_ROOT"/share/lang.sh
 source "$DOTFILES_ROOT"/share/nodeenv.sh
 source "$DOTFILES_ROOT"/share/goenv.sh
+source "$DOTFILES_ROOT"/share/rubyenv.sh
 ### priority local bin
 [ -d "$HOME"/bin ] && export PATH="$HOME"/bin:"$PATH"
 [ -d "$HOME"/bin/dev ] && export PATH="$HOME"/bin/dev:"$PATH"
