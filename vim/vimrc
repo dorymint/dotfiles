@@ -170,8 +170,7 @@ syntax on
 if $TERM == "xterm-256color" ||
       \ $TERM == "xterm-termite" ||
       \ $TERM == "screen-256color" ||
-      \ $TERM == "rxvt-unicode-256color" ||
-      \ $TERM == "vt220"
+      \ $TERM == "rxvt-unicode-256color"
   try
     set background=dark
     set t_Co=256
