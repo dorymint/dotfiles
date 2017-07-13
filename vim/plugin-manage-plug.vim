@@ -20,6 +20,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'thinca/vim-ref'
   Plug 'kannokanno/previm'
   Plug 'easymotion/vim-easymotion'
+  Plug 'szw/vim-tags'
 
 " TODO: trim syntastic?
 if 1 == 1
@@ -31,10 +32,14 @@ else
 endif
 
   " language
+  " dart
   Plug 'dart-lang/dart-vim-plugin'
+  " clang
   Plug 'justmao945/vim-clang'
+  " javascript
   Plug 'heavenshell/vim-jsdoc'
   Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
+  " golang
   Plug 'fatih/vim-go'
 
   " color
