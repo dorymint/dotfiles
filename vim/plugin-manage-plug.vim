@@ -21,6 +21,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'kannokanno/previm'
   Plug 'easymotion/vim-easymotion'
   Plug 'szw/vim-tags'
+    " TODO: consider tags directory
+    "     : let g:vim_tags_cache_dir = expand($HOME)
+    "     : default .vt_location is .git directory
 
 " TODO: trim syntastic?
 if 1 == 1
