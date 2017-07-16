@@ -60,10 +60,14 @@ if [ -x "$(builtin command -v peco)" ]; then
   fi
 fi
 
+# sway
+if [ -x "$(builtin command -v sway)" ]; then
+  alias sway='XKB_DEFAULT_LAYOUT=jp WLC_REPEAT_DELAY=200 WLC_REPEAT_RATE=30 sway'
+fi
+
 ## etc
 [ "$TERM" = "xterm-termite" ] && alias ssh='TERM=xterm-256color ssh'
 [ -x "$(builtin command -v mplayer)" ] && alias mplayerbgm='command mplayer -ao pulse -vo null '
-[ -x "$(builtin command -v sway)" ] && alias sway='XKB_DEFAULT_LAYOUT=jp sway'
 [ -x "$(builtin command -v emacs)" ] && alias emacs='command emacs -nw'
 alias timers 2> /dev/null || alias timers='systemctl --no-pager --user list-timers'
 alias tmux='tmux -2'

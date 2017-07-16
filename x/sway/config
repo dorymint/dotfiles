@@ -1,7 +1,4 @@
-# Default config for sway
-#
-# Copy this to ~/.config/sway/config and edit it to your liking.
-#
+# config for sway
 # Read `man 5 sway` for a complete reference.
 
 ### Variables
@@ -22,10 +19,8 @@ set $menu dmenu_run
 #
 # Default wallpaper (more resolutions are available in /usr/share/sway/)
 output * bg /usr/share/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-#
-# Example configuration:
-#
-#   output HDMI-A-1 resolution 1920x1080 position 1920,0
+output LVDS-A-1 disable
+output HDMI-A-1 resolution 1920x1080 position 0,0
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
