@@ -1,9 +1,6 @@
 # config for sway
 # Read `man 5 sway` for a complete reference.
 
-### exec
-exec xrdb ~/.Xresorces
-
 ### Variables
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
@@ -180,7 +177,7 @@ bindsym $mod+r mode "resize"
 bindsym $mod+t border normal 2
 bindsym $mod+y border pixel 15
 bindsym $mod+u border none
-bindsym $mod+shift+b bar mode toggle
+bindsym $mod+Shift+b bar mode toggle
 
 # for modify volume
 mode "volume" {
@@ -211,5 +208,8 @@ bar {
         inactive_workspace #32323200 #32323200 #5c5c5c
     }
 }
+
+### exec
+exec xrdb ~/.Xresorces
 
 include /etc/sway/config.d/*
