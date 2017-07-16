@@ -54,11 +54,6 @@ if false; then
   fi
 fi
 
-# TODO: reconsider ssh-agent
-#if [ -x /usr/bin/ssh-agent ]; then
-#  eval $(ssh-agent)
-#fi
-
 # for i3
 if [ -d "$HOME"/Pictures/links ] && [ -x /usr/bin/feh ]; then
   wallpath="$HOME"/Pictures/links
