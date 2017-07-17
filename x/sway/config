@@ -33,6 +33,12 @@ output HDMI-A-1 resolution 1920x1080 position 0,0
 #
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
+input "2:7:SynPS/2_Synaptics_TouchPad" {
+    dwt enabled
+    tap enabled
+    natural_scroll enabled
+    middle_emulation enabled
+}
 
 ### Key bindings
 #
@@ -173,12 +179,6 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-# border
-bindsym $mod+t border normal 2
-bindsym $mod+y border pixel 15
-bindsym $mod+u border none
-bindsym $mod+Shift+b bar mode toggle
-
 # for modify volume
 mode "volume" {
   bindsym j exec amixer -q set Master 2dB- unmute
@@ -190,6 +190,40 @@ mode "volume" {
   bindsym q      mode "default"
 }
 bindsym $mod+Shift+v mode "volume"
+
+# TODO: make border mode?
+# border
+bindsym $mod+t border normal 2
+bindsym $mod+y border pixel 15
+bindsym $mod+u border none
+bindsym $mod+Shift+b bar mode toggle
+
+# TODO: consider mode selector
+mode "mode_selector" {
+  bindsym q mode "default"
+  bindsym Escape mode "default"
+  bindsym Return mode "default"
+
+  bindsym v mode "volume"
+  bindsym r mode "resize"
+}
+bindsym $mod+m mode "mode_selector"
+
+# TODO: set color
+### color
+# client
+# class                  border      background  text      indicator   child_border
+#client.focused           #ffffff     #dddddd     #000000   #ccccc      #aaaaa
+#client.focused_inactiv   $darkgray   $darkgray   $white    $black      $blue
+#client.unfocused         $black      $black      $white    $black      $blue
+
+#client.background #ffffff
+#client.focused #333333 #28557740 #ffffff #2e9ef490 #00000000
+#client.unfocused #333333 #22222280 #ffffff #292d2e90 #00000000
+#client.focused_inactiv #333333 #5f676a #ffffff #484e50 #5f676a
+
+#client.placeholder #00000000 #00000000 #ffffff #00000000 #00000000
+#client.argent #00000000 #00000000 #ffffff #00000000 #00000000
 
 #
 # Status Bar:
@@ -210,6 +244,9 @@ bar {
 }
 
 ### exec
-exec xrdb ~/.Xresorces
+exec sh -c '[ -f ~/.Xresources ] && xrdb ~/.Xresources'
+exec sh -c '[ -f "$HOME"/dotfiles/etc/sway/currentsock ] && : > "$HOME"/dotfiles/etc/sway/currentsock && sync'
+exec sh -c '[ -f "$HOME"/dotfiles/etc/sway/currentsock ] && echo "SWAYSOCK=$SWAYSOCK" > "$HOME"/dotfiles/etc/sway/currentsock'
+exec_always sh -c '[ -x $(command -v sway-bg-random.sh) ] && sway-bg-random.sh'
 
 include /etc/sway/config.d/*

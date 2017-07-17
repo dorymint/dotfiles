@@ -62,7 +62,7 @@ fi
 
 # sway
 if [ -x "$(builtin command -v sway)" ]; then
-  alias sway='XKB_DEFAULT_LAYOUT=jp WLC_REPEAT_DELAY=200 WLC_REPEAT_RATE=30 sway'
+  alias sway='XKB_DEFAULT_LAYOUT=jp XKB_DEFAULT_MODEL=pc106 WLC_REPEAT_DELAY=200 WLC_REPEAT_RATE=30 sway'
 fi
 
 ## etc

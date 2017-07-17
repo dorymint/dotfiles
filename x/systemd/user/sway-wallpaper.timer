@@ -1,0 +1,9 @@
+[Unit]
+Description=for sway-wallpaper.service
+
+[Timer]
+OnUnitActiveSec=2min
+Unit=sway-wallpaper.service
+
+[Install]
+WantedBy=

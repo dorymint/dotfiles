@@ -1,0 +1,11 @@
+[Unit]
+Description=rotate wallpaper for sway
+
+[Service]
+Type=oneshot
+EnvironmentFile=%h/dotfiles/etc/systemd/wallenv
+EnvironmentFile=%h/dotfiles/etc/sway/currentsock
+ExecStart=/usr/bin/sh -c '[ -n "$SWAYSOCK" ] && swaymsg --socket "$SWAYSOCK" --type command output "*" bg "$WALLPATH"/"$(ls "$WALLPATH" | shuf -n 1)" fit'
+
+[Install]
+WantedBy=
