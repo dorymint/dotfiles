@@ -198,6 +198,14 @@ bindsym $mod+y border pixel 15
 bindsym $mod+u border none
 bindsym $mod+Shift+b bar mode toggle
 
+mode "wallpaper" {
+  bindsym q mode "default"
+  bindsym Escape mode "default"
+  bindsym Return mode "default"
+
+  bindsym n exec sh -c 'sway-bg-random.sh'
+}
+
 # TODO: consider mode selector
 mode "mode_selector" {
   bindsym q mode "default"
@@ -206,6 +214,7 @@ mode "mode_selector" {
 
   bindsym v mode "volume"
   bindsym r mode "resize"
+  bindsym w mode "wallpaper"
 }
 bindsym $mod+m mode "mode_selector"
 
@@ -239,7 +248,7 @@ bar {
     colors {
         statusline #ffffff
         background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
+        inactive_workspace #323232 #323232 #5c5c5c
     }
 }
 

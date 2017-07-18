@@ -12,13 +12,13 @@ if command -v pacman &> /dev/null; then
     echo "recommend: pacman -S grml-zsh-config"
 else
   echo "warning: use grml in dotfiles"
-  source "$DOTFILES_ROOT"/zsh/grml/zshrc.grml
+  source "$HOME"/dotfiles/zsh/grml/zshrc.grml
 fi
 
 
 ## alias
-source "$DOTFILES_ROOT"/share/alias
-[ -f "$DOTFILES_ROOT"/etc/alias ] && source "$DOTFILES_ROOT"/etc/alias
+source "$HOME"/dotfiles/share/alias
+[ -f "$HOME"/dotfiles/etc/alias ] && source "$HOME"/dotfiles/etc/alias
 
 
 ## setopt
@@ -26,7 +26,7 @@ setopt autocd
 setopt autopushd
 setopt pushdignoredups
 
-[ -f "$DOTFILES_ROOT"/etc/zsh/localrc.zsh ] && source "$DOTFILES_ROOT"/etc/zsh/localrc.zsh
+[ -f "$HOME"/dotfiles/etc/zsh/localrc.zsh ] && source "$HOME"/dotfiles/etc/zsh/localrc.zsh
 
 ## lily
 if [[ "$(uname -n)" == *lily* ]] && [ "$SHLVL" -eq 1 ]; then

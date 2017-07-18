@@ -7,9 +7,9 @@
 
 
 ## alias
-if [ -n "$DOTFILES_ROOT" ]; then
-  source "$DOTFILES_ROOT"/share/alias
-  [ -f "$DOTFILES_ROOT"/etc/alias ] && source "$DOTFILES_ROOT"/etc/alias
+if [ -n "$HOME"/dotfiles ]; then
+  source "$HOME"/dotfiles/share/alias
+  [ -f "$HOME"/dotfiles/etc/alias ] && source "$HOME"/dotfiles/etc/alias
 fi
 
 

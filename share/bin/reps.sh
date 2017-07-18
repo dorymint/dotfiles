@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-replist="$DOTFILES_ROOT"/etc/reps.list
+replist="$HOME"/dotfiles/etc/reps.list
 sub="status"
 
 # help

@@ -42,6 +42,6 @@ function split () {
   commit "$1"
   echo ""
 }
-split "$DOTFILES_ROOT/vim/sonicdir/pretempl"
-split "$DOTFILES_ROOT/vim/sonicdir/templ"
+split "$HOME/dotfiles/vim/sonicdir/pretempl"
+split "$HOME/dotfiles/vim/sonicdir/templ"
 # EOF

@@ -18,10 +18,10 @@ alias sudo='command sudo '
 
 # local
 ## cd
-alias gw='cd "$GOPATH/src/github.com/$USER"'
-alias ww='cd "$HOME/github.com/$USER"'
-alias dot='cd "$DOTFILES_ROOT"'
-alias dotfiles='cd "$DOTFILES_ROOT"'
+alias gw='cd "$GOPATH"/src/github.com/"$USER"'
+alias ww='cd "$HOME"/github.com/"$USER"'
+alias dot='cd "$HOME"/dotfiles'
+alias dotfiles='cd "$HOME"/dotfiles'
 
 ##  goto src golang official pkg
 if [ -d "$GOROOT"/src ] && [ -x "$(command which vim)" ]; then
@@ -39,8 +39,8 @@ if [ -x "$HOME"/opt/neovim/bin/nvim ]; then
 fi
 
 ## for vim plugin sonictemplate: add to commite
-if [ -x "$DOTFILES_ROOT"/vim/sonicdir/allcommit.bash ]; then
-  alias sonic='"$DOTFILES_ROOT"/vim/sonicdir/allcommit.bash'
+if [ -x "$HOME/dotfiles"/vim/sonicdir/allcommit.bash ]; then
+  alias sonic='"$HOME/dotfiles"/vim/sonicdir/allcommit.bash'
 fi
 
 ## peco
