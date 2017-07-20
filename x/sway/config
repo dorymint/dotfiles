@@ -218,21 +218,23 @@ mode "mode_selector" {
 }
 bindsym $mod+m mode "mode_selector"
 
-# TODO: set color
-### color
+### default color
 # client
 # class                  border      background  text      indicator   child_border
-#client.focused           #ffffff     #dddddd     #000000   #ccccc      #aaaaa
-#client.focused_inactiv   $darkgray   $darkgray   $white    $black      $blue
-#client.unfocused         $black      $black      $white    $black      $blue
-
-#client.background #ffffff
-#client.focused #333333 #28557740 #ffffff #2e9ef490 #00000000
-#client.unfocused #333333 #22222280 #ffffff #292d2e90 #00000000
+#background #ffffff
+#client.focused #4c7899 #285577 #ffffff #2e9ef4 #285577
 #client.focused_inactiv #333333 #5f676a #ffffff #484e50 #5f676a
+#client.unfocused #333333 #222222 #888888 #292d2e #222222
+#client.urgent #2f343a #900000 #ffffff #900000 #900000
+#client.placeholder #000000 #0c0c0c #ffffff #000000 #0c0c0c
 
-#client.placeholder #00000000 #00000000 #ffffff #00000000 #00000000
-#client.argent #00000000 #00000000 #ffffff #00000000 #00000000
+
+#default_border normal 5
+# TODO: transparency
+#client.focused #4c7899 #285577 #ffffff #2e9ef4 #28557700
+#client.focused_inactiv #333333 #5f676a #ffffff #484e50 #5f676a00
+#client.unfocused #33333300 #22222200 #888888 #292d2e #22222200
+
 
 #
 # Status Bar:
@@ -248,14 +250,14 @@ bar {
     colors {
         statusline #ffffff
         background #323232
-        inactive_workspace #323232 #323232 #5c5c5c
+        inactive_workspace #32323200 #32323200 #5c5c5c
     }
 }
 
 ### exec
 exec sh -c '[ -f ~/.Xresources ] && xrdb ~/.Xresources'
 exec sh -c '[ -f "$HOME"/dotfiles/etc/sway/currentsock ] && : > "$HOME"/dotfiles/etc/sway/currentsock && sync'
-exec sh -c '[ -f "$HOME"/dotfiles/etc/sway/currentsock ] && echo "SWAYSOCK=$SWAYSOCK" > "$HOME"/dotfiles/etc/sway/currentsock'
-exec_always sh -c '[ -x $(command -v sway-bg-random.sh) ] && sway-bg-random.sh'
+exec sh -c '[ -f "$HOME"/dotfiles/etc/sway/currentsock ] && echo "SWAYSOCK=$SWAYSOCK" > "$HOME"/dotfiles/etc/sway/currentsock && sync'
+#exec_always sh -c '[ -x $(command -v sway-bg-random.sh) ] && sway-bg-random.sh &'
 
 include /etc/sway/config.d/*

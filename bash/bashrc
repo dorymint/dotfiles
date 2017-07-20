@@ -1,10 +1,8 @@
 # bashrc
 
-
 ## check interactive
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
-
 
 ## alias
 if [ -n "$HOME"/dotfiles ]; then
@@ -12,12 +10,11 @@ if [ -n "$HOME"/dotfiles ]; then
   [ -f "$HOME"/dotfiles/etc/alias ] && source "$HOME"/dotfiles/etc/alias
 fi
 
-
 ## lily
 if [[ "$(uname -n)" == *lily* ]] && [ "$SHLVL" -eq 1 ]; then
   echo "hello lily"
+  command -v fortune &> /dev/null && fortune -a
 fi
-
 
 ## call zsh
 if [ -x /bin/zsh ] && [ -f "$HOME"/.zshrc ]; then

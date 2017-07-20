@@ -1,10 +1,8 @@
 # zhsrc
 
-
 ## check interactive
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
-
 
 ## grml zshrc
 if command -v pacman &> /dev/null; then
@@ -15,11 +13,9 @@ else
   source "$HOME"/dotfiles/zsh/grml/zshrc.grml
 fi
 
-
 ## alias
 source "$HOME"/dotfiles/share/alias
 [ -f "$HOME"/dotfiles/etc/alias ] && source "$HOME"/dotfiles/etc/alias
-
 
 ## setopt
 setopt autocd
@@ -31,5 +27,6 @@ setopt pushdignoredups
 ## lily
 if [[ "$(uname -n)" == *lily* ]] && [ "$SHLVL" -eq 1 ]; then
   echo "hello lily"
+  command -v fortune &> /dev/null && fortune -a
 fi
 # EOF

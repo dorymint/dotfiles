@@ -8,8 +8,12 @@
 # i3 config file (v4)
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
-
 set $mod Mod4
+
+set $left h
+set $down j
+set $up k
+set $right l
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below. ISO 10646 = Unicode
@@ -21,9 +25,6 @@ set $mod Mod4
 #font pango:Sans Regular 9
 #font Noto Sans Mono CJK JP, pango:Orbitron 9
 font pango:Orbitron 9
-
-# path to i3
-set $i3dir $HOME/.i3
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -44,10 +45,10 @@ bindsym $mod+Shift+d exec dmenu_run
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -56,10 +57,10 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -68,7 +69,8 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+#bindsym $mod+h split h
+bindsym $mod+b split h
 
 # split in vertical orientation
 bindsym $mod+v split v
@@ -122,8 +124,8 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-bindsym $mod+Shift+q exec "i3-msg exit"
+#bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec "i3-msg exit"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -133,10 +135,10 @@ mode "resize" {
   # Pressing right will grow the window’s width.
   # Pressing up will shrink the window’s height.
   # Pressing down will grow the window’s height.
-  bindsym j resize shrink width 5 px or 5 ppt
-  bindsym k resize grow height 5 px or 5 ppt
-  bindsym l resize shrink height 5 px or 5 ppt
-  bindsym semicolon resize grow width 5 px or 5 ppt
+  bindsym $left resize shrink width 5 px or 5 ppt
+  bindsym $right resize grow height 5 px or 5 ppt
+  bindsym $up resize shrink height 5 px or 5 ppt
+  bindsym $down resize grow width 5 px or 5 ppt
 
   # same bindings, but for the arrow keys
   bindsym Left resize shrink width 10 px or 10 ppt
@@ -168,7 +170,7 @@ bindsym $mod+t border normal 2
 bindsym $mod+y border pixel 15
 bindsym $mod+u border none
 
-bindsym $mod+b bar mode toggle
+bindsym $mod+shift+b bar mode toggle
 
 # reconsider: Colors
 set $lightgray #AAAAAA
@@ -180,10 +182,10 @@ set $white     #FFFFFF
 set $red       #FF0000
 set $blue      #005588
 
-# class                  border      backgr      txt       indicator   child_border
-client.focused           $darkgray   $darkgray   $white    $darkgray   $blue
-client.focused_inactiv   $darkgray   $darkgray   $white    $black      $blue
-client.unfocused         $black      $black      $white    $black      $blue
+# class                  border backgr txt    indicator child_border
+client.focused           $black $black $white $black    $black
+client.focused_inactiv   $black $black $white $black    $black
+client.unfocused         $black $black $white $black    $black
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -194,3 +196,6 @@ bar {
   workspace_buttons yes
   hidden_state hide
 }
+
+# start exec
+exec --no-startup-id conky
