@@ -55,11 +55,11 @@ case "$bootstrap" in
       cd "$HOME/$bootstrap/src"
       git fetch
       git checkout $bootstrap
-      git clean --force
       # build go1.4.3
       clang --version > /dev/null
       clang++ --version > /dev/null
-      CC=clang CXX=clang++ ./make.bash
+      CC=clang CXX=clang++ CGO_ENABLED=0 ./make.bash
+      #./make.bash
     fi
     cd "$goroot/src"
     git checkout "$goversion"
@@ -74,7 +74,7 @@ case "$bootstrap" in
       cd "$HOME/$bootstrap/src"
       clang --version > /dev/null
       clang++ --version > /dev/null
-      CC=clang CXX=clang++ ./make.bash
+      CC=clang CXX=clang++ CGO_ENABLED=0 ./make.bash
     fi
     cd "$goroot/src"
     git checkout "$goversion"
