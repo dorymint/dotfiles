@@ -28,7 +28,6 @@ done
 unset -f helpmsg
 [ -x "$(command which getter)" ]
 if [ "$bgcmd" = "feh" ];then
-  [ -x "$(command which $feh)" ]
   $bgcmd $option "$(getter)"
 else
   $bgcmd "$(getter)" $option
