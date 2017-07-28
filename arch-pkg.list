@@ -12,6 +12,7 @@ chromium
 cmake
 cmatrix
 compton
+conky
 ctags
 dmenu
 emacs
