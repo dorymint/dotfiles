@@ -6,8 +6,8 @@ repo="//go.googlesource.com/go"
 #repo="//github.com/golang/go"
 goroot="$HOME/github.com/golang/go"
 
-#goversion="go1.8.3"
-goversion="master"
+goversion="go1.9"
+#goversion="master"
 
 #bootstrap="gcc-go"
 bootstrap="go1.4.3"
@@ -63,7 +63,6 @@ case "$bootstrap" in
     fi
     cd "$goroot/src"
     git checkout "$goversion"
-    git pull
     confirm "build $goversion ?"
     if confirm "$goversion prebuild: git clean ?"; then
       git clean --force

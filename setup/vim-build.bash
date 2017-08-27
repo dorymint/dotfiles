@@ -36,6 +36,7 @@ case "$(uname)" in
       --enable-perlinterp
       --enable-python3interp
       --enable-rubyinterp
+      --enable-terminal
       --disable-gui
       --prefix=$installdir
       --without-x
