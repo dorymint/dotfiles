@@ -192,7 +192,7 @@ client.unfocused         $black $black $white $black    $black
 bar {
   status_command i3status
   position bottom
-  mode hide
+  mode dock
   workspace_buttons yes
   hidden_state hide
 }
