@@ -465,7 +465,7 @@ augroup nyan_vimrc
     " NOTE: (# ﾟДﾟ)つ textwidth がどこで set されたかわかんない!
     "     : おとなしく modeline 使った方が良さそう
 
-  " go
+  " golang
   autocmd Filetype go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
     "    \ listchars=tab:\ \ ,trail:-,nbsp:%,extends:>,precedes:<,
     " NOTE: goはハードタブが推奨される、noexpandtabとスペースの表示をfmtに合わせて設定
@@ -475,6 +475,11 @@ augroup nyan_vimrc
   "if isdirectory(glob('~/dotfiles/vim/tmp'))
   "  autocmd Filetype go nnoremap <buffer> <c-@>gorun  :<C-u>!go run  % > ~/dotfiles/vim/tmp/gorunlog.txt 2>&1<CR>
   "endif
+
+  " python3
+  if has('python3')
+    autocmd FileType python setlocal omnifunc=python3complete#Complete
+  endif
 
   " cpp
   "autocmd Filetype cpp setlocal nocindent
