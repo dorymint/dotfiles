@@ -476,7 +476,10 @@ augroup nyan_vimrc
   "  autocmd Filetype go nnoremap <buffer> <c-@>gorun  :<C-u>!go run  % > ~/dotfiles/vim/tmp/gorunlog.txt 2>&1<CR>
   "endif
 
-  " python3
+  " python
+  autocmd FileType python setlocal textwidth=79
+    " NOTE: see pep8
+    "     : is not working?
   if has('python3')
     autocmd FileType python setlocal omnifunc=python3complete#Complete
   endif
@@ -493,6 +496,9 @@ augroup nyan_vimrc_bg
   autocmd VimEnter,ColorScheme * highlight TablineSel ctermbg=NONE
   autocmd VimEnter,ColorScheme * highlight LineNr ctermbg=NONE
   autocmd VimEnter,ColorScheme * highlight CursorLineNr ctermbg=NONE
+  if has('terminal')
+    autocmd VimEnter,ColorScheme * highlight Terminal ctermbg=NONE
+  endif
 augroup END
 let s:toggle_bg_state = 1
 function! Togglebg() abort
@@ -510,6 +516,9 @@ function! Togglebg() abort
       autocmd ColorScheme * highlight TablineSel ctermbg=NONE
       autocmd ColorScheme * highlight LineNr ctermbg=NONE
       autocmd ColorScheme * highlight CursorLineNr ctermbg=NONE
+      if has('terminal')
+        autocmd ColorScheme * highlight Terminal ctermbg=NONE
+      endif
     augroup END
     let s:toggle_bg_state = 1
     execute 'colorscheme ' . g:colors_name
