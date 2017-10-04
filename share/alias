@@ -43,6 +43,11 @@ if [ -x "$HOME/dotfiles"/vim/sonicdir/allcommit.bash ]; then
   alias sonic='"$HOME/dotfiles"/vim/sonicdir/allcommit.bash'
 fi
 
+## python
+if [ -r "$HOME/venv/bin/activate" ]; then
+  alias python-activate='source $HOME/venv/bin/activate'
+fi
+
 ## peco
 if [ -x "$(builtin command -v peco)" ]; then
   if [ -x "$(builtin command -v reps.sh)" ]; then
