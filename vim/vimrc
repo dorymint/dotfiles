@@ -449,8 +449,7 @@ endif
 if !empty(s:errlist)
   call setqflist(s:errlist, 'r', { 'nr': s:errnum, 'title': 'vimrc tool errlist'})
   call setqflist(s:errlist, 'a')
-  echoerr 'tools activate error: count=' . len(s:errlist)
-  echoerr 'check to :copen'
+  echoerr 'tools activate error: count=' . len(s:errlist) . ' check to :copen'
   "copen
 endif
 
