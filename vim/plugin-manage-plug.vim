@@ -44,6 +44,9 @@ endif
   Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
   " golang
   Plug 'fatih/vim-go'
+  " python
+  Plug 'davidhalter/jedi-vim'
+    " TODO: check
 
   " color
   Plug 'nanotech/jellybeans.vim'
