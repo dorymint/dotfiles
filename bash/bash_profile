@@ -16,6 +16,7 @@ source "$HOME"/dotfiles/share/rubyenv.sh
 [ -d "$HOME"/bin ] && export PATH="$HOME"/bin:"$PATH"
 [ -d "$HOME"/bin/dev ] && export PATH="$HOME"/bin/dev:"$PATH"
 
-
-[[ -f ~/.bashrc ]] && . ~/.bashrc
+## for local
+[[ -f "$HOME"/dotfiles/etc/bash/bash_profile ]] && . "$HOME"/dotfiles/etc/bash/bash_profile
+[[ -f "$HOME"/.bashrc ]] && . "$HOME"/bashrc
 # EOF
