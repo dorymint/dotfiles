@@ -20,7 +20,6 @@ alias sudo='command sudo '
 ## cd
 alias gw='cd "$GOPATH"/src/github.com/"$USER"'
 alias ww='cd "$HOME"/github.com/"$USER"'
-alias dot='cd "$HOME"/dotfiles'
 alias dotfiles='cd "$HOME"/dotfiles'
 
 ##  goto src golang official pkg
