@@ -32,10 +32,10 @@ installdir="$HOME/opt/vim"
 case "$(uname)" in
   "Linux")
     buildoption="--enable-fail-if-missing
-      --enable-luainterp
-      --enable-perlinterp
-      --enable-python3interp
-      --enable-rubyinterp
+      --enable-luainterp=dynamic
+      --enable-perlinterp=dynamic
+      --enable-python3interp=dynamic
+      --enable-rubyinterp=dynamic
       --enable-terminal
       --disable-gui
       --prefix=$installdir
