@@ -67,6 +67,7 @@ xorg-server-utils
 xorg-server-xwayland
 xorg-twm
 xorg-xclock
+xorg-xhost
 xorg-xinit
 xterm
 zsh
