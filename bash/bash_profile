@@ -18,5 +18,5 @@ source "$HOME"/dotfiles/share/rubyenv.sh
 
 ## for local
 [[ -f "$HOME"/dotfiles/etc/bash/bash_profile ]] && . "$HOME"/dotfiles/etc/bash/bash_profile
-[[ -f "$HOME"/.bashrc ]] && . "$HOME"/bashrc
+[[ -f "$HOME"/.bashrc ]] && . "$HOME"/.bashrc
 # EOF
