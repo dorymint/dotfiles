@@ -481,9 +481,9 @@ augroup nyan_vimrc
   autocmd FileType python setlocal textwidth=79
     " NOTE: see pep8
     "     : is not working?
-  if has('python3')
-    autocmd FileType python setlocal omnifunc=python3complete#Complete
-  endif
+  "if has('python3')
+  "  autocmd FileType python setlocal omnifunc=python3complete#Complete
+  "endif
 
   " cpp
   "autocmd Filetype cpp setlocal nocindent
