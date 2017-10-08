@@ -4,20 +4,20 @@ set -eu
 result=""
 option="-s "
 dst="$HOME"/bin
-withoutx=""
+withoutx="yes"
 
 # help
 function helpmsg () {
   cat >&1 <<END
   -f	accept override exists files
-  --without-x
+  --with-x
 END
 }
 while [ -n "${1:-}" ]; do
   case "$1" in
    help|--help|-h) helpmsg; exit 0;;
    -f) option="-sf ";;
-   --without-x) withoutx="yes";;
+   --with-x) withoutx="";;
    *) echo "invalid argument $*"; exit 1;;
   esac
   shift
