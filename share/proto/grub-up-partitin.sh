@@ -17,7 +17,8 @@ function confirm () {
   return 1
 }
 
-confirm "install root $1"
+# to /dev/sd[X]
+confirm "install device root $1"
 
 chattr -i /boot/grub/i386-pc/core.img
 grub-install --target=i386-pc --debug --force $1
