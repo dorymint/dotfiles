@@ -195,6 +195,10 @@ endif
   let g:go_fmt_autosave = 0
   let g:go_template_autocreate = 0
 
+" jedi-vim
+" let g:jedi#auto_initialization = 0
+  let g:jedi#popup_on_dot = 0
+
 
 "-----| keymap |-----"
 " NOTE: プラグインのプレフィックスは<Leader>を基本に設定してみる
