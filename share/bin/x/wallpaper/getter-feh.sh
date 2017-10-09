@@ -22,6 +22,8 @@ while [ -n "${1:-}" ]; do
    -sway|--background-sway)
      bgcmd='swaymsg -t command output "*" bg'
      option="fit";;
+   "");;
+   *) echo "unknown option: $*"; exit 1;;
   esac
   shift
 done
