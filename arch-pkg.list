@@ -27,10 +27,12 @@ grml-zsh-config
 grub
 i3
 intel-ucode
+libnotify
 mesa
 mplayer
 net-tools
 nftables
+notify-osd
 noto-fonts
 noto-fonts-cjk
 noto-fonts-emoji

@@ -196,8 +196,13 @@ endif
   let g:go_template_autocreate = 0
 
 " jedi-vim
+  " NOTE: for python
 " let g:jedi#auto_initialization = 0
   let g:jedi#popup_on_dot = 0
+  let g:jedi#auto_close_doc = 0
+" let g:jedi#popup_select_first = 0
+  let g:jedi#show_call_signatures = 0
+  let g:jedi#rename_command = '<Leader>R'
 
 
 "-----| keymap |-----"
