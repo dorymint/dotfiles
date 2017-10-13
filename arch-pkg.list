@@ -15,6 +15,7 @@ compton
 conky
 ctags
 dmenu
+dunst
 emacs
 fcitx-im
 fcitx-mozc
@@ -32,7 +33,6 @@ mesa
 mplayer
 net-tools
 nftables
-notify-osd
 noto-fonts
 noto-fonts-cjk
 noto-fonts-emoji
