@@ -14,5 +14,6 @@ ln $lnopt "$HOME"/dotfiles/x/sway/ "$HOME"/.sway
 
 ln $lnopt "$HOME"/dotfiles/x/termite/ "$HOME"/.config/termite
 ln $lnopt "$HOME"/dotfiles/x/conky/ "$HOME"/.config/conky
+ln $lnopt "$HOME"/dotfiles/x/dunst/ "$HOME"/.config/dunst
 set -e
 # EOF

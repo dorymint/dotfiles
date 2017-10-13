@@ -58,6 +58,8 @@ if [[ -d "$vimbuilddir" ]]; then
   if confirm "update vim source? [yes:no]:>" ""; then
     git fetch
     git merge origin/master
+    # ignore exit code
+    confirm "git log -p [yes:no]?:>" "" && git log -p || true
   fi
 else
   echo "not found vim src directory"
@@ -68,7 +70,8 @@ else
 fi
 
 # show configure
-echo 'configure options'
+echo ""
+echo "configure options"
 for x in $buildoption; do
   echo $x
 done
