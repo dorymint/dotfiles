@@ -4,6 +4,12 @@
 
 set -eu
 
+## test
+bindir=$(dirname $(readlink -f ${0}))/bin
+echo ${bindir}
+ls ${bindir}
+exit 0
+
 [ -d "$HOME"/dotfiles/share/bin ]
 bindir="$HOME"/dotfiles/share/bin
 subcmd=""
@@ -32,5 +38,6 @@ case "$1" in
 esac
 unset -f helpmsg
 unset -f showlist
+
 $bindir/$subcmd $*
 # EOF
