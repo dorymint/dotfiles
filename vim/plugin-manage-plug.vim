@@ -112,6 +112,12 @@ endif
 "          \)
 "  endfunction
 
+" ctrlp.vim
+if executable('tree')
+  " use go-tree
+  let g:ctrlp_user_command = 'tree -full -nolog -nocolor %s'
+endif
+
 " tagbar
 if (has('win32') || has('win64'))
   " path to local biuld ctags.exe

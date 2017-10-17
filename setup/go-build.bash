@@ -6,7 +6,7 @@ repo="//go.googlesource.com/go"
 #repo="//github.com/golang/go"
 goroot="$HOME/github.com/golang/go"
 
-goversion="go1.9"
+goversion="go1.9.1"
 #goversion="master"
 
 #bootstrap="gcc-go"
@@ -28,9 +28,26 @@ function confirm () {
   done
   return 1
 }
+# help
+function helpmsg () {
+  cat >&1 <<END
+  go-build.bash
 
-# git
-git version
+  option:
+    -help
+      show this help
+    -target
+      specify build tag (default: ${goversion})
+END
+}
+while [ -n "${1:-}" ]; do
+  case "$1" in
+   help|-help|--help|-h) helpmsg; exit 0;;
+   -target) shift; goversion=${1};;
+  esac
+  shift
+done
+unset -f helpmsg
 
 # check goroot
 if [[ ! -d "$goroot" ]]; then
