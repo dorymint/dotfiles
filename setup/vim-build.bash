@@ -73,19 +73,17 @@ fi
 # build
 cd "${vimbuilddir}/src"
 if [ -r "./configure" ]; then
-  make clean
-
   # show configure
   echo ""
   echo "configure options"
   for x in $buildoption; do
     echo $x
   done
-  confirm "configure? [yes:no]:>" "stop process"
-  ./configure $buildoption
+  confirm "make distclean && ./configure? [yes:no]:>" "stop process"
+  make distclean && ./configure $buildoption
 
-  confirm "make? [yes:no]:>" "stop process"
-  make
+  confirm "make clean && make? [yes:no]:>" "stop process"
+  make clean && make
   echo "install to $installdir"
   confirm "make install? [yes:no]:>" "stop process"
   make install
