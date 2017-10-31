@@ -52,8 +52,8 @@ case "$(uname)" in
 esac
 
 # update src
-if [[ -d "$vimbuilddir" ]]; then
-  cd $vimbuilddir
+if [ -d ${vimbuilddir} ]; then
+  cd ${vimbuilddir}
   git checkout master
   if confirm "update vim source? [yes:no]:>" ""; then
     git fetch
@@ -69,19 +69,23 @@ else
   git checkout master
 fi
 
-# show configure
-echo ""
-echo "configure options"
-for x in $buildoption; do
-  echo $x
-done
 
 # build
-if [[ -r ./configure ]]; then
+cd "${vimbuilddir}/src"
+if [ -r "./configure" ]; then
+  make clean
+
+  # show configure
+  echo ""
+  echo "configure options"
+  for x in $buildoption; do
+    echo $x
+  done
   confirm "configure? [yes:no]:>" "stop process"
   ./configure $buildoption
-  confirm "make clean && maek? [yes:no]:>" "stop process"
-  make clean && make
+
+  confirm "make? [yes:no]:>" "stop process"
+  make
   echo "install to $installdir"
   confirm "make install? [yes:no]:>" "stop process"
   make install

@@ -99,7 +99,7 @@ endif
 
 " search
   set incsearch
-  set nohlsearch
+  set hlsearch
     " NOTE: keymapでトグル指定
   set ignorecase
   set smartcase

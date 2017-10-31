@@ -113,10 +113,10 @@ endif
 "  endfunction
 
 " ctrlp.vim
-if executable('tree')
-  " use go-tree
-  let g:ctrlp_user_command = 'tree -full -nolog -nocolor %s'
-endif
+"if executable('tree')
+"  " use go-tree
+"  let g:ctrlp_user_command = 'tree -full -nolog -nocolor %s'
+"endif
 
 " tagbar
 if (has('win32') || has('win64'))
@@ -179,7 +179,7 @@ else
   let g:syntastic_mode_map = { 'mode': 'active' }
     " golang
     let g:syntastic_go_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-    let g:syntastic_go_checkers = ['gofmt', 'govet', 'golint']
+    let g:syntastic_go_checkers = ['go', 'gofmt', 'govet', 'golint']
     " cpp
     let g:syntastic_cpp_compiler = 'clang'
     let g:syntastic_cpp_compiler_options = '-std=c++1z --pedantic-errors'

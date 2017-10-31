@@ -6,7 +6,7 @@ repo="//go.googlesource.com/go"
 #repo="//github.com/golang/go"
 goroot="$HOME/github.com/golang/go"
 
-goversion="go1.9.1"
+goversion="go1.9.2"
 #goversion="master"
 
 #bootstrap="gcc-go"
@@ -38,6 +38,10 @@ function helpmsg () {
       show this help
     -target
       specify build tag (default: ${goversion})
+
+  example:
+    go-build.bash -target master
+    go-build.bash -target 1.9.2
 END
 }
 while [ -n "${1:-}" ]; do
