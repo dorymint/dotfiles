@@ -37,7 +37,6 @@ if [ -x /usr/bin/xset ]; then
   sleep 1 && xset s off
   sleep 1 && xset -dpms
   sleep 1 && xset r rate 200 30
-
 fi
 # for laptop with broken screen :P
 if [ -x /usr/bin/xrandr ] && xrandr --query | grep "HDMI1 connected" &> /dev/null; then
@@ -45,13 +44,11 @@ if [ -x /usr/bin/xrandr ] && xrandr --query | grep "HDMI1 connected" &> /dev/nul
 fi
 
 # fcitx
-if false; then
-  if [ -x /usr/bin/fcitx-autostart ]; then
-    export GTK_IM_MODULE=fcitx
-    export QT_IM_MODULE=fcitx
-    export XMODIFIERS="@im=fcitx"
-    fcitx-autostart
-  fi
+if [ -x /usr/bin/fcitx-autostart ]; then
+  export GTK_IM_MODULE=fcitx
+  export QT_IM_MODULE=fcitx
+  export XMODIFIERS="@im=fcitx"
+  fcitx-autostart
 fi
 
 # for i3

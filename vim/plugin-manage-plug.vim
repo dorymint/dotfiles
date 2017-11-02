@@ -26,7 +26,7 @@ call plug#begin('~/.vim/plugged')
     "     : default .vt_location is .git directory
 
 " TODO: trim syntastic?
-if 1 == 1
+if 0 == 1
   Plug 'vim-syntastic/syntastic'
   let s:useALE = 0
 else
@@ -172,7 +172,7 @@ endif
 " TODO: fix
 if s:useALE
 " ale
-  let g:ale_linters = {'go': ['gometalinter', 'gofmt', 'go build']}
+  let g:ale_linters = {'go': ['gofmt', 'go vet', 'golint', 'go build', 'gosimple', 'staticcheck']}
   let g:ale_go_gometalinter_options = '--fast'
 else
 " syntastic
