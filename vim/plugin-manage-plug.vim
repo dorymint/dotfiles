@@ -172,6 +172,9 @@ endif
 " TODO: fix
 if s:useALE
 " ale
+  let g:ale_lint_on_text_changed = 'never'
+  let g:ale_lint_on_save = 1
+  let g:ale_lint_on_enter = 1
   let g:ale_linters = {'go': ['gofmt', 'go vet', 'golint', 'go build', 'gosimple', 'staticcheck']}
   let g:ale_go_gometalinter_options = '--fast'
 else
