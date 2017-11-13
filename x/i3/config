@@ -165,6 +165,17 @@ mode "volume" {
 }
 bindsym $mod+Shift+v mode "volume"
 
+# TODO: consider mode selector
+mode "mode_selector" {
+  bindsym q mode "default"
+  bindsym Escape mode "default"
+  bindsym Return mode "default"
+
+  bindsym v mode "volume"
+  bindsym r mode "resize"
+}
+bindsym $mod+m mode "mode_selector"
+
 # border
 bindsym $mod+t border normal 2
 bindsym $mod+y border pixel 15
