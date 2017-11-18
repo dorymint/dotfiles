@@ -155,6 +155,9 @@ bindsym $mod+r mode "resize"
 
 # for modify volume
 mode "volume" {
+  # TODO: fix notify-send
+  bindsym h exec sh -c 'notify-send "mode: volume" "$(echo -e "j\tvolume down\nk\tvolume up\nm\tset volume to zero\n")"'
+
   bindsym j exec amixer -q set Master 2dB- unmute
   bindsym k exec amixer -q set Master 2dB+ unmute
   bindsym m exec amixer -q set Master 0%
@@ -163,16 +166,20 @@ mode "volume" {
   bindsym Escape mode "default"
   bindsym q      mode "default"
 }
-bindsym $mod+Shift+v mode "volume"
+#bindsym $mod+Shift+v mode "volume"
+# use mode_selector
 
 # TODO: consider mode selector
 mode "mode_selector" {
-  bindsym q mode "default"
-  bindsym Escape mode "default"
-  bindsym Return mode "default"
+  # TODO: fix notify-send
+  bindsym h exec sh -c 'notify-send "mode: mode_selector" "$(echo -e "[q|Escape|Return]\tmode to default\nv\tvolume\nr\tresize\n")"'
 
   bindsym v mode "volume"
   bindsym r mode "resize"
+
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+  bindsym q mode "default"
 }
 bindsym $mod+m mode "mode_selector"
 
@@ -183,7 +190,7 @@ bindsym $mod+u border none
 
 bindsym $mod+shift+b bar mode toggle
 
-# reconsider: Colors
+# TODO: reconsider Colors
 set $lightgray #AAAAAA
 set $gray      #484848
 set $gray2     #757575
