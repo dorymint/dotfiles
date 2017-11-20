@@ -10,8 +10,8 @@ urxvt.pointerBlank: true
 
 ! do not need iso insert mode
 ! for release ctrl+shift
-urxvt*iso14755: false
-urxvt*iso14755_52: false
+urxvt.iso14755: false
+urxvt.iso14755_52: false
 
 ! disable Perl extension
 urxvt.perl-ext:
