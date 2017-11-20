@@ -162,7 +162,9 @@ endif
     "     : go test -race $(pwd)
 
 " previm
-if has('unix') && executable('chromium')
+if has('unix') && executable('firefox')
+  let g:previm_open_cmd = 'exec firefox'
+elseif executable('chromium')
   let g:previm_open_cmd = 'exec chromium'
 endif
 
