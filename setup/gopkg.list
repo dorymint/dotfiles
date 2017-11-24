@@ -13,7 +13,7 @@ honnef.co/go/tools/cmd/unused
 honnef.co/go/tools/cmd/staticcheck
 
 github.com/github/hub
-github.com/google/gops
+#github.com/google/gops
 github.com/golang/lint/golint
 github.com/golang/dep/cmd/dep
 

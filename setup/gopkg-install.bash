@@ -2,8 +2,7 @@
 set -eu
 
 # set variable
-goget="go get"
-options="-v"
+options="-v -u"
 pkglist="$HOME/dotfiles/setup/gopkg.list"
 
 function split () {
@@ -31,19 +30,19 @@ function helpmsg () {
   cat >&1 <<END
 go pkg install scripts
 
-  help --help -h
+  help -help --help -h
     show help message
-  update --update -u
+  update -update --update -u
     add flag -u for go get
-  file --file -f
+  file -file --file -f
     specify path to gopkg.list(default: $pkglist)
 END
 }
 while [ -n "${1:-}" ]; do
   case "$1" in
-   help|--help|-h) helpmsg; exit 0;;
-   update|--update|-u) options="-v -u";;
-   file|--file|-f) shift; pkglist="$1";;
+   help|-help|--help|-h) helpmsg; exit 0;;
+   update|-update|--update|-u) options="-v -u";;
+   file|-file|--file|-f) shift; pkglist="$1";;
    "");;
   esac
   shift
@@ -54,8 +53,8 @@ unset -f helpmsg
 split "require"
 type go
 type gawk
-if  [ ! -r "$pkglist" ] || [ ! -f "$pkglist" ]; then
-  echo "can't read $pkglist"
+if  [ ! -r "${pkglist}" ] || [ ! -f "${pkglist}" ]; then
+  echo "can't read ${pkglist}"
   exit 1
 fi
 
@@ -68,16 +67,16 @@ go version
 go env
 sleep 1
 split "install list"
-for x in $awkout; do
-  echo "$x"
+for x in ${awkout}; do
+  echo "${x}"
 done
 split "confirm"
-confirm "install packages? Run: ${goget} ${options}"
+confirm "install packages? Run: go get ${options}"
 
 # install && update
-echo "Run: $goget $options pkg"
-for x in $awkout; do
-  $goget $options $x
+echo "Run: go get ${options} pkg"
+for x in ${awkout}; do
+  go get ${options} ${x}
 done
 echo "...finish"
 # EOF
