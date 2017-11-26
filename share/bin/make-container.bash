@@ -10,11 +10,14 @@ additional_pkg=" \
   rxvt-unicode-terminfo \
   --ignore linux \
   "
+
 # locale
-sed_locale_option=" \
-  -e 's/^#\(en_US.UTF-8 UTF-8\)/\1/' \
-  -e 's/^#\(ja_JP.UTF-8 UTF-8\)/\1/' \
-  "
+# TODO: fix sed_locale_option
+#sed_locale_option=" \
+#  -e 's/^#\(en_US.UTF-8 UTF-8\)/\1/' \
+#  -e 's/^#\(ja_JP.UTF-8 UTF-8\)/\1/' \
+#  "
+
 locale_conf="LANG=en_US.UTF-8
 LANGUAGE=en_US:ja_JP
 LC_MESSAGES=C"
@@ -78,7 +81,10 @@ fi
 mkdir ${dst}
 pacstrap -i -c -d ${dst} ${additional_pkg}
 # locale
-sed ${sed_locale_option} "${dst}/etc/locale.gen" | cat > "${dst}/etc/locale.gen"
+sed -i \
+  -e 's/^#\(en_US.UTF-8 UTF-8\)/\1/' \
+  -e 's/^#\(ja_JP.UTF-8 UTF-8\)/\1/' \
+ "${dst}/etc/locale.gen"
 echo "${locale_conf}" > "${dst}/etc/locale.conf"
 # host
 hostname="$(basename ${dst})"
