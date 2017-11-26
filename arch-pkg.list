@@ -41,6 +41,7 @@ openssh
 os-prober
 pavucontrol
 pulseaudio
+pulseaudio-alsa
 rsync
 rxvt-unicode
 rxvt-unicode-terminfo
