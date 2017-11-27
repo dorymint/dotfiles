@@ -81,7 +81,7 @@ fi
 mkdir ${dst}
 pacstrap -i -c -d ${dst} ${additional_pkg}
 # locale
-sed -i \
+sed -i.back \
   -e 's/^#\(en_US.UTF-8 UTF-8\)/\1/' \
   -e 's/^#\(ja_JP.UTF-8 UTF-8\)/\1/' \
  "${dst}/etc/locale.gen"
@@ -91,16 +91,56 @@ hostname="$(basename ${dst})"
 echo "${hostname}" > "${dst}/etc/hostname"
 
 ### msg
-echo "-----------------------------------"
-echo "new container was created in ${dst}"
-echo "use: systemd-nspawn -b -D ${dst}"
-echo "--- require after login on root ---"
-echo "run: locale-gen"
-echo "add: '127.0.1.1 ${hostname}.localdomain ${hostname}' to /etc/hosts"
-echo "--- if need network-bridge ---"
-echo "run: systemctl enable nftables"
-echo "run: systemctl enable systemd-networkd"
-echo "fix: /etc/nftables.conf"
-echo "fix: /etc/resolv.conf"
-echo "-----------------------------------"
+cat <<END
+-----------------------------------
+new container was created in ${dst}
+use: systemd-nspawn -b -D ${dst}
+--- require after login on root ---
+run: locale-gen
+consider: add '127.0.1.1 ${hostname}.localdomain ${hostname}' to /etc/hosts
+--- if need network-bridge ---
+run: systemctl enable nftables
+run: systemctl enable systemd-networkd
+fix: /etc/nftables.conf
+fix: /etc/resolv.conf
+-----------------------------------
+END
+
+
+### make script
+init_dir="${dst}/root/init"
+back_dir="${dst}/root/back"
+mkdir "${init_dir}"
+mkdir "${back_dir}"
+cat <<END > "${init_dir}/set-locale.bash"
+#!/bin/bash
+set -eu
+
+# locale
+sed -i.back \
+  -e 's/^#\(en_US.UTF-8 UTF-8\)/\1/' \
+  -e 's/^#\(ja_JP.UTF-8 UTF-8\)/\1/' \
+ "/etc/locale.gen"
+echo "${locale_conf}" > "$/etc/locale.conf"
+
+# host
+echo "${hostname}" > "/etc/hostname"
+echo "consider add '127.0.1.1 ${hostname}.localdomain ${hostname}' to /etc/hosts"
+
+locale-gen
+END
+
+nameserver=$(grep -e 'nameserver' /etc/resolv.conf)
+cat <<END > "${init_dir}/enable-networkd.bash"
+#!/bin/bash
+set -eu
+
+cp "/etc/resolv.conf" "${back_dir}"
+echo "${nameserver}" > /etc/resolv.conf
+
+# consider
+#systemctl enable nftables
+
+systemctl enable systemd-networkd
+END
 # EOF
