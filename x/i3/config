@@ -154,13 +154,20 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # for modify volume
+# TODO: fix notify-send
+#     : fix pactl sink number
+#     : consider make volume control scripts
 mode "volume" {
-  # TODO: fix notify-send
-  bindsym h exec sh -c 'notify-send "mode: volume" "$(echo -e "j\tvolume down\nk\tvolume up\nm\tset volume to zero\n")"'
+  bindsym h exec sh -c 'notify-send "mode: volume" "$(echo -e "alse\tpulse\nj\td\tvolume down\nk\tu\tvolume up\nm\tM\tset volume to zero\n")"'
 
-  bindsym j exec amixer -q set Master 2dB- unmute
-  bindsym k exec amixer -q set Master 2dB+ unmute
+  bindsym j exec amixer -q set Master 5%- unmute
+  bindsym d exec pactl set-sink-volume 6 -5%
+
+  bindsym k exec amixer -q set Master 5%+ unmute
+  bindsym u exec pactl set-sink-volume 6 +5%
+
   bindsym m exec amixer -q set Master 0%
+  bindsym M exec pactl set-sink-volume 6 0%
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
