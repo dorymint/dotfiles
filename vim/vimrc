@@ -172,16 +172,16 @@ if $TERM == "xterm-256color" ||
       \ $TERM == "screen-256color" ||
       \ $TERM == "rxvt-unicode-256color"
   try
-    set background=dark
+    colorscheme jellybeans
     set t_Co=256
+    "set background=dark
     "colorscheme hybrid
     "colorscheme iceberg
     "colorscheme molokai
-    colorscheme jellybeans
   catch
-    echo 'colorscheme: t_Co=256 & jellybeans; try error: use t_Co=8 & default'
-    set t_Co=8
+    echoerr 'try error: colorscheme jellybeans && t_Co=256; failback: default && t_Co=8'
     colorscheme default
+    set t_Co=8
   endtry
 else
   " NOTE: use default
