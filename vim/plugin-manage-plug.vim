@@ -50,9 +50,9 @@ endif
 
   " color
   Plug 'nanotech/jellybeans.vim'
-  "Plug 'w0ng/vim-hybrid'
-  "Plug 'cocopon/Iceberg.vim'
-  "Plug 'tomasr/molokai'
+  Plug 'w0ng/vim-hybrid'
+  Plug 'cocopon/Iceberg.vim'
+  Plug 'tomasr/molokai'
   "Plug 'trusktr/seti.vim'
 
   " etc

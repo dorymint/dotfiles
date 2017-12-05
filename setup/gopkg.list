@@ -3,6 +3,7 @@ github.com/josharian/impl
 github.com/jstemmer/gotags
 github.com/nsf/gocode
 github.com/rogpeppe/godef
+github.com/derekparker/delve/cmd/dlv
 #github.com/alecthomas/gometalinter
 
 # use vendor
