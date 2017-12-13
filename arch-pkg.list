@@ -2,14 +2,11 @@ alsa-plugins
 alsa-tools
 alsa-utils
 arch-install-scripts
-atom
-base
 base-devel
 bash-completion
 bind-tools
 bridge-utils
 chromium
-cmake
 cmatrix
 compton
 conky
@@ -25,9 +22,9 @@ fortune-mod
 git
 graphviz
 grml-zsh-config
-grub
 i3
 intel-ucode
+keychain
 libnotify
 mesa
 mplayer
@@ -38,7 +35,6 @@ noto-fonts-cjk
 noto-fonts-emoji
 ntfs-3g
 openssh
-os-prober
 pavucontrol
 pulseaudio
 pulseaudio-alsa
@@ -46,6 +42,7 @@ rsync
 rxvt-unicode
 rxvt-unicode-terminfo
 screenfetch
+sshfs
 sway
 tcpdump
 termite
@@ -64,13 +61,9 @@ wayland
 weston
 wget
 xclip
-xf86-video-intel
-xf86-video-vesa
+xorg-apps
 xorg-server
-xorg-server-utils
 xorg-server-xwayland
-xorg-twm
-xorg-xclock
 xorg-xhost
 xorg-xinit
 xterm

@@ -1,8 +1,9 @@
 #!/bin/sh
 set -eu
 
-# TODO: reconsider exchange $USER
-utilsmd="$HOME"/github.com/"$USER"/hello-world/md/utils.md
+user=$(git config --global user.name)
+
+utilsmd="$HOME"/github.com/"$user"/hello-world/md/utils.md
 # TODO: reconsider, bit confused utilsmd utilspath
 # for reset utilsmd, see --local
 utilspath="$HOME"/dotfiles/etc/grep-utils.path

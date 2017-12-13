@@ -38,6 +38,7 @@ if [ -x /usr/bin/xset ]; then
   sleep 1 && xset -dpms
   sleep 1 && xset r rate 200 30
 fi
+
 # for laptop with broken screen :P
 if [ -x /usr/bin/xrandr ] && xrandr --query | grep "HDMI1 connected" &> /dev/null; then
   sleep 1 && xrandr --output HDMI1 --primary --auto && xrandr --output LVDS1 --off
@@ -66,6 +67,8 @@ fi
 session="${1:-i3}"
 case "$session" in
   i3|i3wm )
+    # TODO: fix setxkbdmap
+    setxkbmap jp 106 &
     $fehbg "$wall" &
     $compton "$conf" &
     exec /usr/bin/i3;;

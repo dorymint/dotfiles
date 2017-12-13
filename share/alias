@@ -18,8 +18,8 @@ alias sudo='command sudo '
 
 # local
 ## cd
-alias gw='cd "$GOPATH"/src/github.com/"$USER"'
-alias ww='cd "$HOME"/github.com/"$USER"'
+alias gw='cd "$GOPATH"/src/github.com/"$(git config --global user.name)"'
+alias ww='cd "$HOME"/github.com/"$(git config --global user.name)"'
 alias dotfiles='cd "$HOME"/dotfiles'
 
 ##  goto src golang official pkg

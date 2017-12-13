@@ -73,6 +73,7 @@ case "$bootstrap" in
   "go1.4.3")
     [[ ! -d "$HOME/$bootstrap" ]] && git clone --no-local  --branch="$bootstrap" "$goroot" "$HOME/$bootstrap"
     if confirm "build/update $bootstrap ?"; then
+      type clang
       cd "$HOME/$bootstrap/src"
       git fetch
       git checkout $bootstrap
