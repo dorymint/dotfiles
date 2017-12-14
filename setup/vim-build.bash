@@ -16,6 +16,7 @@ case "$(uname)" in
       --enable-rubyinterp=dynamic
       --enable-terminal
       --disable-gui
+      --without-x
       --prefix=${prefix}"
     ;;
   *)

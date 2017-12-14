@@ -35,7 +35,10 @@ else
   echo "starting $service ..."
   systemctl --user start $timer
   sleep 1
-  systemctl --user start $service
+  if ! systemctl --user start $service; then
+    systemctl --user stop $timer
+    exit 1
+  fi
   echo "timer activated"
 fi
 # EOF

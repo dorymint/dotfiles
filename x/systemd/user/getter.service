@@ -4,7 +4,7 @@ Description=wall getter
 [Service]
 Type=oneshot
 EnvironmentFile=%h/dotfiles/etc/getter/systemd-service-env
-ExecStart=/bin/sh -c 'feh --bg-max "$($getter -conf=$conf -lofile=logfile)"'
+ExecStart=/bin/sh -c 'feh --bg-max "$($getter -conf=${conf} -logfile=${logfile})"'
 
 [Install]
 WantedBy=

@@ -1,0 +1,9 @@
+[Unit]
+Description=echo pwd
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c 'pwd'
+
+[Install]
+WantedBy=

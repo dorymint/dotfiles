@@ -5,7 +5,7 @@ Description=wall getter for sway
 Type=oneshot
 EnvironmentFile=%h/dotfiles/etc/getter/systemd-service-env
 EnvironmentFile=%h/dotfiles/etc/sway/currentsock
-ExecStart=/bin/bash -c '[ -n "$SWAYSOCK" ] && swaymsg -s $SWAYSOCK -t command output "*" bg "$($getter -conf=$conf -logfile=$logfile)" fit'
+ExecStart=/bin/bash -c '[ -n "$SWAYSOCK" ] && swaymsg -s $SWAYSOCK -t command output "*" bg "$($getter -conf=${conf} -logfile=${logfile})" fit'
 
 [Install]
 WantedBy=

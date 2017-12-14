@@ -2,7 +2,7 @@
 Description=rotate feh-wallpaper.service
 
 [Timer]
-OnUnitActiveSec=2min
+OnUnitActiveSec=1h
 Unit=feh-wallpaper.service
 
 [Install]
