@@ -3,8 +3,8 @@
 
 set -eu
 
-vimdir="${HOME}/github.com/vim/vim"
 vimrepo="https://github.com/vim/vim"
+vimdir="${HOME}/github.com/vim/vim"
 prefix="${HOME}/opt/vim"
 ignore_confirm="no"
 case "$(uname)" in
@@ -56,13 +56,13 @@ unset -f helpmsg
 
 # $1=message of confirm, $2=exit message, if "$2" != "" ; then exit 1
 function confirm() {
-  if [[ "${ignore_confirm}" == "yes" ]]; then
+  if [ "${ignore_confirm}" = "yes" ]; then
     return 0
   fi
   local key=""
   local count=0
-  while [[ "${key}" != "yes" ]] && [[ "${key}" != "y" ]]; do
-    if [[ "${key}" = "no" ]] || [[ "${key}" = "n" ]] || [[ ${count} -gt 2 ]]; then
+  while [ "${key}" != "yes" ] && [ "${key}" != "y" ]; do
+    if [ "${key}" = "no" ] || [ "${key}" = "n" ] || [ ${count} -gt 2 ]; then
       echo "${2}"
       return 1
     fi
@@ -84,7 +84,7 @@ if [ -d ${vimdir} ]; then
     git fetch
     git merge origin/master
     # ignore exit code
-    confirm "skip git log -p [yes:no]?:>" "" && git log -p || true
+    confirm "skip check: git log -p [yes:no]?:>" "" || git log -p || true
   fi
 else
   echo "not found vim src directory"

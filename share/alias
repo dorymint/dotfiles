@@ -55,11 +55,11 @@ if [ -x "$(builtin command -v peco)" ]; then
   alias cdl='cd "$(dirs -pl | peco)"'
   alias cdp='cd "$(find . -type d ! -path "*.git*" !  -path "*.deps*" | peco)"'
   alias gwp='gw && cdp'
-  if [ -x "$(builtin command -v todogotcha)" ]; then
+  if [ -x "$(builtin command -v gotcha)" ]; then
     if alias viml &> /dev/null; then
-      alias gwtodo='gw && viml "$(todogotcha -trim=false | peco)"'
+      alias gwtodo='gw && viml "$(gotcha -trim=false | peco)"'
     else
-      alias gwtodo='gw && vim "$(todogotcha -trim=false | peco)"'
+      alias gwtodo='gw && vim "$(gotcha -trim=false | peco)"'
     fi
   fi
 fi

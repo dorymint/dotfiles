@@ -403,8 +403,11 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
       % delete _
       let l:word = a:0 == 0 ? "TODO: " : a:1
       let l:opt = '-word=' . l:word . ' ' .
-            \ '-type=".go .txt .vim" ' .
-            \ '-result '
+            \ '-ignore-dirs=".git:.cache:tmp:backup" ' .
+            \ '-sync ' .
+            \ '-cache ' .
+            \ '-verbose ' .
+            \ '-total'
       let l:cmd = 'todogotcha ' . l:opt
       put =system(l:cmd)
       write
