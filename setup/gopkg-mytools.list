@@ -1,6 +1,6 @@
 # go package list
 # my tools
-github.com/kamisari/go-todogotcha/todogotcha
+github.com/kamisari/go-todogotcha/gotcha
 #github.com/kamisari/go-addtree/addtree
 github.com/kamisari/expfunc
 github.com/kamisari/tree

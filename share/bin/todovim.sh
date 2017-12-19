@@ -1,11 +1,10 @@
 #!/bin/sh
 set -eu
 
-[ -x "$(which todogotcha)" ]
+[ -x "$(which gotcha)" ]
 [ -x "$(which peco)" ]
 
 word="TODO: "
-types=".go .txt"
 file=""
 root="./"
 
@@ -13,10 +12,9 @@ root="./"
 function helpmsg () {
   cat >&1 <<'END'
   todovim.sh
-    vim "$(todogotcha | peco)"
+    vim "$(gotcha | peco)"
     root --root -r
     word --wrod -w
-    types --types -t
 
     $1 is same -root
 END
@@ -25,7 +23,6 @@ while [ -n "${1:-}" ]; do
   case "$1" in
    help|--help|-h)helpmsg; exit 0;;
    word|--word|-w)shift; word="$1";;
-   types|--types|-t)shift; types="$1";;
    root|-root|-r)shift; root="$1";;
    *)root="$1";;
   esac
@@ -33,7 +30,7 @@ while [ -n "${1:-}" ]; do
 done
 unset -f helpmsg
 
-file="$(todogotcha -root="$root" -word="$word" -type="$types" -result=true | peco)"
+file="$(gotcha -root="$root" -word="$word" -total | peco)"
 [ -z "$file" ] && exit 1
 vim "$file"
 # EOF

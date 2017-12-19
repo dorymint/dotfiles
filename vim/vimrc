@@ -397,9 +397,9 @@ endfunction
 
 if isdirectory(glob('~/dotfiles/vim/tmp'))
   " go-todogotcha
-  if executable('todogotcha')
-    function! s:todogotcha(...) abort
-      split ~/dotfiles/vim/tmp/todogotcha.log
+  if executable('gotcha')
+    function! s:gotcha(...) abort
+      split ~/dotfiles/vim/tmp/gotcha.log
       % delete _
       let l:word = a:0 == 0 ? "TODO: " : a:1
       let l:opt = '-word=' . l:word . ' ' .
@@ -408,14 +408,14 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
             \ '-cache ' .
             \ '-verbose ' .
             \ '-total'
-      let l:cmd = 'todogotcha ' . l:opt
+      let l:cmd = 'gotcha ' . l:opt
       put =system(l:cmd)
       write
     endfunction
-    command! -nargs=? TodoGotcah call s:todogotcha(<f-args>)
+    command! -nargs=? Gotcah call s:gotcha(<f-args>)
       " NOTE: List内のファイル名からgfで飛べる
   else
-    call s:adderr('todogotcha')
+    call s:adderr('gotcha')
   endif
 
   " reps.bash
