@@ -10,6 +10,8 @@ additional_pkg=" \
   rxvt-unicode-terminfo \
   --ignore linux \
   "
+# accept override for -dir
+force="no"
 
 # locale
 # TODO: fix sed_locale_option
@@ -36,6 +38,7 @@ function helpmsg () {
   option:
     -help
     -dir {specify name of new continer directory}
+    -force
 
   defaults packages:
     ${additional_pkg}
@@ -50,6 +53,7 @@ while [ -n "${1:-}" ]; do
   case "$1" in
     --help|-help|-h) helpmsg; exit 0;;
     --dir|-dir) shift; dst=${1};;
+    --force|-force) force="yes";;
     *) additional_pkg="${additional_pkg} ${1}";;
   esac
   shift
@@ -72,13 +76,13 @@ if [ -z ${dst} ]; then
   echo "require: -dir [name of new container directory]"
   exit 1
 fi
-if [ -x ${dst} ]; then
+if [ -x ${dst} ] && [ "${force}" != "yes" ]; then
   echo "directory is exists: -dir ${dst}"
   exit 1
 fi
 
 ### create container
-mkdir ${dst}
+[ -x ${dst} ] || mkdir ${dst}
 pacstrap -i -c -d ${dst} ${additional_pkg}
 # locale
 sed -i.back \
@@ -110,8 +114,8 @@ END
 ### make script
 init_dir="${dst}/root/init"
 back_dir="${dst}/root/back"
-mkdir "${init_dir}"
-mkdir "${back_dir}"
+[ -x ${init_dir} ] || mkdir -p "${init_dir}"
+[ -x ${back_dir} ] || mkdir -p "${back_dir}"
 cat <<END > "${init_dir}/set-locale.bash"
 #!/bin/bash
 set -eu
@@ -121,7 +125,7 @@ sed -i.back \
   -e 's/^#\(en_US.UTF-8 UTF-8\)/\1/' \
   -e 's/^#\(ja_JP.UTF-8 UTF-8\)/\1/' \
  "/etc/locale.gen"
-echo "${locale_conf}" > "$/etc/locale.conf"
+echo "${locale_conf}" > "/etc/locale.conf"
 
 # host
 echo "${hostname}" > "/etc/hostname"

@@ -8,6 +8,6 @@ for x in *; do
   if [ ! -L "$x" ]; then
     continue
   fi
-  unlink "$x"
+  rm "$x"
 done
 # EOF
