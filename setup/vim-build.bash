@@ -84,7 +84,9 @@ if [ -d ${vimdir} ]; then
     git fetch
     git merge origin/master
     # ignore exit code
-    confirm "skip check: git log -p [yes:no]?:>" "" || git log -p || true
+    if [ "${ignore_confirm}" != "yes" ]; then
+      confirm "check: git log -p [yes:no]?:>" "" && git log -p || true
+    fi
   fi
 else
   echo "not found vim src directory"
