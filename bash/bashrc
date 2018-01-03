@@ -16,6 +16,11 @@ if [[ "$(uname -n)" == *lily* ]] && [ "$SHLVL" -eq 1 ]; then
   command -v fortune &> /dev/null && fortune -a
 fi
 
+## TODO: fix
+green="\[$(tput setaf 6)\]"
+reset="\[$(tput sgr0)\]"
+export PS1="[${green}\u${reset}@\h \w]"
+
 ## call zsh
 if [ -x /bin/zsh ] && [ -f "$HOME"/.zshrc ]; then
   if [ "$SHLVL" -eq 1 ]; then

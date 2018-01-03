@@ -167,7 +167,7 @@ mode "volume" {
   bindsym u exec --no-startup-id pactl set-sink-volume 6 +5%
 
   bindsym m exec --no-startup-id amixer -q set Master 0%
-  bindsym M exec --no-startup-id pactl set-sink-volume 6 0%
+  bindsym Sift+m exec --no-startup-id pactl set-sink-volume 6 0%
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
@@ -176,6 +176,19 @@ mode "volume" {
 #bindsym $mod+Shift+v mode "volume"
 # use mode_selector
 
+# backlight brightness
+# TODO: consider
+mode "backlight" {
+  bindsym k exec sh -c 'sudo brightness.sh -incper'
+  bindsym j exec sh -c 'sudo brightness.sh -decper'
+  bindsym Shift+m exec sh -c 'sudo brightness.sh -setmax'
+  bindsym m exec sh -c 'sudo brightness.sh -setmin'
+
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+  bindsym q      mode "default"
+}
+
 # TODO: consider mode selector
 mode "mode_selector" {
   # TODO: fix notify-send
@@ -183,6 +196,7 @@ mode "mode_selector" {
 
   bindsym v mode "volume"
   bindsym r mode "resize"
+  bindsym b mode "backlight"
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
