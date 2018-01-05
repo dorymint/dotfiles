@@ -2,6 +2,8 @@
 # scriptencoding utf-8
 set -euB
 
+# TODO: consider setup scripts
+
 function split () {
   echo "------- setup $1 -------"
 }
@@ -53,7 +55,7 @@ set +e
   ln $lnopt "$dotroot"/vim/vimrc "$HOME"/.vimrc
   ln $lnopt "$dotroot"/vim/gvimrc "$HOME"/.gvimrc
 
-  # RECONSIDER: neovim
+  # TODO: reconsider neovim
   #split "neovim"
   #cp -i "$dotroot"/vim/vimrc "$HOME"/.config/nvim/init.vim
 

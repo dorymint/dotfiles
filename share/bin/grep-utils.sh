@@ -1,14 +1,15 @@
 #!/bin/sh
 set -eu
 
-user=$(git config --global user.name)
+user="$(git config --global user.name)"
 
 utilsmd="$HOME"/github.com/"$user"/hello-world/md/utils.md
 # TODO: reconsider, bit confused utilsmd utilspath
 # for reset utilsmd, see --local
 utilspath="$HOME"/dotfiles/etc/grep-utils.path
 context="-A 5"
-option="$context -n --color=auto -i -e"
+color="--color=auto"
+option="$context -n $color -i -e"
 word=""
 
 # confirm $1=msg return bool
@@ -43,6 +44,7 @@ helpmsg() {
   -B [N]	before context
   -A [N]	after context
   -C [N]	context
+  --color	always use color
   --dir	show target files directory
 END
 }
@@ -72,6 +74,7 @@ while [ -n "${1:-}" ]; do
     "-A")shift;context="-A $1";;
     "-B")shift;context="-B $1";;
     "-C")shift;context="-C $1";;
+    "--color") color="--color=always";;
     # TODO: reconsider --dir
     "--dir")echo "$(dirname "$utilsmd")"; exit 0;;
     *)if [ -n "$word" ]; then
@@ -83,8 +86,8 @@ while [ -n "${1:-}" ]; do
   shift
 done
 unset -f helpmsg
-# update option for context
-option="$context -n --color=auto -i -e"
+# update option
+option="$context -n $color -i -e"
 
 if [ ! -r "$utilsmd" ] || [ ! -f "$utilsmd" ]; then
   echo "invalid filepath: $utilsmd"
