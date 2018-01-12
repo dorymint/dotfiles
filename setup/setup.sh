@@ -1,5 +1,4 @@
 #!/bin/sh
-# scriptencoding utf-8
 set -euB
 
 # TODO: consider setup scripts
@@ -31,6 +30,7 @@ dotroot=$(dirname $(dirname "$(readlink -f "$0")"))
 lnopt="-sn ""${lnopt:-}"
 
 [ -d "$HOME"/.vim ] || mkdir "$HOME"/.vim
+# TODO: coonsider mkdir for golang
 [ -d "$HOME"/go ] || mkdir -p "$HOME"/go/{bin,pkg,src}
 [ -d "$HOME"/bin ] || mkdir "$HOME"/bin
 [ -d "$HOME"/.config ] || mkdir "$HOME"/.config

@@ -15,6 +15,8 @@ set $down j
 set $up k
 set $right l
 
+set $i3dir "${HOME}"/.i3
+
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below. ISO 10646 = Unicode
 #font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -189,6 +191,15 @@ mode "backlight" {
   bindsym q      mode "default"
 }
 
+# for background
+mode "feh_background" {
+  bindsym r exec --no-startup-id sh -c '$i3dir/randombg.sh'
+
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+  bindsym q      mode "default"
+}
+
 # TODO: consider mode selector
 mode "mode_selector" {
   # TODO: fix notify-send
@@ -197,6 +208,7 @@ mode "mode_selector" {
   bindsym v mode "volume"
   bindsym r mode "resize"
   bindsym b mode "backlight"
+  bindsym f mode "feh_background"
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
@@ -237,5 +249,7 @@ bar {
 }
 
 # start exec
+# duplication is allowed
+exec_always --no-startup-id sh -c '$i3dir/randombg.sh'
 exec --no-startup-id conky
-#exec --no-startup-id compton -b --config "${HOME}"/.i3/compton.conf
+exec --no-startup-id compton

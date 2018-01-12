@@ -39,7 +39,6 @@ xset r rate 200 30
 setxkbmap jp 106
 
 # fcitx
-# TODO: consider into .i3/config
 if [ -x /usr/bin/fcitx-autostart ]; then
   export GTK_IM_MODULE=fcitx
   export QT_IM_MODULE=fcitx
@@ -47,29 +46,15 @@ if [ -x /usr/bin/fcitx-autostart ]; then
   fcitx-autostart
 fi
 
-# for i3
-# TODO: consider into .i3/config
-if [ -d "$HOME"/Pictures/links ] && [ -x /usr/bin/feh ]; then
-  wallpath="$HOME"/Pictures/links
-  fehbg="feh --bg-max"
-  wall="$wallpath"/"$(ls "$wallpath" | shuf -n 1)"
-fi
-if [ -x /usr/bin/compton ]; then
-  compton="/usr/bin/compton"
-fi
-
 # session
-session="${1:-i3}"
-case "$session" in
+case "${1:-i3}" in
   i3|i3wm )
-    [ -n "${fehbg}" ] && ${fehbg} "${wall}" &
-    [ -n "${compton}" ] && ${compton} &
-    exec /usr/bin/i3;;
+    exec i3
+    ;;
   i3-log|i3wm-log )
     echo "xinit i3-log: $(date "+%Y-%m-%d")" > ~/.i3/i3.log
-    [ -n "${fehbg}" ] && ${fehbg} "${wall}" &
-    [ -n "${compton}" ] && ${compton} &
-    exec /usr/bin/i3 -V -d all >> ~/.i3/i3.log;;
-  * ) exec /usr/bin/i3;;
+    exec i3 -V -d all >> ~/.i3/i3.log
+    ;;
+  * ) exec i3;;
 esac
 # EOF
