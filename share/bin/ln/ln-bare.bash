@@ -2,7 +2,7 @@
 set -eu
 bare=""
 # help
-function helpmsg () {
+helpmsg() {
   cat >&1 <<END
   ln-bare.bash for git bare repository, make symbolic link
 
@@ -12,7 +12,7 @@ END
 }
 while [ -n "${1:-}" ]; do
   case "$1" in
-   help|--help|-h) helpmsg; exit 0;;
+   help|-help|--help|-h) helpmsg; exit 0;;
    *)bare="$(readlink -f "$1")";;
   esac
   shift

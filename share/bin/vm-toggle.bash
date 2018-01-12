@@ -8,7 +8,7 @@ if ! systemctl --user cat $service &> /dev/null; then
 fi
 
 # confirm $1=msg return bool
-function confirm () {
+confirm() {
   local key=""
   local counter=0
   while [ $counter -lt 3 ]; do
@@ -16,8 +16,8 @@ function confirm () {
     echo -n "$1 [yes:no]?>"
     read -t 60 key || return 1
     case "$key" in
-      "no"|"n") return 1;;
-      "yes"|"y") return 0;;
+      no|n) return 1;;
+      yes|y) return 0;;
     esac
   done
   return 1
@@ -25,7 +25,7 @@ function confirm () {
 
 # help
 unset -f helpmsg
-function helpmsg () {
+helpmsg() {
   cat >&1 <<END
   toggle vboxeadless.service
 
@@ -39,8 +39,8 @@ function helpmsg () {
 END
 }
 case "${1:-}" in
-  "--help"|"-h") helpmsg; exit 0;;
-  "--status"|"-s")
+  -help|--help|-h) helpmsg; exit 0;;
+  -status|--status|-s)
     echo "----- STATUS -----"
     systemctl --user status ${service} || true
     echo "----- LIST VMS -----"
@@ -49,7 +49,7 @@ case "${1:-}" in
     echo "----- BIND PORTS -----"
     vboxmanage showvminfo "$(cat "$HOME"/dotfiles/etc/systemd/currentvm)" | grep NIC
     exit 0;;
-  "--name"|"-n")
+  -name|--name|-n)
     shift
     if [ -z "${1:-}" ]; then
       cat "$HOME"/dotfiles/etc/systemd/currentvm

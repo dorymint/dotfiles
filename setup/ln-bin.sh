@@ -1,13 +1,15 @@
 #!/bin/sh
 set -eu
 
+# TODO: consider to remove
+
 result=""
 option="-s "
 dst="$HOME"/bin
 withoutx="yes"
 
 # help
-function helpmsg () {
+helpmsg() {
   cat >&1 <<END
   -f	accept override exists files
   --with-x
@@ -15,7 +17,7 @@ END
 }
 while [ -n "${1:-}" ]; do
   case "$1" in
-   help|--help|-h) helpmsg; exit 0;;
+   help|-help|--help|-h) helpmsg; exit 0;;
    -f) option="-sf ";;
    --with-x) withoutx="";;
    *) echo "invalid argument $*"; exit 1;;
@@ -24,7 +26,7 @@ while [ -n "${1:-}" ]; do
 done
 unset -f helpmsg
 
-function links() {
+links() {
   [ -d "$1" ]
   command pushd "$1" 1> /dev/null
   echo "link directory: $(pwd)"

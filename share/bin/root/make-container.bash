@@ -26,7 +26,7 @@ LC_MESSAGES=C"
 
 ### function
 # help
-function helpmsg () {
+helpmsg() {
   cat >&1 <<END
   make-container.bash
     make container for systemd-nspawn

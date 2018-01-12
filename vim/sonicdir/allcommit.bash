@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eu
 # confirm $1="confirm messsage"
-function confirm() {
+confirm() {
   local key=""
   local count=0
   while [[ "$key" != "yes" ]] && [[ "$key" != "y" ]]; do
@@ -15,7 +15,7 @@ function confirm() {
   done
   return 0
 }
-function commit() {
+commit() {
   if [[ -d "$1" ]]; then
     cd "$1"; pwd
     echo "git diff ."
@@ -37,7 +37,7 @@ function commit() {
     git push origin master
   fi
 }
-function split () {
+split() {
   echo "------- $1 -------"
   commit "$1"
   echo ""

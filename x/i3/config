@@ -179,10 +179,10 @@ mode "volume" {
 # backlight brightness
 # TODO: consider
 mode "backlight" {
-  bindsym k exec sh -c 'sudo brightness.sh -incper'
-  bindsym j exec sh -c 'sudo brightness.sh -decper'
-  bindsym Shift+m exec sh -c 'sudo brightness.sh -setmax'
-  bindsym m exec sh -c 'sudo brightness.sh -setmin'
+  bindsym k exec --no-startup-id sh -c 'sudo brightness.sh -incper'
+  bindsym j exec --no-startup-id sh -c 'sudo brightness.sh -decper'
+  bindsym Shift+m exec --no-startup-id sh -c 'sudo brightness.sh -setmax'
+  bindsym m exec --no-startup-id sh -c 'sudo brightness.sh -setmin'
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
@@ -238,3 +238,4 @@ bar {
 
 # start exec
 exec --no-startup-id conky
+#exec --no-startup-id compton -b --config "${HOME}"/.i3/compton.conf

@@ -5,7 +5,7 @@ echo "be carefull. remove auther, copyright, license"
 set -eu
 
 # confirm $1=msg return bool
-function confirm () {
+confirm() {
   local key=""
   local counter=0
   while [ $counter -lt 3 ]; do

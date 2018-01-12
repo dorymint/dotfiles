@@ -13,13 +13,13 @@ END
 }
 while [ -n "${1:-}" ]; do
   case "${1:-}" in
-    "-h"|"--help")helpmsg; exit 0;;
-    "-s"|"--status")
+    -h|-help|--help)helpmsg; exit 0;;
+    -s|-status|--status)
       systemctl --user status getter.timer
       systemctl --user list-timers
       exit 0;;
-    "--service") shift; service="$1";;
-    "--timer") shift; timer="$1";;
+    -service|--service) shift; service="$1";;
+    -timer|--timer) shift; timer="$1";;
     "");;
     *)echo "unknown option: ${*}"; exit 1;;
   esac

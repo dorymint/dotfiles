@@ -4,12 +4,12 @@ set -euB
 
 # TODO: consider setup scripts
 
-function split () {
-  echo "------- setup $1 -------"
+split() {
+  echo "------- setup ${1} -------"
 }
 
 # help
-function helpmsg () {
+helpmsg() {
   cat >&1 <<END
   make directory and symlink
   --help -h
@@ -19,23 +19,21 @@ END
 }
 while [ -n "${1:-}" ]; do
   case "$1" in
-   help|--help|-h) helpmsg; exit 0;;
-   --force|-f) lnopt="-f"
+   help|-help|--help|-h) helpmsg; exit 0;;
+   -force|--force|-f) lnopt="-f";;
+   -withx|--withx|-x) withx="yes";;
   esac
   shift
 done
 unset -f helpmsg
 
-cd "$(dirname "$(readlink -f "$0")")" && cd ../
-dotroot=$(pwd -P)
+dotroot=$(dirname $(dirname "$(readlink -f "$0")"))
 lnopt="-sn ""${lnopt:-}"
 
 [ -d "$HOME"/.vim ] || mkdir "$HOME"/.vim
 [ -d "$HOME"/go ] || mkdir -p "$HOME"/go/{bin,pkg,src}
 [ -d "$HOME"/bin ] || mkdir "$HOME"/bin
-[ -d "$HOME"/bin/dev ] || mkdir "$HOME"/bin/dev
 [ -d "$HOME"/.config ] || mkdir "$HOME"/.config
-[ -d "$HOME"/.config/nvim ] || mkdir -p "$HOME"/.config/nvim
 [ -d "$HOME"/.config/systemd/user ] || mkdir -p "$HOME"/.config/systemd/user
 
 # fallthrough
@@ -55,12 +53,28 @@ set +e
   ln $lnopt "$dotroot"/vim/vimrc "$HOME"/.vimrc
   ln $lnopt "$dotroot"/vim/gvimrc "$HOME"/.gvimrc
 
-  # TODO: reconsider neovim
-  #split "neovim"
-  #cp -i "$dotroot"/vim/vimrc "$HOME"/.config/nvim/init.vim
-
   split "tmux"
   ln $lnopt "$dotroot"/tmux/tmux.conf "$HOME"/.tmux.conf
 set -e
 
+# for xorg
+if [ "${withx:-}" = "yes" ]; then
+  split "xorg"
+  set +e
+  ln $lnopt "$dotroot"/x/xinitrc "$HOME"/.xinitrc
+  ln $lnopt "$dotroot"/x/xserverrc "$HOME"/.xserverrc
+  ln $lnopt "$dotroot"/x/Xresources "$HOME"/.Xresources
+  ln $lnopt "$dotroot"/x/fontconfig/ "$HOME"/.config/fontconfig
+
+  # window manager
+  ln $lnopt "$dotroot"/x/i3/ "$HOME"/.i3
+  ln $lnopt "$dotroot"/x/sway/ "$HOME"/.sway
+
+  # config
+  ln $lnopt "$dotroot"/x/termite/ "$HOME"/.config/termite
+  ln $lnopt "$dotroot"/x/conky/ "$HOME"/.config/conky
+  ln $lnopt "$dotroot"/x/dunst/ "$HOME"/.config/dunst
+  ln ${lnopt} "${dotroot}"/x/compton/compton.conf "${HOME}"/.config/compton.conf
+  set -e
+fi
 # EOF

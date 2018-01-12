@@ -1,5 +1,6 @@
 #!/bin/bash
 # vim install to local enviroment script
+# TODO: consider 
 
 set -eu
 
@@ -8,7 +9,7 @@ vimdir="${HOME}/github.com/vim/vim"
 prefix="${HOME}/opt/vim"
 ignore_confirm="no"
 case "$(uname)" in
-  "Linux")
+  Linux)
     buildoption="--enable-fail-if-missing
       --enable-luainterp=dynamic
       --enable-perlinterp=dynamic
@@ -29,7 +30,7 @@ case "$(uname)" in
 esac
 
 # help
-function helpmsg () {
+helpmsg() {
   cat >&1 <<END
   vim-build.bash
 
@@ -40,13 +41,13 @@ END
 }
 while [ -n "${1:-}" ]; do
   case "${1}" in
-   help|--help|-help|-h) helpmsg; exit 0;;
-   --simple|-simple)
+   help|-help|--help|-h) helpmsg; exit 0;;
+   -simple|--simple)
      buildoption="--enable-fail-if-missing
        --enable-terminal
        --prefix=${prefix}"
      ;;
-   --yes|-yes|-y)
+   -yes|--yes|-y)
      ignore_confirm="yes"
      ;;
   esac
@@ -55,7 +56,7 @@ done
 unset -f helpmsg
 
 # $1=message of confirm, $2=exit message, if "$2" != "" ; then exit 1
-function confirm() {
+confirm() {
   if [ "${ignore_confirm}" = "yes" ]; then
     return 0
   fi

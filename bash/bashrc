@@ -1,17 +1,20 @@
+#
 # bashrc
+#
 
 ## check interactive
+# TODO: consider
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
 ## alias
-if [ -n "$HOME"/dotfiles ]; then
-  source "$HOME"/dotfiles/share/alias
-  [ -f "$HOME"/dotfiles/etc/alias ] && source "$HOME"/dotfiles/etc/alias
+if [ -n "${HOME}"/dotfiles ]; then
+  source "${HOME}"/dotfiles/share/alias
+  [ -f "${HOME}"/dotfiles/etc/alias ] && source "${HOME}"/dotfiles/etc/alias
 fi
 
 ## lily
-if [[ "$(uname -n)" == *lily* ]] && [ "$SHLVL" -eq 1 ]; then
+if [[ "$(uname -n)" == *lily* ]] && [ "${SHLVL}" -eq 1 ]; then
   echo "hello lily"
   command -v fortune &> /dev/null && fortune -a
 fi
@@ -22,8 +25,8 @@ reset="\[$(tput sgr0)\]"
 export PS1="[${green}\u${reset}@\h \w]"
 
 ## call zsh
-if [ -x /bin/zsh ] && [ -f "$HOME"/.zshrc ]; then
-  if [ "$SHLVL" -eq 1 ]; then
+if [ -x /bin/zsh ] && [ -f "${HOME}"/.zshrc ]; then
+  if [ "${SHLVL}" -eq 1 ]; then
     /bin/zsh
   fi
 fi

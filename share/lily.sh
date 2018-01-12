@@ -14,13 +14,13 @@ exit 0
 bindir="$HOME"/dotfiles/share/bin
 subcmd=""
 list=$(ls --indicator-style=slash $bindir)
-function showlist () {
+showlist() {
   for x in $list; do
     echo "$x"
   done
 }
 # help
-function helpmsg () {
+helpmsg() {
   cat >&1 <<END
   for sub command
     lily.sh [sub name] [args]

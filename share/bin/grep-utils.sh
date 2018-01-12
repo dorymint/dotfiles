@@ -13,7 +13,7 @@ option="$context -n $color -i -e"
 word=""
 
 # confirm $1=msg return bool
-function confirm () {
+confirm() {
   local key=""
   local counter=0
   while [ $counter -lt 3 ]; do
@@ -21,8 +21,8 @@ function confirm () {
     echo -n "$1 [yes:no]?>"
     read -t 60 key || return 1
     case "$key" in
-      "no"|"n") return 1;;
-      "yes"|"y") return 0;;
+      no|n) return 1;;
+      yes|y) return 0;;
     esac
   done
   return 1
@@ -50,33 +50,33 @@ END
 }
 while [ -n "${1:-}" ]; do
   case "$1" in
-    "-h"|"--help")helpmsg; exit 0;;
-    "-f"|"--file")shift; utilsmd="$1";;
-    "-l"|"--local")utilsmd="$(cat "$utilspath")";;
-    "-e"|"--edit")vim "$utilsmd"; exit 0;;
-    "-c"|"--commit")
+    -h|--help)helpmsg; exit 0;;
+    -f|--file)shift; utilsmd="$1";;
+    -l|--local)utilsmd="$(cat "$utilspath")";;
+    -e|--edit)vim "$utilsmd"; exit 0;;
+    -c|--commit)
       cd "$(dirname "$utilsmd")"
       git add "$utilsmd"
       git commit -m "up $(basename "$utilsmd")" -- "$utilsmd"
       exit 0;;
-    "-p"|"--push-master")
+    -p|--push-master)
       cd "$(dirname "$utilsmd")"
       git status
       git diff origin master
       confirm "run [git push origin master]"
       git push origin master
      exit 0 ;;
-    "-w"|"--word")shift; word="$1";;
-    "-d"|"--diff")
+    -w|--word)shift; word="$1";;
+    -d|--diff)
       cd "$(dirname "$utilsmd")"
       git diff "$(basename "$utilsmd")"
       exit 0;;
-    "-A")shift;context="-A $1";;
-    "-B")shift;context="-B $1";;
-    "-C")shift;context="-C $1";;
-    "--color") color="--color=always";;
+    -A)shift;context="-A $1";;
+    -B)shift;context="-B $1";;
+    -C)shift;context="-C $1";;
+    --color) color="--color=always";;
     # TODO: reconsider --dir
-    "--dir")echo "$(dirname "$utilsmd")"; exit 0;;
+    --dir)echo "$(dirname "$utilsmd")"; exit 0;;
     *)if [ -n "$word" ]; then
         echo "invalid argument: $*"
         exit 1

@@ -10,7 +10,7 @@ srcroot="$HOME/github.com/neovim/neovim"
 installdir="$HOME/opt/neovim"
 
 # confirm $1=msg return bool
-function confirm () {
+confirm() {
   local key=""
   local counter=0
   while [ $counter -lt 3 ]; do
@@ -18,8 +18,8 @@ function confirm () {
     echo -n "$1 [yes:no]?>"
     read -t 60 key || return 1
     case "$key" in
-      "no"|"n") return 1;;
-      "yes"|"y") return 0;;
+      no|n) return 1;;
+      yes|y) return 0;;
     esac
   done
   return 1
@@ -38,14 +38,14 @@ git pull
 echo "use=$use"
 confirm "build?"
 case "$use" in
-  "make")
+  make)
     test -d "build" && rm -r "build/"
     make clean
     make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$installdir" CMAKE_BUILD_TYPE="RelWithDebInfo"
     make install
   exit 0;;
 
-  "cmake")
+  cmake)
     if [ ! -d "$srcroot/.deps" ]; then
       mkdir ".deps"
     fi

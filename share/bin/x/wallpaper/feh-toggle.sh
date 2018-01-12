@@ -11,8 +11,8 @@ END
 }
 
 case "${1:-}" in
-  "-h"|"--help")helpmsg; exit 0;;
-  "-s"|"--status")
+  -h|-help|--help)helpmsg; exit 0;;
+  -s|-status|--status)
     systemctl --user status feh-wallpaper.timer
     systemctl --user list-timers
     exit 0;;

@@ -15,6 +15,8 @@ scriptencoding utf-8
 "     : Vim script は最初の非空白文字を \ にすることで前の行と連結できる
 "     : :help scriptnames
 "     : :help set-option
+"     : true = 0 same v:true
+"     : false = !0 same v:false
 
 
 "-----| plugin manage |-----"
@@ -23,11 +25,18 @@ if (has('win32') || has('win64')) && isdirectory(glob('~/.vim'))
     " NOTE: linuxに合わせる
 endif
 
-" plug
-if filereadable(glob('~/.vim/autoload/plug.vim'))
-  source ~/dotfiles/vim/plugin-manage-plug.vim
+if v:true
+  " plug
+  if filereadable(glob('~/.vim/autoload/plug.vim'))
+    source ~/dotfiles/vim/plugin-manage-plug.vim
+  else
+    echo 'not found: autoload/plug.vim'
+  endif
 else
-  echo 'not found: autoload/plug.vim'
+  " minpac
+  if filereadable(glob('~/dotfiles/vim/minpac-pkg.vim'))
+    source ~/dotfiles/vim/minpac-pkg.vim
+  endif
 endif
 
 
@@ -179,7 +188,7 @@ if $TERM == "xterm-256color" ||
     "colorscheme iceberg
     "colorscheme molokai
   catch
-    echoerr 'try error: colorscheme jellybeans && t_Co=256; fallback: default && t_Co=8'
+    echo 'try error: colorscheme jellybeans && t_Co=256; fallback: default && t_Co=8'
     colorscheme default
     set t_Co=8
   endtry

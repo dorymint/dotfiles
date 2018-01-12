@@ -3,14 +3,14 @@ set -eu
 
 cmd=""
 # help
-function helpmsg () {
+helpmsg() {
   cat >&1 <<END
   with-notify.sh
     run command with notify-send
 END
 }
 case "$1" in
-  help|--help|-h) helpmsg; exit 0;;
+  help|-help|--help|-h) helpmsg; exit 0;;
   *) cmd=${1}; shift;;
   "") echo "command not specified"; exit 1;;
 esac

@@ -2,21 +2,23 @@
 # ~/.bash_profile
 #
 
+# umask
+umask 022
+
 # keychain
 if command -v keychain > /dev/null; then
   eval $(keychain --eval --quiet)
 fi
 
 ## environments
-source "$HOME"/dotfiles/share/lang.sh
-source "$HOME"/dotfiles/share/nodeenv.sh
-source "$HOME"/dotfiles/share/goenv.sh
-source "$HOME"/dotfiles/share/rubyenv.sh
-### priority local bin
-[ -d "$HOME"/bin ] && export PATH="$HOME"/bin:"$PATH"
-[ -d "$HOME"/bin/dev ] && export PATH="$HOME"/bin/dev:"$PATH"
+source "${HOME}"/dotfiles/share/lang.sh
+source "${HOME}"/dotfiles/share/nodeenv.sh
+source "${HOME}"/dotfiles/share/goenv.sh
+source "${HOME}"/dotfiles/share/rubyenv.sh
 
-## for local
-[[ -f "$HOME"/dotfiles/etc/bash/bash_profile ]] && . "$HOME"/dotfiles/etc/bash/bash_profile
-[[ -f "$HOME"/.bashrc ]] && . "$HOME"/.bashrc
+### priority local bin
+[ -d "${HOME}"/bin ] && export PATH="${HOME}"/bin:"${PATH}"
+
+# call rc
+[ -f "${HOME}"/.bashrc ] && source "${HOME}"/.bashrc
 # EOF

@@ -9,7 +9,7 @@ file=""
 root="./"
 
 # help
-function helpmsg () {
+helpmsg() {
   cat >&1 <<'END'
   todovim.sh
     vim "$(gotcha | peco)"

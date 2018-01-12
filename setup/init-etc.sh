@@ -1,15 +1,17 @@
 #!/bin/sh
 set -eu
 
+# TODO: consider to remove
+
 # help
-function helpmsg () {
+helpmsg() {
   cat >&1 <<END
   make bind files to dotfiles etc
 END
 }
 while [ -n "${1:-}" ]; do
   case "$1" in
-    help|--help|-h) helpmsg; exit 0;;
+    help|-help|--help|-h) helpmsg; exit 0;;
     *)echo "unknown option: $*"; exit 1;;
     "");;
   esac

@@ -5,7 +5,7 @@ bgcmd="feh"
 option="--scale-down"
 
 # help
-function helpmsg () {
+helpmsg() {
   cat >&1 <<END
   use default feh
 
@@ -17,9 +17,9 @@ END
 }
 while [ -n "${1:-}" ]; do
   case "$1" in
-   help|--help|-h) helpmsg; exit 0;;
-   -bg|--background) option="--bg-max";;
-   -sway|--background-sway)
+   help|-help|--help|-h) helpmsg; exit 0;;
+   -bg|-background|--background) option="--bg-max";;
+   -sway|-background-sway|--background-sway)
      bgcmd='swaymsg -t command output "*" bg'
      option="fit";;
    "");;

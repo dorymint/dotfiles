@@ -23,7 +23,7 @@ br=${brroot}/brightness
 builtin test -f ${br}
 
 # help
-function helpmsg () {
+helpmsg() {
   $cat >&1 <<END
 [brightness.sh]
   for set the brightness
@@ -55,24 +55,24 @@ END
 }
 
 # get current brightness
-function getbr () {
+getbr() {
   $cat "${br}"
 }
 
 # get max brightness
-function getmax () {
+getmax() {
   $cat "${brmax}"
 }
 
 # get min brightness
-function getmin () {
+getmin() {
   local max=$(getmax)
   # TODO: consider minimum lengths
   $expr ${max} / 10
 }
 
 # set brightness
-function setbr () {
+setbr() {
   local current=$(getbr)
   local max=$(getmax)
   local min=$(getmin)
@@ -94,37 +94,37 @@ function setbr () {
 }
 
 # set max
-function setmax () {
+setmax() {
   local max=$(getmax)
   setbr ${max}
 }
 
 # set min
-function setmin () {
+setmin() {
   local min=$(getmin)
   setbr ${min}
 }
 
 # increment
-function inc () {
+inc() {
   local n=$($expr $(getbr) + ${1})
   setbr ${n}
 }
 
 # decrement
-function dec () {
+dec() {
   local n=$($expr $(getbr) - ${1})
   setbr ${n}
 }
 
 # increment ten percentage
-function incper() {
+incper() {
   local n=$($expr $(getbr) + $(getmin))
   setbr ${n}
 }
 
 # decrement ten percentage
-function decper() {
+decper() {
   local n=$($expr $(getbr) - $(getmin))
   setbr ${n}
 }

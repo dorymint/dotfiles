@@ -33,18 +33,13 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 fi
 
 # disable display power management signaling
-if [ -x /usr/bin/xset ]; then
-  sleep 1 && xset s off
-  sleep 1 && xset -dpms
-  sleep 1 && xset r rate 200 30
-fi
-
-# for laptop with broken screen :P
-if [ -x /usr/bin/xrandr ] && xrandr --query | grep "HDMI1 connected" &> /dev/null; then
-  sleep 1 && xrandr --output HDMI1 --primary --auto && xrandr --output LVDS1 --off
-fi
+xset s off
+xset -dpms
+xset r rate 200 30
+setxkbmap jp 106
 
 # fcitx
+# TODO: consider into .i3/config
 if [ -x /usr/bin/fcitx-autostart ]; then
   export GTK_IM_MODULE=fcitx
   export QT_IM_MODULE=fcitx
@@ -53,29 +48,28 @@ if [ -x /usr/bin/fcitx-autostart ]; then
 fi
 
 # for i3
+# TODO: consider into .i3/config
 if [ -d "$HOME"/Pictures/links ] && [ -x /usr/bin/feh ]; then
   wallpath="$HOME"/Pictures/links
   fehbg="feh --bg-max"
   wall="$wallpath"/"$(ls "$wallpath" | shuf -n 1)"
 fi
-if [ -r "$HOME"/.i3/compton.conf ] && [ -x /usr/bin/compton ]; then
-  compton="compton --config"
-  conf="$HOME"/.i3/compton.conf
+if [ -x /usr/bin/compton ]; then
+  compton="/usr/bin/compton"
 fi
 
 # session
 session="${1:-i3}"
 case "$session" in
   i3|i3wm )
-    # TODO: fix setxkbdmap
-    setxkbmap jp 106 &
-    $fehbg "$wall" &
-    $compton "$conf" &
+    [ -n "${fehbg}" ] && ${fehbg} "${wall}" &
+    [ -n "${compton}" ] && ${compton} &
     exec /usr/bin/i3;;
   i3-log|i3wm-log )
     echo "xinit i3-log: $(date "+%Y-%m-%d")" > ~/.i3/i3.log
-    $fehbg "$wall" &
-    $compton "$conf" &
+    [ -n "${fehbg}" ] && ${fehbg} "${wall}" &
+    [ -n "${compton}" ] && ${compton} &
     exec /usr/bin/i3 -V -d all >> ~/.i3/i3.log;;
   * ) exec /usr/bin/i3;;
 esac
+# EOF
