@@ -15,5 +15,3 @@ while [ -n "${1:-}" ]; do
   shift
 done
 unset -f helpmsg
-
-# EOF
