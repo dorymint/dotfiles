@@ -1,0 +1,6 @@
+*
+!.gitignore
+!README.md
+!new/.gitignore
+!update-grml.sh
+!wget-grml.bash
