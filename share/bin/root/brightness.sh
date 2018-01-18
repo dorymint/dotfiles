@@ -5,9 +5,9 @@ set -eu
 
 # check
 test -x /usr/bin/cat
-cat=/usr/bin/cat
+cat='/usr/bin/cat'
 test -x /usr/bin/expr
-expr=/usr/bin/expr
+expr='/usr/bin/expr'
 
 # path to sys backlight
 # TODO: case of different name of directory
@@ -130,7 +130,7 @@ decper() {
 }
 
 while [ -n "${1:-}" ]; do
-  case "$1" in
+  case "${1}" in
    -help)
      helpmsg
      exit 0

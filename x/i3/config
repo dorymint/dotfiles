@@ -181,10 +181,10 @@ mode "volume" {
 # backlight brightness
 # TODO: consider
 mode "backlight" {
-  bindsym k exec --no-startup-id sh -c 'sudo brightness.sh -incper'
-  bindsym j exec --no-startup-id sh -c 'sudo brightness.sh -decper'
-  bindsym Shift+m exec --no-startup-id sh -c 'sudo brightness.sh -setmax'
-  bindsym m exec --no-startup-id sh -c 'sudo brightness.sh -setmin'
+  bindsym k exec --no-startup-id sh -c "$i3dir/brightness.sh -incper"
+  bindsym j exec --no-startup-id sh -c "$i3dir/brightness.sh -decper"
+  bindsym Shift+m exec --no-startup-id sh -c "$i3dir/brightness.sh -setmax"
+  bindsym m exec --no-startup-id sh -c "$i3dir/brightness.sh -setmin"
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
@@ -216,12 +216,15 @@ mode "mode_selector" {
 }
 bindsym $mod+m mode "mode_selector"
 
+# i3lock
+bindsym $mod+Shift+Return exec --no-startup-id /usr/bin/i3lock
+
 # border
 bindsym $mod+t border normal 2
 bindsym $mod+y border pixel 15
 bindsym $mod+u border none
 
-bindsym $mod+shift+b bar mode toggle
+bindsym $mod+Shift+b bar mode toggle
 
 # TODO: reconsider Colors
 set $lightgray #AAAAAA

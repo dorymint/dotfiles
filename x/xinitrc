@@ -55,6 +55,8 @@ case "${1:-i3}" in
     echo "xinit i3-log: $(date "+%Y-%m-%d")" > ~/.i3/i3.log
     exec i3 -V -d all >> ~/.i3/i3.log
     ;;
-  * ) exec i3;;
+  * )
+    # TODO: consider another way
+    exec ${1}
+    ;;
 esac
-# EOF
