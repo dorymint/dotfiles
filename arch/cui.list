@@ -20,6 +20,7 @@ keychain
 libnotify
 mediainfo
 mplayer
+mpv
 net-tools
 nftables
 nmap
@@ -36,6 +37,7 @@ sshfs
 tcpdump
 tig
 tmux
+traceroute
 unzip
 vim
 w3m
