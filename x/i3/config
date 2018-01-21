@@ -255,4 +255,7 @@ bar {
 # duplication is allowed
 exec_always --no-startup-id sh -c '$i3dir/randombg.sh'
 exec --no-startup-id conky
+
+# TODO: consider options
+#exec --no-startup-id compton -c -m 0.75
 exec --no-startup-id compton

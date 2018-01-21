@@ -1,6 +1,7 @@
 # dotenv
-### really need?
-if [ -d "$HOME"/dotfiles ]; then
-  export DOTFILES_ROOT="$HOME"/dotfiles
+
+# TODO: consider to remove
+
+if [ -d "${HOME}"/dotfiles ]; then
+	export DOTFILES_ROOT="${HOME}"/dotfiles
 fi
-# EOF

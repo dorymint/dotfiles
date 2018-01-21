@@ -30,5 +30,3 @@ chattr +i /boot/grub/i386-pc/core.img
 
 # output for boot.img
 # dd count=1 bs=512 if="$1" of="$2"
-
-# EOF

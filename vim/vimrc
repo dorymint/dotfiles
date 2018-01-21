@@ -180,27 +180,22 @@ if $TERM == "xterm-256color" ||
       \ $TERM == "xterm-termite" ||
       \ $TERM == "screen-256color" ||
       \ $TERM == "rxvt-unicode-256color"
-  try
-    colorscheme jellybeans
-    set t_Co=256
-    "set background=dark
-    "colorscheme hybrid
-    "colorscheme iceberg
-    "colorscheme molokai
-  catch
-    echo 'try error: colorscheme jellybeans && t_Co=256; fallback: default && t_Co=8'
-    colorscheme default
-    set t_Co=8
-  endtry
-else
-  " NOTE: use default
+  set t_Co=256
 endif
 
 " set has win
 if has('win32') || has('win64')
   set t_Co=16
-  colorscheme default
 endif
+
+try
+  colorscheme jellybeans
+  "set background=dark
+  "colorscheme hybrid
+  "colorscheme iceberg
+  "colorscheme molokai
+catch
+endtry
 
 
 "-----| key map  |-----"

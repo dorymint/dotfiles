@@ -20,4 +20,3 @@ diff -u --color=always ./zshrc.grml.local ./new/zshrc.grml.local | less -R
 [ -f "./update-grml.sh" ]
 echo "----- update -----"
 ./update-grml.sh
-# EOF

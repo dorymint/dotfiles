@@ -7,7 +7,7 @@ umask 022
 
 # keychain
 if command -v keychain > /dev/null; then
-  eval $(keychain --eval --quiet)
+	eval $(keychain --eval --quiet)
 fi
 
 ## environments
@@ -21,4 +21,3 @@ source "${HOME}"/dotfiles/share/rubyenv.sh
 
 # call rc
 [ -f "${HOME}"/.zshrc ] && source "${HOME}"/.zshrc
-# EOF

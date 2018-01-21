@@ -7,11 +7,11 @@
 
 ## grml zshrc
 if command -v pacman &> /dev/null; then
-  pacman -Q grml-zsh-config &> /dev/null ||
-    echo "recommend: pacman -S grml-zsh-config"
+	pacman -Q grml-zsh-config &> /dev/null ||
+		echo "recommend: pacman -S grml-zsh-config"
 else
-  echo "warning: use grml in dotfiles"
-  source "${HOME}"/dotfiles/zsh/grml/zshrc.grml
+	echo "warning: use grml in dotfiles"
+	source "${HOME}"/dotfiles/zsh/grml/zshrc.grml
 fi
 
 ## alias
@@ -24,17 +24,16 @@ setopt autopushd
 setopt pushdignoredups
 
 ## syntax highlight
-src_syntax="/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-if [ -r "${src_syntax}" ]; then
-  source "${src_syntax}"
+src_syntax_hi="/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+if [ -r "${src_syntax_hi}" ]; then
+	source "${src_syntax_hi}"
 fi
-unset -v src_syntax
+unset -v src_syntax_hi
 
 [ -f "${HOME}"/dotfiles/etc/zsh/localrc.zsh ] && source "${HOME}"/dotfiles/etc/zsh/localrc.zsh
 
 ## lily
 if [[ "$(uname -n)" == *lily* ]] && [ "${SHLVL}" -eq 1 ]; then
-  echo "hello lily"
-  command -v fortune &> /dev/null && fortune -a
+	echo "hello lily"
+	command -v fortune &> /dev/null && fortune -a
 fi
-# EOF
