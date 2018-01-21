@@ -59,7 +59,7 @@ endif
   set completeopt=menuone,preview
   set display=truncate
   set nrformats=bin,octal,hex
-  set helplang=ja
+  set helplang=ja,en
   set nospell
   set spelllang=en,cjk
     " NOTE: cjk を追加で東アジア圏の言葉をチェックから除外できるらしい
