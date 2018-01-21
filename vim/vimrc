@@ -123,7 +123,7 @@ endif
   set smarttab
 
 " tab
-  set expandtab
+  set noexpandtab
   set tabstop=2
   set softtabstop=2
 
