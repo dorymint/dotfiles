@@ -27,6 +27,7 @@ confirm() {
 	done
 	return 1
 }
+
 # help
 unset -f helpmsg
 helpmsg() {
@@ -34,21 +35,21 @@ helpmsg() {
 grep-utils.sh [flags] ["grep word"]
 
 options:
-	-h --help
+	-h -help --help
 		show help then exit
-	-f --file
+	-f -file --file
 		path to target file (default $utilsmd)
-	-l --local
+	-l -local --local
 		use seved target file path (default $utilspath)
-	-e --edit
+	-e -edit --edit
 		edit target file, (default editor is vim)
-	-c --commit
+	-c -commit --commit
 		git add && commit for $utilsmd
-	-p --push-master
+	-p -push-master --push-master
 		git push origin master
-	-w --word
+	-w -word --word
 		specify search word
-	-d --diff
+	-d -diff --diff
 		show diff $utilsmd
 	-B [N]
 		before context
@@ -56,33 +57,33 @@ options:
 		after context
 	-C [N]
 		context
-	--color
+	-color --color
 		always use color
-	--dir
+	-dir --dir
 		show target files directory
 END
 }
 while [ -n "${1:-}" ]; do
 	case "$1" in
-		-h|--help)helpmsg; exit 0;;
-		-f|--file)shift; utilsmd="$1";;
-		-l|--local)utilsmd="$(cat "$utilspath")";;
-		-e|--edit)vim "$utilsmd"; exit 0;;
-		-c|--commit)
+		-h|-help|--help)helpmsg; exit 0;;
+		-f|-file|--file)shift; utilsmd="$1";;
+		-l|-local|--local)utilsmd="$(cat "$utilspath")";;
+		-e|-edit|--edit)vim "$utilsmd"; exit 0;;
+		-c|-commit|--commit)
 			cd "$(dirname "$utilsmd")"
 			git add "$utilsmd"
 			git commit -m "up $(basename "$utilsmd")" -- "$utilsmd"
 			exit 0
 			;;
-		-p|--push-master)
+		-p|-push-master|--push-master)
 			cd "$(dirname "$utilsmd")"
 			git status
 			git diff origin master
 			confirm "run [git push origin master]"
 			git push origin master
 			exit 0 ;;
-		-w|--word)shift; word="$1";;
-		-d|--diff)
+		-w|-word|--word)shift; word="$1";;
+		-d|-dirr|--diff)
 			cd "$(dirname "$utilsmd")"
 			git diff "$(basename "$utilsmd")"
 			exit 0
@@ -90,8 +91,8 @@ while [ -n "${1:-}" ]; do
 		-A)shift;context="-A $1";;
 		-B)shift;context="-B $1";;
 		-C)shift;context="-C $1";;
-		--color) color="--color=always";;
-		--dir)
+		-color|--color) color="--color=always";;
+		-dir|--dir)
 			# TODO: reconsider --dir
 			echo "$(dirname "$utilsmd")"
 			exit 0
