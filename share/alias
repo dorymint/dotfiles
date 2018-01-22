@@ -14,37 +14,37 @@ alias chmod='command chmod --preserve-root'
 alias chgrp='command chgrp --preserve-root'
 
 ## for carry of alias
-alias sudo='command sudo '
+#alias sudo='command sudo '
 
 # local
 ## cd
-alias gw='cd "$GOPATH"/src/github.com/"$(git config --global user.name)"'
-alias ww='cd "$HOME"/github.com/"$(git config --global user.name)"'
-alias dotfiles='cd "$HOME"/dotfiles'
+alias gw='cd "${GOPATH}"/src/github.com/"$(git config --global user.name)"'
+alias ww='cd "${HOME}"/github.com/"$(git config --global user.name)"'
+alias dotfiles='cd "${HOME}"/dotfiles'
 
 ## goto src golang official pkg
-if [ -d "$GOROOT"/src ] && [ -x "$(command which vim)" ]; then
-	alias gosrc='cd "$GOROOT/src" && vim -R . '
+if [ -d "${GOROOT}"/src ] && [ -x "$(command which vim)" ]; then
+	alias gosrc='cd "${GOROOT}/src" && vim -R . '
 fi
 
 ## vim
-if [ -x "$HOME"/opt/vim/bin/vim ]; then
-	alias viml='"$HOME"/opt/vim/bin/vim'
+if [ -x "${HOME}"/opt/vim/bin/vim ]; then
+	alias viml='"${HOME}"/opt/vim/bin/vim'
 fi
 
 ## nvim
-if [ -x "$HOME"/opt/neovim/bin/nvim ]; then
-	alias nvim='"$HOME"/opt/neovim/bin/nvim'
+if [ -x "${HOME}"/opt/neovim/bin/nvim ]; then
+	alias nvim='"${HOME}"/opt/neovim/bin/nvim'
 fi
 
 ## for vim plugin sonictemplate: add to commite
-if [ -x "$HOME/dotfiles"/vim/sonicdir/allcommit.bash ]; then
-	alias sonic='"$HOME/dotfiles"/vim/sonicdir/allcommit.bash'
+if [ -x "${HOME}/dotfiles"/vim/sonicdir/allcommit.bash ]; then
+	alias sonic='"${HOME}/dotfiles"/vim/sonicdir/allcommit.bash'
 fi
 
 ## python
-if [ -r "$HOME/venv/bin/activate" ]; then
-	alias python-activate='source $HOME/venv/bin/activate'
+if [ -r "${HOME}/venv/bin/activate" ]; then
+	alias python-activate='source ${HOME}/venv/bin/activate'
 fi
 
 ## peco
@@ -71,7 +71,7 @@ if [ -x "$(builtin command -v sway)" ]; then
 fi
 
 ## etc
-[ "$TERM" = "xterm-termite" ] && alias ssh='TERM=xterm-256color ssh'
+[ "${TERM}" = "xterm-termite" ] && alias ssh='TERM=xterm-256color ssh'
 [ -x "$(builtin command -v mplayer)" ] && alias mplayerbgm='command mplayer -ao pulse -vo null '
 [ -x "$(builtin command -v emacs)" ] && alias emacs='command emacs -nw'
 alias timers 2> /dev/null || alias timers='systemctl --no-pager --user list-timers'

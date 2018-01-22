@@ -181,6 +181,20 @@ if $TERM == "xterm-256color" ||
       \ $TERM == "screen-256color" ||
       \ $TERM == "rxvt-unicode-256color"
   set t_Co=256
+  try
+    "set background=dark
+    colorscheme jellybeans
+    "colorscheme hybrid
+    "colorscheme iceberg
+    "colorscheme molokai
+  catch
+  endtry
+else
+  try
+    set background=dark
+    colorscheme elflord
+  catch
+  endtry
 endif
 
 " set has win
@@ -188,14 +202,6 @@ if has('win32') || has('win64')
   set t_Co=16
 endif
 
-try
-  colorscheme jellybeans
-  "set background=dark
-  "colorscheme hybrid
-  "colorscheme iceberg
-  "colorscheme molokai
-catch
-endtry
 
 
 "-----| key map  |-----"
