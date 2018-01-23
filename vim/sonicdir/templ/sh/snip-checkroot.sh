@@ -1,3 +1,3 @@
 if [ ${EUID:-${UID}} = 0 ]; then
-  {{_cursor_}}
+	{{_cursor_}}
 fi
