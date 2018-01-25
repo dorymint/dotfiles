@@ -6,6 +6,9 @@ list="next.list"
 # TODO: fix exe
 exe="echo"
 
+# sleep sec
+delay="1200-1800"
+
 # help
 helpmsg() {
 	cat >&1 <<END
@@ -57,18 +60,18 @@ dryrun() {
 	local l=$(cat "${list}")
 	for x in ${l}; do
 		echo "${exe} ${x}"
-		local delay=$(shuf -i 20-180 -n 1)
-		echo "delay: ${delay}"
+		local d=$(shuf -i ${delay} -n 1)
+		echo "delay: ${d}"
 	done
 }
 
 action() {
 	local l=$(cat "${list}")
 	for x in ${l}; do
-		${exe} "${x}"
-		local delay=$(shuf -i 20-180 -n 1)
-		echo "delay: ${delay}"
-		sleep ${delay}
+		${exe} ${x}
+		local d=$(shuf -i ${delay} -n 1)
+		echo "delay: ${d}"
+		sleep ${d}
 	done
 	# trunc
 	: > "${list}"
