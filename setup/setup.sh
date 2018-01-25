@@ -10,8 +10,11 @@ split() {
 # help
 helpmsg() {
 	cat >&1 <<END
+setup.sh
 	make directory and symlink
+options:
 	--help -h
+		show this help
 	--force -f
 		allow override exists files
 END
@@ -74,7 +77,7 @@ if [ "${withx:-}" = "yes" ]; then
 	ln $lnopt "$dotroot"/x/termite/ "$HOME"/.config/termite
 	ln $lnopt "$dotroot"/x/conky/ "$HOME"/.config/conky
 	ln $lnopt "$dotroot"/x/dunst/ "$HOME"/.config/dunst
-	# TODO: consider to use default config and run compton -cbm 0.75
-	#ln ${lnopt} "${dotroot}"/x/compton/compton.conf "${HOME}"/.config/compton.conf
+	# TODO: consider to use default config and run compton -b -c -m 0.75
+	ln ${lnopt} "${dotroot}"/x/compton/compton.conf "${HOME}"/.config/compton.conf
 	set -e
 fi

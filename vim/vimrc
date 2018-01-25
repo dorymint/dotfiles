@@ -21,8 +21,8 @@ scriptencoding utf-8
 
 "-----| plugin manage |-----"
 if (has('win32') || has('win64')) && isdirectory(glob('~/.vim'))
+	" NOTE: linuxに合わせる
 	set runtimepath^=~/.vim,~/.vim/after
-		" NOTE: linuxに合わせる
 endif
 
 if v:true
@@ -47,22 +47,28 @@ endif
 	set ttimeout
 	set ttimeoutlen=100
 	set modeline
+
+	" NOTE: modelines ファイル頭と尻尾のコメントを書くとき注意する
+	" {vi:|vim:|Vim:|ex:}でぶつかる
 	set modelines=5
-		" NOTE: modeline ファイル頭と尻尾のコメントを書くとき注意する
-		" {vi:|vim:|Vim:|ex:}でぶつかる
+
 	set hidden
 	set autoread
+
+	" NOTE: 貼り付けで形が崩れる場合は :paste して貼付け後に :nopaste する
+	" keymapでトグル指定
 	set nopaste
-		" NOTE: 貼り付けで形が崩れる場合は :paste して貼付け後に :nopaste する
-		" keymapでトグル指定
+
 	set backspace=indent,eol,start
 	set completeopt=menuone,preview
 	set display=truncate
 	set nrformats=bin,octal,hex
 	set helplang=ja,en
 	set nospell
+
+	" NOTE: cjk を追加で東アジア圏の言葉をチェックから除外できるらしい
 	set spelllang=en,cjk
-		" NOTE: cjk を追加で東アジア圏の言葉をチェックから除外できるらしい
+
 	set title
 	set ruler
 	set number
@@ -70,10 +76,12 @@ endif
 	set scrolloff=5
 	set textwidth=0
 	set wrap
+
+	" NOTE: 折り返しのインデントを合わせる,vim8
 	set breakindent
-		" NOTE: 折り返しのインデントを合わせる,vim8
+
+	" NOTE: :help revins :)
 	set norevins
-		" NOTE: :help revins :)
 
 " cursor
 	set nocursorcolumn
@@ -83,9 +91,10 @@ endif
 	set foldmethod=marker
 	set foldmarker={{{,}}}
 	set foldlevel=0
+
+	" NOTE: デフォルトは開くように
+	" :help zi
 	set nofoldenable
-		" NOTE: デフォルトは開くように
-		" :help zi
 	function! Giko()
 		return ' (,,ﾟДﾟ)' . foldtext()
 	endfunction
@@ -103,18 +112,21 @@ endif
 	set wildmenu
 	set wildmode=list:longest,full
 	set confirm
-	"set shell
-		" NOTE: vimから呼ぶシェルを設定, shell=zsh
+
+	" NOTE: vimから呼ぶシェルを設定, shell=zsh
+	"set shell=bash
 
 " search
 	set incsearch
+
+	" NOTE: keymapでトグル指定
 	set hlsearch
-		" NOTE: keymapでトグル指定
+
+	" NOTE: 置換処理のマッチにも影響するため注意
+	" ignorecase 大文字少文字を区別しない
+	" smartcase 検索条件に大文字が含まれると noignorecase
 	set ignorecase
 	set smartcase
-		" NOTE: 置換処理のマッチにも影響するため注意
-		" ignorecase 大文字少文字を区別しない
-		" smartcase 検索条件に大文字が含まれると noignorecase
 
 " indent
 	set autoindent
@@ -129,29 +141,32 @@ endif
 
 " list
 	set list
+
+	" NOTE: eolは考慮中 eol:↵
 	set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:<
-		" NOTE: eolは考慮中 eol:↵
 
 " statusline
 	set laststatus=2
+
+	" NOTE: %[n]?[.] の形式で指定してる、詳細は:help statuslineで確認
+	" 設定はプラグインが効かないときだけ
 	set statusline=%f%m%r%w%y%{&fileencoding}[%{&fileformat}]%=%(buf[%n]hex[%4B]line[%4l/%4L:%4P]%)
-		" NOTE: %[n]?[.] の形式で指定してる、詳細は:help statuslineで確認
-		" 上の設定はプラグインが効かないときだけ
 
 " tabline
 	set showtabline=1
+
+	" NOTE: 設定はstatuslineと似てる :help tabline
 	"set tabline=
-		" NOTE: 設定はstatuslineと似てる :help tabline
 
 " split
 	set splitbelow
 	set splitright
 
 " visualbell
+	" NOTE: set visualbell でbeep音を画面のフラッシュと置き換える
+	" t_vb= でフラッシュのターミナルコードを空指定してフラッシュさせない
 	set visualbell
 	set t_vb=
-		" NOTE: set visualbell でbeep音を画面のフラッシュと置き換える
-		" t_vb= でフラッシュのターミナルコードを空指定してフラッシュさせない
 
 " backup, swap, undo
 	set nobackup
@@ -215,40 +230,41 @@ endif
 " コマンドのキーマップは<C-u>で数値の前置を消しておかないと範囲指定される
 
 " normal map
+	" NOTE: disable all erase?
 	"nnoremap zE <nop>
-		" NOTE: disable all erase?
 
 	" Resize window
 	nnoremap <up> <nop>
 	nnoremap <down> <nop>
 	nnoremap <left> <nop>
 	nnoremap <right> <nop>
-		" NOTE: <nop> で消しておくとリサイズの処理が軽くなる?
+	" NOTE: <nop> で消しておくとリサイズの処理が軽くなる?
 	nnoremap <up> <C-w>+
 	nnoremap <down> <C-w>-
 	nnoremap <left> <C-w><
 	nnoremap <right> <C-w>>
 
 	" 行を上下に引っ張る
+	" NOTE: <C-k>はファイルの先頭で入れると行が消える、挙動の理由がよくわかってない
+	" ddまでは動いて、kが失敗すると止まるっぽい? dd && k && P
 	"nnoremap <C-j> ddp
 	"nnoremap <C-k> ddkP
-		" NOTE: 上の<C-k>はファイルの先頭で入れると行が消える、挙動の理由がよくわかってない
-		" ddまでは動いて、kが失敗すると止まるっぽい? dd && k && P
+	" NOTE: reg を汚さない . は現在行、こちらなら行は消えない
 	nnoremap <C-j> :<C-u>. move +1<CR>
 	nnoremap <C-k> :<C-u>. move -2<CR>
-		" NOTE: reg を汚さない . は現在行、こちらなら行は消えない
 
 	" 改行の挿入
+	" NOTE: このマップはもう少し考えたい
 	"nnoremap <C-m> o<Esc>k
-		" NOTE: このマップはもう少し考えたい
+	nnoremap <CR> o<Esc>
 
-" keymap prefix <T> <t> {{{
-		" NOTE: tは移動系で便利っぽいけどfがあるので潰してみる
+" NOTE: tは移動系で便利っぽいけどfがあるので潰してみる
+" keymap prefix <T> <t>
 	nnoremap T <nop>
 	nnoremap t <nop>
 
-		" tabpage prefix<t>
-			" NOTE: help: tab-page
+	" prefix <t>
+		" NOTE: help: tab-page
 		nnoremap tn :<C-u>tabnext<CR>
 		nnoremap tp :<C-u>tabprevious<CR>
 		nnoremap tN :<C-u>tabnew<CR>
@@ -256,8 +272,8 @@ endif
 		nnoremap tmn :<C-u>+tabmove<CR>
 		nnoremap tmp :<C-u>-tabmove<CR>
 
+		" NOTE: :help mark-motions
 		nnoremap tmm :<C-u>marks<CR>
-			" NOTE: :help mark-motions
 
 		" buffer prefix<tb>
 		nnoremap tbl :<C-u>ls<CR>:buffer<space>
@@ -265,20 +281,22 @@ endif
 		nnoremap tbd :<C-u>ls<CR>:bdelete<space>
 		nnoremap tbk :<C-u>bdelete<CR>
 		nnoremap tbn :<C-u>enew<CR>
+
+		" NOTE: next,prevは使用頻度が高いので<tb>から<t>に
 		nnoremap tj :<C-u>bnext<CR>
 		nnoremap tk :<C-u>bprev<CR>
-			" NOTE: next,prevは使用頻度が高いので<tb>から<t>に
 
-		" search and move
 		" NOTE: autocmd Filetype で設定したほうがよさそう
 		" :help object-motions
+		" search and move
 		nnoremap t; /}<CR>
 		nnoremap t> /><CR>
-		nnoremap tol /\%80v.\+<CR>
-			" NOTE: match over 80 characters
-			" :help pattern
 
-		" prefix for toggle<T>
+		" NOTE: match over 80 characters
+		" :help pattern
+		nnoremap tol /\%80v.\+<CR>
+
+	" prefix <T>
 		" NOTE: setのトグルとオプションの補完は T を使う
 		nnoremap Th :<C-u>set hlsearch!<CR>
 		nnoremap Tl :<C-u>set list!<CR>
@@ -293,34 +311,33 @@ endif
 		nnoremap Tw :<C-u>setlocal textwidth=0
 		nnoremap TENC :<C-u>e ++enc=shift_jis<space>
 
-	" hex
-	if executable('xxd')
-		nnoremap Txxd :<C-u>setlocal filetype=xxd<CR>:%!xxd<space>
-		nnoremap TRxxd :<C-u>%!xxd -r<space>
+		" hex
+		if executable('xxd')
 			" NOTE: 戻す時は xxd -r
 			" T[rR]xxd みたいに書きたい
 			" Trxxd conflict readonly!
-	else
-		echo 'not found xxd'
-	endif
-" }}}
+			nnoremap Txxd :<C-u>setlocal filetype=xxd<CR>:%!xxd<space>
+			nnoremap TRxxd :<C-u>%!xxd -r<space>
+		else
+			echo 'not found xxd'
+		endif
 
 
 " insert map
+	" NOTE: <C-[> に慣れた方がいいかも
 	" ノーマルモードに
 	"inoremap jj <Esc>
 	"inoremap jk <Esc>
 	"inoremap kj <Esc>
-		" NOTE: <C-[> に慣れた方がいいかも
 
 	" インサートモードの移動
+	" TODO: 使い難いのでもう少し考える...無くてもいいかも
+	" NOTE: <C-f> 直感に反する
+	" <C-h> 削除はbackspaceで割り切るか考える
 	"inoremap <C-f> <left>
 	"inoremap <C-h> <left>
 	inoremap <C-l> <right>
 	inoremap <C-b> <left>
-		" TODO: 使い難いのでもう少し考える...無くてもいいかも
-		" NOTE: <C-f> 直感に反する
-		" <C-h> 削除はbackspaceで割り切るか考える
 	" emacs
 	"inoremap <C-a> <home>
 	"inoremap <C-e> <end>
@@ -344,8 +361,8 @@ endif
 	inoremap (<CR> ()<left><CR><Esc><S-o>
 	inoremap [<enter> []<left><enter><Esc><S-o>
 	inoremap [<CR> []<left><CR><Esc><S-o>
-		" NOTE: <enter>と<CR>、違いがよくわかってない
-		" 入力は別扱い、挿入が<eol>、書き込みがff依存?
+	" NOTE: <enter>と<CR>、違いがよくわかってない
+	" 入力は別扱い、挿入が<eol>、書き込みがff依存?
 
 	" オムニ補完
 	"inoremap <S-tab> <C-x><C-o>
@@ -355,7 +372,7 @@ endif
 	inoremap <C-w> <C-g>u<C-w>
 
 	" 全角を半角に
-		" NOTE: :help i_ctrl-v
+	" NOTE: :help i_ctrl-v
 	inoremap 　 <space>
 	inoremap （ (
 	inoremap ） )
@@ -422,7 +439,7 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
 			write
 		endfunction
 		command! -nargs=? Gotcah call s:gotcha(<f-args>)
-			" NOTE: List内のファイル名からgfで飛べる
+		" NOTE: List内のファイル名からgfで飛べる
 	else
 		call s:adderr('gotcha')
 	endif
@@ -467,37 +484,38 @@ endif
 
 
 "-----| autocmd |-----"
+" NOTE: filetypeによる挙動の変化を有効に設定
 filetype plugin indent on
-	" NOTE: filetypeによる挙動の変化を有効に設定
 augroup nyan_vimrc
+	" NOTE: nyan_vimrcグループのautocmdを初期化して再設定を防ぐ
 	autocmd!
-		" NOTE: nyan_vimrcグループのautocmdを初期化して再設定を防ぐ
 
-	" vim
+" vim
+	" NOTE: (# ﾟДﾟ)つ textwidth がどこで set されたかわかんない!
+	" おとなしく modeline 使った方が良さそう
 	"autocmd Filetype vim setlocal textwidth=0
-		" NOTE: (# ﾟДﾟ)つ textwidth がどこで set されたかわかんない!
-		" おとなしく modeline 使った方が良さそう
 
-	" golang
+" golang
+	" NOTE: goはハードタブが推奨される、noexpandtabとスペースの表示をfmtに合わせて設定
 	autocmd Filetype go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
-		" listchars=tab:\ \ ,trail:-,nbsp:%,extends:>,precedes:<,
-		" NOTE: goはハードタブが推奨される、noexpandtabとスペースの表示をfmtに合わせて設定
 		" listchars-=tab したかったけど動かなかった
 		" lictchars+=tab:\ \ , でもいいけどtabが重複する
+		"listchars=tab:\ \ ,trail:-,nbsp:%,extends:>,precedes:<,
+
 	" NOTE: QuickRunを使うなら以下は無効
 	"if isdirectory(glob('~/dotfiles/vim/tmp'))
 		"autocmd Filetype go nnoremap <buffer> <c-@>gorun :<C-u>!go run % > ~/dotfiles/vim/tmp/gorunlog.txt 2>&1<CR>
 	"endif
 
-	" python
+" python
 	autocmd FileType python setlocal textwidth=79
-		" NOTE: see pep8
-		" is not working?
+	" NOTE: see pep8
+	" is not working?
 	"if has('python3')
 		"autocmd FileType python setlocal omnifunc=python3complete#Complete
 	"endif
 
-	" cpp
+" cpp
 	"autocmd Filetype cpp setlocal nocindent
 augroup END
 
@@ -514,7 +532,7 @@ augroup nyan_vimrc_bg
 	endif
 augroup END
 let s:toggle_bg_state = 1
-function! Togglebg() abort
+function! s:toggleBackground() abort
 	if s:toggle_bg_state == 1
 		augroup nyan_vimrc_bg
 			autocmd!
@@ -537,12 +555,13 @@ function! Togglebg() abort
 		execute 'colorscheme ' . g:colors_name
 	endif
 endfunction
+command! ToggleBackground call s:toggleBackground()
 
 
 "-----| nvim |-----"
 if has('nvim')
+	" NOTE: nvimのterminal mode
 	tnoremap <Esc> <C-\><C-n>
-		" NOTE: nvimのterminal mode
 endif
 
 

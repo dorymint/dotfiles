@@ -1,0 +1,9 @@
+[Match]
+Name=wl0
+
+[Network]
+#Bridge=br0
+DHCP=yes
+
+[DHCP]
+RouteMetric=20

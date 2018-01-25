@@ -1,0 +1,9 @@
+#
+# en*
+#
+[Match]
+MACAddress=
+
+[Link]
+Description=for default ethrnet
+Name=en0

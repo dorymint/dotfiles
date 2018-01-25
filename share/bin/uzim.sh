@@ -15,8 +15,12 @@ helpmsg() {
 uzim.sh
 	${name}.sh "\${target_archive}"
 options:
-	-help	this help
-	-show	show current images
+	-help
+		this help
+	-show
+		show current images
+	-only-extract
+		do only extract
 END
 }
 
@@ -26,8 +30,14 @@ viwer() {
 	feh --scale-down --borderless --recursive -- "${imgdir}"
 }
 
-main() {
-	rm -rf "${tmpdir}"/*
+remove() {
+	echo "remove ${tmpdir}/*"
+	rm --one-file-system --recursive --force -- "${tmpdir}"/*
+	echo "removed"
+}
+
+extract() {
+	remove
 	[ -d "${imgdir}" ] || mkdir -p "${imgdir}"
 	local target="$(readlink -f "${1}")"
 	case "${target}" in
@@ -42,7 +52,6 @@ main() {
 			atool --extract-to="${imgdir}" -- "${target}"
 			;;
 	esac
-	viwer
 }
 
 while [ -n "${1:-}" ]; do
@@ -55,8 +64,14 @@ while [ -n "${1:-}" ]; do
 			viwer
 			exit 0
 			;;
+		only|extract|-only-extract|--only-extract)
+			shift
+			extract "${1}"
+			exit 0
+			;;
 		*)
-			main "${1}"
+			extract "${1}"
+			viwer
 			exit 0
 			;;
 	esac

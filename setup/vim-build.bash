@@ -1,6 +1,6 @@
 #!/bin/bash
 # vim install to local enviroment script
-# TODO: consider 
+# TODO: consider
 
 set -eu
 

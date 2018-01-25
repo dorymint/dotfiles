@@ -1,0 +1,9 @@
+#
+# wl*
+#
+[Match]
+MACAddress=
+
+[Link]
+Description=for default wireless lan
+Name=wl0

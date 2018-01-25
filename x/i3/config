@@ -254,8 +254,8 @@ bar {
 # start exec
 # duplication is allowed
 exec_always --no-startup-id sh -c '$i3dir/randombg.sh'
-exec --no-startup-id conky
+exec --no-startup-id conky --daemonize
 
 # TODO: consider options
+exec --no-startup-id compton --daemon
 #exec --no-startup-id compton -c -m 0.75
-exec --no-startup-id compton

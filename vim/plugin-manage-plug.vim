@@ -14,24 +14,26 @@ call plug#begin('~/.vim/plugged')
 	" manage
 	Plug 'ctrlpvim/ctrlp.vim'
 	Plug 'scrooloose/nerdtree'
+	" NOTE: require ctags
 	Plug 'majutsushi/tagbar'
-		" NOTE: require ctags
 	Plug 'thinca/vim-quickrun'
 	Plug 'thinca/vim-ref'
 	Plug 'kannokanno/previm'
 	Plug 'easymotion/vim-easymotion'
+	" TODO: consider tags directory
+	" let g:vim_tags_cache_dir = expand($HOME)
+	" default .vt_location is .git directory
 	Plug 'szw/vim-tags'
-		" TODO: consider tags directory
-		" let g:vim_tags_cache_dir = expand($HOME)
-		" default .vt_location is .git directory
 
 " TODO: trim syntastic?
-if 0 == 1
+let s:useALE = v:false
+if v:true
+	" NOTE: :Errors
+	" see more info is :help syntastic-commands
 	Plug 'vim-syntastic/syntastic'
-	let s:useALE = 0
 else
 	Plug 'w0rp/ale'
-	let s:useALE = 1
+	let s:useALE = v:true
 endif
 
 	" language
@@ -45,8 +47,8 @@ endif
 	" golang
 	Plug 'fatih/vim-go'
 	" python
+	" TODO: check
 	Plug 'davidhalter/jedi-vim'
-		" TODO: check
 
 	" color
 	Plug 'nanotech/jellybeans.vim'
@@ -155,12 +157,12 @@ let g:tagbar_type_go = {
 \ }
 
 " vim-quickrun
+" NOTE: 設定するとデフォルトマップが無効になる
 "let g:quickrun_no_default_key_mappings = 1
-	" NOTE: 上を設定するとデフォルトマップが無効になる
 let g:quickrun_config = {}
+" NOTE: :QuickRun gotest
+" go test -race $(pwd)
 let g:quickrun_config['gotest'] = { 'command': 'go', 'exec': ['%c test -v -race'] }
-	" NOTE: :QuickRun gotest
-	" go test -race $(pwd)
 
 " previm
 if has('unix') && executable('firefox')
@@ -207,8 +209,8 @@ let g:go_play_open_browser = 0
 let g:go_fmt_autosave = 0
 let g:go_template_autocreate = 0
 
+" NOTE: for python
 " jedi-vim
-	" NOTE: for python
 "let g:jedi#auto_initialization = 0
 let g:jedi#popup_on_dot = 0
 let g:jedi#auto_close_doc = 0
@@ -232,9 +234,9 @@ if s:useALE
 	nnoremap <Leader>k :<C-u>ALEPreviousWrap<CR>
 else
 " syntastic
+	" NOTE: 保存時に常に走らせると少し重い時があるのでトグルをマップ
+	" 非同期でチェックできる良いプラグインがあれば乗り換えたい
 	nnoremap <Leader>s :<C-u>SyntasticToggleMode<CR>
-		" NOTE: 保存時に常に走らせると少し重い時があるのでトグルをマップ
-		" 非同期でチェックできる良いプラグインがあれば乗り換えたい
 endif
 
 " nerdtree
