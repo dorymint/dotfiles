@@ -30,4 +30,3 @@ if [ -x /bin/zsh ] && [ -f "${HOME}"/.zshrc ]; then
 		/bin/zsh
 	fi
 fi
-# EOF

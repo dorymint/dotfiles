@@ -21,4 +21,3 @@ source "${HOME}"/dotfiles/share/rubyenv.sh
 
 # call rc
 [ -f "${HOME}"/.bashrc ] && source "${HOME}"/.bashrc
-# EOF
