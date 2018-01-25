@@ -47,7 +47,10 @@ append() {
 	echo "${1}" >> "${list}"
 	echo "appended: ${1}"
 	echo "--- cat ${list} ---"
-	cat "${list}"
+	local l=$(cat "${list}")
+	echo "${l}"
+	echo -n "[wc -l]: "
+	echo "${l}" | wc -l
 }
 
 dryrun() {
