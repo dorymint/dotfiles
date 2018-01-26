@@ -10,13 +10,25 @@ scriptencoding utf-8
 " fix path for windows
 
 " NOTE: 設定の詳細は:helpで調べればまず困らない
+" 日本語のヘルプは下
+" https://github.com/vim-jp/vimdoc-ja
 " setの詳細は :help <setname> で確認
 " setはできるだけ省略せずに書く set nohl --> set nohlsearch
 " Vim script は最初の非空白文字を \ にすることで前の行と連結できる
-" :help scriptnames
+" vim の echo は内部変数を除くのにべんり
+" :help echo
+" true = 1 same v:true
+" false = 0 same v:false
+" 以下のヘルプを見ておけば迷わないと思う
+" :help help
+" :help helplang
+" :help search-commands
+" :help index
 " :help set-option
-" true = 0 same v:true
-" false = !0 same v:false
+" :help vim-variable
+" :help functions
+" :help scriptnames
+" :help runtimepath
 
 
 "-----| plugin manage |-----"
@@ -190,7 +202,10 @@ endif
 "-----| color |-----"
 " NOTE: シェルの設定で変わるのでlocalで設定するか分岐を作った方がいいかも
 
+" set to default
 syntax on
+
+" colorscheme
 if $TERM == "xterm-256color" ||
 			\ $TERM == "xterm-termite" ||
 			\ $TERM == "screen-256color" ||
@@ -206,7 +221,7 @@ if $TERM == "xterm-256color" ||
 	endtry
 else
 	try
-		set background=dark
+		"set background=dark
 		colorscheme elflord
 	catch
 	endtry
@@ -331,14 +346,13 @@ endif
 	"inoremap kj <Esc>
 
 	" インサートモードの移動
-	" TODO: 使い難いのでもう少し考える...無くてもいいかも
-	" NOTE: <C-f> 直感に反する
-	" <C-h> 削除はbackspaceで割り切るか考える
-	"inoremap <C-f> <left>
-	"inoremap <C-h> <left>
-	inoremap <C-l> <right>
+	" TODO: もう少し考える...無くてもいいかも
+	" NOTE: <C-b> tmux とかぶる
+	" <C-f> 再インデントを上書き
+	" <C-h> バックスペース
+	inoremap <C-f> <right>
 	inoremap <C-b> <left>
-	" emacs
+	" NOTE: emacs
 	"inoremap <C-a> <home>
 	"inoremap <C-e> <end>
 	"inoremap <C-b> <left>

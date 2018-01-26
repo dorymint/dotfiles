@@ -25,7 +25,19 @@ options:
 		check results for -exec
 	-xclip
 		append from xclip
+	-show
+		cat ${list}
 END
+}
+
+# cat $list
+show() {
+	[ -f "${list}" ] || return 1
+	echo "--- cat ${list} ---"
+	local l=$(cat "${list}")
+	echo "${l}"
+	echo -n "[wc -l]: "
+	echo "${l}" | wc -l
 }
 
 isvalid() {
@@ -49,11 +61,7 @@ append() {
 
 	echo "${1}" >> "${list}"
 	echo "appended: ${1}"
-	echo "--- cat ${list} ---"
-	local l=$(cat "${list}")
-	echo "${l}"
-	echo -n "[wc -l]: "
-	echo "${l}" | wc -l
+	show
 }
 
 dryrun() {
@@ -93,6 +101,10 @@ while [ -n "${1:-}" ]; do
 			;;
 		xclip|-xclip)
 			append "$(xclip -o)"
+			exit 0
+			;;
+		show|-show)
+			show
 			exit 0
 			;;
 		*)

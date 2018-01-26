@@ -35,12 +35,16 @@ options:
 		get current brightness: brightness.sh -get
 	-getmax
 		get max brightness: brightness.sh -getmax
+	-getmid
+		get mid brightness: brightness.sh -getmid
 	-getmin
 		get min brightness: brightness.sh -getmin
 	-set
 		set the brightness: brightness.sh -set \${number}
 	-setmax
 		set to max: brightness.sh -setmax
+	-setmid
+		set to mid: brightness.sh -setmid
 	-setmin
 		set to min: brightness.sh -setmin
 	-inc
@@ -62,6 +66,11 @@ getbr() {
 # get max brightness
 getmax() {
 	$cat "${brmax}"
+}
+
+# get mid brightness
+getmid() {
+	$expr $(getmin) \* 5
 }
 
 # get min brightness
@@ -97,6 +106,11 @@ setbr() {
 setmax() {
 	local max=$(getmax)
 	setbr ${max}
+}
+
+setmid() {
+	local mid=$(getmid)
+	setbr ${mid}
 }
 
 # set min
@@ -143,6 +157,10 @@ while [ -n "${1:-}" ]; do
 		getmax
 		exit 0
 		;;
+	-getmid)
+		getmid
+		exit 0
+		;;
 	-getmin)
 		getmin
 		exit 0
@@ -154,6 +172,10 @@ while [ -n "${1:-}" ]; do
 		;;
 	-setmax)
 		setmax
+		exit 0
+		;;
+	-setmid)
+		setmid
 		exit 0
 		;;
 	-setmin)
