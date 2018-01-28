@@ -11,7 +11,9 @@ if command -v keychain > /dev/null; then
 fi
 
 ## environments
-source "${HOME}"/dotfiles/share/lang.sh
+source "${HOME}"/dotfiles/share/locale.sh
+
+## lang
 source "${HOME}"/dotfiles/share/nodeenv.sh
 source "${HOME}"/dotfiles/share/goenv.sh
 source "${HOME}"/dotfiles/share/rubyenv.sh
