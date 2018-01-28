@@ -1,7 +1,8 @@
 # share/alias
 # common
 alias la='command ls -hal --color=auto'
-alias :q='exit'
+alias lale='la --color=always | less -r'
+alias :q='builtin exit'
 alias mkdir='command mkdir -p -v'
 alias ping='command ping -c 3'
 alias ..='cd ..'
