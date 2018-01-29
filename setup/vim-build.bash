@@ -57,7 +57,6 @@ while [ -n "${1:-}" ]; do
 	esac
 	shift
 done
-unset -f helpmsg
 
 # $1=message of confirm, $2=exit message, if "$2" != "" ; then exit 1
 confirm() {

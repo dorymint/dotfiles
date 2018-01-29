@@ -1,69 +1,100 @@
 scriptencoding utf-8
 call plug#begin('~/.vim/plugged')
-	" edit
+" edit
+	" for html css completion
 	Plug 'mattn/emmet-vim'
+
+	" for snipets
 	Plug 'mattn/sonictemplate-vim'
 
-	" status
+" status
+	" for status line customize
 	Plug 'itchyny/lightline.vim'
 
-	" git
+" git
+	" for use git commands in vim
 	Plug 'tpope/vim-fugitive'
+
+	" for display a git diff in sign column
 	Plug 'airblade/vim-gitgutter'
 
-	" manage
+" manage
+	" fizzy finder
 	Plug 'ctrlpvim/ctrlp.vim'
+
+	" show directory tree
 	Plug 'scrooloose/nerdtree'
+
+	" show tags information
 	" NOTE: require ctags
 	Plug 'majutsushi/tagbar'
+
+	" command runner
 	Plug 'thinca/vim-quickrun'
+
+	" check reference from current cursors words
 	Plug 'thinca/vim-ref'
+
+	" preview for markdown
 	Plug 'kannokanno/previm'
+
+	" jump to words
+	" NOTE: instead action: '/' or '?' on NORMAL mode
 	Plug 'easymotion/vim-easymotion'
+
+	" for generate tags file
 	" TODO: consider tags directory
 	" let g:vim_tags_cache_dir = expand($HOME)
 	" default .vt_location is .git directory
 	Plug 'szw/vim-tags'
 
-" TODO: trim syntastic?
+" TODO: pick
 let s:useALE = v:false
-if v:true
+"let s:useALE = v:true
+if s:useALE
+	Plug 'w0rp/ale'
+else
 	" NOTE: :Errors
 	" see more info is :help syntastic-commands
 	Plug 'vim-syntastic/syntastic'
-else
-	Plug 'w0rp/ale'
-	let s:useALE = v:true
 endif
 
-	" language
+" language
 	" dart
 	Plug 'dart-lang/dart-vim-plugin'
+
 	" clang
 	Plug 'justmao945/vim-clang'
+
 	" javascript
 	Plug 'heavenshell/vim-jsdoc'
 	Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
+
 	" golang
 	Plug 'fatih/vim-go'
+
 	" python
 	" TODO: check
 	Plug 'davidhalter/jedi-vim'
 
-	" color
+" color scheme
 	Plug 'nanotech/jellybeans.vim'
 	Plug 'w0ng/vim-hybrid'
 	Plug 'cocopon/Iceberg.vim'
 	Plug 'tomasr/molokai'
 	"Plug 'trusktr/seti.vim'
 
-	" etc
+" etc
+	" translated vim help
 	Plug 'vim-jp/vimdoc-ja'
+	" fun
 	Plug 'deris/vim-duzzle', { 'on': 'DuzzleStart' }
 
+	" Vim script plugin library
+	" TODO: consider to remove
 	Plug 'google/vim-maktaba'
-	Plug 'google/vim-codefmt'
 	Plug 'google/vim-glaive'
+	Plug 'google/vim-codefmt'
 call plug#end()
 
 
@@ -114,12 +145,6 @@ let g:lightline = {
 "				\ all_errors,
 "				\ )
 "endfunction
-
-" ctrlp.vim
-"if executable('tree')
-"	" use go-tree
-"	let g:ctrlp_user_command = 'tree -full -nolog -nocolor %s'
-"endif
 
 " tagbar
 if (has('win32') || has('win64'))
@@ -174,7 +199,6 @@ endif
 " vim-easymotion
 let g:EasyMotion_do_mapping = 0
 
-" TODO: fix
 if s:useALE
 " ale
 	let g:ale_lint_on_text_changed = 'never'
@@ -225,7 +249,6 @@ let g:jedi#rename_command = '<Leader>R'
 " CtrlP emmet sonictemplate はそのまま
 " :help ctrlp-mappings
 
-" TODO: fix
 if s:useALE
 " ale
 	nnoremap <Leader>at :<C-u>ALEToggle<CR>
@@ -262,7 +285,7 @@ nnoremap <Leader>ggt :<C-u>GitGutterToggle<CR>
 
 "-----| autocmd |-----"
 function! s:ftgo()
-	" vim-go
+" vim-go
 	nnoremap <buffer> <Leader>i :<C-u>GoImport<space>
 	nnoremap <buffer> <Leader>d :<C-u>GoDrop<space>
 	nnoremap <buffer> <Leader>gd :<C-u>GoDoc<space>
