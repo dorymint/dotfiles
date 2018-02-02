@@ -1,21 +1,22 @@
 # share/alias
 # common
-alias la='command ls -hal --color=auto'
-alias lale='la --color=always | less -r'
+alias la='builtin command ls -hal --color=auto'
+alias lale='builtin command ls -hal --color=always | less -r'
+alias dmesgl='builtin command dmesg --color=always | less -r'
 alias :q='builtin exit'
-alias mkdir='command mkdir -p -v'
-alias ping='command ping -c 3'
+alias mkdir='builtin command mkdir -p -v'
+alias ping='builtin command ping -c 3'
 alias ..='cd ..'
 
-alias rm='command rm -I -v'
-alias cp='command cp -i'
-alias ln='command ln -i'
-alias chown='command chown --preserve-root'
-alias chmod='command chmod --preserve-root'
-alias chgrp='command chgrp --preserve-root'
+alias rm='builtin command rm -I -v'
+alias cp='builtin command cp -i'
+alias ln='builtin command ln -i'
+alias chown='builtin command chown --preserve-root'
+alias chmod='builtin command chmod --preserve-root'
+alias chgrp='builtin command chgrp --preserve-root'
 
 ## for carry of alias
-#alias sudo='command sudo '
+#alias sudo='builtin command sudo '
 
 # local
 ## cd
@@ -24,7 +25,7 @@ alias ww='cd "${HOME}"/github.com/"$(git config --global user.name)"'
 alias dotfiles='cd "${HOME}"/dotfiles'
 
 ## goto src golang official pkg
-if [ -d "${GOROOT}"/src ] && [ -x "$(command which vim)" ]; then
+if [ -d "${GOROOT}"/src ] && [ -x "$(builtin command which vim)" ]; then
 	alias gosrc='cd "${GOROOT}/src" && vim -R . '
 fi
 
@@ -45,7 +46,7 @@ fi
 
 ## python
 if [ -r "${HOME}/venv/bin/activate" ]; then
-	alias python-activate='source ${HOME}/venv/bin/activate'
+	alias python-activate='builtin source ${HOME}/venv/bin/activate'
 fi
 
 ## peco
@@ -73,7 +74,7 @@ fi
 
 ## etc
 [ "${TERM}" = "xterm-termite" ] && alias ssh='TERM=xterm-256color ssh'
-[ -x "$(builtin command -v mplayer)" ] && alias mplayerbgm='command mplayer -ao pulse -vo null '
-[ -x "$(builtin command -v emacs)" ] && alias emacs='command emacs -nw'
-alias timers 2> /dev/null || alias timers='systemctl --no-pager --user list-timers'
+[ -x "$(builtin command -v mplayer)" ] && alias mplayerbgm='builtin command mplayer -ao pulse -vo null '
+[ -x "$(builtin command -v emacs)" ] && alias emacs='builtin command emacs -nw'
+alias timers &> /dev/null || alias timers='systemctl --no-pager --user list-timers'
 alias tmux='tmux -2'

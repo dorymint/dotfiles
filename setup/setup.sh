@@ -65,7 +65,7 @@ if [ "${withx:-}" = "yes" ]; then
 	split "xorg"
 	set +e
 	ln $lnopt "$dotroot"/x/xinitrc "$HOME"/.xinitrc
-	ln $lnopt "$dotroot"/x/xserverrc "$HOME"/.xserverrc
+	#ln $lnopt "$dotroot"/x/xserverrc "$HOME"/.xserverrc
 	ln $lnopt "$dotroot"/x/Xresources "$HOME"/.Xresources
 	ln $lnopt "$dotroot"/x/fontconfig/ "$HOME"/.config/fontconfig
 

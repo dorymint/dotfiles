@@ -10,12 +10,12 @@ scriptencoding utf-8
 " fix path for windows
 
 " NOTE: 設定の詳細は:helpで調べればまず困らない
-" 日本語のヘルプは下
-" https://github.com/vim-jp/vimdoc-ja
-" setの詳細は :help <setname> で確認
+" 日本語のヘルプは https://github.com/vim-jp/vimdoc-ja
+" NORMALモードで : を押すとコマンドを入力するモードに移る
+" setの詳細は :help ${name} もしくは :help set で確認
 " setはできるだけ省略せずに書く set nohl --> set nohlsearch
 " Vim script は最初の非空白文字を \ にすることで前の行と連結できる
-" vim の echo は内部変数を除くのにべんり
+" vim の echo は内部変数を除くのにべんり :echo &encoding
 " :help echo
 " true = 1 same v:true
 " false = 0 same v:false
@@ -29,6 +29,8 @@ scriptencoding utf-8
 " :help functions
 " :help scriptnames
 " :help runtimepath
+" :help motion
+" :help operator
 
 
 "-----| plugin manage |-----"
@@ -70,6 +72,7 @@ endif
 	" NOTE: 貼り付けで形が崩れる場合は :paste して貼付け後に :nopaste する
 	" keymapでトグル指定
 	set nopaste
+
 
 	set backspace=indent,eol,start
 	set completeopt=menuone,preview
@@ -338,7 +341,7 @@ endif
 		endif
 
 
-" insert map
+" map of INSERT mode
 	" NOTE: <C-[> に慣れた方がいいかも
 	" ノーマルモードに
 	"inoremap jj <Esc>
@@ -359,6 +362,18 @@ endif
 	"inoremap <C-a> <right>
 	"inoremap <C-p> <up>
 	"inoremap <C-n> <down>
+
+	" TODO: consider
+	" ctrl-r を便利に
+	function! s:regput() abort
+		reg
+		let l:select = input("[select registries]:")
+		let l:out = getreg(l:select)
+		if l:out != ""
+			put = l:out
+		endif
+	endfunction
+	inoremap <C-r> <C-o>:<C-u>call <SID>regput()<CR>
 
 if 1 == 0
 	" 閉じ括弧

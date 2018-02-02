@@ -118,13 +118,14 @@ let g:lightline = {
 			\ [ 'readonly', 'filename', 'modified' ],
 		\ ],
 		\ 'right': [
-			\ [ 'lineinfo', 'percent' ],
+			\ [ 'lineinfo', 'charvaluehex', 'percent' ],
 			\ [ 'fileformat', 'fileencoding', 'filetype' ],
 			\ [ 'syntastic', 'ale' ],
 		\ ],
 	\ },
 	\ 'component': {
 		\ 'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}',
+		\ 'charvaluehex': '0x%04B',
 	\ },
 	\ 'component_visible_condition': {
 		\ 'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())',
