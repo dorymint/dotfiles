@@ -135,6 +135,18 @@ let g:lightline = {
 		\ 'ale': 'ALEGetStatusLine',
 	\ },
 \ }
+let g:lightline.tabline = {
+	\ 'left': [
+		\ [ 'tabs' ],
+	\ ],
+	\ 'right': [
+		\ [ 'close' ],
+	\ ],
+\ }
+let g:lightline.enable = {
+	\ 'statusline': 1,
+	\ 'tabline': 1,
+\ }
 
 "function! AleLintStatus() abort
 "	let l:counts = ale#statusline#Count(bufnr(''))
