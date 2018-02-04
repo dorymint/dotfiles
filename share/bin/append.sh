@@ -75,7 +75,7 @@ dryrun() {
 
 action() {
 	local l=$(cat "${list}")
-	local left=$(wc -l ${l})
+	local left=$(echo "${l}" | wc -l)
 	for x in ${l}; do
 		${exe} ${x}
 		local d=$(shuf -i ${delay} -n 1)
