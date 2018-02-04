@@ -28,7 +28,9 @@ scriptencoding utf-8
 " :help index
 " :help set-option
 " :help vim-variable
+" :help function
 " :help functions
+" :help function-list
 " :help scriptnames
 " :help runtimepath
 " :help motion
