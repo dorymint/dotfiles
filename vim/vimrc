@@ -1,8 +1,6 @@
 "
 " vimrc
 "
-
-
 "-----| fileencoding |-----"
 set encoding=utf-8
 scriptencoding utf-8
@@ -18,6 +16,7 @@ scriptencoding utf-8
 " setはできるだけ省略せずに書く set nohl --> set nohlsearch
 " Vim script は最初の非空白文字を \ にすることで前の行と連結できる
 " vim の echo は内部変数を除くのにべんり :echo &encoding
+" 関数の結果を見るにもべんり :echo expand("%:p")
 " :help echo
 " true = 1 same v:true
 " false = 0 same v:false
@@ -35,6 +34,8 @@ scriptencoding utf-8
 " :help runtimepath
 " :help motion
 " :help operator
+" functions
+" :help expand
 
 
 "-----| plugin manage |-----"
@@ -367,18 +368,6 @@ endif
 	"inoremap <C-p> <up>
 	"inoremap <C-n> <down>
 
-	" TODO: consider
-	" ctrl-r を便利に
-	function! s:regput() abort
-		reg
-		let l:select = input("[select registries]:")
-		let l:out = getreg(l:select)
-		if l:out != ""
-			put = l:out
-		endif
-	endfunction
-	inoremap <C-r> <C-o>:<C-u>call <SID>regput()<CR>
-
 if 1 == 0
 	" 閉じ括弧
 	inoremap {} {}<C-g>U<left>
@@ -436,6 +425,13 @@ endif
 	inoremap ！ !
 	"inoremap ー -
 	"inoremap 〜 ~
+
+" V-LINE mode
+" TODO: consider to useful
+	" TODO: to use :move or function
+	snoremap <C-j> dp
+	" NOTE: if use at top line then delete select lines
+	snoremap <C-k> dkP
 
 
 "-----| tool |-----"
