@@ -6,7 +6,7 @@ repo="//go.googlesource.com/go"
 #repo="//github.com/golang/go"
 goroot="$HOME/github.com/golang/go"
 
-goversion="go1.9.3"
+goversion="go1.9.4"
 #goversion="master"
 
 #bootstrap="gcc-go"
@@ -41,7 +41,7 @@ options:
 
 example:
 	go-build.bash -target master
-	go-build.bash -target 1.9.2
+	go-build.bash -target 1.8.7
 END
 }
 while [ -n "${1:-}" ]; do
