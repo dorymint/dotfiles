@@ -1,5 +1,16 @@
 intel-ucode
+
 mesa
+
+libva-intel-driver
+libva-utils
+
+libdpau-va-gl
+vdpauinfo
+
+ethtool
+acpi
+
 noto-fonts
 noto-fonts-cjk
 noto-fonts-emoji
@@ -9,6 +20,3 @@ ttf-freefont
 ttf-inconsolata
 ttf-indic-otf
 ttf-liberation
-
-ethtool
-acpi
