@@ -39,6 +39,8 @@ options:
 		get mid brightness: brightness.sh -getmid
 	-getmin
 		get min brightness: brightness.sh -getmin
+	-state
+		get current state
 	-set
 		set the brightness: brightness.sh -set \${number}
 	-setmax
@@ -78,6 +80,13 @@ getmin() {
 	local max=$(getmax)
 	# TODO: consider minimum lengths
 	$expr ${max} / 10
+}
+
+# get current state
+state() {
+	echo "current: $(getbr)"
+	echo "max: $(getmax)"
+	echo "min: $(getmin)"
 }
 
 # set brightness
@@ -163,6 +172,10 @@ while [ -n "${1:-}" ]; do
 		;;
 	-getmin)
 		getmin
+		exit 0
+		;;
+	-state)
+		state
 		exit 0
 		;;
 	-set)
