@@ -2,8 +2,10 @@
 set -eu
 
 list="next.list"
+log="log.txt"
 
 # TODO: fix exe
+# use in exec_cmd
 exe="echo"
 
 # sleep sec
@@ -20,7 +22,7 @@ options:
 	-help
 		show this help
 	-exec
-		action
+		exec cmd
 	-dry-run
 		check results for -exec
 	-xclip
@@ -73,11 +75,12 @@ dryrun() {
 	done
 }
 
-action() {
+exec_cmd() {
 	local l=$(cat "${list}")
 	local left=$(echo "${l}" | wc -l)
+	: > ${log}
 	for x in ${l}; do
-		${exe} ${x}
+		${exe} ${x} 2>&1 | tee ${log} || echo ${x} >> ${log}
 		local d=$(shuf -i ${delay} -n 1)
 		local left=$(expr ${left} - 1)
 		echo "left: ${left}"
@@ -95,7 +98,7 @@ while [ -n "${1:-}" ]; do
 			exit 0
 			;;
 		exec|-exec)
-			action
+			exec_cmd
 			exit 0
 			;;
 		dry-run|-dry-run)
@@ -117,5 +120,6 @@ while [ -n "${1:-}" ]; do
 	esac
 	shift
 done
+
 helpmsg
 exit 1
