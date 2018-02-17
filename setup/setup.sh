@@ -37,7 +37,6 @@ lnopt="-sn ""${lnopt:-}"
 [ -d "$HOME"/go ] || mkdir -p "$HOME"/go/{bin,pkg,src}
 [ -d "$HOME"/bin ] || mkdir "$HOME"/bin
 [ -d "$HOME"/.config ] || mkdir "$HOME"/.config
-[ -d "$HOME"/.config/systemd/user ] || mkdir -p "$HOME"/.config/systemd/user
 
 # fallthrough
 set +e
@@ -63,6 +62,9 @@ set -e
 # for xorg
 if [ "${withx:-}" = "yes" ]; then
 	split "xorg"
+	[ -d "$HOME"/.config/systemd/user ] || mkdir -p "$HOME"/.config/systemd/user
+
+	# fallthrough
 	set +e
 	ln $lnopt "$dotroot"/x/xinitrc "$HOME"/.xinitrc
 	# TODO: consider to remove

@@ -24,5 +24,3 @@ source "${HOME}"/dotfiles/share/env/rust.sh
 
 # call rc
 [ -f "${HOME}"/.bashrc ] && source "${HOME}"/.bashrc
-
-#export PATH="$HOME/.cargo/bin:$PATH"

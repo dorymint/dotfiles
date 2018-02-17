@@ -3,7 +3,7 @@ set -eu
 
 # set variable
 options="-v -u"
-pkglist="$HOME/dotfiles/setup/gopkg.list"
+pkglist="$HOME/dotfiles/setup/golang/gopkg.list"
 
 split() {
 	echo "------- $1 -------"

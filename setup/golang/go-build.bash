@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# TODO: fix to simpl
+
 set -eu
 
 protocol="https:"
