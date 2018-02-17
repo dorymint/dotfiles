@@ -70,6 +70,9 @@ endif
 	Plug 'heavenshell/vim-jsdoc'
 	Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 
+	" rust
+	Plug 'rust-lang/rust.vim'
+
 	" golang
 	Plug 'fatih/vim-go'
 

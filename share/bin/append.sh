@@ -80,7 +80,11 @@ exec_cmd() {
 	local left=$(echo "${l}" | wc -l)
 	: > ${log}
 	for x in ${l}; do
-		${exe} ${x} 2>&1 | tee ${log} || echo ${x} >> ${log}
+
+		echo ${x} >> ${log}
+		${exe} ${x} | tee -a ${log} || :
+		echo ${left} >> ${log}
+
 		local d=$(shuf -i ${delay} -n 1)
 		local left=$(expr ${left} - 1)
 		echo "left: ${left}"

@@ -1,5 +1,4 @@
 #!/bin/sh
-
 set -eu
 
 # cds(change to script directory)
