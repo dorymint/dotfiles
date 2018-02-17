@@ -53,8 +53,8 @@ case "${1:-i3}" in
 		exec i3
 		;;
 	i3-log|i3wm-log)
-		echo "xinit i3-log: $(date "+%Y-%m-%d")" > ~/.i3/i3.log
-		exec i3 -V -d all >> ~/.i3/i3.log
+		echo "xinit i3-log: $(date "+%Y-%m-%d")" > ~/.i3/tmp/i3.log
+		exec i3 -V -d all >> ~/.i3/tmp/i3.log
 		;;
 	*)
 		# TODO: consider another way
