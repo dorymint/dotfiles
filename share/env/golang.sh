@@ -1,10 +1,11 @@
-# goenv
+# golang
 
 # GOROOT
 if [ -x "${HOME}"/github.com/golang/go/bin/go ]; then
 	export GOROOT="${HOME}"/github.com/golang/go
 	# priority up
 	export PATH="${GOROOT}"/bin:"${PATH}"
+	#export PATH="$PATH":"${GOROOT}"/bin
 fi
 
 # GOPATH

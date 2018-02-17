@@ -1,4 +1,5 @@
-# lang
+# locale
+
 export LC_MESSAGES=C
 export LC_COLLATE=C
 if true; then
