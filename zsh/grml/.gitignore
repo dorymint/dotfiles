@@ -2,7 +2,7 @@
 !.gitignore
 !README.md
 
-!new/
+!new/*
 
 !update-grml.sh
 !wget-grml.bash
