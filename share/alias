@@ -31,9 +31,7 @@ fi
 
 ## goto src for rust
 if [ -x rustc ]; then
-	if [ -d "$(rustc --print sysroot)"/lib/rustlib/src/rust/src ]; then
-		alias rustsrc='cd "$(rustc --print sysroot)"/lib/rustlib/src/rust/src && vim -R .'
-	fi
+	alias rustsrc='cd "$(rustc --print sysroot)"/lib/rustlib/src/rust/src && vim -R .'
 fi
 
 ## vim
@@ -46,25 +44,20 @@ if [ -x "${HOME}"/opt/neovim/bin/nvim ]; then
 	alias nvim='"${HOME}"/opt/neovim/bin/nvim'
 fi
 
-## for vim plugin sonictemplate: add to commite
-if [ -x "${HOME}"/dotfiles/vim/sonicdir/allcommit.bash ]; then
-	alias sonic='"${HOME}/dotfiles"/vim/sonicdir/allcommit.bash'
-fi
-
 ## python
 if [ -r "${HOME}"/venv/bin/activate ]; then
 	alias python-activate='builtin source ${HOME}/venv/bin/activate'
 fi
 
 ## peco
-if [ -x "$(builtin command -v peco)" ]; then
-	if [ -x "$(builtin command -v reps.sh)" ]; then
+if [ -x peco ]; then
+	if [ -x reps.sh ]; then
 		alias reps='cd "$(reps.sh status | peco)"'
 	fi
 	alias cdl='cd "$(dirs -pl | peco)"'
 	alias cdp='cd "$(find . -type d ! -path "*.git*" ! -path "*.deps*" | peco)"'
 	alias gwp='gw && cdp'
-	if [ -x "$(builtin command -v gotcha)" ]; then
+	if [ -x gotcha ]; then
 		if alias viml &> /dev/null; then
 			alias gwtodo='gw && viml "$(gotcha -trim=false | peco)"'
 		else
@@ -74,12 +67,12 @@ if [ -x "$(builtin command -v peco)" ]; then
 fi
 
 # sway
-if [ -x "$(builtin command -v sway)" ]; then
+if [ -x sway ]; then
 	alias sway='XKB_DEFAULT_LAYOUT=jp XKB_DEFAULT_MODEL=pc106 WLC_REPEAT_DELAY=200 WLC_REPEAT_RATE=30 sway'
 	alias sway-without-xwayland='XKB_DEFAULT_LAYOUT=jp XKB_DEFAULT_MODEL=pc106 WLC_REPEAT_DELAY=200 WLC_REPEAT_RATE=30 WLC_XWAYLAND=0 sway'
 fi
 
 ## etc
 [ "${TERM}" = "xterm-termite" ] && alias ssh='TERM=xterm-256color ssh'
-[ -x "$(builtin command -v mplayer)" ] && alias mplayerbgm='builtin command mplayer -ao pulse -vo null '
+[ -x mplayer ] && alias mplayerbgm='builtin command mplayer -ao pulse -vo null '
 alias timers &> /dev/null || alias timers='systemctl --no-pager --user list-timers'
