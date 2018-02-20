@@ -243,13 +243,14 @@ endif
 
 "-----| key map |-----"
 " NOTE: (,,ﾟДﾟ)つ:help index
-" defaultのマップは :help index.txt で確認できる
+" defaultのマップは :help index で確認できる
 " user定義のマップは :imap :nmap :vmap :map :verbose map で確認できる
 " なるべくデフォルトを消さないようにマップする
 " <C-s>はttyへの入力受付をロックする?<C-q>で復帰、端末制御に使うキーはマップに注意する
 " <C-b>はtmuxと被る、tmuxを変えずにvimでマップしないようにしてみる
 " <C-z>はサスペンド、jobsでサスペンドの確認、fgでフォアグラウンド
 " <nop>はマップを削除できる
+" :help <Leader>
 " コマンドのキーマップは<C-u>で数値の前置を消しておかないと範囲指定される
 
 " NORMAL map
@@ -281,13 +282,14 @@ endif
 	"nnoremap <C-m> o<Esc>k
 	nnoremap <CR> o<Esc>
 
+" TODO: consider to use <Leader>
 " NOTE: tは移動系で便利っぽいけどfがあるので潰してみる
 " keymap prefix <T> <t>
 	nnoremap T <nop>
 	nnoremap t <nop>
 
 	" prefix <t>
-		" NOTE: help: tab-page
+		" NOTE: :help tabpage
 		nnoremap tn :<C-u>tabnext<CR>
 		nnoremap tp :<C-u>tabprevious<CR>
 		nnoremap tN :<C-u>tabnew<CR>

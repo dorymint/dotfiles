@@ -72,6 +72,7 @@ endif
 
 	" rust
 	Plug 'rust-lang/rust.vim'
+	Plug 'racer-rust/vim-racer'
 
 	" golang
 	Plug 'fatih/vim-go'
@@ -228,6 +229,8 @@ else
 	" golang
 	let g:syntastic_go_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 	let g:syntastic_go_checkers = ['go', 'gofmt', 'govet', 'golint']
+	" rust
+	"let g:syntastic_rust_checkers = ['rustc', 'cargo']
 	" cpp
 	let g:syntastic_cpp_compiler = 'clang'
 	let g:syntastic_cpp_compiler_options = '-std=c++1z --pedantic-errors'
@@ -301,15 +304,24 @@ nnoremap <Leader>ggt :<C-u>GitGutterToggle<CR>
 
 "-----| autocmd |-----"
 function! s:ftgo()
-" vim-go
+	" vim-go
 	nnoremap <buffer> <Leader>i :<C-u>GoImport<space>
 	nnoremap <buffer> <Leader>d :<C-u>GoDrop<space>
 	nnoremap <buffer> <Leader>gd :<C-u>GoDoc<space>
+endfunction
+
+function! s:ftrust()
+	" vim-racer
+	nmap <buffer> gd <Plug>(rust-def)
+	nmap <buffer> gs <Plug>(rust-def-split)
+	nmap <buffer> gx <Plug>(rust-def-vertical)
+	nmap <buffer> <leader>gd <Plug>(rust-doc)
 endfunction
 
 " NOTE: plug begin end で含まれてるはずだけど一応
 filetype plugin indent on
 augroup plugin_manage_plug
 	autocmd!
-	autocmd Filetype go call s:ftgo()
+	autocmd FileType go call s:ftgo()
+	autocmd FileType rust call s:ftrust()
 augroup END
