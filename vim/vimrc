@@ -307,49 +307,52 @@ endif
 	" NOTE: このマップはもう少し考えたい
 	nnoremap <CR> o<Esc>
 
-	" prefix <Leader>
+	" prefix: <Leader>
 	" NOTE: reserved prefixes
 	" <Leader>t
 	" <Leader>set
-	" <Leader>c
 	" <Leader>xxd
 	" <Leader>rxxd
 
 		" buffer
 		nnoremap <Leader>j :<C-u>bnext<CR>
 		nnoremap <Leader>k :<C-u>bprev<CR>
-		nnoremap <Leader>ls :<C-u>ls<CR>
 		nnoremap <Leader>bl :<C-u>ls<CR>:buffer<Space>
 		nnoremap <Leader>bs :<C-u>ls<CR>:sbuffer<Space>
 		nnoremap <Leader>bd :<C-u>ls<CR>:bdelete<Space>
-		nnoremap <Leader>bk :<C-u>bdelete<CR>
-		nnoremap <Leader>bn :<C-u>enew<CR>
 
 		" tabpage
-		nnoremap <Leader>n :<C-u>tabnext<CR>
-		nnoremap <Leader>p :<C-u>tabprevious<CR>
+		nnoremap <Leader>l :<C-u>tabnext<CR>
+		nnoremap <Leader>h :<C-u>tabprevious<CR>
 		nnoremap <Leader>N :<C-u>tabnew<CR>
 		nnoremap <Leader>C :<C-u>tabclose<CR>
 		" TODO: consider to remove
-		nnoremap <Leader>mn :<C-u>+tabmove<CR>
-		nnoremap <Leader>mp :<C-u>-tabmove<CR>
+		nnoremap <Leader>ml :<C-u>+tabmove<CR>
+		nnoremap <Leader>mh :<C-u>-tabmove<CR>
+
+		" quickfix
+		nnoremap <Leader>n :<C-u>cnext<CR>
+		nnoremap <Leader>p :<C-u>cprevious<CR>
+		nnoremap <Leader>o :<C-u>copen<CR>
+		nnoremap <Leader>w :<C-u>cwindow<CR>
+		nnoremap <Leader>c :<C-u>cclose<CR>
 
 		" mark
 		nnoremap <Leader>mm :<C-u>marks<CR>
 
 		" register
 		" NOTE: help: registers
-		nnoremap <Leader>reg :<C-u>registers<CR>
+		nnoremap <Leader>r :<C-u>registers<CR>
 
+		" search and move
 		" NOTE: autocmd Filetype で設定したほうがよさそう
 		" :help object-motions
-		" search and move
 		nnoremap <Leader>; /}<CR>
 		nnoremap <Leader>> /><CR>
-
 		" NOTE: match over 80 characters
 		" :help pattern
-		nnoremap <Leader>ol /\%80v.\+<CR>
+		" TODO: consider to move to :command
+		nnoremap <Leader>80 /\%80v.\+<CR>
 
 	" toggle: <Leader>t
 		nnoremap <Leader>th :<C-u>set hlsearch!<CR>
@@ -365,13 +368,6 @@ endif
 		nnoremap <Leader>setft :<C-u>setlocal filetype=
 		nnoremap <Leader>settw :<C-u>setlocal textwidth=0
 		nnoremap <Leader>setenc :<C-u>e ++enc=shift_jis
-
-	" quickfix: <Leader>c
-		nnoremap <Leader>cn :<C-u>cnext<CR>
-		nnoremap <Leader>cp :<C-u>cprevious<CR>
-		nnoremap <Leader>co :<C-u>copen<CR>
-		nnoremap <Leader>cw :<C-u>cwindow<CR>
-		nnoremap <Leader>cc :<C-u>cclose<CR>
 
 		" hex
 		if executable('xxd')

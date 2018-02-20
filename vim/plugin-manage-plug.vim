@@ -163,6 +163,9 @@ let g:lightline.enable = {
 "				\ )
 "endfunction
 
+" vim-gitgutter
+let g:gitgutter_map_keys = v:false
+
 " tagbar
 if (has('win32') || has('win64'))
 	" path to local biuld ctags.exe
