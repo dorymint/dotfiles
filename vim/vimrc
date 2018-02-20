@@ -573,7 +573,7 @@ augroup nyan_vimrc
 	autocmd!
 	autocmd Filetype go call s:ftgolang()
 	autocmd FileType python call s:ftpython()
-	autocmd FileType gitcommit call s:gitcommit()
+	autocmd FileType gitcommit call s:ftgitcommit()
 augroup END
 
 " nyan_vimrc_bg for bg None
