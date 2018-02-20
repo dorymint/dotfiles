@@ -259,55 +259,55 @@ let g:jedi#popup_on_dot = 0
 let g:jedi#auto_close_doc = 0
 "let g:jedi#popup_select_first = 0
 let g:jedi#show_call_signatures = 0
-let g:jedi#rename_command = '<Leader>R'
+let g:jedi#rename_command = '<LocalLeader>R'
 
 
 "-----| keymap |-----"
-" NOTE: プラグインのプレフィックスは<Leader>を基本に設定してみる
+" TODO: consider
 " Filetypeでスイッチするマップは次の autocmd で定義する
 " CtrlP emmet sonictemplate はそのまま
 " :help ctrlp-mappings
 
 if s:useALE
 " ale
-	nnoremap <Leader>at :<C-u>ALEToggle<CR>
-	nnoremap <Leader>ad :<C-u>ALEDetail<CR>
-	nnoremap <Leader>j :<C-u>ALENextWrap<CR>
-	nnoremap <Leader>k :<C-u>ALEPreviousWrap<CR>
+	nnoremap <LocalLeader>ale :<C-u>ALEToggle<CR>
+	nnoremap <LocalLeader>ad :<C-u>ALEDetail<CR>
+	nnoremap <LocalLeader>an :<C-u>ALENextWrap<CR>
+	nnoremap <LocalLeader>ap :<C-u>ALEPreviousWrap<CR>
 else
 " syntastic
 	" NOTE: 保存時に常に走らせると少し重い時があるのでトグルをマップ
 	" 非同期でチェックできる良いプラグインがあれば乗り換えたい
-	nnoremap <Leader>s :<C-u>SyntasticToggleMode<CR>
+	nnoremap <LocalLeader>s :<C-u>SyntasticToggleMode<CR>
 endif
 
 " nerdtree
-nnoremap <Leader>n :<C-u>NERDTreeToggle<CR>
+nnoremap <LocalLeader>n :<C-u>NERDTreeToggle<CR>
 
 " tagbar
-nnoremap <Leader>t :<C-u>TagbarToggle<CR>
+nnoremap <LocalLeader>t :<C-u>TagbarToggle<CR>
 
 " sonictemplate-vim
 " すぐにテンプレートを編集できるように
 if isdirectory(glob('~/dotfiles/vim/sonicdir/pretempl'))
-	nnoremap <Leader>wp :<C-u>10split ~/dotfiles/vim/sonicdir/pretempl/%:e/
-	nnoremap <Leader>ww :<C-u>10split ~/dotfiles/vim/sonicdir/templ/%:e/
+	nnoremap <LocalLeader>ept :<C-u>10split ~/dotfiles/vim/sonicdir/pretempl/%:e/
+	nnoremap <LocalLeader>et :<C-u>10split ~/dotfiles/vim/sonicdir/templ/%:e/
 endif
 
 " vim-easymotion
-map <Leader>f <Plug>(easymotion-bd-w)
-nmap <Leader>f <Plug>(easymotion-overwin-w)
+map <LocalLeader>f <Plug>(easymotion-bd-w)
+nmap <LocalLeader>f <Plug>(easymotion-overwin-w)
 
 " vim-gitgutter
-nnoremap <Leader>ggt :<C-u>GitGutterToggle<CR>
+nnoremap <LocalLeader>ggt :<C-u>GitGutterToggle<CR>
 
 
 "-----| autocmd |-----"
-function! s:ftgo()
+function! s:ftgolang()
 	" vim-go
-	nnoremap <buffer> <Leader>i :<C-u>GoImport<Space>
-	nnoremap <buffer> <Leader>d :<C-u>GoDrop<Space>
-	nnoremap <buffer> <Leader>gd :<C-u>GoDoc<Space>
+	nnoremap <buffer> <LocalLeader>i :<C-u>GoImport<Space>
+	nnoremap <buffer> <LocalLeader>d :<C-u>GoDrop<Space>
+	nnoremap <buffer> <LocalLeader>gd :<C-u>GoDoc<Space>
 endfunction
 
 function! s:ftrust()
@@ -315,7 +315,7 @@ function! s:ftrust()
 	nmap <buffer> gd <Plug>(rust-def)
 	nmap <buffer> gs <Plug>(rust-def-split)
 	nmap <buffer> gx <Plug>(rust-def-vertical)
-	nmap <buffer> <Leader>gd <Plug>(rust-doc)
+	nmap <buffer> <LocalLeader>gd <Plug>(rust-doc)
 endfunction
 
 " NOTE: plug begin end で含まれてるはずだけど一応
@@ -323,6 +323,6 @@ filetype plugin indent on
 
 augroup plugin_manage_plug
 	autocmd!
-	autocmd FileType go call s:ftgo()
+	autocmd FileType go call s:ftgolang()
 	autocmd FileType rust call s:ftrust()
 augroup END

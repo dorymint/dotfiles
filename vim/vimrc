@@ -309,7 +309,7 @@ endif
 
 	" prefix <Leader>
 	" NOTE: reserved prefixes
-	" <Leader>T
+	" <Leader>t
 	" <Leader>set
 	" <Leader>c
 	" <Leader>xxd
@@ -351,15 +351,15 @@ endif
 		" :help pattern
 		nnoremap <Leader>ol /\%80v.\+<CR>
 
-	" toggle: <Leader>T
-		nnoremap <Leader>Th :<C-u>set hlsearch!<CR>
-		nnoremap <Leader>Tl :<C-u>set list!<CR>
-		nnoremap <Leader>Tc :<C-u>set cursorcolumn! cursorline!<CR>
-		nnoremap <Leader>Tn :<C-u>set number!<CR>
-		nnoremap <Leader>Te :<C-u>setlocal expandtab!<CR>
-		nnoremap <Leader>Ts :<C-u>setlocal spell!<CR>
-		nnoremap <Leader>Tp :<C-u>setlocal paste!<CR>
-		nnoremap <Leader>Tr :<C-u>setlocal readonly!
+	" toggle: <Leader>t
+		nnoremap <Leader>th :<C-u>set hlsearch!<CR>
+		nnoremap <Leader>tl :<C-u>set list!<CR>
+		nnoremap <Leader>tc :<C-u>set cursorcolumn! cursorline!<CR>
+		nnoremap <Leader>tn :<C-u>set number!<CR>
+		nnoremap <Leader>te :<C-u>setlocal expandtab!<CR>
+		nnoremap <Leader>ts :<C-u>setlocal spell!<CR>
+		nnoremap <Leader>tp :<C-u>setlocal paste!<CR>
+		nnoremap <Leader>tr :<C-u>setlocal readonly!
 
 	" set: <Leader>set
 		nnoremap <Leader>setft :<C-u>setlocal filetype=
@@ -380,8 +380,6 @@ endif
 			" Trxxd conflict readonly!
 			nnoremap <Leader>xxd :<C-u>setlocal filetype=xxd<CR>:%!xxd<Space>
 			nnoremap <Leader>rxxd :<C-u>%!xxd -r<Space>
-		else
-			echo 'not found xxd'
 		endif
 
 
@@ -474,7 +472,7 @@ endif
 
 
 "-----| tool |-----"
-" TODO: reconsider copen, to simple
+" TODO: consider copen, to simple
 " fix for os windows
 let s:errlist = []
 let s:sfile = expand('<sfile>')
@@ -491,6 +489,7 @@ endfunction
 
 if isdirectory(glob('~/dotfiles/vim/tmp'))
 	" go-todogotcha
+	" TODO: consider to remove
 	if executable('gotcha')
 		function! s:gotcha(...) abort
 			split ~/dotfiles/vim/tmp/gotcha.log
@@ -513,6 +512,7 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
 	endif
 
 	" reps.bash
+	" TODO: consider to remove
 	if executable('reps.sh')
 		function! s:repsStatus() abort
 			split ~/dotfiles/vim/tmp/reps.log
@@ -547,48 +547,36 @@ if !empty(s:errlist)
 	call setqflist(s:errlist, 'r', { 'nr': s:errnum, 'title': 'vimrc tool errlist'})
 	call setqflist(s:errlist, 'a')
 	echoerr 'tools activate error: count=' . len(s:errlist) . ' check to :copen'
-	"copen
 endif
 
 
-"-----| autocmd |-----"
+"-----| filetype |-----"
 " NOTE: filetypeによる挙動の変化を有効に設定
-" nyan_vimrc for reloadable vimrc
+" :help filetype
 filetype plugin indent on
+
+function! s:ftgolang()
+	setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
+endfunction
+
+function! s:ftpython()
+	setlocal textwidth=79
+endfunction
+
+function! s:ftgitcommit()
+	setlocal spell
+endfunction
+
+" NOTE: autocmdは再読込されるたびに重複して登録される
+" autocmd!でnyan_vimrcグループのautocmdを初期化して重複を防ぐ
 augroup nyan_vimrc
-	" NOTE: nyan_vimrcグループのautocmdを初期化して再設定を防ぐ
 	autocmd!
-
-" vim
-	" NOTE: (# ﾟДﾟ)つ textwidth がどこで set されたかわかんない!
-	" おとなしく modeline 使った方が良さそう
-	"autocmd Filetype vim setlocal textwidth=0
-
-" golang
-	" NOTE: goはハードタブが推奨される、noexpandtabとスペースの表示をfmtに合わせて設定
-	autocmd Filetype go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
-		" listchars-=tab したかったけど動かなかった
-		" lictchars+=tab:\ \ , でもいいけどtabが重複する
-		"listchars=tab:\ \ ,trail:-,nbsp:%,extends:>,precedes:<,
-
-	" NOTE: QuickRunを使うなら以下は無効
-	"if isdirectory(glob('~/dotfiles/vim/tmp'))
-		"autocmd Filetype go nnoremap <buffer> <c-@>gorun :<C-u>!go run % > ~/dotfiles/vim/tmp/gorunlog.txt 2>&1<CR>
-	"endif
-
-" python
-	autocmd FileType python setlocal textwidth=79
-	" NOTE: see pep8
-	" is not working?
-	"if has('python3')
-		"autocmd FileType python setlocal omnifunc=python3complete#Complete
-	"endif
-
-" cpp
-	"autocmd Filetype cpp setlocal nocindent
+	autocmd Filetype go call s:ftgolang()
+	autocmd FileType python call s:ftpython()
+	autocmd FileType gitcommit call s:gitcommit()
 augroup END
 
-" nyan_vimrc_bg for background
+" nyan_vimrc_bg for bg None
 augroup nyan_vimrc_bg
 	autocmd!
 	autocmd VimEnter,ColorScheme * highlight Normal ctermbg=NONE
@@ -600,13 +588,15 @@ augroup nyan_vimrc_bg
 		autocmd VimEnter,ColorScheme * highlight Terminal ctermbg=NONE
 	endif
 augroup END
-let s:toggle_bg_state = 1
+
+" for toggle background
+let s:is_none_bg = v:true
 function! s:toggleBackground() abort
-	if s:toggle_bg_state == 1
+	if s:is_none_bg
 		augroup nyan_vimrc_bg
 			autocmd!
 		augroup END
-		let s:toggle_bg_state = 0
+		let s:is_none_bg = v:false
 		execute 'colorscheme ' . g:colors_name
 	else
 		augroup nyan_vimrc_bg
@@ -620,7 +610,7 @@ function! s:toggleBackground() abort
 				autocmd ColorScheme * highlight Terminal ctermbg=NONE
 			endif
 		augroup END
-		let s:toggle_bg_state = 1
+		let s:is_none_bg = v:true
 		execute 'colorscheme ' . g:colors_name
 	endif
 endfunction
@@ -628,6 +618,8 @@ command! ToggleBackground call s:toggleBackground()
 
 
 "-----| nvim |-----"
+" TODO: consider to remove
+
 if has('nvim')
 	" NOTE: nvimのterminal mode
 	tnoremap <Esc> <C-\><C-n>
