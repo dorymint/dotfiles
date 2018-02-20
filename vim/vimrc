@@ -18,6 +18,9 @@ scriptencoding utf-8
 " vim の echo は内部変数を除くのにべんり :echo &encoding
 " 関数の結果を見るにもべんり :echo expand("%:p")
 " :help echo
+" @% で現在のファイルパスが取れる
+" :echo @%
+" fullpath は :echo expand("%:p")
 
 " NOTE: true and false
 " those variable is read only
@@ -93,7 +96,7 @@ endif
 	set autoread
 
 	" NOTE: 貼り付けで形が崩れる場合は :paste して貼付け後に :nopaste する
-	" keymapでトグル指定
+	" keymap でトグル指定
 	set nopaste
 
 
@@ -187,7 +190,6 @@ endif
 	set laststatus=2
 
 	" NOTE: %[n]?[.] の形式で指定してる、詳細は:help statuslineで確認
-	" 設定はプラグインが効かないときだけ
 	set statusline=%f%m%r%w%y%{&fileencoding}[%{&fileformat}]%=%(buf[%n]hex[%4B]line[%4l/%4L:%4P]%)
 
 " tabline
@@ -226,8 +228,6 @@ endif
 
 
 "-----| color |-----"
-" NOTE: シェルの設定で変わるのでlocalで設定するか分岐を作った方がいいかも
-
 " colorscheme
 if $TERM == "xterm-256color" ||
 			\ $TERM == "xterm-termite" ||
