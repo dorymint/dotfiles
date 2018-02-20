@@ -45,12 +45,12 @@ if [ -x "${HOME}"/opt/neovim/bin/nvim ]; then
 fi
 
 ## for vim plugin sonictemplate: add to commite
-if [ -x "${HOME}/dotfiles"/vim/sonicdir/allcommit.bash ]; then
+if [ -x "${HOME}"/dotfiles/vim/sonicdir/allcommit.bash ]; then
 	alias sonic='"${HOME}/dotfiles"/vim/sonicdir/allcommit.bash'
 fi
 
 ## python
-if [ -r "${HOME}/venv/bin/activate" ]; then
+if [ -r "${HOME}"/venv/bin/activate ]; then
 	alias python-activate='builtin source ${HOME}/venv/bin/activate'
 fi
 
@@ -80,6 +80,4 @@ fi
 ## etc
 [ "${TERM}" = "xterm-termite" ] && alias ssh='TERM=xterm-256color ssh'
 [ -x "$(builtin command -v mplayer)" ] && alias mplayerbgm='builtin command mplayer -ao pulse -vo null '
-[ -x "$(builtin command -v emacs)" ] && alias emacs='builtin command emacs -nw'
 alias timers &> /dev/null || alias timers='systemctl --no-pager --user list-timers'
-alias tmux='tmux -2'

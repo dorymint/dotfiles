@@ -11,12 +11,14 @@ split() {
 helpmsg() {
 	cat >&1 <<END
 setup.sh
-	make directory and symlink
+	make directory and symlinks
 options:
-	--help -h
+	-help -h
 		show this help
-	--force -f
+	-force -f
 		allow override exists files
+	-withx
+		setup with xorg
 END
 }
 while [ -n "${1:-}" ]; do
@@ -33,10 +35,11 @@ dotroot=$(dirname $(dirname "$(readlink -f "$0")"))
 lnopt="-sn ""${lnopt:-}"
 
 [ -d "$HOME"/.vim ] || mkdir "$HOME"/.vim
-# TODO: coonsider mkdir for golang
-[ -d "$HOME"/go ] || mkdir -p "$HOME"/go/{bin,pkg,src}
 [ -d "$HOME"/bin ] || mkdir "$HOME"/bin
 [ -d "$HOME"/.config ] || mkdir "$HOME"/.config
+
+# TODO: coonsider mkdir for golang
+[ -d "$HOME"/go ] || mkdir -p "$HOME"/go/{bin,pkg,src}
 
 # fallthrough
 set +e

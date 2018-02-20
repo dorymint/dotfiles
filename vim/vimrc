@@ -20,22 +20,32 @@ scriptencoding utf-8
 " :help echo
 " true = 1 same v:true
 " false = 0 same v:false
+
 " 以下のヘルプを見ておけば迷わないと思う
+" base
 " :help help
 " :help helplang
 " :help search-commands
-" :help index
 " :help set-option
-" :help vim-variable
+" :help option-summary
+" :help runtimepath
+" :help scriptnames
+" map
+" :help index
+" :help motion
+" :help operator
+" function
 " :help function
 " :help functions
 " :help function-list
-" :help scriptnames
-" :help runtimepath
-" :help motion
-" :help operator
-" functions
 " :help expand
+" variable
+" :help internal-variables
+" :help v:
+" :help v:true
+" :help v:false
+" :help g:
+" :help s:
 
 
 "-----| plugin manage |-----"
@@ -210,9 +220,6 @@ endif
 "-----| color |-----"
 " NOTE: シェルの設定で変わるのでlocalで設定するか分岐を作った方がいいかも
 
-" set to default
-syntax on
-
 " colorscheme
 if $TERM == "xterm-256color" ||
 			\ $TERM == "xterm-termite" ||
@@ -240,6 +247,8 @@ if has('win32') || has('win64')
 	set t_Co=16
 endif
 
+syntax on
+
 
 "-----| key map |-----"
 " NOTE: (,,ﾟДﾟ)つ:help index
@@ -249,24 +258,31 @@ endif
 " <C-s>はttyへの入力受付をロックする?<C-q>で復帰、端末制御に使うキーはマップに注意する
 " <C-b>はtmuxと被る、tmuxを変えずにvimでマップしないようにしてみる
 " <C-z>はサスペンド、jobsでサスペンドの確認、fgでフォアグラウンド
-" <nop>はマップを削除できる
+" <Nop>はマップを削除できる
 " :help <Leader>
 " コマンドのキーマップは<C-u>で数値の前置を消しておかないと範囲指定される
 
+" mapleader
+	" TODO: consider
+if v:true
+	let g:mapleader = "\<Space>"
+	let g:maplocalleader = g:mapleader
+endif
+
 " NORMAL map
 	" NOTE: disable all erase?
-	"nnoremap zE <nop>
+	"nnoremap zE <Nop>
 
 	" Resize window
-	nnoremap <up> <nop>
-	nnoremap <down> <nop>
-	nnoremap <left> <nop>
-	nnoremap <right> <nop>
-	" NOTE: <nop> で消しておくとリサイズの処理が軽くなる?
-	nnoremap <up> <C-w>+
-	nnoremap <down> <C-w>-
-	nnoremap <left> <C-w><
-	nnoremap <right> <C-w>>
+	nnoremap <Up> <Nop>
+	nnoremap <Down> <Nop>
+	nnoremap <Left> <Nop>
+	nnoremap <Right> <Nop>
+	" NOTE: <Nop> で消しておくとリサイズの処理が軽くなる?
+	nnoremap <Up> <C-w>+
+	nnoremap <Down> <C-w>-
+	nnoremap <Left> <C-w><
+	nnoremap <Right> <C-w>>
 
 	" 行を上下に引っ張る
 	" NOTE: <C-k>はファイルの先頭で入れると行が消える、挙動の理由がよくわかってない
@@ -285,8 +301,8 @@ endif
 " TODO: consider to use <Leader>
 " NOTE: tは移動系で便利っぽいけどfがあるので潰してみる
 " keymap prefix <T> <t>
-	nnoremap T <nop>
-	nnoremap t <nop>
+	nnoremap T <Nop>
+	nnoremap t <Nop>
 
 	" prefix <t>
 		" NOTE: :help tabpage
@@ -301,9 +317,9 @@ endif
 		nnoremap tmm :<C-u>marks<CR>
 
 		" buffer prefix<tb>
-		nnoremap tbl :<C-u>ls<CR>:buffer<space>
-		nnoremap tbs :<C-u>ls<CR>:sbuffer<space>
-		nnoremap tbd :<C-u>ls<CR>:bdelete<space>
+		nnoremap tbl :<C-u>ls<CR>:buffer<Space>
+		nnoremap tbs :<C-u>ls<CR>:sbuffer<Space>
+		nnoremap tbd :<C-u>ls<CR>:bdelete<Space>
 		nnoremap tbk :<C-u>bdelete<CR>
 		nnoremap tbn :<C-u>enew<CR>
 
@@ -334,15 +350,15 @@ endif
 		nnoremap Tr :<C-u>setlocal readonly!
 		nnoremap Tf :<C-u>setlocal filetype=
 		nnoremap Tw :<C-u>setlocal textwidth=0
-		nnoremap TENC :<C-u>e ++enc=shift_jis<space>
+		nnoremap TENC :<C-u>e ++enc=shift_jis<Space>
 
 		" hex
 		if executable('xxd')
 			" NOTE: 戻す時は xxd -r
 			" T[rR]xxd みたいに書きたい
 			" Trxxd conflict readonly!
-			nnoremap Txxd :<C-u>setlocal filetype=xxd<CR>:%!xxd<space>
-			nnoremap TRxxd :<C-u>%!xxd -r<space>
+			nnoremap Txxd :<C-u>setlocal filetype=xxd<CR>:%!xxd<Space>
+			nnoremap TRxxd :<C-u>%!xxd -r<Space>
 		else
 			echo 'not found xxd'
 		endif
@@ -360,36 +376,36 @@ endif
 	" NOTE: <C-b> tmux とかぶる
 	" <C-f> 再インデントを上書き
 	" <C-h> バックスペース
-	inoremap <C-f> <right>
-	inoremap <C-b> <left>
+	inoremap <C-f> <Right>
+	inoremap <C-b> <Left>
 	" NOTE: emacs
-	"inoremap <C-a> <home>
-	"inoremap <C-e> <end>
-	"inoremap <C-b> <left>
-	"inoremap <C-a> <right>
-	"inoremap <C-p> <up>
-	"inoremap <C-n> <down>
+	"inoremap <C-a> <Home>
+	"inoremap <C-e> <End>
+	"inoremap <C-b> <Left>
+	"inoremap <C-a> <Right>
+	"inoremap <C-p> <Up>
+	"inoremap <C-n> <Down>
 
-if 1 == 0
+if v:false
 	" 閉じ括弧
-	inoremap {} {}<C-g>U<left>
-	inoremap () ()<C-g>U<left>
-	inoremap [] []<C-g>U<left>
-	inoremap <> <><C-g>U<left>
-	inoremap "" ""<C-g>U<left>
-	inoremap '' ''<C-g>U<left>
+	inoremap {} {}<C-g>U<Left>
+	inoremap () ()<C-g>U<Left>
+	inoremap [] []<C-g>U<Left>
+	inoremap <> <><C-g>U<Left>
+	inoremap "" ""<C-g>U<Left>
+	inoremap '' ''<C-g>U<Left>
 endif
-	inoremap {<enter> {}<left><enter><Esc><S-o>
-	inoremap {<CR> {}<left><CR><Esc><S-o>
-	inoremap (<enter> ()<left><enter><Esc><S-o>
-	inoremap (<CR> ()<left><CR><Esc><S-o>
-	inoremap [<enter> []<left><enter><Esc><S-o>
-	inoremap [<CR> []<left><CR><Esc><S-o>
+	inoremap {<enter> {}<Left><enter><Esc><S-o>
+	inoremap {<CR> {}<Left><CR><Esc><S-o>
+	inoremap (<enter> ()<Left><enter><Esc><S-o>
+	inoremap (<CR> ()<Left><CR><Esc><S-o>
+	inoremap [<enter> []<Left><enter><Esc><S-o>
+	inoremap [<CR> []<Left><CR><Esc><S-o>
 	" NOTE: <enter>と<CR>、違いがよくわかってない
 	" 入力は別扱い、挿入が<eol>、書き込みがff依存?
 
 	" オムニ補完
-	inoremap <S-tab> <C-x><C-o>
+	inoremap <S-Tab> <C-x><C-o>
 
 	" undo
 	inoremap <C-u> <C-g>u<C-u>
@@ -397,7 +413,7 @@ endif
 
 	" 全角を半角に
 	" NOTE: :help i_ctrl-v
-	inoremap 　 <space>
+	inoremap 　 <Space>
 	inoremap （ (
 	inoremap ） )
 	inoremap ｛ {

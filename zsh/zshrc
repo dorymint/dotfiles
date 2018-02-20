@@ -8,6 +8,7 @@
 [[ $- != *i* ]] && return
 
 ## grml zshrc
+# TODO: consider to remove
 if command -v pacman &> /dev/null; then
 	pacman -Q grml-zsh-config &> /dev/null ||
 		echo "recommend: pacman -S grml-zsh-config"

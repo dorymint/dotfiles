@@ -305,9 +305,9 @@ nnoremap <Leader>ggt :<C-u>GitGutterToggle<CR>
 "-----| autocmd |-----"
 function! s:ftgo()
 	" vim-go
-	nnoremap <buffer> <Leader>i :<C-u>GoImport<space>
-	nnoremap <buffer> <Leader>d :<C-u>GoDrop<space>
-	nnoremap <buffer> <Leader>gd :<C-u>GoDoc<space>
+	nnoremap <buffer> <Leader>i :<C-u>GoImport<Space>
+	nnoremap <buffer> <Leader>d :<C-u>GoDrop<Space>
+	nnoremap <buffer> <Leader>gd :<C-u>GoDoc<Space>
 endfunction
 
 function! s:ftrust()
@@ -315,11 +315,12 @@ function! s:ftrust()
 	nmap <buffer> gd <Plug>(rust-def)
 	nmap <buffer> gs <Plug>(rust-def-split)
 	nmap <buffer> gx <Plug>(rust-def-vertical)
-	nmap <buffer> <leader>gd <Plug>(rust-doc)
+	nmap <buffer> <Leader>gd <Plug>(rust-doc)
 endfunction
 
 " NOTE: plug begin end で含まれてるはずだけど一応
 filetype plugin indent on
+
 augroup plugin_manage_plug
 	autocmd!
 	autocmd FileType go call s:ftgo()
