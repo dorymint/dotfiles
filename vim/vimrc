@@ -18,8 +18,13 @@ scriptencoding utf-8
 " vim の echo は内部変数を除くのにべんり :echo &encoding
 " 関数の結果を見るにもべんり :echo expand("%:p")
 " :help echo
-" true = 1 same v:true
-" false = 0 same v:false
+
+" NOTE: true and false
+" those variable is read only
+" v:true = 1
+" v:false = 0
+" :echo v:true != v:false
+" :echo v:true == v:false
 
 " 以下のヘルプを見ておけば迷わないと思う
 " base
@@ -28,9 +33,7 @@ scriptencoding utf-8
 " :help search-commands
 " :help set-option
 " :help option-summary
-" :help runtimepath
-" :help scriptnames
-" map
+" mapping
 " :help index
 " :help motion
 " :help operator
@@ -46,6 +49,11 @@ scriptencoding utf-8
 " :help v:false
 " :help g:
 " :help s:
+" extra
+" :help runtimepath
+" :help scriptnames
+" :help object-motions
+" :help registers
 
 
 "-----| plugin manage |-----"
@@ -259,15 +267,17 @@ syntax on
 " <C-b>はtmuxと被る、tmuxを変えずにvimでマップしないようにしてみる
 " <C-z>はサスペンド、jobsでサスペンドの確認、fgでフォアグラウンド
 " <Nop>はマップを削除できる
-" :help <Leader>
 " コマンドのキーマップは<C-u>で数値の前置を消しておかないと範囲指定される
+" mapleaderが有用
+" :help <Leader>
 
 " mapleader
-	" TODO: consider
 if v:true
+	" TODO: consider
 	let g:mapleader = "\<Space>"
-	let g:maplocalleader = g:mapleader
+	let g:maplocalleader = "\\"
 endif
+
 
 " NORMAL map
 	" NOTE: disable all erase?
@@ -295,70 +305,81 @@ endif
 
 	" 改行の挿入
 	" NOTE: このマップはもう少し考えたい
-	"nnoremap <C-m> o<Esc>k
 	nnoremap <CR> o<Esc>
 
-" TODO: consider to use <Leader>
-" NOTE: tは移動系で便利っぽいけどfがあるので潰してみる
-" keymap prefix <T> <t>
-	nnoremap T <Nop>
-	nnoremap t <Nop>
+	" prefix <Leader>
+	" NOTE: reserved prefixes
+	" <Leader>T
+	" <Leader>set
+	" <Leader>c
+	" <Leader>xxd
+	" <Leader>rxxd
 
-	" prefix <t>
-		" NOTE: :help tabpage
-		nnoremap tn :<C-u>tabnext<CR>
-		nnoremap tp :<C-u>tabprevious<CR>
-		nnoremap tN :<C-u>tabnew<CR>
-		nnoremap tC :<C-u>tabclose<CR>
-		nnoremap tmn :<C-u>+tabmove<CR>
-		nnoremap tmp :<C-u>-tabmove<CR>
+		" buffer
+		nnoremap <Leader>j :<C-u>bnext<CR>
+		nnoremap <Leader>k :<C-u>bprev<CR>
+		nnoremap <Leader>ls :<C-u>ls<CR>
+		nnoremap <Leader>bl :<C-u>ls<CR>:buffer<Space>
+		nnoremap <Leader>bs :<C-u>ls<CR>:sbuffer<Space>
+		nnoremap <Leader>bd :<C-u>ls<CR>:bdelete<Space>
+		nnoremap <Leader>bk :<C-u>bdelete<CR>
+		nnoremap <Leader>bn :<C-u>enew<CR>
 
-		" NOTE: :help mark-motions
-		nnoremap tmm :<C-u>marks<CR>
+		" tabpage
+		nnoremap <Leader>n :<C-u>tabnext<CR>
+		nnoremap <Leader>p :<C-u>tabprevious<CR>
+		nnoremap <Leader>N :<C-u>tabnew<CR>
+		nnoremap <Leader>C :<C-u>tabclose<CR>
+		" TODO: consider to remove
+		nnoremap <Leader>mn :<C-u>+tabmove<CR>
+		nnoremap <Leader>mp :<C-u>-tabmove<CR>
 
-		" buffer prefix<tb>
-		nnoremap tbl :<C-u>ls<CR>:buffer<Space>
-		nnoremap tbs :<C-u>ls<CR>:sbuffer<Space>
-		nnoremap tbd :<C-u>ls<CR>:bdelete<Space>
-		nnoremap tbk :<C-u>bdelete<CR>
-		nnoremap tbn :<C-u>enew<CR>
+		" mark
+		nnoremap <Leader>mm :<C-u>marks<CR>
 
-		" NOTE: next,prevは使用頻度が高いので<tb>から<t>に
-		nnoremap tj :<C-u>bnext<CR>
-		nnoremap tk :<C-u>bprev<CR>
+		" register
+		" NOTE: help: registers
+		nnoremap <Leader>reg :<C-u>registers<CR>
 
 		" NOTE: autocmd Filetype で設定したほうがよさそう
 		" :help object-motions
 		" search and move
-		nnoremap t; /}<CR>
-		nnoremap t> /><CR>
+		nnoremap <Leader>; /}<CR>
+		nnoremap <Leader>> /><CR>
 
 		" NOTE: match over 80 characters
 		" :help pattern
-		nnoremap tol /\%80v.\+<CR>
+		nnoremap <Leader>ol /\%80v.\+<CR>
 
-	" prefix <T>
-		" NOTE: setのトグルとオプションの補完は T を使う
-		nnoremap Th :<C-u>set hlsearch!<CR>
-		nnoremap Tl :<C-u>set list!<CR>
-		nnoremap Tc :<C-u>set cursorcolumn! cursorline!<CR>
-		nnoremap Tn :<C-u>set number!<CR>
+	" toggle: <Leader>T
+		nnoremap <Leader>Th :<C-u>set hlsearch!<CR>
+		nnoremap <Leader>Tl :<C-u>set list!<CR>
+		nnoremap <Leader>Tc :<C-u>set cursorcolumn! cursorline!<CR>
+		nnoremap <Leader>Tn :<C-u>set number!<CR>
+		nnoremap <Leader>Te :<C-u>setlocal expandtab!<CR>
+		nnoremap <Leader>Ts :<C-u>setlocal spell!<CR>
+		nnoremap <Leader>Tp :<C-u>setlocal paste!<CR>
+		nnoremap <Leader>Tr :<C-u>setlocal readonly!
 
-		nnoremap Te :<C-u>setlocal expandtab!<CR>
-		nnoremap Ts :<C-u>setlocal spell!<CR>
-		nnoremap Tp :<C-u>setlocal paste!<CR>
-		nnoremap Tr :<C-u>setlocal readonly!
-		nnoremap Tf :<C-u>setlocal filetype=
-		nnoremap Tw :<C-u>setlocal textwidth=0
-		nnoremap TENC :<C-u>e ++enc=shift_jis<Space>
+	" set: <Leader>set
+		nnoremap <Leader>setft :<C-u>setlocal filetype=
+		nnoremap <Leader>settw :<C-u>setlocal textwidth=0
+		nnoremap <Leader>setenc :<C-u>e ++enc=shift_jis
+
+	" quickfix: <Leader>c
+		nnoremap <Leader>cn :<C-u>cnext<CR>
+		nnoremap <Leader>cp :<C-u>cprevious<CR>
+		nnoremap <Leader>co :<C-u>copen<CR>
+		nnoremap <Leader>cw :<C-u>cwindow<CR>
+		nnoremap <Leader>cc :<C-u>cclose<CR>
 
 		" hex
 		if executable('xxd')
 			" NOTE: 戻す時は xxd -r
 			" T[rR]xxd みたいに書きたい
 			" Trxxd conflict readonly!
-			nnoremap Txxd :<C-u>setlocal filetype=xxd<CR>:%!xxd<Space>
-			nnoremap TRxxd :<C-u>%!xxd -r<Space>
+			nnoremap <Leader>xxd :<C-u>setlocal filetype=xxd<CR>:%!xxd<Space>
+			nnoremap <Leader>rxxd :<C-u>%!xxd -r<Space>
 		else
 			echo 'not found xxd'
 		endif
