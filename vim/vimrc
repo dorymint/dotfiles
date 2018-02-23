@@ -271,7 +271,6 @@ syntax on
 
 " mapleader
 if v:true
-	" TODO: consider
 	let g:mapleader = "\<Space>"
 	let g:maplocalleader = "\\"
 endif
@@ -485,8 +484,8 @@ function! s:adderr(msg, ...) abort
 endfunction
 
 if isdirectory(glob('~/dotfiles/vim/tmp'))
-	" go-todogotcha
 	" TODO: consider to remove
+	" go-todogotcha
 	if executable('gotcha')
 		function! s:gotcha(...) abort
 			split ~/dotfiles/vim/tmp/gotcha.log
@@ -508,8 +507,8 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
 		call s:adderr('gotcha')
 	endif
 
-	" reps.bash
 	" TODO: consider to remove
+	" reps.bash
 	if executable('reps.sh')
 		function! s:repsStatus() abort
 			split ~/dotfiles/vim/tmp/reps.log
