@@ -80,9 +80,11 @@ exec_cmd() {
 	local left=$(echo "${l}" | wc -l)
 	: > ${log}
 	for x in ${l}; do
-
-		echo ${x} >> ${log}
-		${exe} ${x} | tee -a ${log} || :
+		if ${exe} ${x}; then
+			echo "${x}" >> ${log}
+		else
+			echo "[Err]: ${x}" >> ${log}
+		fi
 		echo ${left} >> ${log}
 
 		local d=$(shuf -i ${delay} -n 1)

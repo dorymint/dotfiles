@@ -1,6 +1,2 @@
 # nodejs
-
-# node_modules/bin
-if [ -d "$HOME"/.node_modules/bin ]; then
-	export PATH="$PATH":"$HOME"/.node_modules/bin
-fi
+[ -d "$HOME"/.node_modules/bin ] && export PATH="$PATH":"$HOME"/.node_modules/bin

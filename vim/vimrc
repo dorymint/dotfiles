@@ -342,7 +342,7 @@ endif
 
 		" register
 		" NOTE: help: registers
-		nnoremap <Leader>r :<C-u>registers<CR>
+		nnoremap <Leader>reg :<C-u>registers<CR>
 
 		" search and move
 		" NOTE: autocmd Filetype で設定したほうがよさそう

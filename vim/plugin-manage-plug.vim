@@ -3,7 +3,6 @@ call plug#begin('~/.vim/plugged')
 " edit
 	" for html css completion
 	Plug 'mattn/emmet-vim'
-
 	" for snipets
 	Plug 'mattn/sonictemplate-vim'
 
@@ -14,35 +13,27 @@ call plug#begin('~/.vim/plugged')
 " git
 	" for use git commands in vim
 	Plug 'tpope/vim-fugitive'
-
 	" for display a git diff in sign column
 	Plug 'airblade/vim-gitgutter'
 
 " manage
 	" fizzy finder
 	Plug 'ctrlpvim/ctrlp.vim'
-
-	" show directory tree
+	" directory tree
 	Plug 'scrooloose/nerdtree'
-
-	" show tags information
+	" tags information
 	" NOTE: require ctags
 	Plug 'majutsushi/tagbar'
-
 	" command runner
 	Plug 'thinca/vim-quickrun'
-
 	" check reference from current cursors words
 	Plug 'thinca/vim-ref'
-
 	" preview for markdown
 	Plug 'kannokanno/previm'
-
 	" jump to words
 	" NOTE: instead action: '/' or '?' on NORMAL mode
 	Plug 'easymotion/vim-easymotion'
-
-	" for generate tags file
+	" generate tags file
 	" TODO: consider tags directory
 	" let g:vim_tags_cache_dir = expand($HOME)
 	" default .vt_location is .git directory
@@ -50,7 +41,6 @@ call plug#begin('~/.vim/plugged')
 
 " TODO: pick
 let s:useALE = v:false
-"let s:useALE = v:true
 if s:useALE
 	Plug 'w0rp/ale'
 else
@@ -62,26 +52,20 @@ endif
 " language
 	" dart
 	Plug 'dart-lang/dart-vim-plugin'
-
 	" clang
 	Plug 'justmao945/vim-clang'
-
 	" javascript
 	Plug 'heavenshell/vim-jsdoc'
 	Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
-
 	" rust
 	Plug 'rust-lang/rust.vim'
 	Plug 'racer-rust/vim-racer'
-
 	" golang
 	Plug 'fatih/vim-go'
-
 	" python
-	" TODO: check
 	Plug 'davidhalter/jedi-vim'
 
-" color scheme
+" colorscheme
 	Plug 'nanotech/jellybeans.vim'
 	Plug 'w0ng/vim-hybrid'
 	Plug 'cocopon/Iceberg.vim'
@@ -93,7 +77,6 @@ endif
 	Plug 'vim-jp/vimdoc-ja'
 	" fun
 	Plug 'deris/vim-duzzle', { 'on': 'DuzzleStart' }
-
 	" Vim script plugin library
 	" TODO: consider to remove
 	Plug 'google/vim-maktaba'
@@ -104,6 +87,7 @@ call plug#end()
 
 "-----| let |-----"
 " sonictemplate-vim
+" TODO: consider to simpl
 if isdirectory(glob('~/dotfiles/vim/sonicdir'))
 	let g:sonictemplate_vim_template_dir = [
 		\ '~/dotfiles/vim/sonicdir/pretempl',
@@ -152,17 +136,6 @@ let g:lightline.enable = {
 	\ 'tabline': 1,
 \ }
 
-"function! AleLintStatus() abort
-"	let l:counts = ale#statusline#Count(bufnr(''))
-"	let l:all_errors = l:counts.error + l:counts.style_error
-"	let l:all_non_errors = l:counts.total - l:all_errors
-"	return l:counts.total == 0 ? 'ALE:[OK]' : printf(
-"				\ 'ALE:[%dW %dE]',
-"				\ all_non_errors,
-"				\ all_errors,
-"				\ )
-"endfunction
-
 " vim-gitgutter
 let g:gitgutter_map_keys = v:false
 
@@ -171,8 +144,6 @@ if (has('win32') || has('win64'))
 	" path to local biuld ctags.exe
 	if executable(glob('~/opt/ctags/ctags.exe'))
 		let g:tagbar_ctags_bin = expand(glob('~/opt/ctags/ctags.exe'))
-	else
-		echo "not found ctags.exe"
 	endif
 endif
 " use gotags
@@ -210,7 +181,7 @@ let g:quickrun_config = {}
 let g:quickrun_config['gotest'] = { 'command': 'go', 'exec': ['%c test -v -race'] }
 
 " previm
-if has('unix') && executable('firefox')
+if executable('firefox')
 	let g:previm_open_cmd = 'exec firefox'
 elseif executable('chromium')
 	let g:previm_open_cmd = 'exec chromium'
@@ -224,20 +195,20 @@ if s:useALE
 	let g:ale_lint_on_text_changed = 'never'
 	let g:ale_lint_on_save = 1
 	let g:ale_lint_on_enter = 1
-	let g:ale_linters = {'go': ['gofmt', 'go vet', 'golint', 'go build', 'gosimple', 'staticcheck']}
-	let g:ale_go_gometalinter_options = '--fast'
+	" NOTE: rustc is only use nightly
+	" if use on stable or beta then be careful that is make the executable
+	let g:ale_linters = {
+		\ 'rust': ['cargo', 'rls', 'rustc'],
+	\ }
 else
 " syntastic
-	let g:syntastic_mode_map = { 'mode': 'active' }
 	" golang
-	let g:syntastic_go_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 	let g:syntastic_go_checkers = ['go', 'gofmt', 'govet', 'golint']
 	" rust
-	"let g:syntastic_rust_checkers = ['rustc', 'cargo']
+	let g:syntastic_rust_checkers = ['cargo']
 	" cpp
 	let g:syntastic_cpp_compiler = 'clang'
 	let g:syntastic_cpp_compiler_options = '-std=c++1z --pedantic-errors'
-	let g:syntastic_cpp_mode_map = { 'mode': 'active', 'passive_filetypes': ['cpp'] }
 	let g:syntastic_cpp_checkers = ['clang_check']
 	" javascript
 	let g:syntastic_javascript_checkers = ['eslint']
@@ -315,10 +286,16 @@ endfunction
 
 function! s:ftrust()
 	" vim-racer
+	"if executable(expand('~/.cargo/bin/racer'))
+	"	let g:racer_cmd = expand('~/.cargo/bin/racer')
+	"	let g:racer_experimental_completer = 1
+	"endif
 	nmap <buffer> gd <Plug>(rust-def)
 	nmap <buffer> gs <Plug>(rust-def-split)
 	nmap <buffer> gx <Plug>(rust-def-vertical)
 	nmap <buffer> <LocalLeader>gd <Plug>(rust-doc)
+	" quickrun
+	nmap <buffer> <LocalLeader>r <Plug>(quickrun)
 endfunction
 
 " NOTE: plug begin end で含まれてるはずだけど一応
