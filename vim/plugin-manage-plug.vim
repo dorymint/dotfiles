@@ -146,7 +146,6 @@ if (has('win32') || has('win64'))
 		let g:tagbar_ctags_bin = expand(glob('~/opt/ctags/ctags.exe'))
 	endif
 endif
-" use gotags
 let g:tagbar_type_go = {
 	\ 'ctagstype' : 'go',
 	\ 'kinds' : [

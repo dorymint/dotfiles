@@ -53,6 +53,8 @@ scriptencoding utf-8
 " :help g:
 " :help s:
 " extra
+" :help helpgrep
+" :help quickfix
 " :help runtimepath
 " :help scriptnames
 " :help object-motions
@@ -65,12 +67,11 @@ if (has('win32') || has('win64')) && isdirectory(glob('~/.vim'))
 	set runtimepath^=~/.vim,~/.vim/after
 endif
 
+" select plugin manager
 if v:true
 	" plug
 	if filereadable(glob('~/.vim/autoload/plug.vim'))
 		source ~/dotfiles/vim/plugin-manage-plug.vim
-	else
-		echo 'not found: autoload/plug.vim'
 	endif
 else
 	" minpac
@@ -222,20 +223,18 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
 	set backup
 	set undofile
 	set swapfile
-else
-	echo 'not found ~/dotfiles/vim/tmp'
 endif
 
 
 "-----| color |-----"
 " colorscheme
+"set background=dark
 if $TERM == "xterm-256color" ||
 			\ $TERM == "xterm-termite" ||
 			\ $TERM == "screen-256color" ||
 			\ $TERM == "rxvt-unicode-256color"
 	set t_Co=256
 	try
-		"set background=dark
 		colorscheme jellybeans
 		"colorscheme hybrid
 		"colorscheme iceberg
@@ -244,7 +243,6 @@ if $TERM == "xterm-256color" ||
 	endtry
 else
 	try
-		"set background=dark
 		colorscheme elflord
 	catch
 	endtry
@@ -305,10 +303,12 @@ endif
 
 	" 改行の挿入
 	" NOTE: このマップはもう少し考えたい
-	nnoremap <CR> o<Esc>
+	" :helpgrep ${word} && :copen の時エンターで飛べなくなる
+	"nnoremap <CR> o<Esc>
 
 	" prefix: <Leader>
 	" NOTE: reserved prefixes
+	" <Leader>c
 	" <Leader>t
 	" <Leader>set
 	" <Leader>xxd
@@ -330,13 +330,6 @@ endif
 		nnoremap <Leader>ml :<C-u>+tabmove<CR>
 		nnoremap <Leader>mh :<C-u>-tabmove<CR>
 
-		" quickfix
-		nnoremap <Leader>n :<C-u>cnext<CR>
-		nnoremap <Leader>p :<C-u>cprevious<CR>
-		nnoremap <Leader>o :<C-u>copen<CR>
-		nnoremap <Leader>w :<C-u>cwindow<CR>
-		nnoremap <Leader>c :<C-u>cclose<CR>
-
 		" mark
 		nnoremap <Leader>mm :<C-u>marks<CR>
 
@@ -354,6 +347,13 @@ endif
 		" TODO: consider to move to :command
 		nnoremap <Leader>80 /\%80v.\+<CR>
 
+		" quickfix: <Leader>c
+		nnoremap <Leader>cn :<C-u>cnext<CR>
+		nnoremap <Leader>cp :<C-u>cprevious<CR>
+		nnoremap <Leader>co :<C-u>copen<CR>
+		nnoremap <Leader>cw :<C-u>cwindow<CR>
+		nnoremap <Leader>cc :<C-u>cclose<CR>
+
 	" toggle: <Leader>t
 		nnoremap <Leader>th :<C-u>set hlsearch!<CR>
 		nnoremap <Leader>tl :<C-u>set list!<CR>
@@ -369,7 +369,8 @@ endif
 		nnoremap <Leader>settw :<C-u>setlocal textwidth=0
 		nnoremap <Leader>setenc :<C-u>e ++enc=shift_jis
 
-		" hex
+	" hex: <Leader>xxd
+	" hex: <Leader>rxxd
 		if executable('xxd')
 			" NOTE: 戻す時は xxd -r
 			" T[rR]xxd みたいに書きたい
@@ -556,7 +557,7 @@ function! s:ftgolang()
 endfunction
 
 function! s:ftpython()
-	setlocal textwidth=79
+	setlocal textwidth=78
 endfunction
 
 function! s:ftgitcommit()
@@ -580,20 +581,17 @@ augroup nyan_vimrc_bg
 	autocmd VimEnter,ColorScheme * highlight TablineSel ctermbg=NONE
 	autocmd VimEnter,ColorScheme * highlight LineNr ctermbg=NONE
 	autocmd VimEnter,ColorScheme * highlight CursorLineNr ctermbg=NONE
-	if has('terminal')
-		autocmd VimEnter,ColorScheme * highlight Terminal ctermbg=NONE
-	endif
+	autocmd VimEnter,ColorScheme * highlight Terminal ctermbg=NONE
 augroup END
+let s:is_none_bg = v:true
 
 " for toggle background
-let s:is_none_bg = v:true
 function! s:toggleBackground() abort
 	if s:is_none_bg
 		augroup nyan_vimrc_bg
 			autocmd!
 		augroup END
 		let s:is_none_bg = v:false
-		execute 'colorscheme ' . g:colors_name
 	else
 		augroup nyan_vimrc_bg
 			autocmd!
@@ -602,24 +600,21 @@ function! s:toggleBackground() abort
 			autocmd ColorScheme * highlight TablineSel ctermbg=NONE
 			autocmd ColorScheme * highlight LineNr ctermbg=NONE
 			autocmd ColorScheme * highlight CursorLineNr ctermbg=NONE
-			if has('terminal')
-				autocmd ColorScheme * highlight Terminal ctermbg=NONE
-			endif
+			autocmd ColorScheme * highlight Terminal ctermbg=NONE
 		augroup END
 		let s:is_none_bg = v:true
-		execute 'colorscheme ' . g:colors_name
 	endif
+	execute 'colorscheme ' . g:colors_name
 endfunction
 command! ToggleBackground call s:toggleBackground()
 
 
 "-----| nvim |-----"
 " TODO: consider to remove
-
 if has('nvim')
 	" NOTE: nvimのterminal mode
 	tnoremap <Esc> <C-\><C-n>
 endif
 
 
-" vim: set textwidth=0 :
+" vim: textwidth=0
