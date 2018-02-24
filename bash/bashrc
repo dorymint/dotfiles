@@ -2,8 +2,8 @@
 # bashrc
 #
 
-## check interactive
 # TODO: consider
+## check interactive
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
