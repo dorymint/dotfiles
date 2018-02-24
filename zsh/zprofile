@@ -22,5 +22,8 @@ source "${HOME}"/dotfiles/share/env/rust.sh
 ### priority local bin
 [ -d "${HOME}"/bin ] && export PATH="${HOME}"/bin:"${PATH}"
 
+# completions
+[ -d "${HOME}"/dotfiles/zsh/functions/completions ] && fpath+="${HOME}"/dotfiles/zsh/functions/completins
+
 # call rc
 [ -f "${HOME}"/.zshrc ] && source "${HOME}"/.zshrc
