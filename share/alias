@@ -1,4 +1,7 @@
 # share/alias
+
+# TODO: consider to simpl
+
 # common
 alias la='builtin command ls -hal --color=auto'
 alias lale='builtin command ls -hal --color=always | less -r'
@@ -25,13 +28,15 @@ alias ww='cd "${HOME}"/github.com/"$(git config --global user.name)"'
 alias dotfiles='cd "${HOME}"/dotfiles'
 
 ## goto src for golang
-if [ -d "${GOROOT}"/src ] && [ -x "$(builtin command which vim)" ]; then
+if [ -d "${GOROOT}"/src ] && [ -x "$(builtin command -v vim)" ]; then
 	alias gosrc='cd "${GOROOT}/src" && vim -R . '
 fi
 
 ## goto src for rust
-if [ -d "$(rustc --print sysroot)"/lib/rustlib/src/rust/src ]; then
-	alias rustsrc='cd "$(rustc --print sysroot)"/lib/rustlib/src/rust/src && vim -R .'
+if [ -x "$(builtin command -v rustc)" ]; then
+	if [ -d "$(rustc --print sysroot)"/lib/rustlib/src/rust/src ]; then
+		alias rustsrc='cd "$(rustc --print sysroot)"/lib/rustlib/src/rust/src && vim -R .'
+	fi
 fi
 
 ## vim
@@ -50,14 +55,14 @@ if [ -r "${HOME}"/venv/bin/activate ]; then
 fi
 
 ## peco
-if [ -x peco ]; then
-	if [ -x reps.sh ]; then
+if [ -x "$(builtin command -v peco)" ]; then
+	if [ -x "$(builtin command -v reps.sh)" ]; then
 		alias reps='cd "$(reps.sh status | peco)"'
 	fi
 	alias cdl='cd "$(dirs -pl | peco)"'
 	alias cdp='cd "$(find . -type d ! -path "*.git*" ! -path "*.deps*" | peco)"'
 	alias gwp='gw && cdp'
-	if [ -x gotcha ]; then
+	if [ -x "$(builtin command -v gotcha)" ]; then
 		if alias viml &> /dev/null; then
 			alias gwtodo='gw && viml "$(gotcha -trim=false | peco)"'
 		else
@@ -67,12 +72,12 @@ if [ -x peco ]; then
 fi
 
 # sway
-if [ -x sway ]; then
+if [ -x "$(builtin command -v sway)" ]; then
 	alias sway='XKB_DEFAULT_LAYOUT=jp XKB_DEFAULT_MODEL=pc106 WLC_REPEAT_DELAY=200 WLC_REPEAT_RATE=30 sway'
 	alias sway-without-xwayland='XKB_DEFAULT_LAYOUT=jp XKB_DEFAULT_MODEL=pc106 WLC_REPEAT_DELAY=200 WLC_REPEAT_RATE=30 WLC_XWAYLAND=0 sway'
 fi
 
 ## etc
 [ "${TERM}" = "xterm-termite" ] && alias ssh='TERM=xterm-256color ssh'
-[ -x mplayer ] && alias mplayerbgm='builtin command mplayer -ao pulse -vo null '
+[ -x "$(builtin command -v mplayer)" ] && alias mplayerbgm='builtin command mplayer -ao pulse -vo null '
 alias timers &> /dev/null || alias timers='systemctl --no-pager --user list-timers'
