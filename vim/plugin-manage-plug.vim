@@ -1,29 +1,33 @@
 scriptencoding utf-8
 call plug#begin('~/.vim/plugged')
-" edit
+" Edit:
 	" for html css completion
 	Plug 'mattn/emmet-vim'
 	" for snipets
 	Plug 'mattn/sonictemplate-vim'
 
-" status
+" Status:
 	" for status line customize
 	Plug 'itchyny/lightline.vim'
 
-" git
+" Git:
 	" for use git commands in vim
 	Plug 'tpope/vim-fugitive'
 	" for display a git diff in sign column
 	Plug 'airblade/vim-gitgutter'
 
-" manage
+" Manage:
 	" fizzy finder
 	Plug 'ctrlpvim/ctrlp.vim'
 	" directory tree
 	Plug 'scrooloose/nerdtree'
-	" tags information
-	" NOTE: require ctags
+	" tags information, require ctags
 	Plug 'majutsushi/tagbar'
+	" generate tags file
+	" TODO: consider tags directory
+	" let g:vim_tags_cache_dir = expand($HOME)
+	" default .vt_location is .git directory
+	Plug 'szw/vim-tags'
 	" command runner
 	Plug 'thinca/vim-quickrun'
 	" check reference from current cursors words
@@ -33,23 +37,17 @@ call plug#begin('~/.vim/plugged')
 	" jump to words
 	" NOTE: instead action: '/' or '?' on NORMAL mode
 	Plug 'easymotion/vim-easymotion'
-	" generate tags file
-	" TODO: consider tags directory
-	" let g:vim_tags_cache_dir = expand($HOME)
-	" default .vt_location is .git directory
-	Plug 'szw/vim-tags'
 
-" TODO: pick
-let s:useALE = v:false
-if s:useALE
-	Plug 'w0rp/ale'
-else
-	" NOTE: :Errors
-	" see more info is :help syntastic-commands
-	Plug 'vim-syntastic/syntastic'
-endif
+	let s:useALE = v:false
+	if s:useALE
+		Plug 'w0rp/ale'
+	else
+		" NOTE: :help :Errors
+		" see more info is :help syntastic-commands
+		Plug 'vim-syntastic/syntastic'
+	endif
 
-" language
+" Language:
 	" dart
 	Plug 'dart-lang/dart-vim-plugin'
 	" clang
@@ -65,14 +63,14 @@ endif
 	" python
 	Plug 'davidhalter/jedi-vim'
 
-" colorscheme
+" Colorscheme:
 	Plug 'nanotech/jellybeans.vim'
 	Plug 'w0ng/vim-hybrid'
 	Plug 'cocopon/Iceberg.vim'
 	Plug 'tomasr/molokai'
 	"Plug 'trusktr/seti.vim'
 
-" etc
+" Etc:
 	" translated vim help
 	Plug 'vim-jp/vimdoc-ja'
 	" fun
@@ -84,10 +82,11 @@ endif
 	Plug 'google/vim-codefmt'
 call plug#end()
 
+" NOTE: プラグインごとの設定が分散して把握しにくいなんとかしたい
+
 
 "-----| let |-----"
 " sonictemplate-vim
-" TODO: consider to simpl
 if isdirectory(glob('~/dotfiles/vim/sonicdir'))
 	let g:sonictemplate_vim_template_dir = [
 		\ '~/dotfiles/vim/sonicdir/pretempl',
@@ -190,7 +189,7 @@ endif
 let g:EasyMotion_do_mapping = 0
 
 if s:useALE
-" ale
+	" ale
 	let g:ale_lint_on_text_changed = 'never'
 	let g:ale_lint_on_save = 1
 	let g:ale_lint_on_enter = 1
@@ -200,7 +199,7 @@ if s:useALE
 		\ 'rust': ['cargo', 'rls', 'rustc'],
 	\ }
 else
-" syntastic
+	" syntastic
 	" golang
 	let g:syntastic_go_checkers = ['go', 'gofmt', 'govet', 'golint']
 	" rust
@@ -242,16 +241,17 @@ let g:jedi#rename_command = '<LocalLeader>R'
 " :help ctrlp-mappings
 
 if s:useALE
-" ale
+	" ale
 	nnoremap <LocalLeader>ale :<C-u>ALEToggle<CR>
 	nnoremap <LocalLeader>ad :<C-u>ALEDetail<CR>
 	nnoremap <LocalLeader>an :<C-u>ALENextWrap<CR>
 	nnoremap <LocalLeader>ap :<C-u>ALEPreviousWrap<CR>
 else
-" syntastic
+	" syntastic
 	" NOTE: 保存時に常に走らせると少し重い時があるのでトグルをマップ
 	" 非同期でチェックできる良いプラグインがあれば乗り換えたい
 	nnoremap <LocalLeader>s :<C-u>SyntasticToggleMode<CR>
+	nnoremap <LocalLeader>o :<C-u>Errors<CR>
 endif
 
 " nerdtree
@@ -305,3 +305,6 @@ augroup plugin_manage_plug
 	autocmd FileType go call s:ftgolang()
 	autocmd FileType rust call s:ftrust()
 augroup END
+
+
+" vim: textwidth=0
