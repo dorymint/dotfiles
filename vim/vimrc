@@ -11,6 +11,9 @@ scriptencoding utf-8
 
 " NOTE: 設定の詳細は:helpで調べればまず困らない
 " 日本語のヘルプは https://github.com/vim-jp/vimdoc-ja
+" scriptencoding utf-8 はマルチバイトが現れる前の先頭に書くといい
+" また set encoding=utf-8 を付けるなら scriptencoding の前にする
+" 詳しくはアンチパターンを確認
 " vimrc アンチパターンは https://github.com/vim-jp/reading-vimrc/wiki
 " NORMALモードで : を押すとコマンドを入力するモードに移る
 " setの詳細は :help ${name} もしくは :help set で確認
@@ -64,6 +67,7 @@ scriptencoding utf-8
 " :help scriptnames
 " :help object-motions
 " :help registers
+" :help special-buffers
 
 " NOTE: useful vimgrep
 " バッククォートはunixだけらしい
@@ -463,7 +467,7 @@ endif
 
 
 "-----| tool |-----"
-" TODO: consider copen, to simple
+" TODO: consider to simple
 " fix for os windows
 let s:errlist = []
 let s:sfile = expand('<sfile>')
@@ -484,15 +488,42 @@ function! s:gitgrep(word) abort
 	cwindow
 endfunction
 command! -nargs=1 GitGrep call s:gitgrep(<q-args>)
-command! -nargs=1 GGrep vimgrep <args> `git ls-files` | cwindow
+" instead
+command! -nargs=1 Grep vimgrep <args> `git ls-files` | cwindow
+
+function! s:scratch() abort
+	new
+	setlocal buftype=nofile
+	setlocal bufhidden=hide
+	setlocal noswapfile
+endfunction
+command! Scratch call s:scratch()
 
 if isdirectory(glob('~/dotfiles/vim/tmp'))
+	" gotcha
+	if executable("gotcha")
+		function! s:gotcha(...) abort
+			new
+			setlocal buftype=nofile
+			setlocal bufhidden=hide
+			setlocal noswapfile
+			let l:word = a:0 == 0 ? "TODO: " : a:1
+			let l:opt = "-word=\"" . l:word . "\" "
+					\ . "-sync "
+					\ . "-total "
+					\ . "-drop-errors "
+			let l:cmd = "gotcha " . l:opt
+			put =system(l:cmd)
+		endfunction
+		command! -nargs=? Gotcha call s:gotcha(<f-args>)
+	endif
+
 	" xclip
-	if executable('xclip')
+	if executable("xclip")
 		command! Paste read !xclip -o
 		command! -range Cut <line1>,<line2>!xclip
 	else
-		call s:adderr('xclip')
+		call s:adderr("xclip")
 	endif
 
 	" timestamp
