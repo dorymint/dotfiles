@@ -252,6 +252,7 @@ else
 	" 非同期でチェックできる良いプラグインがあれば乗り換えたい
 	nnoremap <LocalLeader>s :<C-u>SyntasticToggleMode<CR>
 	nnoremap <LocalLeader>o :<C-u>Errors<CR>
+	nnoremap <LocalLeader>e :<C-u>Errors<CR>
 endif
 
 " nerdtree
