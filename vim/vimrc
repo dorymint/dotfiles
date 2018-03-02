@@ -380,7 +380,7 @@ endif
 		" Hex: <Leader>rxxd
 		if executable('xxd')
 			" NOTE: 戻す時は xxd -r
-			nnoremap <Leader>xxd :<C-u>setlocal filetype=xxd \| %!xxd<Space>
+			nnoremap <Leader>xxd :<C-u>setlocal filetype=xxd <Bar> %!xxd<Space>
 			nnoremap <Leader>rxxd :<C-u>%!xxd -r<Space>
 		endif
 

@@ -75,11 +75,12 @@ call plug#begin('~/.vim/plugged')
 	Plug 'vim-jp/vimdoc-ja'
 	" fun
 	Plug 'deris/vim-duzzle', { 'on': 'DuzzleStart' }
+
 	" Vim script plugin library
 	" TODO: consider to remove
-	Plug 'google/vim-maktaba'
-	Plug 'google/vim-glaive'
-	Plug 'google/vim-codefmt'
+	"Plug 'google/vim-maktaba'
+	"Plug 'google/vim-glaive'
+	"Plug 'google/vim-codefmt'
 call plug#end()
 
 " NOTE: プラグインごとの設定が分散して把握しにくいなんとかしたい
