@@ -9,6 +9,7 @@ bind-tools
 bridge-utils
 ctags
 emacs
+exfat-utils
 fortune-mod
 git
 graphicsmagick
