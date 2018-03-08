@@ -62,6 +62,11 @@ call plug#begin('~/.vim/plugged')
 	Plug 'fatih/vim-go'
 	" python
 	Plug 'davidhalter/jedi-vim'
+	" UML
+	" NOTE: Unified Modeling Language, see 'plantuml.com'
+	" vim-slumlord is for insert the ASCII diagrams
+	Plug 'scrooloose/vim-slumlord'
+	Plug 'aklt/plantuml-syntax'
 
 " Colorscheme:
 	Plug 'nanotech/jellybeans.vim'
@@ -283,6 +288,8 @@ function! s:ftgolang()
 	nnoremap <buffer> <LocalLeader>i :<C-u>GoImport<Space>
 	nnoremap <buffer> <LocalLeader>d :<C-u>GoDrop<Space>
 	nnoremap <buffer> <LocalLeader>gd :<C-u>GoDoc<Space>
+	" quickrun
+	nnoremap <buffer> <LocalLeader>t :<C-u>QuickRun gotest<Space>
 endfunction
 
 function! s:ftrust()
