@@ -83,9 +83,9 @@ exec_cmd() {
 		if ${exe} ${x}; then
 			echo "${x}" >> ${log}
 		else
-			echo "[Err]: ${x}" >> ${log}
+			echo "[err]: ${x}" >> ${log}
 		fi
-		echo ${left} >> ${log}
+		echo "left: ${left}" >> ${log}
 
 		local d=$(shuf -i ${delay} -n 1)
 		local left=$(expr ${left} - 1)

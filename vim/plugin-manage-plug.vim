@@ -270,8 +270,8 @@ nnoremap <LocalLeader>t :<C-u>TagbarToggle<CR>
 " sonictemplate-vim
 " すぐにテンプレートを編集できるように
 if isdirectory(glob('~/dotfiles/vim/sonicdir/pretempl'))
-	nnoremap <LocalLeader>ept :<C-u>10split ~/dotfiles/vim/sonicdir/pretempl/%:e/
-	nnoremap <LocalLeader>et :<C-u>10split ~/dotfiles/vim/sonicdir/templ/%:e/
+	nnoremap <LocalLeader>wp :<C-u>10split ~/dotfiles/vim/sonicdir/pretempl/%:e/
+	nnoremap <LocalLeader>ww :<C-u>10split ~/dotfiles/vim/sonicdir/templ/%:e/
 endif
 
 " vim-easymotion
