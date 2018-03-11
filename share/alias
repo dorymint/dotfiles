@@ -4,8 +4,8 @@
 
 # common
 alias la='builtin command ls -hal --color=auto'
-alias lale='builtin command ls -hal --color=always | less -r'
-alias dmesgl='builtin command dmesg --color=always | less -r'
+alias lale='builtin command ls -hal --color=always | less -R'
+alias dmesgl='builtin command dmesg --color=always | less -R'
 alias :q='builtin exit'
 alias mkdir='builtin command mkdir -p -v'
 alias ping='builtin command ping -c 3'
