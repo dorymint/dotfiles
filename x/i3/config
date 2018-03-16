@@ -160,7 +160,7 @@ bindsym $mod+r mode "resize"
 #     : fix pactl sink number
 #     : consider make volume control scripts
 mode "volume" {
-  bindsym h exec --no-startup-id sh -c 'notify-send "mode: volume" "$(echo -e "alse\tpulse\nj\td\tvolume down\nk\tu\tvolume up\nm\tM\tset volume to zero\n")"'
+  #bindsym h exec --no-startup-id sh -c 'notify-send "mode: volume" "$(echo -e "alse\tpulse\nj\td\tvolume down\nk\tu\tvolume up\nm\tM\tset volume to zero\n")"'
 
   bindsym j exec --no-startup-id amixer -q set Master 5%- unmute
   bindsym d exec --no-startup-id pactl set-sink-volume 6 -5%
@@ -193,7 +193,7 @@ mode "backlight" {
 
 # for background
 mode "feh_background" {
-  bindsym r exec --no-startup-id sh -c '$i3dir/randombg.sh'
+  #bindsym r exec --no-startup-id sh -c '$i3dir/randombg.sh'
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
@@ -201,9 +201,9 @@ mode "feh_background" {
 }
 
 # TODO: consider mode selector
+#     : consider notify-send for mode select
 mode "mode_selector" {
-  # TODO: fix notify-send
-  bindsym h exec --no-startup-id sh -c 'notify-send "mode: mode_selector" "$(echo -e "[q|Escape|Return]\tmode to default\nv\tvolume\nr\tresize\n")"'
+  #bindsym h exec --no-startup-id sh -c 'notify-send "mode: mode_selector" "$(echo -e "[q|Escape|Return]\tmode to default\nv\tvolume\nr\tresize\n")"'
 
   bindsym v mode "volume"
   bindsym r mode "resize"
@@ -237,9 +237,9 @@ set $red       #FF0000
 set $blue      #005588
 
 # class                  border backgr txt    indicator child_border
-client.focused           $black $black $white $black    $black
-client.focused_inactiv   $black $black $white $black    $black
-client.unfocused         $black $black $white $black    $black
+client.focused           $gray  $black $white $black    $black
+client.focused_inactive  $gray  $black $gray  $black    $black
+client.unfocused         $gray  $black $gray  $black    $black
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)

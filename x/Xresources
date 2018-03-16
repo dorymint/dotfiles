@@ -56,5 +56,4 @@ urxvt.color15: #ffffff
 urxvt.font: \
 	xft:Inconsolata:size=10, \
 	xft:Noto Sanse Mono CJK JP:size=10, \
-	xft:Ricty:size=10, \
-	-misc-fixed-medium-r-semicondensed-*-12-90-100-*-c-60-iso8859-1
+	xft:Ricty:size=10
