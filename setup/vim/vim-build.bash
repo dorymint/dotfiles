@@ -8,6 +8,9 @@ vimrepo="https://github.com/vim/vim"
 vimdir="${HOME}/github.com/vim/vim"
 prefix="${HOME}/opt/vim"
 ignore_confirm="no"
+CC="clang"
+# not use?
+CXX="clang++"
 
 case "$(uname)" in
 	Linux)
@@ -40,6 +43,7 @@ options:
 	--help -help -h	show help
 	--simple -simple	symple configure options
 	--yes -yes -y	ignore confirm
+	--cc-default	use default compiler
 END
 }
 
@@ -55,6 +59,7 @@ while [ -n "${1:-}" ]; do
 		-yes|--yes|-y)
 			ignore_confirm="yes"
 			;;
+		-cc-default|--cc-default) CC=""; CXX="";;
 	esac
 	shift
 done
@@ -101,7 +106,7 @@ else
 fi
 
 
-# build
+# main
 cd "${vimdir}/src"
 if [ -r "./configure" ]; then
 	# show configure
@@ -110,9 +115,17 @@ if [ -r "./configure" ]; then
 	for x in ${buildoption}; do
 		echo ${x}
 	done
+	echo "CC=$CC CXX=$CXX"
 	confirm "make distclean && ./configure [yes:no]:>"
-	make distclean && ./configure ${buildoption}
 
+	# configure
+	if [ "${CC}" = "clang" ] && [ "${CXX}" = "clang++" ]; then
+		make distclean && CC="clang" CXX="clang++" ./configure ${buildoption}
+	else
+		make distclean && ./configure ${buildoption}
+	fi
+
+	# build
 	confirm "make clean && make [yes:no]:>"
 	make clean && make
 	echo "install to ${prefix}"
