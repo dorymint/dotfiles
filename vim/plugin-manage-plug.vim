@@ -267,6 +267,11 @@ nnoremap <LocalLeader>n :<C-u>NERDTreeToggle<CR>
 " tagbar
 nnoremap <LocalLeader>t :<C-u>TagbarToggle<CR>
 
+" quickrun
+" NOTE: is not work?
+"nnoremap <LocalLeader>r <Plug>(quickrun)
+nnoremap <LocalLeader>r :<C-u>QuickRun<CR>
+
 " sonictemplate-vim
 " すぐにテンプレートを編集できるように
 if isdirectory(glob('~/dotfiles/vim/sonicdir/pretempl'))
