@@ -11,6 +11,7 @@ ignore_confirm="no"
 CC="clang"
 # not use?
 CXX="clang++"
+logfile=""
 
 case "$(uname)" in
 	Linux)
@@ -43,6 +44,7 @@ options:
 	--help -help -h	show help
 	--simple -simple	symple configure options
 	--yes -yes -y	ignore confirm
+	--with-log	with build log
 	--cc-default	use default compiler
 END
 }
@@ -59,7 +61,13 @@ while [ -n "${1:-}" ]; do
 		-yes|--yes|-y)
 			ignore_confirm="yes"
 			;;
+		-with-log|--with-log)
+			[ -d "${HOME}"/dotfiles/setup/vim ] || exit 1
+			logfile="${HOME}/dotfiles/setup/vim/build.log"
+			date > "${logfile}"
+			;;
 		-cc-default|--cc-default) CC=""; CXX="";;
+		*) helpmsg; echo "unknown arguments: $*"; exit 1;;
 	esac
 	shift
 done
@@ -127,7 +135,11 @@ if [ -r "./configure" ]; then
 
 	# build
 	confirm "make clean && make [yes:no]:>"
-	make clean && make
+	if [ -n "${logfile}" ]; then
+		make clean && make 2>&1 | tee --append -- ${logfile}
+	else
+		make clean && make
+	fi
 	echo "install to ${prefix}"
 	confirm "make install [yes:no]:>"
 	make install
