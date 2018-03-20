@@ -8,9 +8,9 @@ vimrepo="https://github.com/vim/vim"
 vimdir="${HOME}/github.com/vim/vim"
 prefix="${HOME}/opt/vim"
 ignore_confirm="no"
-CC="clang"
+CC=""
 # not use?
-CXX="clang++"
+CXX=""
 logfile=""
 
 case "$(uname)" in
@@ -45,7 +45,7 @@ options:
 	--simple -simple	symple configure options
 	--yes -yes -y	ignore confirm
 	--with-log	with build log
-	--cc-default	use default compiler
+	--cc-clang	use CC=clang
 END
 }
 
@@ -66,7 +66,7 @@ while [ -n "${1:-}" ]; do
 			logfile="${HOME}/dotfiles/setup/vim/build.log"
 			date > "${logfile}"
 			;;
-		-cc-default|--cc-default) CC=""; CXX="";;
+		-cc-clang|--cc-clang) CC="clang"; CXX="clang++";;
 		*) helpmsg; echo "unknown arguments: $*"; exit 1;;
 	esac
 	shift
