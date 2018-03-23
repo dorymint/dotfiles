@@ -73,7 +73,8 @@ fi
 
 ## gits && cho
 if [ -x "$(builtin command -v gits)" ] && [ -x "$(builtin command -v cho)" ]; then
-	alias cdg='cd -- $(gits -list-repo-full | cho)'
+	alias cdg='cd -- $(gits -list-repo-full | cho || pwd)'
+	alias gl='gits -- "status --with-color" | less -R'
 fi
 
 # sway
