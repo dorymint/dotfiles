@@ -6,18 +6,16 @@ github.com/rogpeppe/godef
 github.com/derekparker/delve/cmd/dlv
 #github.com/alecthomas/gometalinter
 
-# use vendor
-#github.com/mattn/go-tty
-
 honnef.co/go/tools/cmd/gosimple
 honnef.co/go/tools/cmd/unused
 honnef.co/go/tools/cmd/staticcheck
 
+github.com/mattn/cho
 github.com/github/hub
-#github.com/google/gops
+github.com/google/gops
 github.com/golang/lint/golint
 github.com/golang/dep/cmd/dep
 
-golang.org/x/tools/cmd/...
+golang.org/x/tools/...
 #golang.org/x/tour/gotour
 # EOF

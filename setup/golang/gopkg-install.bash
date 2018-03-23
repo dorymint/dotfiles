@@ -2,7 +2,7 @@
 set -eu
 
 # set variable
-options="-v -u"
+options="-v"
 pkglist="$HOME/dotfiles/setup/golang/gopkg.list"
 
 split() {

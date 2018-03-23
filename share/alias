@@ -71,6 +71,11 @@ if [ -x "$(builtin command -v peco)" ]; then
 	fi
 fi
 
+## gits && cho
+if [ -x "$(builtin command -v gits)" ] && [ -x "$(builtin command -v cho)" ]; then
+	alias cdg='cd -- $(gits -list-repo-full | cho)'
+fi
+
 # sway
 if [ -x "$(builtin command -v sway)" ]; then
 	alias sway='XKB_DEFAULT_LAYOUT=jp XKB_DEFAULT_MODEL=pc106 WLC_REPEAT_DELAY=200 WLC_REPEAT_RATE=30 sway'
