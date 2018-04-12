@@ -17,6 +17,7 @@ graphviz
 grml-zsh-config
 highlight
 htop
+jq
 keychain
 libnotify
 mediainfo
@@ -43,6 +44,7 @@ unzip
 vim
 w3m
 wget
+xdotool
 zsh
 zsh-completions
 zsh-syntax-highlighting

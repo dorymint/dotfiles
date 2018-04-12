@@ -28,8 +28,8 @@ alias ww='cd "${HOME}"/github.com/"$(git config --global user.name)"'
 alias dotfiles='cd "${HOME}"/dotfiles'
 
 ## goto src for golang
-if [ -d "${GOROOT}"/src ] && [ -x "$(builtin command -v vim)" ]; then
-	alias gosrc='cd "${GOROOT}/src" && vim -R . '
+if [ -d "${GOROOT}"/src ]; then
+	alias gosrc='cd "${GOROOT}/src" && vim -R .'
 fi
 
 ## goto src for rust
@@ -85,5 +85,5 @@ fi
 
 ## etc
 [ "${TERM}" = "xterm-termite" ] && alias ssh='TERM=xterm-256color ssh'
-[ -x "$(builtin command -v mplayer)" ] && alias mplayerbgm='builtin command mplayer -ao pulse -vo null '
+[ -x "$(builtin command -v mplayer)" ] && alias mplayerbgm='builtin command mplayer -ao pulse -vo null'
 alias timers &> /dev/null || alias timers='systemctl --no-pager --user list-timers'
