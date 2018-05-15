@@ -183,8 +183,10 @@ mode "volume" {
 mode "backlight" {
   bindsym k exec --no-startup-id sh -c "$i3dir/brightness.sh -incper"
   bindsym j exec --no-startup-id sh -c "$i3dir/brightness.sh -decper"
-  bindsym Shift+m exec --no-startup-id sh -c "$i3dir/brightness.sh -setmax"
-  bindsym m exec --no-startup-id sh -c "$i3dir/brightness.sh -setmin"
+
+  bindsym h exec --no-startup-id sh -c "$i3dir/brightness.sh -setmax"
+  bindsym m exec --no-startup-id sh -c "$i3dir/brightness.sh -setmid"
+  bindsym l exec --no-startup-id sh -c "$i3dir/brightness.sh -setmin"
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
@@ -193,7 +195,8 @@ mode "backlight" {
 
 # for background
 mode "feh_background" {
-  #bindsym r exec --no-startup-id sh -c '$i3dir/randombg.sh'
+  bindsym r exec --no-startup-id sh -c '$i3dir/randombg.sh'
+  bindsym n exec --no-startup-id sh -c '$i3dir/randombg.sh'
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
