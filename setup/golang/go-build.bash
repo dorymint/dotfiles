@@ -9,7 +9,7 @@ repo="//go.googlesource.com/go"
 #repo="//github.com/golang/go"
 goroot="$HOME/github.com/golang/go"
 
-goversion="go1.10.1"
+goversion="go1.10.2"
 #goversion="master"
 
 #bootstrap="gcc-go"
