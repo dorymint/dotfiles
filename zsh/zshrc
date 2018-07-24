@@ -38,5 +38,5 @@ unset -v src_syntax_hi
 ## lily
 if [[ "$(uname -n)" == *lily* ]] && [ "${SHLVL}" -eq 1 ]; then
 	echo "hello lily"
-	command -v fortune &> /dev/null && fortune -a
+	command -v fortune &> /dev/null && fortune
 fi

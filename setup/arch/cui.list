@@ -3,6 +3,7 @@ alsa-tools
 alsa-utils
 arch-install-scripts
 atool
+base
 base-devel
 bash-completion
 bind-tools
@@ -28,6 +29,7 @@ nftables
 nmap
 ntfs-3g
 openssh
+pacman-contrib
 poppler
 poppler-data
 pulseaudio

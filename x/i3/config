@@ -171,6 +171,9 @@ mode "volume" {
   bindsym m exec --no-startup-id amixer -q set Master 0%
   bindsym Sift+m exec --no-startup-id pactl set-sink-volume 6 0%
 
+  bindsym i exec --no-startup-id notify-send "$(amixer get Master)"
+  bindsym c exec --no-startup-id notify-send "$(amixer get Master)"
+
   bindsym Return mode "default"
   bindsym Escape mode "default"
   bindsym q      mode "default"
