@@ -548,20 +548,29 @@ endif
 " :help filetype
 filetype plugin indent on
 
+" golang
 function! s:ftgolang()
 	setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
 endfunction
 
+" python
 function! s:ftpython()
 	setlocal textwidth=78
 endfunction
 
+" gitcommit
 function! s:ftgitcommit()
 	setlocal spell
 endfunction
 
+" markdown
 function! s:ftmarkdown()
 	setlocal spell
+endfunction
+
+" text
+function! s:fttext()
+	nnoremap <Leader>settw :setlocal textwidth=78
 endfunction
 
 " NOTE: autocmdは再読込されるたびに重複して登録される
@@ -572,6 +581,7 @@ augroup nyan_vimrc
 	autocmd FileType python call s:ftpython()
 	autocmd FileType gitcommit call s:ftgitcommit()
 	autocmd FileType markdown call s:ftmarkdown()
+	autocmd FileType text call s:fttext()
 augroup END
 
 " nyan_vimrc_bg for bg None

@@ -90,14 +90,13 @@ confirm() {
 	return 0
 }
 
-echo "hi!"
-echo "Start Local vim install proccess!"
+echo "Starting build script for vim"
 
 # update src
 if [ -d ${vimdir} ]; then
 	cd ${vimdir}
 	git checkout master
-	if confirm "update vim source [yes:no]:>"; then
+	if confirm "git fetch && git merge origin/master [yes:no]:>"; then
 		git fetch
 		git merge origin/master
 		# ignore exit code
@@ -107,7 +106,7 @@ if [ -d ${vimdir} ]; then
 	fi
 else
 	echo "not found vim src directory"
-	confirm "git clone? [yes:no]:>"
+	confirm "git clone [yes:no]:>"
 	git clone ${vimrepo} ${vimdir}
 	cd ${vimdir}
 	git checkout master
@@ -146,6 +145,6 @@ if [ -r "./configure" ]; then
 	make clean
 
 	echo ""
-	echo "Local vim, build and install successful!!"
+	echo "Finishing build scripts"
 	echo ""
 fi
