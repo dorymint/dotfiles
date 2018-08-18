@@ -15,7 +15,6 @@ fi
 
 ## lily
 if [[ "$(uname -n)" == *lily* ]] && [ "${SHLVL}" -eq 1 ]; then
-	echo "hello lily"
 	command -v fortune &> /dev/null && fortune -a
 fi
 

@@ -18,6 +18,8 @@ alias chown='builtin command chown --preserve-root'
 alias chmod='builtin command chmod --preserve-root'
 alias chgrp='builtin command chgrp --preserve-root'
 
+alias checkupdates='command date > "${HOME}"/tmp/checkupdates.log && command checkupdates | command tee -a "${HOME}"/tmp/checkupdates.log'
+
 ## for carry of alias
 #alias sudo='builtin command sudo '
 
@@ -26,6 +28,7 @@ alias chgrp='builtin command chgrp --preserve-root'
 alias gw='cd "${GOPATH}"/src/github.com/"$(git config --global user.name)"'
 alias ww='cd "${HOME}"/github.com/"$(git config --global user.name)"'
 alias dotfiles='cd "${HOME}"/dotfiles'
+alias tmp='cd "${HOME}"/tmp'
 
 ## goto src for golang
 if [ -d "${GOROOT}"/src ]; then

@@ -84,6 +84,6 @@ if [ "${withx:-}" = "yes" ]; then
 	ln $lnopt "$dotroot"/x/conky/ "$HOME"/.config/conky
 	ln $lnopt "$dotroot"/x/dunst/ "$HOME"/.config/dunst
 	# TODO: consider to use default config and run compton -b -c -m 0.75
-	ln ${lnopt} "${dotroot}"/x/compton/compton.conf "${HOME}"/.config/compton.conf
+	#ln ${lnopt} "${dotroot}"/x/compton/compton.conf "${HOME}"/.config/compton.conf
 	set -e
 fi
