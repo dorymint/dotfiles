@@ -10,6 +10,7 @@ alias :q='builtin exit'
 alias mkdir='builtin command mkdir -p -v'
 alias ping='builtin command ping -c 3'
 alias ..='cd ..'
+alias diff='diff --color=auto'
 
 alias rm='builtin command rm -I -v'
 alias cp='builtin command cp -i'
