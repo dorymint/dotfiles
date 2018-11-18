@@ -1,4 +1,4 @@
 #!/bin/sh
 set -eu
-command swapoff -a 
+command swapoff -a
 command swapon -a

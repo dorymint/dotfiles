@@ -3,21 +3,35 @@ set -eu
 
 # help
 helpmsg() {
-	cat >&1 <<END
+  cat >&1 <<END
+Options:
+  -h --help
+    Show help
+
+Examples:
+
 END
 }
-while [ -n "${1:-}" ]; do
-	case "$1" in
-		help|-help|--help|-h)
-			helpmsg
-			exit 0
-			;;
-		*)
-			echo "unknown option: $*"
-			exit 1
-			;;
-		"")
-			;;
-	esac
-	shift
+
+# main
+main() {
+  echo "Do something"
+}
+
+while true; do
+  case "${1:-}" in
+    help|-help|--help|-h)
+      helpmsg
+      exit 0
+      ;;
+    "")
+      main
+      exit 0
+      ;;
+    *)
+      echo "Unknown option: $*"
+      exit 1
+      ;;
+  esac
+  shift
 done

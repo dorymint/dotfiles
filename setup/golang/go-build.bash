@@ -13,7 +13,7 @@ goversion="release-branch.go1.11"
 #goversion="master"
 
 #bootstrap="gcc-go"
-bootstrap="go1.4.3"
+bootstrap="release-branch.go1.4"
 #bootstrap="go1.4-bootstrap"
 
 # confirm $1=msg return bool
@@ -73,21 +73,27 @@ fi
 # build
 echo "bootstrap=$bootstrap"
 case "$bootstrap" in
-	"go1.4.3")
-		[[ ! -d "$HOME/$bootstrap" ]] && git clone --no-local --branch="$bootstrap" "$goroot" "$HOME/$bootstrap"
+	"release-branch.go1.4")
+		# for go1.4
+		[[ ! -d "$HOME/$bootstrap" ]] && git clone "$protocol$repo" "$HOME/$bootstrap"
+		cd "$HOME/$bootstrap"
+		git checkout $bootstrap
 		if confirm "build/update $bootstrap ?"; then
 			type clang
-			cd "$HOME/$bootstrap/src"
 			git fetch
 			git checkout $bootstrap
-			# build go1.4.3
+			git pull
+			# build release-branch.go1.4
+			cd "$HOME/$bootstrap/src"
 			clang --version > /dev/null
 			clang++ --version > /dev/null
 			CC=clang CXX=clang++ CGO_ENABLED=0 ./make.bash
-			#./make.bash
 		fi
+
+		# build go
 		cd "$goroot/src"
 		git checkout "$goversion"
+		git pull
 		confirm "build $goversion ?"
 		if confirm "$goversion prebuild: git clean ?"; then
 			git clean --force
@@ -103,6 +109,7 @@ case "$bootstrap" in
 		fi
 		cd "$goroot/src"
 		git checkout "$goversion"
+		git pull
 		confirm "build $goversion ?"
 		if confirm "$goversion prebuild: git clean ?"; then
 			git clean --force
@@ -113,9 +120,12 @@ case "$bootstrap" in
 		confirm "build $goversion ?"
 		cd "$goroot/src"
 		git checkout "$goversion"
+		git pull
 		GOROOT_BOOTSTRAP="/usr" ./all.bash
 		;;
 	*)
 		echo "bootstrap=$bootstrap is invalid"; exit 1
 		;;
 esac
+
+# vim: set noexpandtab shiftwidth=2 tabstop=2 softtabstop=2

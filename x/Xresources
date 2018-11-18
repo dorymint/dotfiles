@@ -54,6 +54,6 @@ urxvt.color15: #ffffff
 !urxvt*font: xft:Noto Sanse Mono CJK JP:size=10
 
 urxvt.font: \
-	xft:Inconsolata:size=11, \
-	xft:Noto Sanse Mono CJK JP:size=11, \
-	xft:Ricty:size=11
+  xft:Inconsolata:size=11, \
+  xft:Noto Sanse Mono CJK JP:size=11, \
+  xft:Ricty:size=11

@@ -18,6 +18,7 @@ alias ln='builtin command ln -i'
 alias chown='builtin command chown --preserve-root'
 alias chmod='builtin command chmod --preserve-root'
 alias chgrp='builtin command chgrp --preserve-root'
+#alias dd='builtin command dd status=progress'
 
 alias checkupdates='command date > "${HOME}"/tmp/checkupdates.log && command checkupdates | command tee -a "${HOME}"/tmp/checkupdates.log'
 alias checklog='less "${HOME}"/tmp/checkupdates.log'
@@ -34,58 +35,58 @@ alias tmp='cd "${HOME}"/tmp'
 
 ## goto src for golang
 if [ -d "${GOROOT}"/src ]; then
-	alias gosrc='cd "${GOROOT}/src" && vim -R .'
+  alias gosrc='cd "${GOROOT}/src" && vim -R .'
 fi
 
 ## goto src for rust
 if [ -x "$(builtin command -v rustc)" ]; then
-	if [ -d "$(rustc --print sysroot)"/lib/rustlib/src/rust/src ]; then
-		alias rustsrc='cd "$(rustc --print sysroot)"/lib/rustlib/src/rust/src && vim -R .'
-	fi
+  if [ -d "$(rustc --print sysroot)"/lib/rustlib/src/rust/src ]; then
+    alias rustsrc='cd "$(rustc --print sysroot)"/lib/rustlib/src/rust/src && vim -R .'
+  fi
 fi
 
 ## vim
 if [ -x "${HOME}"/opt/vim/bin/vim ]; then
-	alias viml='"${HOME}"/opt/vim/bin/vim'
+  alias viml='"${HOME}"/opt/vim/bin/vim'
 fi
 
 ## nvim
 if [ -x "${HOME}"/opt/neovim/bin/nvim ]; then
-	alias nvim='"${HOME}"/opt/neovim/bin/nvim'
+  alias nvim='"${HOME}"/opt/neovim/bin/nvim'
 fi
 
 ## python
 if [ -r "${HOME}"/venv/bin/activate ]; then
-	alias python-activate='builtin source ${HOME}/venv/bin/activate'
+  alias python-activate='builtin source ${HOME}/venv/bin/activate'
 fi
 
 ## peco
 if [ -x "$(builtin command -v peco)" ]; then
-	if [ -x "$(builtin command -v reps.sh)" ]; then
-		alias reps='cd "$(reps.sh status | peco)"'
-	fi
-	alias cdl='cd "$(dirs -pl | peco)"'
-	alias cdp='cd "$(find . -type d ! -path "*.git*" ! -path "*.deps*" | peco)"'
-	alias gwp='gw && cdp'
-	if [ -x "$(builtin command -v gotcha)" ]; then
-		if alias viml &> /dev/null; then
-			alias gwtodo='gw && viml "$(gotcha -trim=false | peco)"'
-		else
-			alias gwtodo='gw && vim "$(gotcha -trim=false | peco)"'
-		fi
-	fi
+  if [ -x "$(builtin command -v reps.sh)" ]; then
+    alias reps='cd "$(reps.sh status | peco)"'
+  fi
+  alias cdl='cd "$(dirs -pl | peco)"'
+  alias cdp='cd "$(find . -type d ! -path "*.git*" ! -path "*.deps*" | peco)"'
+  alias gwp='gw && cdp'
+  if [ -x "$(builtin command -v gotcha)" ]; then
+    if alias viml &> /dev/null; then
+      alias gwtodo='gw && viml "$(gotcha -trim=false | peco)"'
+    else
+      alias gwtodo='gw && vim "$(gotcha -trim=false | peco)"'
+    fi
+  fi
 fi
 
 ## gits && cho
 if [ -x "$(builtin command -v gits)" ] && [ -x "$(builtin command -v cho)" ]; then
-	alias cdg='cd -- $(gits -list-repo-full | cho || pwd)'
-	alias gl='gits -- "status --with-color" | less -R'
+  alias cdg='cd -- $(gits -list-repo-full | cho || pwd)'
+  alias gl='gits -- "status --with-color" | less -R'
 fi
 
 # sway
 if [ -x "$(builtin command -v sway)" ]; then
-	alias sway='XKB_DEFAULT_LAYOUT=jp XKB_DEFAULT_MODEL=pc106 WLC_REPEAT_DELAY=200 WLC_REPEAT_RATE=30 sway'
-	alias sway-without-xwayland='XKB_DEFAULT_LAYOUT=jp XKB_DEFAULT_MODEL=pc106 WLC_REPEAT_DELAY=200 WLC_REPEAT_RATE=30 WLC_XWAYLAND=0 sway'
+  alias sway='XKB_DEFAULT_LAYOUT=jp XKB_DEFAULT_MODEL=pc106 WLC_REPEAT_DELAY=200 WLC_REPEAT_RATE=30 sway'
+  alias sway-without-xwayland='XKB_DEFAULT_LAYOUT=jp XKB_DEFAULT_MODEL=pc106 WLC_REPEAT_DELAY=200 WLC_REPEAT_RATE=30 WLC_XWAYLAND=0 sway'
 fi
 
 ## etc

@@ -15,31 +15,31 @@ bindir="${HOME}"/dotfiles/share/bin
 subcmd=""
 list=$(ls --indicator-style=slash ${bindir})
 showlist() {
-	for x in ${list}; do
-		echo "${x}"
-	done
+  for x in ${list}; do
+    echo "${x}"
+  done
 }
 # help
 helpmsg() {
-	cat >&1 <<END
+  cat >&1 <<END
 lily.sh
-	for sub command
+  for sub command
 options:
-	-help
-	-list
+  -help
+  -list
 examples:
-	lily.sh [sub name] [args]
-	lily.sh --help
-		show this help
-	lily.sh --list
-		list of sub command
+  lily.sh [sub name] [args]
+  lily.sh --help
+    show this help
+  lily.sh --list
+    list of sub command
 END
 }
 case "${1}" in
-	help|--help|-h) helpmsg; exit 0;;
-	list|--list|-l) showlist; exit 0;;
-	*)subcmd=$1; shift;;
-	"")echo "\$1 is not specify"; exit 1;;
+  help|--help|-h) helpmsg; exit 0;;
+  list|--list|-l) showlist; exit 0;;
+  *)subcmd=$1; shift;;
+  "")echo "\$1 is not specify"; exit 1;;
 esac
 unset -f helpmsg
 unset -f showlist

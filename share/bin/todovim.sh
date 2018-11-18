@@ -10,25 +10,25 @@ root="./"
 
 # help
 helpmsg() {
-	cat >&1 <<'END'
+  cat >&1 <<'END'
 todovim.sh
-	vim "$(gotcha | peco)"
+  vim "$(gotcha | peco)"
 
 options:
-	root --root -r
-	word --wrod -w
+  root --root -r
+  word --wrod -w
 
-	$1 is same flag the -root
+  $1 is same flag the -root
 END
 }
 while [ -n "${1:-}" ]; do
-	case "$1" in
-		help|--help|-h)helpmsg; exit 0;;
-		word|--word|-w)shift; word="$1";;
-		root|-root|-r)shift; root="$1";;
-		*)root="$1";;
-	esac
-	shift
+  case "$1" in
+    help|--help|-h)helpmsg; exit 0;;
+    word|--word|-w)shift; word="$1";;
+    root|-root|-r)shift; root="$1";;
+    *)root="$1";;
+  esac
+  shift
 done
 unset -f helpmsg
 

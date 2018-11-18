@@ -27,3 +27,5 @@ fi
 
 go test -race -cover -coverprofile "${prof}"
 go tool cover -html "${prof}"
+
+# vim: set noexpandtab shiftwidth=2 tabstop=2 softtabstop=2

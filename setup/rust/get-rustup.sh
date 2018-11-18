@@ -8,6 +8,6 @@ curl -f https://sh.rustup.rs > rust.sh
 
 p=$(pwd)/rust.sh
 cat <<END
-	output: ${p}
-	check: vim ${p}
+  output: ${p}
+  check: vim ${p}
 END

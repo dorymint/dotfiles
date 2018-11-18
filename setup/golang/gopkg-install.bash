@@ -90,3 +90,5 @@ for x in ${awkout}; do
 	go get ${options} ${x}
 done
 echo "...finish"
+
+# vim: set noexpandtab shiftwidth=2 tabstop=2 softtabstop=2

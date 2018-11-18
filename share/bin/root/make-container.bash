@@ -8,19 +8,19 @@ set -eu
 dst=""
 # if need then fix
 additional_pkg=" \
-	base \
-	rxvt-unicode-terminfo \
-	--ignore linux \
-	"
+  base \
+  rxvt-unicode-terminfo \
+  --ignore linux \
+  "
 # accept override for -dir
 force="no"
 
 # locale
 # TODO: fix sed_locale_option
 #sed_locale_option=" \
-#	-e 's/^#\(en_US.UTF-8 UTF-8\)/\1/' \
-#	-e 's/^#\(ja_JP.UTF-8 UTF-8\)/\1/' \
-#	"
+#  -e 's/^#\(en_US.UTF-8 UTF-8\)/\1/' \
+#  -e 's/^#\(ja_JP.UTF-8 UTF-8\)/\1/' \
+#  "
 
 locale_conf="LANG=en_US.UTF-8
 LANGUAGE=en_US:ja_JP
@@ -29,36 +29,36 @@ LC_MESSAGES=C"
 ### function
 # help
 helpmsg() {
-	cat >&1 <<END
+  cat >&1 <<END
 make-container.bash
-	make container for systemd-nspawn
+  make container for systemd-nspawn
 
 usage:
-	make-container.bash [option] [additional packages]
-	make-container.bash -dir [name of new container] [additional pkg]
+  make-container.bash [option] [additional packages]
+  make-container.bash -dir [name of new container] [additional pkg]
 
 option:
-	-help
-	-dir {specify name of new continer directory}
-	-force
+  -help
+  -dir {specify name of new continer directory}
+  -force
 
 defaults packages:
-	${additional_pkg}
+  ${additional_pkg}
 
 example:
-	cd workdir && sudo make-container.bash -dir ./new-container base-devel vim
+  cd workdir && sudo make-container.bash -dir ./new-container base-devel vim
 END
 }
 
 ### parse
 while [ -n "${1:-}" ]; do
-	case "$1" in
-		--help|-help|-h) helpmsg; exit 0;;
-		--dir|-dir) shift; dst=${1};;
-		--force|-force) force="yes";;
-		*) additional_pkg="${additional_pkg} ${1}";;
-	esac
-	shift
+  case "$1" in
+    --help|-help|-h) helpmsg; exit 0;;
+    --dir|-dir) shift; dst=${1};;
+    --force|-force) force="yes";;
+    *) additional_pkg="${additional_pkg} ${1}";;
+  esac
+  shift
 done
 unset -f helpmsg
 
@@ -70,17 +70,17 @@ command -v mkdir
 command -v sed
 echo "--------------------"
 if ! [ ${EUID:-${UID}} = 0 ]; then
-	echo "require root"
-	exit 1
+  echo "require root"
+  exit 1
 fi
 if [ -z ${dst} ]; then
-	echo "not specify name of new container directory"
-	echo "require: -dir [name of new container directory]"
-	exit 1
+  echo "not specify name of new container directory"
+  echo "require: -dir [name of new container directory]"
+  exit 1
 fi
 if [ -x ${dst} ] && [ "${force}" != "yes" ]; then
-	echo "directory is exists: -dir ${dst}"
-	exit 1
+  echo "directory is exists: -dir ${dst}"
+  exit 1
 fi
 
 ### create container
@@ -88,8 +88,8 @@ fi
 pacstrap -i -c -d ${dst} ${additional_pkg}
 # locale
 sed -i.back \
-	-e 's/^#\(en_US.UTF-8 UTF-8\)/\1/' \
-	-e 's/^#\(ja_JP.UTF-8 UTF-8\)/\1/' \
+  -e 's/^#\(en_US.UTF-8 UTF-8\)/\1/' \
+  -e 's/^#\(ja_JP.UTF-8 UTF-8\)/\1/' \
  "${dst}/etc/locale.gen"
 echo "${locale_conf}" > "${dst}/etc/locale.conf"
 # host
@@ -124,8 +124,8 @@ set -eu
 
 # locale
 sed -i.back \
-	-e 's/^#\(en_US.UTF-8 UTF-8\)/\1/' \
-	-e 's/^#\(ja_JP.UTF-8 UTF-8\)/\1/' \
+  -e 's/^#\(en_US.UTF-8 UTF-8\)/\1/' \
+  -e 's/^#\(ja_JP.UTF-8 UTF-8\)/\1/' \
  "/etc/locale.gen"
 echo "${locale_conf}" > "/etc/locale.conf"
 
