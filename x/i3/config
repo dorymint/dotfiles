@@ -203,6 +203,7 @@ mode "feh_background" {
   bindsym n exec --no-startup-id sh -c '$i3dir/randombg.sh next'
   bindsym p exec --no-startup-id sh -c '$i3dir/randombg.sh previous'
 
+  bindsym i exec --no-startup-id sh -c 'notify-send "mode: feh_background" "Current background number: $($i3dir/randombg.sh show)"'
   bindsym h exec --no-startup-id sh -c 'notify-send "mode: feh_background" "$(echo -e "\nr\tRandom\nn\tNext\np\tPrevious\n\nq\tReturn to default")"'
 
   bindsym Return mode "default"
