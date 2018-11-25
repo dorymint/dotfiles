@@ -4,31 +4,34 @@ set -eu
 dportn=-1
 targetn=-1
 deleten=-1
+proto="tcp"
 
 # help
 helpmsg() {
-  cat >&1 <<"END"
+  cat >&1 <<END
 Options:
   -h --help
     Show help
   -s --show
     Show nft ruleset with target number
-  -p --port (NUMBER)
+  -p --port (number)
     Specify accpet destination port number
-  -t --target (NUMBER)
+  -u --udp
+    Specify target protocol is to the udp (default is ${proto})
+  -t --target (number)
     Specify target number
-  -d --delete (NUMBER)
+  -d --delete (number)
     Specify number for delete the rule
 
 Examples:
   Show ruleset with target number
     nft-accept.sh -s
   Append the acceptable destination ports after target number in ruleset
-    nft-accept.sh -a $port -t $target
+    nft-accept.sh -a \$port -t \$target
   Append acceptable port 8080 after target 8 in ruleset
     nft-accept.sh -a 8080 -t 8
   Delete rule
-    nft-accept.sh -d $target
+    nft-accept.sh -d \$target
 
 END
 }
@@ -43,9 +46,15 @@ delete() {
   sudo nft delete rule inet filter input handle ${deleten}
 }
 
+# help with error message
+help_with_errmsg() {
+  helpmsg
+  echo "Invalid parameter: dportn=${dportn} targetn=${targetn} deleten=${deleten}"
+}
+
 # append
 main() {
-  sudo nft add rule inet filter input position ${targetn} tcp dport ${dportn} accept
+  sudo nft add rule inet filter input position ${targetn} ${proto} dport ${dportn} accept
 }
 
 while true; do
@@ -62,6 +71,9 @@ while true; do
       shift
       dportn=${1}
       ;;
+    -u|--udp)
+      proto="udp"
+      ;;
     -t|--target)
       shift
       targetn=${1}
@@ -71,12 +83,17 @@ while true; do
       deleten=${1}
       ;;
     "")
-      if [ ${deleten} -gt 0 ] && [ ${dportn} -lt 0 ] && [ ${targetn} -lt 0 ]; then
-        delete
-        exit 0
-      elif [ ${dportn} -lt 0 ] || [ ${targetn} -lt 0 ]; then
-        helpmsg
-        echo "Invalid parameter: dportn=${dportn} targetn=${targetn} deleten=${deleten}"
+      if [ ${deleten} -gt 0 ]; then
+        if [ ${dportn} -lt 0 ] && [ ${targetn} -lt 0 ];then
+          delete
+          exit 0
+        else
+          help_with_errmsg
+          exit 1
+        fi
+      fi
+      if [ ${dportn} -lt 0 ] || [ ${targetn} -lt 0 ]; then
+        help_with_errmsg
         exit 1
       fi
       main

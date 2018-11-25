@@ -21,7 +21,7 @@ alias chgrp='builtin command chgrp --preserve-root'
 #alias dd='builtin command dd status=progress'
 
 alias checkupdates='command date > "${HOME}"/tmp/checkupdates.log && command checkupdates | command tee -a "${HOME}"/tmp/checkupdates.log'
-alias checklog='less "${HOME}"/tmp/checkupdates.log'
+alias checklog='cat "${HOME}"/tmp/checkupdates.log'
 
 ## for carry of alias
 #alias sudo='builtin command sudo '
