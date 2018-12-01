@@ -19,6 +19,7 @@ scriptencoding utf-8
 " NORMALモードで : を押すとコマンドを入力するモードに移る
 " setの詳細は :help ${name} もしくは :help set で確認
 " setはできるだけ省略せずに書く set nohl --> set nohlsearch
+" 現在のオプションの値を確認するには :set {option}? とする
 " Vim script は最初の非空白文字を \ にすることで前の行と連結できる
 " vim の echo は内部変数を除くのにべんり :echo &encoding
 " 関数の結果を見るにもべんり :echo expand("%:p")
@@ -652,5 +653,4 @@ if has('nvim')
   tnoremap <Esc> <C-\><C-n>
 endif
 
-
-" vim: textwidth=0
+" vim: textwidth=0 expandtab shiftwidth=2 tabstop=2 softtabstop=2

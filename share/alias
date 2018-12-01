@@ -1,17 +1,20 @@
 # share/alias
+# for bash, zsh
 
-# TODO: consider to simpl
-
-# common
-alias la='builtin command ls -hal --color=auto'
-alias lale='builtin command ls -hal --color=always | less -R'
+# Common
+alias la='builtin command ls -halv --color=auto'
+alias lale='builtin command ls -halv --color=always | less -R'
+alias lah='builtin command ls -halvd --color=auto .*'
 alias dmesgl='builtin command dmesg --color=always | less -R'
 alias :q='builtin exit'
+alias hi='builtin command grep --color=always -e "$" -e'
+alias ..='builtin cd ..'
+alias gitroot='builtin command git rev-parse --show-toplevel > /dev/null && builtin cd "$(builtin command git rev-parse --show-toplevel)"'
+
+# Override
 alias mkdir='builtin command mkdir -p -v'
 alias ping='builtin command ping -c 3'
-alias ..='cd ..'
-alias diff='diff --color=auto'
-
+alias diff='builtin command diff --color=auto'
 alias rm='builtin command rm -I -v'
 alias cp='builtin command cp -i'
 alias ln='builtin command ln -i'
@@ -20,67 +23,69 @@ alias chmod='builtin command chmod --preserve-root'
 alias chgrp='builtin command chgrp --preserve-root'
 #alias dd='builtin command dd status=progress'
 
-alias checkupdates='command date > "${HOME}"/tmp/checkupdates.log && command checkupdates | command tee -a "${HOME}"/tmp/checkupdates.log'
-alias checklog='cat "${HOME}"/tmp/checkupdates.log'
+# Which one use
+alias manja='builtin command LC_ALL=ja_JP.UTF-8 man'
+#alias manja='builtin command LC_MESSAGES=ja_JP.UTF-8 man'
 
-## for carry of alias
-#alias sudo='builtin command sudo '
-
-# local
+# Local
 ## cd
-alias gw='cd "${GOPATH}"/src/github.com/"$(git config --global user.name)"'
-alias ww='cd "${HOME}"/github.com/"$(git config --global user.name)"'
-alias dotfiles='cd "${HOME}"/dotfiles'
-alias tmp='cd "${HOME}"/tmp'
+alias gw='builtin cd "$GOPATH"/src/github.com/"$(git config --global user.name)"'
+alias ww='builtin cd "$HOME"/github.com/"$(git config --global user.name)"'
+alias dotfiles='builtin cd "$HOME"/dotfiles'
+alias tmp='builtin cd "$HOME"/tmp'
 
-## goto src for golang
-if [ -d "${GOROOT}"/src ]; then
-  alias gosrc='cd "${GOROOT}/src" && vim -R .'
+# pacman
+alias checkupdates='builtin command date > "$HOME"/tmp/checkupdates.log && builtin command checkupdates >> "$HOME"/tmp/checkupdates.log && builtin command cat "$HOME"/tmp/checkupdates.log'
+alias checklog='bulitin command cat "$HOME"/tmp/checkupdates.log'
+
+## Goto src for golang
+if [ -d "$GOROOT"/src ]; then
+  alias gosrc='builtin cd "$GOROOT/src" && vim -R .'
 fi
 
-## goto src for rust
+## Goto src for rust
 if [ -x "$(builtin command -v rustc)" ]; then
   if [ -d "$(rustc --print sysroot)"/lib/rustlib/src/rust/src ]; then
-    alias rustsrc='cd "$(rustc --print sysroot)"/lib/rustlib/src/rust/src && vim -R .'
+    alias rustsrc='builtin cd "$(rustc --print sysroot)"/lib/rustlib/src/rust/src && vim -R .'
   fi
 fi
 
 ## vim
-if [ -x "${HOME}"/opt/vim/bin/vim ]; then
-  alias viml='"${HOME}"/opt/vim/bin/vim'
+if [ -x "$HOME"/opt/vim/bin/vim ]; then
+  alias viml='"$HOME"/opt/vim/bin/vim'
 fi
 
 ## nvim
-if [ -x "${HOME}"/opt/neovim/bin/nvim ]; then
-  alias nvim='"${HOME}"/opt/neovim/bin/nvim'
+if [ -x "$HOME"/opt/neovim/bin/nvim ]; then
+  alias nvim='"$HOME"/opt/neovim/bin/nvim'
 fi
 
 ## python
-if [ -r "${HOME}"/venv/bin/activate ]; then
-  alias python-activate='builtin source ${HOME}/venv/bin/activate'
+if [ -r "$HOME"/venv/bin/activate ]; then
+  alias python-activate='builtin source $HOME/venv/bin/activate'
 fi
 
 ## peco
 if [ -x "$(builtin command -v peco)" ]; then
   if [ -x "$(builtin command -v reps.sh)" ]; then
-    alias reps='cd "$(reps.sh status | peco)"'
+    alias reps='builtin cd "$(reps.sh status | peco)"'
   fi
-  alias cdl='cd "$(dirs -pl | peco)"'
-  alias cdp='cd "$(find . -type d ! -path "*.git*" ! -path "*.deps*" | peco)"'
-  alias gwp='gw && cdp'
-  if [ -x "$(builtin command -v gotcha)" ]; then
-    if alias viml &> /dev/null; then
-      alias gwtodo='gw && viml "$(gotcha -trim=false | peco)"'
-    else
-      alias gwtodo='gw && vim "$(gotcha -trim=false | peco)"'
+  alias cdl='builtin cd "$(dirs -pl | peco)"'
+  alias cdp='builtin cd "$(find . -type d ! -path "*.git*" ! -path "*.deps*" | peco)"'
+  if (alias gw &> /dev/null); then
+    alias gwp='gw && cdp'
+    if [ -x "$(builtin command -v gotcha)" ] && (alias viml &> /dev/null); then
+        alias gwtodo='gw && viml "$(gotcha -trim=false | peco)"'
+      else
+        alias gwtodo='gw && vim "$(gotcha -trim=false | peco)"'
     fi
   fi
 fi
 
 ## gits && cho
 if [ -x "$(builtin command -v gits)" ] && [ -x "$(builtin command -v cho)" ]; then
-  alias cdg='cd -- $(gits -list-repo-full | cho || pwd)'
-  alias gl='gits -- "status --with-color" | less -R'
+  alias cdg='builtin cd -- $(builtin command gits -list-repo-full | builtin command cho || builtin command pwd)'
+  alias gl='builtin command gits -- "status --with-color" | builtin command less -R'
 fi
 
 # sway
@@ -90,6 +95,6 @@ if [ -x "$(builtin command -v sway)" ]; then
 fi
 
 ## etc
-[ "${TERM}" = "xterm-termite" ] && alias ssh='TERM=xterm-256color ssh'
+[ "$TERM" = "xterm-termite" ] && alias ssh='TERM=xterm-256color ssh'
 [ -x "$(builtin command -v mplayer)" ] && alias mplayerbgm='builtin command mplayer -ao pulse -vo null'
 alias timers &> /dev/null || alias timers='systemctl --no-pager --user list-timers'

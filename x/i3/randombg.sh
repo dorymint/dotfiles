@@ -2,34 +2,34 @@
 
 set -eu
 
-current_bg_number=$(awk '/feh --bg-max/ { print $3 }' "${HOME}"/.fehbg |
+current_bg_id=$(awk '/feh --bg-max/ { print $3 }' "$HOME"/.fehbg |
   sed "s/^'\(.*\)'$/\1/" |
   awk -F / '{ print $NF }')
-walldir="${HOME}"/Pictures/links
+walldir="$HOME"/Pictures/links
 next_bg=""
-with_bg_number="no"
+with_bg_id="false"
 
-function errmsg {
-  echo "$@" 1>&2
+errmsg() {
+  echo "[err] randombg.sh: $*" 1>&2
+}
+
+abort() {
+  errmsg "$*"
+  exit 2
 }
 
 helpmsg() {
   cat >&1 <<END
-Usage: randombg.sh [Options]
+Usage:
+  randombg.sh [Options]
 
 Options:
-  help, -help
-    Show this help
-  next, -next
-    Display next background images
-  previous, -previous
-    Display previous backgroud images
-  random, -random (Default)
-    Display random background images
-  with-number, -with-number, --with-number
-    Output current background image number
-  show, -show
-    Show current background image number
+  help, -help         Show this help
+  random, -random     Display random background images (default)
+  next, -next         Display next background images
+  previous, -previous Display previous backgroud images
+  with-id, --with-id  Output with image id
+  show, -show         Show current background image id
 
 Examples:
   randombg.sh
@@ -41,49 +41,47 @@ Examples:
 END
 }
 
-function main {
-  if [ -f "${next_bg}" ]; then
-    feh --bg-max -- "${next_bg}"
-    [ "${with_bg_number}" = "yes" ] && echo ${current_bg_number}
+main() {
+  if [ -f "$next_bg" ]; then
+    feh --bg-max -- "$next_bg"
+    [ "$with_bg_id" = "true" ] && echo "$current_bg_id"
     exit 0
   else
-    errmsg "Invalid file path: ${next_bg}"
-    exit 1
+    abort "invalid file path: $next_bg"
   fi
 }
 
-if [ -d "${walldir}" ]; then
-  while true; do
-    case ${1:-} in
-      ""|random|-random)
-        [ -z "${next_bg}" ] && next_bg="${walldir}"/"$(ls "${walldir}" | shuf -n 1)"
-        main
-        ;;
-      next|-next)
-        next_bg="${walldir}"/$(expr ${current_bg_number} + 1)
-        ;;
-      previous|-previous)
-        next_bg="${walldir}"/$(expr ${current_bg_number} - 1)
-        ;;
-      with-number|-with-number|--with-number)
-        with_bg_number="yes"
-        ;;
-      show|-show)
-        echo "${current_bg_number}"
-        exit 0
-        ;;
-      help|-help)
-        helpmsg
-        exit 0
-        ;;
-      *)
-        errmsg "Unexpected option: $*"
-        exit 1
-        ;;
-    esac
-    shift
-  done
-else
-  errmsg "Can not found ${walldir}"
-  exit 1
+if [ ! -d "$walldir" ]; then
+  abort "not directory: $walldir"
 fi
+
+while true; do
+  case ${1:-} in
+    help|-help|h|-h|--help)
+      helpmsg
+      exit 0
+      ;;
+    ""|random|-random)
+      [ -z "$next_bg" ] && next_bg="$walldir"/"$(ls "$walldir" | shuf -n 1)"
+      main
+      ;;
+    next|-next)
+      next_bg="$walldir"/"$(expr "$current_bg_id" + 1)"
+      ;;
+    previous|-previous)
+      next_bg="$walldir"/"$(expr "$current_bg_id" - 1)"
+      ;;
+    with-id|--with-id)
+      with_bg_id="true"
+      ;;
+    show|-show)
+      echo "$current_bg_id"
+      exit 0
+      ;;
+    *)
+      errmsg "Unexpected option: $*"
+      exit 1
+      ;;
+  esac
+  shift
+done

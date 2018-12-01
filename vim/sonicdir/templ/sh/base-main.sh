@@ -1,26 +1,39 @@
 #!/bin/sh
 set -eu
 
-# help
 helpmsg() {
   cat >&1 <<END
+Description:
+  {{_cursor_}}Short description
+
+Usage:
+  {{_expr_:expand("%:t")}} [Options]
+
 Options:
-  -h --help
-    Show help
+  -h, --help Display this message
 
 Examples:
+  {{_expr_:expand("%:t")}} --help
 
 END
 }
 
-# main
+errmsg() {
+  echo "[err] {{_expr_:expand("%:t")}}: $*" 1>&2
+}
+
+abort() {
+  errmsg "$*"
+  exit 2
+}
+
 main() {
-  echo "Do something"
+  echo "do something"
 }
 
 while true; do
   case "${1:-}" in
-    help|-help|--help|-h)
+    -h|--help|h|help|-help)
       helpmsg
       exit 0
       ;;
@@ -29,7 +42,7 @@ while true; do
       exit 0
       ;;
     *)
-      echo "Unknown option: $*"
+      errmsg "unknown option: $*"
       exit 1
       ;;
   esac

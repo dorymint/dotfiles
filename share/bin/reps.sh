@@ -1,62 +1,87 @@
 #!/bin/sh
+
+# TODO: consider to remove
+
 set -eu
 
-replist="$HOME"/dotfiles/etc/reps.list
-sub="status"
+path_list="$HOME"/dotfiles/etc/reps.list
+subcmd="status"
 
-# help
-unset -f helpmsg
 helpmsg() {
   cat >&1 <<END
-reps.sh
-  watch for git repositores
-  reps.bash [command]
+Description:
+  Repositories tracker
 
-options:
-  f -f fetch
-    git fetch
-  s -s status
-    git status
-  l -l list
-    show watch list
-  h -h help
-    show this help
-  e -e edit
-    edit reps.list
-  --file
-    specify path/to/reps.list
+Usage:
+  reps.sh [Options]
 
-defaults:
-  reps.list
-    $replist
+Options:
+  -h, -help, help Display this message
+  -file           Specify path to repository lists (default: $path_list)
+  show            Show tracked repositories
+  e, -e, -edit    Edit reps.list
+  f, fetch        Running of git fetch
+  s, status       Running of git status
+
 END
 }
-while [ -n "${1:-}" ]; do
-  case "${1}" in
-    help|-h|h) helpmsg; exit 0;;
-    status|-s|s) sub="status";;
-    fetch|-f|f) sub="fetch";;
-    list|-l|l) cat "$replist"; exit 0;;
-    edit|-e|e) ${EDITOR:-vim} "$replist"; exit 0;;
-    --file) shift; replist="$1";;
-    "");;
-    *)echo "invalid: $*"; helpmsg; exit 1;;
+
+errmsg() {
+  echo "$@" 1>&2
+}
+
+main() {
+  if [ ! -f "$path_list" ] || [ ! -r "$path_list" ]; then
+    errmsg "can not read $path_list"
+    exit 1
+  fi
+
+  echo "path_list=$path_list"
+
+  # NOTE: ('-' * 79)
+  echo -e "-------------------------------------------------------------------------------\n"
+  for x in $(cat "$path_list"); do
+    [ -z "$x" ] && continue
+    echo "$x"
+    cd "$x"
+    git "$subcmd"
+    echo -e "-------------------------------------------------------------------------------\n"
+  done
+}
+
+while true; do
+  case "${1:-}" in
+    -h|-help|help)
+      helpmsg
+      exit 0
+      ;;
+    -file)
+      shift
+      path_list="$1"
+      ;;
+    show)
+      cat "$path_list"
+      exit 0
+      ;;
+    e|-e|-edit)
+      ${EDITOR:-vim} "$path_list"
+      exit 0
+      ;;
+    f|fetch)
+      subcmd="fetch"
+      ;;
+    s|status)
+      subcmd="status"
+      ;;
+    "")
+      main
+      exit 0
+      ;;
+    *)
+      helpmsg
+      errmsg "Unknown option: $*"
+      exit 1
+      ;;
   esac
   shift
-done
-unset -f helpmsg
-
-if [ ! -f "$replist" ] || [ ! -r "$replist" ]; then
-  echo "can not read $replist"
-  exit 1
-fi
-
-echo "replist=$replist"
-# NOTE: 79
-echo -e "-------------------------------------------------------------------------------\n"
-for x in `cat "$replist"`; do
-  [ -z "$x" ] && continue
-  echo "$x"
-  cd "$x" && git "$sub" || continue
-  echo -e "-------------------------------------------------------------------------------\n"
 done
