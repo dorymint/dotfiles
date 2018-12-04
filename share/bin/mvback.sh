@@ -45,7 +45,7 @@ main() {
     done
   else
     for x in "$@"; do
-      mv --no-target-directory --no-clobber -- "${x}" "${dir}/${prefix}${x}"
+      mv --verbose --no-target-directory --no-clobber -- "${x}" "${dir}/${prefix}${x}"
     done
   fi
 }
