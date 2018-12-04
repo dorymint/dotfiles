@@ -27,7 +27,7 @@ errmsg() {
 }
 
 split() {
-  echo -e "\n------- setup $1 -------"
+  printf "\n------- setup %s -------\n" "$*"
 }
 
 main() {
