@@ -36,7 +36,7 @@ alias tmp='builtin cd "$HOME"/tmp'
 
 # pacman
 alias checkupdates='builtin command date > "$HOME"/tmp/checkupdates.log && builtin command checkupdates >> "$HOME"/tmp/checkupdates.log && builtin command cat "$HOME"/tmp/checkupdates.log'
-alias checklog='builtin command cat "$HOME"/tmp/checkupdates.log'
+alias checklog='builtin command cat -- "$HOME"/tmp/checkupdates.log'
 
 ## Goto src for golang
 if [ -d "$GOROOT"/src ]; then
