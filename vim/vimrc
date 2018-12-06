@@ -189,7 +189,7 @@ set shiftwidth=2
 set smarttab
 
 " tab
-set expandtab
+set noexpandtab
 set tabstop=2
 set softtabstop=2
 
@@ -558,7 +558,7 @@ filetype plugin indent on
 
 " vim
 function! s:ftvim()
-  setlocal expandtab
+  setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 endfunction
 
 " sh
