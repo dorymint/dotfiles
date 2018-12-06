@@ -1,30 +1,37 @@
 #!/bin/sh
 set -eu
 
+name="{{_expr_:expand("%:t")}}"
+
 helpmsg() {
   cat >&1 <<END
 Description:
-  {{_cursor_}}Short description
+  {{_cursor_}}short description
 
 Usage:
-  {{_expr_:expand("%:t")}} [Options]
+  $name [Options]
 
 Options:
   -h, --help Display this message
 
 Examples:
-  {{_expr_:expand("%:t")}} --help
+  $name --help
 
 END
 }
 
 errmsg() {
-  echo "[err] {{_expr_:expand("%:t")}}: $*" 1>&2
+  echo "${name}: $*" 1>&2
 }
 
 abort() {
   errmsg "$*"
   exit 2
+}
+
+# e.g. ckargv "$@"
+ckargv() {
+  [ $# -eq 0 ] || abort "invalid arguments: $*"
 }
 
 main() {
@@ -35,9 +42,12 @@ while true; do
   case "${1:-}" in
     -h|--help|h|help|-help)
       helpmsg
+      shift
+      ckargv "$@"
       exit 0
       ;;
     "")
+      ckargv "$@"
       main
       exit 0
       ;;
@@ -48,3 +58,4 @@ while true; do
   esac
   shift
 done
+
