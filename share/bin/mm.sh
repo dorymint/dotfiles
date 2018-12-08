@@ -45,11 +45,12 @@ ckargv() {
 }
 
 append() {
-  printf "%s\n%s\n\n" "$(date)" "$*" >> "$file"
+  printf "%s\n%s\n\n" "$(date)" "$*" | tee -a "$file"
 }
 
 clean() {
   : > "$file"
+  echo "file contents removed"
 }
 
 main() {
