@@ -40,22 +40,23 @@ main() {
 
 while true; do
   case "${1:-}" in
+    --)
+      shift
+      ckargv "$@"
+      break
+      ;;
     -h|--help|h|help|-help)
       helpmsg
       shift
       ckargv "$@"
       exit 0
       ;;
-    "")
-      ckargv "$@"
-      main
-      exit 0
-      ;;
     *)
-      errmsg "unknown option: $*"
-      exit 1
+      break
       ;;
   esac
   shift
 done
+
+main "$@"
 
