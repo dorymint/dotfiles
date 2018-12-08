@@ -93,6 +93,7 @@ gcommit() {
 gpush() {
   cd "$(dirname "$file")"
   git status
+  git diff --stat origin master
   printf "git diff origin master <enter>"
   read
   git diff origin master
