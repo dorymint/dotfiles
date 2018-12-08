@@ -17,6 +17,7 @@ Options:
   -h, --help          Display this message
   -e, --edit          Open file by editor
   -a, --append STRING Append string to file
+  -c, --clean         Delete content
 
 Examples:
   show this help
@@ -47,6 +48,10 @@ append() {
   printf "%s\n%s\n\n" "$(date)" "$*" >> "$file"
 }
 
+clean() {
+  : > "$file"
+}
+
 main() {
   grep --color=auto -A 5 --line-number --ignore-case -e "$*" -- "$file"
 }
@@ -72,6 +77,12 @@ while true; do
     -a|--append)
       shift
       append "$@"
+      exit 0
+      ;;
+    -c|--clean)
+      shift
+      ckargv "$@"
+      clean
       exit 0
       ;;
     "")
