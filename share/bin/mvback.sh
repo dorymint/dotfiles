@@ -1,6 +1,8 @@
 #!/bin/sh
 set -eu
 
+# TODO: treat case of move file with not current directory
+
 # Consider
 dir="${HOME}/backup"
 

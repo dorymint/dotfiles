@@ -4,6 +4,7 @@ set -eu
 name="mm.sh"
 file="$HOME"/Documents/mm/memo.txt
 editor="${EDITOR:-vim}"
+options="--color=auto -C 1 --line-number --ignore-case"
 
 helpmsg() {
   cat >&1 <<END
@@ -54,7 +55,7 @@ clean() {
 }
 
 main() {
-  grep --color=auto -A 5 --line-number --ignore-case -e "$*" -- "$file"
+  grep $options --regexp "$*" -- "$file"
 }
 
 while true; do
@@ -85,9 +86,6 @@ while true; do
       ckargv "$@"
       clean
       exit 0
-      ;;
-    "")
-      break
       ;;
     *)
       break
