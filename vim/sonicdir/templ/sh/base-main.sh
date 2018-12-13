@@ -1,6 +1,7 @@
 #!/bin/sh
 set -eu
 
+#name="$(basename $0)"
 name="{{_expr_:expand("%:t")}}"
 
 helpmsg() {
@@ -21,7 +22,7 @@ END
 }
 
 errmsg() {
-  echo "${name}: $*" 1>&2
+  echo "$name: $*" 1>&2
 }
 
 abort() {
@@ -29,26 +30,20 @@ abort() {
   exit 2
 }
 
-# e.g. ckargv "$@"
-ckargv() {
-  [ $# -eq 0 ] || abort "invalid arguments: $*"
-}
-
 main() {
-  echo "do something"
+  echo "not implemented \"$*\""
 }
 
 while true; do
   case "${1:-}" in
     --)
       shift
-      ckargv "$@"
       break
       ;;
     -h|--help|h|help|-help)
       helpmsg
       shift
-      ckargv "$@"
+      [ $# -eq 0 ] || abort "invalid arguments: $*"
       exit 0
       ;;
     *)
