@@ -11,19 +11,19 @@ if command -v keychain > /dev/null; then
 fi
 
 ## environments
-source "${HOME}"/dotfiles/share/env/locale.sh
+source "$HOME"/dotfiles/share/env/locale.sh
 
 ## lang
-source "${HOME}"/dotfiles/share/env/nodejs.sh
-source "${HOME}"/dotfiles/share/env/golang.sh
-source "${HOME}"/dotfiles/share/env/ruby.sh
-source "${HOME}"/dotfiles/share/env/rust.sh
+source "$HOME"/dotfiles/share/env/nodejs.sh
+source "$HOME"/dotfiles/share/env/golang.sh
+source "$HOME"/dotfiles/share/env/ruby.sh
+source "$HOME"/dotfiles/share/env/rust.sh
 
 ### priority local bin
-[ -d "${HOME}"/bin ] && export PATH="${HOME}"/bin:"${PATH}"
+[ -d "$HOME"/bin ] && export PATH="$HOME"/bin:"$PATH"
 
 # completions
-[ -d "${HOME}"/dotfiles/zsh/functions/completions ] && fpath+="${HOME}"/dotfiles/zsh/functions/completins
+[ -d "$HOME"/dotfiles/zsh/functions/completions ] && fpath+="$HOME"/dotfiles/zsh/functions/completins
 
 # call rc
-[ -f "${HOME}"/.zshrc ] && source "${HOME}"/.zshrc
+[ -f "$HOME"/.zshrc ] && source "$HOME"/.zshrc

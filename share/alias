@@ -3,9 +3,11 @@
 
 # Common
 alias la='builtin command ls -halv --color=auto'
-alias lale='builtin command ls -halv --color=always | less -R'
+alias lale='builtin command ls -halv --color=always | builtin command less -R'
+alias lat='builtin command ls -halvt --color=auto'
+alias latle='builtin command ls -halvt --color=always | builtin command less -R'
 alias lah='builtin command ls -halvd --color=auto .*'
-alias dmesgl='builtin command dmesg --color=always | less -R'
+alias dmesgl='builtin command dmesg --color=always | builtin command less -R'
 alias :q='builtin exit'
 alias hi='builtin command grep --color=always -e "$" -e'
 alias ..='builtin cd ..'

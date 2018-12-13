@@ -2,8 +2,6 @@
 # zshrc
 #
 
-# TODO: consider
-## check interactive
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
@@ -14,12 +12,12 @@ if command -v pacman &> /dev/null; then
     echo "recommend: pacman -S grml-zsh-config"
 else
   echo "warning: use grml in dotfiles"
-  source "${HOME}"/dotfiles/zsh/grml/zshrc.grml
+  source "$HOME"/dotfiles/zsh/grml/zshrc.grml
 fi
 
 ## alias
-source "${HOME}"/dotfiles/share/alias
-[ -f "${HOME}"/dotfiles/etc/alias ] && source "${HOME}"/dotfiles/etc/alias
+source "$HOME"/dotfiles/share/alias
+[ -f "$HOME"/dotfiles/etc/alias ] && source "$HOME"/dotfiles/etc/alias
 
 ## setopt
 setopt autocd
@@ -28,14 +26,14 @@ setopt pushdignoredups
 
 ## syntax highlight
 src_syntax_hi="/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-if [ -r "${src_syntax_hi}" ]; then
-  source "${src_syntax_hi}"
+if [ -r "$src_syntax_hi" ]; then
+  source "$src_syntax_hi"
 fi
 unset -v src_syntax_hi
 
-[ -f "${HOME}"/dotfiles/etc/zsh/localrc.zsh ] && source "${HOME}"/dotfiles/etc/zsh/localrc.zsh
+[ -f "$HOME"/dotfiles/etc/zsh/localrc.zsh ] && source "$HOME"/dotfiles/etc/zsh/localrc.zsh
 
 ## lily
-if [[ "$(uname -n)" == *lily* ]] && [ "${SHLVL}" -eq 1 ]; then
+if [[ "$(uname -n)" == *lily* ]] && [ "$SHLVL" -eq 1 ]; then
   command -v fortune &> /dev/null && fortune
 fi
