@@ -1,0 +1,19 @@
+# for auto play the music by raspberry pi
+# require: add "dtparam=audio=on" in /boot/config.txt
+# require: audio group
+# require: command mpv
+[Unit]
+Description=Music loop
+
+[Service]
+Type=simple
+
+# might be changed
+User=mpvuser
+Group=mpvuser
+
+WorkingDirectory=~
+ExecStart=/usr/bin/sh -c 'while true; do mpv --no-video -- "$HOME"/Music &> /dev/null; done'
+
+[Install]
+WantedBy=multi-user.target
