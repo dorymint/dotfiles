@@ -20,7 +20,7 @@ fi
 green="\[$(tput setaf 6)\]"
 red="\[$(tput setaf 5)\]"
 reset="\[$(tput sgr0)\]"
-export PS1="$red\$?$reset $green\u$reset@\h \w "
+export PS1="$red\$?$reset $green\u$reset@\h \w $ "
 
 # less
 man() {
