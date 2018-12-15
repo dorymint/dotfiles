@@ -4,5 +4,4 @@
 
 !new/*
 
-!update-grml.sh
-!wget-grml.bash
+!get-grml.sh
