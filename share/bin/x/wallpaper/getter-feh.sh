@@ -4,7 +4,6 @@ set -eu
 bgcmd="feh"
 option="--scale-down"
 
-# help
 helpmsg() {
   cat >&1 <<END
 getter-feh.sh
@@ -16,8 +15,9 @@ options:
   -sway --background-sway
 END
 }
+
 while [ -n "${1:-}" ]; do
-  case "${1}" in
+  case "$1" in
   help|-help|--help|-h)
     helpmsg
     exit 0
@@ -38,10 +38,12 @@ while [ -n "${1:-}" ]; do
   esac
   shift
 done
-unset -f helpmsg
+
 [ -x "$(command which getter)" ]
-if [ "${bgcmd}" = "feh" ];then
-  ${bgcmd} ${option} "$(getter)"
+bg="$(getter)"
+
+if [ "$bgcmd" = "feh" ];then
+  $bgcmd $option -- "$bg"
 else
-  ${bgcmd} "$(getter)" ${option}
+  $bgcmd "$(getter)" $option
 fi
