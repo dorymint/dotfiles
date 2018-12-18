@@ -1,131 +1,160 @@
 #!/bin/bash
 
-# TODO: fix to simpl
-
 set -eu
 
-protocol="https:"
-repo="//go.googlesource.com/go"
-#repo="//github.com/golang/go"
+repo="https://go.googlesource.com/go"
+branch="release-branch.go1.11"
+#branch="master"
 goroot="$HOME/github.com/golang/go"
 
-goversion="release-branch.go1.11"
-#goversion="master"
+bootstrap_branch="release-branch.go1.4"
+bootstrap_dir="$HOME"/"$bootstrap_branch"
 
-#bootstrap="gcc-go"
-bootstrap="release-branch.go1.4"
-#bootstrap="go1.4-bootstrap"
+ignore_confirm=false
 
 # confirm $1=msg return bool
 confirm() {
-	local key=""
-	local counter=0
-	while [ $counter -lt 3 ]; do
-		counter=`expr $counter + 1`
-		echo -n "$1 [yes:no]>"
-		read -t 60 key || return 1
+	(
+	[ "$ignore_confirm" = "true" ] && return 0
+	key=""
+	count=0
+	while [ $count -lt 3 ]; do
+		count=$(( $count + 1 ))
 		case "$key" in
 			no|n) return 1;;
 			yes|y) return 0;;
 		esac
+		echo -n "$1 [yes:no]?> "
+		read key
 	done
 	return 1
+	)
 }
-# help
+
 helpmsg() {
 	cat >&1 <<END
-go-build.bash
+Usage:
+  go-build.bash [Options]
 
 options:
-	-help
-		show this help
-	-target
-		specify build tag (default: ${goversion})
+  -h, --help   Display this message
+  -b, --branch Specify build branch (default: $branch)
+  -y, --yes    Ignore confirm
 
 example:
-	go-build.bash -target master
-	go-build.bash -target 1.8.7
+  go-build.bash -branch master
+  go-build.bash -branch 1.8.7
 END
 }
-while [ -n "${1:-}" ]; do
+
+abort() {
+	echo "$*" >&2
+	exit 2
+}
+
+up_bootstrap() {
+	(
+	# cd  "$bootstrap_dir"
+	if [ -d "$bootstrap_dir" ]; then
+		cd "$bootstrap_dir"
+		git fetch
+	elif [ ! -e "$bootstrap_dir" ]; then
+		git clone "$repo" "$bootstrap_dir"
+		cd "$bootstrap_dir"
+	else
+		abort "invalid path of bootstrap: $bootstrap_dir"
+	fi
+
+	git checkout "$bootstrap_branch"
+	git merge
+
+	# NOTE: build with gcc is failed
+	command -v clang > /dev/null || abort "command not found \"clang\""
+	command -v clang++ > /dev/null || abort "command not found \"clang++\""
+	echo "--- clang version ---"
+	echo "clang --version"
+	clang --version
+	echo "clang++ --version"
+	clang++ --version
+	echo "---------------------"
+
+	cd "$bootstrap_dir"/src
+
+	echo "--- git clean --force --dry-run ---"
+	git clean --force --dry-run
+	echo "-----------------------------------"
+	if confirm "$bootstrap_branch prebuild: git clean --force"; then
+		git clean --force
+	fi
+
+	CC=clang CXX=clang++ CGO_ENABLED=0 ./make.bash
+	)
+}
+
+build() {
+	(
+	# cd "$goroot"
+	if [ ! -e "$goroot" ];then
+		echo "not found $goroot"
+		confirm "git clone $repo $goroot" || abort "stopped"
+		git clone "$repo" "$goroot"
+		cd "$goroot"
+	elif [ -d "$goroot" ]; then
+		cd "$goroot"
+		git fetch
+	else
+		abort "invalid path of goroot: $goroot"
+	fi
+
+	git checkout "$branch"
+	git merge
+
+	cd "$goroot"/src
+
+	echo "--- git clean --force --dry-run ---"
+	git clean --force --dry-run
+	echo "-----------------------------------"
+	if confirm "$branch prebuild: git clean --force"; then
+		git clean --force
+	fi
+
+	GOROOT_BOOTSTRAP="$bootstrap_dir" ./all.bash
+	)
+}
+
+main() {
+	(
+	if [ -d "$bootstrap_dir" ]; then
+		confirm "build bootstrap $bootstrap_branch" && up_bootstrap || abort "stopped"
+	else
+		up_bootstrap
+	fi
+
+	confirm "build $branch" || abort "stopped"
+	build
+	)
+}
+
+while [ $# -ne 0 ]; do
 	case "$1" in
-		help|-help|--help|-h) helpmsg; exit 0;;
-		-target) shift; goversion=${1};;
+		help|-help|--help|-h)
+			helpmsg
+			exit 0
+			;;
+		-b|--branch)
+			shift
+			branch="$1"
+			;;
+		-y|--yes)
+			ignore_confirm=true
+			;;
+		*)
+			abort "unexpected arguments $*"
+			;;
 	esac
 	shift
 done
-unset -f helpmsg
 
-# check goroot
-if [[ ! -d "$goroot" ]]; then
-	echo "from : $protocol$repo"
-	echo "clone: $goroot"
-	confirm "git clone ?"
-	git clone "$protocol$repo" "$goroot"
-fi
+main
 
-# update src
-if confirm "fetch $goroot ?"; then
-	cd "$goroot/src"
-	git fetch
-fi
-
-# build
-echo "bootstrap=$bootstrap"
-case "$bootstrap" in
-	"release-branch.go1.4")
-		# for go1.4
-		[[ ! -d "$HOME/$bootstrap" ]] && git clone "$protocol$repo" "$HOME/$bootstrap"
-		cd "$HOME/$bootstrap"
-		git checkout $bootstrap
-		if confirm "build/update $bootstrap ?"; then
-			type clang
-			git fetch
-			git checkout $bootstrap
-			git pull
-			# build release-branch.go1.4
-			cd "$HOME/$bootstrap/src"
-			clang --version > /dev/null
-			clang++ --version > /dev/null
-			CC=clang CXX=clang++ CGO_ENABLED=0 ./make.bash
-		fi
-
-		# build go
-		cd "$goroot/src"
-		git checkout "$goversion"
-		git pull
-		confirm "build $goversion ?"
-		if confirm "$goversion prebuild: git clean ?"; then
-			git clean --force
-		fi
-		GOROOT_BOOTSTRAP="$HOME/$bootstrap" ./all.bash
-		;;
-	"go1.4-bootstrap")
-		if confirm "make go boot strap ?"; then
-			cd "$HOME/$bootstrap/src"
-			clang --version > /dev/null
-			clang++ --version > /dev/null
-			CC=clang CXX=clang++ CGO_ENABLED=0 ./make.bash
-		fi
-		cd "$goroot/src"
-		git checkout "$goversion"
-		git pull
-		confirm "build $goversion ?"
-		if confirm "$goversion prebuild: git clean ?"; then
-			git clean --force
-		fi
-		GOROOT_BOOTSTRAP="$HOME/$bootstrap" ./all.bash
-		;;
-	"gcc-go")
-		confirm "build $goversion ?"
-		cd "$goroot/src"
-		git checkout "$goversion"
-		git pull
-		GOROOT_BOOTSTRAP="/usr" ./all.bash
-		;;
-	*)
-		echo "bootstrap=$bootstrap is invalid"; exit 1
-		;;
-esac
-
-# vim: set noexpandtab shiftwidth=2 tabstop=2 softtabstop=2
+# vim: noexpandtab shiftwidth=2 tabstop=2 softtabstop=2
