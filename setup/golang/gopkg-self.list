@@ -1,10 +1,5 @@
+
 # go package list
-# my tools
-github.com/yaeshimo/go-todogotcha/gotcha
-#github.com/yaeshimo/go-addtree/addtree
-github.com/yaeshimo/expfunc
-github.com/yaeshimo/tree
-github.com/yaeshimo/gomem/cmd/gomem
-github.com/yaeshimo/getter
+
 github.com/yaeshimo/gits
-# EOF
+

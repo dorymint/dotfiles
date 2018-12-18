@@ -1,21 +1,24 @@
+
 # go package list
-github.com/josharian/impl
-github.com/jstemmer/gotags
-github.com/nsf/gocode
-github.com/rogpeppe/godef
-github.com/derekparker/delve/cmd/dlv
-#github.com/alecthomas/gometalinter
 
-honnef.co/go/tools/cmd/gosimple
-honnef.co/go/tools/cmd/unused
-honnef.co/go/tools/cmd/staticcheck
+# golang.org
+golang.org/x/tools/...
 
-github.com/mattn/cho
-github.com/github/hub
-github.com/google/gops
+# github.com/golang
 github.com/golang/lint/golint
 github.com/golang/dep/cmd/dep
 
-golang.org/x/tools/...
-#golang.org/x/tour/gotour
-# EOF
+# github.com
+github.com/google/gops
+github.com/github/hub
+github.com/mattn/cho
+github.com/nsf/gocode
+github.com/derekparker/delve/cmd/dlv
+github.com/josharian/impl
+github.com/jstemmer/gotags
+github.com/rogpeppe/godef
+
+#honnef.co/go/tools/cmd/gosimple
+#honnef.co/go/tools/cmd/unused
+#honnef.co/go/tools/cmd/staticcheck
+
