@@ -88,8 +88,6 @@ main() {
       ln $options -- "$dotroot"/x/termite/ "$HOME"/.config/termite
       ln $options -- "$dotroot"/x/conky/ "$HOME"/.config/conky
       ln $options -- "$dotroot"/x/dunst/ "$HOME"/.config/dunst
-      # TODO: consider to use default config and run compton -b -c -m 0.75
-      #ln $options -- "$dotroot"/x/compton/compton.conf "$HOME"/.config/compton.conf
     set -e
   fi
 }
