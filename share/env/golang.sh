@@ -14,4 +14,4 @@ if [ -d "${HOME}"/go ]; then
 	export PATH="${PATH}":"${GOPATH}"/bin
 fi
 
-# vim: set noexpandtab shiftwidth=2 tabstop=2 softtabstop=2
+# vim: noexpandtab shiftwidth=2 tabstop=2 softtabstop=2
