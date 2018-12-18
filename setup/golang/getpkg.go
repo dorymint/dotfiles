@@ -1,3 +1,4 @@
+// go run getpkg.go
 package main
 
 import (
@@ -40,7 +41,7 @@ func main() {
 	flag.BoolVar(&opt.ignoreConfirm, "y", false, `Alias of "-yes"`)
 	flag.BoolVar(&opt.upgrade, "upgrade", false, "Ignore confirm")
 	flag.BoolVar(&opt.upgrade, "u", false, `Alias of "-upgrade"`)
-	flag.StringVar(&opt.file, "file", "", "Specify path to package list")
+	flag.StringVar(&opt.file, "file", "", fmt.Sprintf("Specify path of package list (default: %q)", pkglist))
 	flag.StringVar(&opt.file, "f", "", `Alias of "-file"`)
 	flag.BoolVar(&opt.dryRun, "dry-run", false, "Only display target packages")
 	flag.BoolVar(&opt.dryRun, "d", false, `Alias of "-dry-run"`)
