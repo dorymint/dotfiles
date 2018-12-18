@@ -1,13 +1,13 @@
 #!/bin/sh
 set -eu
 
-# cds(change to script directory)
-cd "$(dirname "$(readlink -f "${0}")")"
+cd "$(dirname "$(readlink -e "$0")")"
 
-curl -f https://sh.rustup.rs > rust.sh
+url="https://sh.rustup.rs"
+curl -f -- "$url" > rust.sh
 
-p=$(pwd)/rust.sh
+p="$(readlink -e rust.sh)"
 cat <<END
-  output: ${p}
-  check: vim ${p}
+  output: $p
+  check: vim $p
 END
