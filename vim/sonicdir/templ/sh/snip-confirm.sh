@@ -1,17 +1,21 @@
 # confirm $1=msg return bool
 confirm() {
   (
+  # which one?
+  msg="${1:-} [yes:no]?> "
+  #msg="${1:-}"
   key=""
-  counter=0
-  while [ $counter -lt 3 ]; do
-    counter=$(expr $counter + 1)
-    echo -n "$1 [yes:no]?>"
-    read key || return 1
+  count=1
+  while true; do
+    [ $count -gt 3 ] && return 1
+    count=$(( $count + 1 ))
     case "$key" in
-      no|n) return 1;;
-      yes|y) return 0;;
+      n|no) return 1;;
+      y|yes) return 0;;
     esac
+    echo -n "$msg"
+    read key
   done
-  return 1
+  echo "unreachable" >&2; exit 99
   )
 }
