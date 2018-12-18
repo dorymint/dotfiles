@@ -5,14 +5,15 @@
 set -eu
 
 vimrepo="https://github.com/vim/vim"
-vimdir="${HOME}/github.com/vim/vim"
-prefix="${HOME}/opt/vim"
-ignore_confirm="no"
-CC=""
-# not use?
-CXX=""
+vimdir="$HOME/github.com/vim/vim"
+prefix="$HOME/opt/vim"
+ignore_confirm=false
+
+# TODO: consider to remove
+cc_clang=false
 logfile=""
 
+buildoption=""
 case "$(uname)" in
   Linux)
     buildoption="--enable-fail-if-missing
@@ -23,133 +24,138 @@ case "$(uname)" in
       --enable-terminal
       --disable-gui
       --without-x
-      --prefix=${prefix}"
+      --prefix=$prefix"
     ;;
   *)
     buildoption="--enable-fail-if-missing
-      --prefix=${prefix}
+      --prefix=$prefix
       --with-features=huge"
-    echo "undefined platform"
-    sleep 5
     ;;
 esac
 
-# help
 helpmsg() {
   cat >&1 <<END
-vim-build.bash
-  build vim on master branch
+Usage:
+  vim-build.bash [Options]
 
-options:
-  --help -help -h
-    Show help
-  --simple -simple
-    Symple configure options
-  --yes -yes -y
-    Ignore confirm
-  --with-log
-    With build log
-  --cc-clang
-    Use CC=clang
+Options:
+  -h, --help      Display this message
+  -d, --default   Set default configure options
+  -y, --yes       Ignore confirm
+  --with-log FILE With build log
+  --cc-clang      Use CC=clang
 END
 }
 
-while [ -n "${1:-}" ]; do
-  case "${1}" in
-    help|-help|--help|-h)
-      helpmsg; exit 0
-      ;;
-    -simple|--simple)
-      buildoption="--enable-fail-if-missing
-        --prefix=${prefix}"
-      ;;
-    -yes|--yes|-y)
-      ignore_confirm="yes"
-      ;;
-    -with-log|--with-log)
-      [ -d "${HOME}"/dotfiles/setup/vim ] || exit 1
-      logfile="${HOME}/dotfiles/setup/vim/build.log"
-      date > "${logfile}"
-      ;;
-    -cc-clang|--cc-clang) CC="clang"; CXX="clang++";;
-    *) helpmsg; echo "unknown arguments: $*"; exit 1;;
-  esac
-  shift
-done
-
 # confirm $1=message
 confirm() {
-  if [ "${ignore_confirm}" = "yes" ]; then
-    return 0
-  fi
-  local key=""
-  local count=0
-  while [ "${key}" != "yes" ] && [ "${key}" != "y" ]; do
-    if [ "${key}" = "no" ] || [ "${key}" = "n" ] || [ ${count} -gt 2 ]; then
-      return 1
-    fi
-    count=$(expr ${count} + 1)
-    echo -n "${1}"
+  (
+  [ "$ignore_confirm" = "true" ] && return 0
+  msg="${1:-} [yes|no]?> "
+  key=""
+  count=0
+  while true; do
+    [ $count -gt 3 ] && return 1
+    count=$(( $count + 1 ))
+    case "$key" in
+      y|yes) return 0;;
+      n|no) return 1;;
+    esac
+    echo -n "$msg"
     read key
   done
-  return 0
+  )
 }
 
-echo "Starting build script for vim"
+main() {
+  echo "Starting build scripts"
 
-# update src
-if [ -d ${vimdir} ]; then
-  cd ${vimdir}
-  git checkout master
-  if confirm "git fetch && git merge origin/master [yes:no]:>"; then
-    git fetch
-    git merge origin/master
-    # ignore exit code
-    if [ "${ignore_confirm}" != "yes" ]; then
-      confirm "check: git log -p [yes:no]:>" && git log -p || true
+  # src
+  if [ -d "$vimdir" ]; then
+    cd "$vimdir"
+    git checkout master
+    if confirm "git fetch && git merge origin/master"; then
+      git fetch
+      git merge origin/master
+      # fail through
+      confirm "check: git log -p" && git log -p || true
     fi
-  fi
-else
-  echo "not found vim src directory"
-  confirm "git clone [yes:no]:>"
-  git clone ${vimrepo} ${vimdir}
-  cd ${vimdir}
-  git checkout master
-fi
-
-
-# main
-cd "${vimdir}/src"
-if [ -r "./configure" ]; then
-  # show configure
-  echo ""
-  echo "configure options"
-  for x in ${buildoption}; do
-    echo ${x}
-  done
-  echo "CC=$CC CXX=$CXX"
-  confirm "make distclean && ./configure [yes:no]:>"
-
-  # configure
-  if [ "${CC}" = "clang" ] && [ "${CXX}" = "clang++" ]; then
-    make distclean && CC="clang" CXX="clang++" ./configure ${buildoption}
   else
-    make distclean && ./configure ${buildoption}
+    echo "not found vim src directory"
+    confirm "git clone" || exit 2
+    git clone "$vimrepo" "$vimdir"
+    cd "$vimdir"
+    git checkout master
   fi
+
 
   # build
-  confirm "make clean && make [yes:no]:>"
-  if [ -n "${logfile}" ]; then
-    make clean && make 2>&1 | tee --append -- ${logfile}
+  cd "$vimdir/src"
+
+  # information
+  echo ""
+  echo "configure options"
+  for x in $buildoption; do
+    echo "$x"
+  done
+  echo "\$cc_clang=$cc_clang"
+
+  confirm "make distclean && ./configure"
+  make distclean
+  if [ "$cc_clang" = "true" ]; then
+    CC="clang" CXX="clang++" ./configure $buildoption
+  else
+    ./configure $buildoption
+  fi
+
+  confirm "make clean && make"
+  if [ -n "$logfile" ]; then
+    date > "$logfile"
+    make clean && make 2>&1 | tee --append -- "$logfile"
   else
     make clean && make
   fi
-  echo "install to ${prefix}"
-  confirm "make install [yes:no]:>"
+  echo "install to $prefix"
+  confirm "make install"
   make install
   make clean
 
   echo ""
   echo "Finishing build scripts"
   echo ""
-fi
+}
+
+while [ $# -ne 0 ]; do
+  case "$1" in
+    -h|--help|-help|help)
+      helpmsg
+      exit 0
+      ;;
+    -d|--default)
+      buildoption="--enable-fail-if-missing --prefix=$prefix"
+      ;;
+    -y|--yes)
+      ignore_confirm=true
+      ;;
+    --with-log)
+      shift
+      logfile="$(readlink -f "$1")"
+      if [ -e "$logfile" ];then
+        echo "specified file exists: $1" >&2
+        exit 1
+      fi
+      ;;
+    -cc-clang|--cc-clang)
+      cc_clang=true
+      ;;
+    *)
+      helpmsg
+      echo "invalid arguments: $*"
+      exit 1
+      ;;
+  esac
+  shift
+done
+
+main
+
