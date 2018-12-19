@@ -2,7 +2,7 @@
 set -eu
 
 dir="$HOME"/bin
-unset force
+force=false
 
 helpmsg() {
   cat >&1 <<END
@@ -22,48 +22,47 @@ Examples:
 END
 }
 
-errmsg() {
-  echo "[err] ln-tobin.sh: $*" 1>&2
-}
-
 abort() {
-  errmsg "$*"
+  echo "$*" >&2
   exit 2
 }
 
 main() {
-  if  [ ! -d "$dir" ]; then
-    abort "not directory: $dir"
-  fi
-  local fullpaths
+  (
+  [ -d "$dir" ] || abort "not directory: $dir"
   fullpaths="$(readlink --verbose -e -- "$@")"
   for x in "$fullpaths"; do
     if [ ! -x "$x" ]; then
       echo "unexecutable: $x"
       continue
     fi
-    ln ${force:-} --verbose --symbolic --target-directory="$dir" -- "$x"
+
+    options="--verbose --symbolic --target-directory="$dir""
+    if [ "$force" = "true" ]; then
+      options="--force $options"
+    fi
+    ln $options -- "$x"
   done
+  )
 }
 
 while true; do
   case "${1:-}" in
+    --)
+      shift
+      main "$@"
+      exit 0
+      ;;
     -h|--help|h|help|-help)
       helpmsg
       exit 0
       ;;
     -f|--force)
-      force="--force"
+      force="true"
       ;;
     "")
       helpmsg
-      errmsg "missing file operand"
-      exit 1
-      ;;
-    --)
-      shift
-      main "$@"
-      exit 0
+      abort "missing file operand"
       ;;
     *)
       main "$@"
@@ -72,3 +71,4 @@ while true; do
   esac
   shift
 done
+

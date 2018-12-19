@@ -1,6 +1,8 @@
 #!/bin/sh
 set -eu
 
+# TODO: rewrite
+
 dportn=-1
 targetn=-1
 deleten=-1
