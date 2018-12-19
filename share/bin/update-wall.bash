@@ -15,6 +15,7 @@ helpmsg() {
   cat >&1 <<END
 Description:
   update symbolic links for wallpaper
+
 Usage:
   update-wall.bash [Options]
 
