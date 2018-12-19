@@ -1,204 +1,168 @@
 #!/bin/sh
 set -eu
 
-# TODO: rewrite
-
 # require root permission
 
 # path to sys backlight
-# TODO: case of different name of directory
-brroot="/sys/class/backlight/intel_backlight"
-test -d "$brroot"
+# TODO: treat different location
+brightness_root="/sys/class/backlight/intel_backlight"
+test -d "$brightness_root"
 
 # max brightness
-brmax="$brroot"/max_brightness
-test -f "$brmax"
+max_brightness="$brightness_root"/max_brightness
+test -f "$max_brightness"
 
 # current brightness
-br="$brroot"/brightness
-test -f "$br"
+current_brightness="$brightness_root"/brightness
+test -f "$current_brightness"
 
 # for debug
 dry_run=false
 
-# help
+# TODO: consider name="$(basename "$(readlink -e "$0")")"
+name="brightness.sh"
+
 helpmsg() {
   cat >&1 <<END
-brightness.sh
-  for set the brightness
+Description:
+  set brightness by "$brightness_root"
 
-options:
-  -help
-    show this help
-  -get
-    get current brightness: brightness.sh -get
-  -getmax
-    get max brightness: brightness.sh -getmax
-  -getmid
-    get mid brightness: brightness.sh -getmid
-  -getmin
-    get min brightness: brightness.sh -getmin
-  -state
-    get current state
-  -set
-    set the brightness: brightness.sh -set \$number
-  -setmax
-    set to max: brightness.sh -setmax
-  -setmid
-    set to mid: brightness.sh -setmid
-  -setmin
-    set to min: brightness.sh -setmin
-  -inc
-    increment: brightness.sh -inc \$number
-  -dec
-    decrement: brightness.sh -dec \$number
-  -incper
-    increment ten percent: brightness.sh -incper
-  -decper
-    decrement ten percent: brightness.sh -decper
+Usage:
+  $name [Options]
 
-  -d, --dry-run
-    dry run
+Options:
+  -h, -help                 Show this help
+  -get [""|max|mid|min]     Get brightness information
+  -state                    Get current state
+  -set [NUMBER|max|mid|min] Set brightness
+  -inc NUMBER               Increment brightness
+  -dec NUMBER               Decrement brightness
+  -inc10per                 Increment 10%
+  -dec10per                 Decrement 10%
+
+  -d, --dry-run             Dry run for debug, is need already specify before
+
+Examples:
+  \$ $name -get        # Get current brightness
+  \$ $name -get max    # Get max brightness
+  \$ $name -set 400    # Set brightness to 400
+  \$ $name -set mid    # Set brightness to mid
+  \$ $name -d -set mid # Only display write info
+
 END
 }
 
-# get current brightness
-getbr() {
-  cat "$br"
+abort() {
+  echo "$*" >&2
+  exit 2
 }
 
-# get max brightness
-getmax() {
-  cat "$brmax"
-}
-
-# get mid brightness
-getmid() {
-  echo "$(( $(getmin) * 5 ))"
-}
-
-# get min brightness
-getmin() {
+# $1=[""|max|mid|min]
+get() {
   (
-  max=$(getmax)
-  # TODO: consider minimum lengths
-  echo "$(( $max / 10 ))"
+  # TODO: consider min and max
+  max="$(cat "$max_brightness")"
+  min="$(( "$max" / 10 ))"
+  mid="$(( "$min" * 5 ))"
+  current="$(cat "$current_brightness")"
+  case "${1:-}" in
+    max) echo "$max";;
+    mid) echo "$mid";;
+    min) echo "$min";;
+    "") echo "$current";;
+    *) abort "unexpected arguments $*";;
+  esac
   )
 }
 
 # get current state
 state() {
-  echo "current: $(getbr)"
-  echo "max: $(getmax)"
-  echo "min: $(getmin)"
-}
-
-write() {
-  if [ "$dry_run" = true ]; then
-    echo "dry run: write \"$1\" to \"$br\""
-  else
-    echo -n "$1" > "$br"
-  fi
-}
-
-# set brightness
-setbr() {
-  (
-  current=$(getbr)
-  max=$(getmax)
-  min=$(getmin)
-
-  echo "brightness:"
-  echo "  current=$current"
-  echo "  max=$max"
-  echo "  min=$min"
-
-  # check
-  if test $1 -lt $min || test $1 -gt $max; then
-    echo "invalid length $1"
-    return 1
-  fi
-
-  echo "set brightness to $1"
-  write "$1"
-  )
-}
-
-# set max
-setmax() {
-  (
-  max=$(getmax)
-  setbr $max
-  )
-}
-
-setmid() {
-  (
-  mid=$(getmid)
-  setbr $mid
-  )
-}
-
-# set min
-setmin() {
-  (
-  min=$(getmin)
-  setbr $min
-  )
+  echo "current: $(get)"
+  echo "max: $(get max)"
+  echo "min: $(get min)"
 }
 
 # increment
 inc() {
   (
-  n=$(( $(getbr) + $1 ))
-  setbr $n
+  n=$(( $(get) + $1 ))
+  main $n
   )
 }
 
 # decrement
 dec() {
   (
-  n=$(( $(getbr) - $1 ))
-  setbr $n
+  n=$(( $(get) - $1 ))
+  main $n
   )
 }
 
-# increment ten percentage
-incper() {
+# increment 10%
+inc10per() {
   (
-  n=$(( $(getbr) + $(getmin) ))
-  setbr $n
+  n=$(( $(get) + $(get min) ))
+  main $n
   )
 }
 
-# decrement ten percentage
-decper() {
+# decrement 10%
+dec10per() {
   (
-  n=$(( $(getbr) - $(getmin) ))
-  setbr $n
+  n=$(( $(get) - $(get min) ))
+  main $n
   )
 }
 
-while [ -n "${1:-}" ]; do
+write() {
+  if [ "$dry_run" = true ]; then
+    echo "[DRY_RUN]: write \"$1\" to \"$current_brightness\""
+  else
+    echo -n "$1" > "$current_brightness"
+  fi
+}
+
+# set brightness $1=[NUMBER|max|mid|min]
+main() {
+  (
+  # expected brightness
+  exp="$1"
+
+  current=$(get)
+  max=$(get max)
+  mid=$(get mid)
+  min=$(get min)
   case "$1" in
-  -help)
+    max) exp="$max";;
+    min) exp="$min";;
+    mid) exp="$mid";;
+  esac
+
+  state
+
+  # check
+  case "$exp" in
+    ''|*[!0-9]*) abort "invalid arguments $*";;
+    *) ;; # valid number
+  esac
+  if [ $exp -lt $min ] || [ $exp -gt $max ]; then
+    abort "invalid length $exp"
+  fi
+
+  echo "set brightness to $exp"
+  write "$exp"
+  )
+}
+
+while [ $# -ne 0 ]; do
+  case "$1" in
+  -h|--help|-help)
     helpmsg
     exit 0
     ;;
   -get)
-    getbr
-    exit 0
-    ;;
-  -getmax)
-    getmax
-    exit 0
-    ;;
-  -getmid)
-    getmid
-    exit 0
-    ;;
-  -getmin)
-    getmin
+    shift
+    get "${1:-}"
     exit 0
     ;;
   -state)
@@ -207,19 +171,7 @@ while [ -n "${1:-}" ]; do
     ;;
   -set)
     shift
-    setbr "$1"
-    exit 0
-    ;;
-  -setmax)
-    setmax
-    exit 0
-    ;;
-  -setmid)
-    setmid
-    exit 0
-    ;;
-  -setmin)
-    setmin
+    main "$1"
     exit 0
     ;;
   -inc)
@@ -232,12 +184,12 @@ while [ -n "${1:-}" ]; do
     dec "$1"
     exit 0
     ;;
-  -incper)
-    incper
+  -inc10per)
+    inc10per
     exit 0
     ;;
-  -decper)
-    decper
+  -dec10per)
+    dec10per
     exit 0
     ;;
   -d|--dry-run)
@@ -252,7 +204,7 @@ while [ -n "${1:-}" ]; do
   shift
 done
 
-# TODO: consider
 helpmsg
 echo "expected arguments"
 exit 2
+
