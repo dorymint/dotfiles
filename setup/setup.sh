@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-dotroot="$(dirname "$(dirname "$(readlink -e "$0")")")"
+dotroot="$(dirname "$(readlink -e "$0")")"
 options="--verbose -sn"
 force=false
 withx=false

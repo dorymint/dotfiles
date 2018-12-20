@@ -3,10 +3,11 @@ set -eu
 
 # confirm $1=msg return bool
 confirm() {
-  local key=""
-  local counter=0
+  (
+  key=""
+  counter=0
   while [ $counter -lt 3 ]; do
-    counter=`expr $counter + 1`
+    counter=$(( $counter + 1 ))
     echo -n "$1 [yes:no]?>"
     read -t 60 key || return 1
     case "$key" in
@@ -15,10 +16,16 @@ confirm() {
     esac
   done
   return 1
+  )
 }
 
+if [ $# -ne 1 ]; then
+  echo "not specify install device e.g. /dev/sd[X]"
+  exit 1
+fi
+
 # to /dev/sd[X]
-confirm "install device root $1"
+confirm "grub install to \"$1\""
 
 chattr -i /boot/grub/i386-pc/core.img
 grub-install --target=i386-pc --debug --force $1
@@ -30,3 +37,4 @@ chattr +i /boot/grub/i386-pc/core.img
 
 # output for boot.img
 # dd count=1 bs=512 if="$1" of="$2"
+
