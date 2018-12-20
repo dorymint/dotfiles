@@ -46,17 +46,20 @@ if [ -x /usr/bin/fcitx-autostart ]; then
   fcitx-autostart
 fi
 
+# TODO: consider
 # session
-case "${1:-i3}" in
-  i3|i3wm)
-    exec i3
-    ;;
-  i3-log|i3wm-log)
-    echo "xinit i3-log: $(date "+%Y-%m-%d")" > ~/.i3/tmp/i3.log
-    exec i3 -V -d all >> ~/.i3/tmp/i3.log
-    ;;
-  *)
-    echo "unexpected arguments: $@" >&2
-    #exec "$@"
-    ;;
-esac
+exec i3
+
+#case "${1:-i3}" in
+#  i3|i3wm)
+#    exec i3
+#    ;;
+#  i3-log|i3wm-log)
+#    echo "xinit i3-log: $(date "+%Y-%m-%d")" > ~/.i3/tmp/i3.log
+#    exec i3 -V -d all >> ~/.i3/tmp/i3.log
+#    ;;
+#  *)
+#    echo "unexpected arguments: $@" >&2
+#    #exec "$@"
+#    ;;
+#esac

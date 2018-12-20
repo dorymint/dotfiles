@@ -2,9 +2,10 @@
 set -eu
 
 dotroot="$(dirname "$(readlink -e "$0")")"
+dotgui="$dotroot"/x
 options="--verbose -sn"
 force=false
-withx=false
+withgui=false
 
 helpmsg() {
   cat >&1 <<END
@@ -15,9 +16,10 @@ Usage:
   setup.sh [Options]
 
 Options:
-  -h, -help  Diplay this message
-  -f, -force Allow override exist files
-  -x, -withx Setup with xorg configuration
+  -h, --help  Diplay this message
+  -f, --force Allow override exist files
+  -x, --withx Setup with xorg configuration
+  -g, --gui   Setup with gui, same -x
 
 END
 }
@@ -68,32 +70,32 @@ main() {
   set -e
 
   # for xorg
-  if [ "$withx" = "true" ]; then
+  if [ "$withgui" = "true" ]; then
     split "xorg"
-    [ -d "$HOME"/.config/systemd/user ] || mkdir -v -p "$HOME"/.config/systemd/user
+    [ -d "$HOME"/.config/systemd/user ] || mkdir -v -p -- "$HOME"/.config/systemd/user
 
     # fallthrough
     set +e
-      ln $options -- "$dotroot"/x/xinitrc "$HOME"/.xinitrc
+      ln $options -- "$dotgui"/xinitrc "$HOME"/.xinitrc
       # TODO: consider to remove
-      #ln $options -- "$dotroot"/x/xserverrc "$HOME"/.xserverrc
-      ln $options -- "$dotroot"/x/Xresources "$HOME"/.Xresources
-      ln $options -- "$dotroot"/x/fontconfig/ "$HOME"/.config/fontconfig
+      #ln $options -- "$dotgui"/xserverrc "$HOME"/.xserverrc
+      ln $options -- "$dotgui"/Xresources "$HOME"/.Xresources
+      ln $options -- "$dotgui"/fontconfig/ "$HOME"/.config/fontconfig
 
       # window manager
-      ln $options -- "$dotroot"/x/i3/ "$HOME"/.i3
-      ln $options -- "$dotroot"/x/sway/ "$HOME"/.sway
+      ln $options -- "$dotgui"/i3/ "$HOME"/.i3
+      ln $options -- "$dotgui"/sway/ "$HOME"/.sway
 
       # config
-      ln $options -- "$dotroot"/x/termite/ "$HOME"/.config/termite
-      ln $options -- "$dotroot"/x/conky/ "$HOME"/.config/conky
-      ln $options -- "$dotroot"/x/dunst/ "$HOME"/.config/dunst
+      ln $options -- "$dotgui"/termite/ "$HOME"/.config/termite
+      ln $options -- "$dotgui"/conky/ "$HOME"/.config/conky
+      ln $options -- "$dotgui"/dunst/ "$HOME"/.config/dunst
     set -e
   fi
 }
 
-while true; do
-  case "${1:-}" in
+while [ $# -ne 0 ]; do
+  case "$1" in
     help|-help|--help|-h)
       helpmsg
       exit 0
@@ -101,12 +103,8 @@ while true; do
     -force|--force|-f)
       force=true
       ;;
-    -withx|--withx|-x)
-      withx=true
-      ;;
-    "")
-      main
-      exit 0
+    -withx|--withx|-x|-g|--gui)
+      withgui=true
       ;;
     *)
       helpmsg
@@ -116,4 +114,6 @@ while true; do
   esac
   shift
 done
+
+main
 

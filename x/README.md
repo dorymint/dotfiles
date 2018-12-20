@@ -1,1 +1,0 @@
-# for xorg-server

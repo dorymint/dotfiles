@@ -20,7 +20,7 @@ urxvt.perl-ext:
 urxvt.perl-ext-common:
 
 ! inputmethods
-!urxvt.inputMethod: fctix
+!urxvt.inputMethod: fcitx
 !urxvt.preeditType: OnTheSpot
 
 urxvt.depth: 32
