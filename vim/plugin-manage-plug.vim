@@ -93,13 +93,11 @@ call plug#end()
 
 "-----| let |-----"
 " sonictemplate-vim
-if isdirectory(glob('~/dotfiles/vim/sonicdir'))
-  let g:sonictemplate_vim_template_dir = [
-    \ '~/dotfiles/vim/sonicdir/pretempl',
-    \ '~/dotfiles/vim/sonicdir/templ',
-  \ ]
+let s:sonicdir = '~/dotfiles/vim/sonictemplate'
+if isdirectory(glob(s:sonicdir))
+  let g:sonictemplate_vim_template_dir = s:sonicdir
 else
-  echo "template directory: sonicdir disable"
+  echoerr "not found " . s:sonicdir
 endif
 
 " lightline.vim

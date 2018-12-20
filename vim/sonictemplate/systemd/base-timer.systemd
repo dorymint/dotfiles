@@ -2,8 +2,8 @@
 Description={{_cursor_}}
 
 [Timer]
-OnUnitActiveSec=
-Unit=
+#OnUnitActiveSec=
+#Unit=
 
 [Install]
-WantedBy=
+WantedBy=multi-user.target

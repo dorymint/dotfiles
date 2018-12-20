@@ -1,0 +1,16 @@
+[Unit]
+Description={{_cursor_}}
+
+[Service]
+Type=simple
+
+# modify
+#User=
+#Group=
+#WorkingDirectory=~
+
+#EnvironmentFile=%h/path/to/localenv
+ExecStart=/bin/bash -c 'echo "do something'
+
+[Install]
+WantedBy=multi-user.target
