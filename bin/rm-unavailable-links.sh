@@ -14,6 +14,7 @@ if [ -d "$1" ]; then
       readlink -e "$x" || rm "$x"
     fi
   done
+  echo "pruned in $1"
   exit 0
 fi
 

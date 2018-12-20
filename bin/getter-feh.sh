@@ -1,6 +1,8 @@
 #!/bin/sh
 set -eu
 
+# TODO: rewrite
+
 bgcmd="feh"
 option="--scale-down"
 

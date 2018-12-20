@@ -1,6 +1,8 @@
 #!/bin/sh
 set -eu
 
+# TODO: rewrite
+
 unset -f helpmsg
 helpmsg() {
   cat >&1 <<END
