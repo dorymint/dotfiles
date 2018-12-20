@@ -1,2 +1,5 @@
-# nodejs
-[ -d "$HOME"/.node_modules/bin ] && export PATH="$PATH":"$HOME"/.node_modules/bin
+# profile for nodejs
+
+if [ -d "$HOME"/.node_modules/bin ];then
+  export PATH="$PATH":"$HOME"/.node_modules/bin
+fi
