@@ -43,13 +43,13 @@ alias checklog='builtin command cat -- "$HOME"/tmp/checkupdates.log'
 
 ## Goto src for golang
 if [ -d "$GOROOT"/src ]; then
-  alias gosrc='builtin cd "$GOROOT/src" && vim -R .'
+  alias gosrc='(builtin cd "$GOROOT/src" && vim -R .)'
 fi
 
 ## Goto src for rust
 if [ -x "$(builtin command -v rustc)" ]; then
   if [ -d "$(rustc --print sysroot)"/lib/rustlib/src/rust/src ]; then
-    alias rustsrc='builtin cd "$(rustc --print sysroot)"/lib/rustlib/src/rust/src && vim -R .'
+    alias rustsrc='(builtin cd "$(rustc --print sysroot)"/lib/rustlib/src/rust/src && vim -R .)'
   fi
 fi
 
@@ -101,3 +101,5 @@ fi
 [ "$TERM" = "xterm-termite" ] && alias ssh='TERM=xterm-256color ssh'
 [ -x "$(builtin command -v mplayer)" ] && alias mplayerbgm='builtin command mplayer -ao pulse -vo null'
 alias timers &> /dev/null || alias timers='systemctl --no-pager --user list-timers'
+
+# vim: ft=sh

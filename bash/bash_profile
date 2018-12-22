@@ -23,4 +23,4 @@ source "$HOME"/dotfiles/share/env/rust.sh
 [ -d "$HOME"/bin ] && export PATH="$HOME"/bin:"$PATH"
 
 # call rc
-#[ -f "$HOME"/.bashrc ] && source "$HOME"/.bashrc
+[ -f "$HOME"/.bashrc ] && source "$HOME"/.bashrc
