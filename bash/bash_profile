@@ -24,3 +24,5 @@ source "$HOME"/dotfiles/share/env/rust.sh
 
 # call rc
 [ -f "$HOME"/.bashrc ] && source "$HOME"/.bashrc
+
+# vim: ft=sh
