@@ -89,6 +89,7 @@ rmlinks() {
 
 main() {
   confirm "remove all symbolic links in $links_dir" || abort "stopped"
+  echo "remove links in $links_dir ..."
   rmlinks "$links_dir"
 
   echo "link $wallpaper to $links_dir"
