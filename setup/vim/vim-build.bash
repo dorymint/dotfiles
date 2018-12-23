@@ -56,13 +56,13 @@ confirm() {
   count=0
   while true; do
     [ $count -gt 3 ] && return 1
-    count=$(( $count + 1 ))
+    count=$(( count + 1 ))
     case "$key" in
       y|yes) return 0;;
       n|no) return 1;;
     esac
     echo -n "$msg"
-    read key
+    read -r key
   done
   )
 }
@@ -78,7 +78,9 @@ main() {
       git fetch
       git merge origin/master
       # fail through
-      confirm "check: git log -p" && git log -p || true
+      if confirm "check: git log -p"; then
+        git log -p
+      fi
     fi
   else
     echo "not found vim src directory"
