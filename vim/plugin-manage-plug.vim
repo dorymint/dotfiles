@@ -93,8 +93,8 @@ call plug#end()
 
 "-----| let |-----"
 " sonictemplate-vim
-let s:sonicdir = '~/dotfiles/vim/sonictemplate'
-if isdirectory(glob(s:sonicdir))
+let s:sonicdir = glob('~/dotfiles/vim/sonictemplate')
+if isdirectory(s:sonicdir)
   let g:sonictemplate_vim_template_dir = s:sonicdir
 else
   echoerr "not found " . s:sonicdir
@@ -272,10 +272,15 @@ nnoremap <LocalLeader>r :<C-u>QuickRun<CR>
 
 " sonictemplate-vim
 " すぐにテンプレートを編集できるように
-if isdirectory(glob('~/dotfiles/vim/sonicdir/pretempl'))
-  nnoremap <LocalLeader>wp :<C-u>10split ~/dotfiles/vim/sonicdir/pretempl/%:e/
-  nnoremap <LocalLeader>ww :<C-u>10split ~/dotfiles/vim/sonicdir/templ/%:e/
-endif
+function! s:editsonic() abort
+  if isdirectory(g:sonictemplate_vim_template_dir)
+    " open by NERDTree or netrw
+    execute "vsplit" . " " . g:sonictemplate_vim_template_dir
+  else
+    echoerr "not directory g:sonictemplate_vim_template_dir"
+  endif
+endfunction
+nnoremap <LocalLeader>ww :<C-u>call <SID>editsonic()<CR>
 
 " vim-easymotion
 map <LocalLeader>f <Plug>(easymotion-bd-w)

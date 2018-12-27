@@ -78,8 +78,10 @@ main() {
       git fetch
       git merge origin/master
       # fail through
-      if confirm "check: git log -p"; then
-        git log -p
+      if [ "$ignore_confirm" = "false" ]; then
+        if confirm "git log -p"; then
+          git log -p || :
+        fi
       fi
     fi
   else
