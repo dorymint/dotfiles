@@ -16,10 +16,10 @@ if [[ "$(uname -n)" == *lily* ]] && [ "$SHLVL" -eq 1 ]; then
 fi
 
 ## TODO: fix
-green="\[$(tput setaf 6)\]"
-red="\[$(tput setaf 5)\]"
+cyan="\[$(tput setaf 6)\]"
+blue="\[$(tput setaf 4)\]"
 reset="\[$(tput sgr0)\]"
-export PS1="$red\$?$reset $green\u$reset@\h:\w$"
+export PS1="$blue\$?$reset $cyan\u$reset@\h:\w$"
 
 # less
 man() {
