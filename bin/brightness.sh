@@ -118,7 +118,7 @@ write() {
   if [ "$dry_run" = true ]; then
     echo "[DRY_RUN]: write \"$1\" to \"$current_brightness\""
   else
-    echo -n "$1" > "$current_brightness"
+    printf "%s" "$1" > "$current_brightness"
   fi
 }
 
