@@ -257,6 +257,7 @@ else
   nnoremap <LocalLeader>s :<C-u>SyntasticToggleMode<CR>
   nnoremap <LocalLeader>o :<C-u>Errors<CR>
   nnoremap <LocalLeader>e :<C-u>Errors<CR>
+  nnoremap <LocalLeader>c :<C-u>lclose<CR>
 endif
 
 " nerdtree
