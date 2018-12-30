@@ -1,7 +1,8 @@
 #!/bin/sh
 set -eu
-for x in {1..100}; do
+for x in $(seq 1 100); do
   ss -atn
-  echo -e "$x\n"
+  printf "%s\n" "$x"
   sleep 1
 done
+
