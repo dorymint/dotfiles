@@ -1,39 +1,33 @@
-#
 # zshrc
-#
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-## grml zshrc
+# grml zshrc
 # TODO: consider to remove
 if command -v pacman &> /dev/null; then
   pacman -Q grml-zsh-config &> /dev/null ||
     echo "recommend: pacman -S grml-zsh-config"
-else
-  echo "warning: use grml in dotfiles"
-  source "$HOME"/dotfiles/zsh/grml/zshrc.grml
 fi
 
-## alias
+# alias
 source "$HOME"/dotfiles/share/alias
 [ -f "$HOME"/dotfiles/etc/alias ] && source "$HOME"/dotfiles/etc/alias
 
-## setopt
+# setopt
 setopt autocd
 setopt autopushd
 setopt pushdignoredups
 
-## syntax highlight
+# syntax highlight
 src_syntax_hi="/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 if [ -r "$src_syntax_hi" ]; then
   source "$src_syntax_hi"
 fi
 unset -v src_syntax_hi
 
-[ -f "$HOME"/dotfiles/etc/zsh/localrc.zsh ] && source "$HOME"/dotfiles/etc/zsh/localrc.zsh
-
-## lily
+# lily
 if [[ "$(uname -n)" == *lily* ]] && [ "$SHLVL" -eq 1 ]; then
   command -v fortune &> /dev/null && fortune
 fi
+
