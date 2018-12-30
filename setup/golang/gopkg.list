@@ -12,6 +12,7 @@ github.com/golang/dep/cmd/dep
 github.com/google/gops
 github.com/github/hub
 github.com/mattn/cho
+github.com/mattn/gof
 github.com/nsf/gocode
 github.com/derekparker/delve/cmd/dlv
 github.com/josharian/impl
