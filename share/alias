@@ -68,23 +68,6 @@ if [ -r "$HOME"/venv/bin/activate ]; then
   alias python-activate='builtin source $HOME/venv/bin/activate'
 fi
 
-## peco
-if [ -x "$(builtin command -v peco)" ]; then
-  if [ -x "$(builtin command -v reps.sh)" ]; then
-    alias reps='builtin cd "$(reps.sh status | peco)"'
-  fi
-  alias cdl='builtin cd "$(dirs -pl | peco)"'
-  alias cdp='builtin cd "$(find . -type d ! -path "*.git*" ! -path "*.deps*" | peco)"'
-  if (alias gw &> /dev/null); then
-    alias gwp='gw && cdp'
-    if [ -x "$(builtin command -v gotcha)" ] && (alias viml &> /dev/null); then
-        alias gwtodo='gw && viml "$(gotcha -trim=false | peco)"'
-      else
-        alias gwtodo='gw && vim "$(gotcha -trim=false | peco)"'
-    fi
-  fi
-fi
-
 ## gits && cho
 if [ -x "$(builtin command -v gits)" ] && [ -x "$(builtin command -v cho)" ]; then
   alias cdg='builtin cd -- $(builtin command gits -list-repo-full | builtin command cho || builtin command pwd)'
