@@ -1,7 +1,7 @@
 ! xrdb -merge ~/.Xresources
 
 xft.dpi: 96
-xft.antialias: true
+xft.antialias: false
 xft.rgba: rgb
 xft.hinting: true
 xft.hintstyle: hitslight
@@ -10,7 +10,6 @@ urxvt.saveLines: 512
 urxvt.scrollBar: false
 urxvt.pointerBlank: true
 
-! do not need iso insert mode
 ! for release ctrl+shift
 urxvt.iso14755: false
 urxvt.iso14755_52: false
@@ -19,13 +18,15 @@ urxvt.iso14755_52: false
 urxvt.perl-ext:
 urxvt.perl-ext-common:
 
+! word by word movement
+urxvt.keysym.Control-Left: \033[1;5D
+urxvt.keysym.Control-Right: \033[1;5C
+
 ! inputmethods
 !urxvt.inputMethod: fcitx
 !urxvt.preeditType: OnTheSpot
 
 urxvt.depth: 32
-!urxvt.background: #0f0f0f
-!urxvt.background: [95]#000000
 urxvt.background: [85]#000000
 urxvt.foreground: #c8c8c8
 urxvt.color0: #3f3f3f
@@ -44,14 +45,6 @@ urxvt.color12: #94bff3
 urxvt.color13: #ec93d3
 urxvt.color14: #93e0e3
 urxvt.color15: #ffffff
-
-! urxvt.font: -misc-fixed-medium-r-semicondensed-*-12-90-100-*-c-60-iso8859-1
-!urxvt*font: xft:DejaVu Sans Mono:size=8, \
-!            xft:Inconsolata:size=8, \
-!            -misc-fixed-medium-r-semicondensed-*-12-90-100-*-c-60-iso8859-1
-
-!urxvt*font: xft:Ricty:size=10
-!urxvt*font: xft:Noto Sanse Mono CJK JP:size=10
 
 urxvt.font: \
   xft:Inconsolata:size=11, \
