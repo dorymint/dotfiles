@@ -30,45 +30,47 @@ alias emacs='builtin command emacs -nw'
 alias manja='LC_ALL=ja_JP.UTF-8 builtin command man'
 #alias manja='LC_MESSAGES=ja_JP.UTF-8 builtin command man'
 
-# Local
-## cd
-alias gw='builtin cd "$GOPATH"/src/github.com/"$(git config --global user.name)"'
-alias ww='builtin cd "$HOME"/github.com/"$(git config --global user.name)"'
-alias dotfiles='builtin cd "$HOME"/dotfiles'
-alias tmp='builtin cd "$HOME"/tmp'
+# cd
+alias gw='builtin cd -- "$GOPATH"/src/github.com/"$(git config --global user.name)"'
+alias ww='builtin cd -- "$HOME"/github.com/"$(git config --global user.name)"'
+alias dotfiles='builtin cd -- "$HOME"/dotfiles'
+alias tmp='builtin cd -- "$HOME"/tmp'
+if [ -x "$(builtin command -v gof)" ]; then
+  alias cdgof='builtin cd -- "$(gof="$(gof)";[ $? -ne 0 ] && pwd && exit 1;[ -d "$gof" ] && echo "$gof" && exit 0;dirname "$gof"; exit 1)"'
+fi
 
 # pacman
 alias checkupdates='builtin command date > "$HOME"/tmp/checkupdates.log && builtin command checkupdates >> "$HOME"/tmp/checkupdates.log && builtin command cat "$HOME"/tmp/checkupdates.log'
 alias checklog='builtin command cat -- "$HOME"/tmp/checkupdates.log'
 
-## Goto src for golang
+# vim -R gosrc
 if [ -d "$GOROOT"/src ]; then
-  alias gosrc='(builtin cd "$GOROOT/src" && vim -R .)'
+  alias gosrc='(builtin cd -- "$GOROOT/src" && vim -R .)'
 fi
 
-## Goto src for rust
+# vim -R rustsrc
 if [ -x "$(builtin command -v rustc)" ]; then
   if [ -d "$(rustc --print sysroot)"/lib/rustlib/src/rust/src ]; then
-    alias rustsrc='(builtin cd "$(rustc --print sysroot)"/lib/rustlib/src/rust/src && vim -R .)'
+    alias rustsrc='(builtin cd -- "$(rustc --print sysroot)"/lib/rustlib/src/rust/src && vim -R .)'
   fi
 fi
 
-## vim
+# vim
 if [ -x "$HOME"/opt/vim/bin/vim ]; then
   alias viml='"$HOME"/opt/vim/bin/vim'
 fi
 
-## nvim
+# nvim
 if [ -x "$HOME"/opt/neovim/bin/nvim ]; then
   alias nvim='"$HOME"/opt/neovim/bin/nvim'
 fi
 
-## python
+# python
 if [ -r "$HOME"/venv/bin/activate ]; then
   alias python-activate='builtin source $HOME/venv/bin/activate'
 fi
 
-## gits && cho
+# gits && cho
 if [ -x "$(builtin command -v gits)" ] && [ -x "$(builtin command -v cho)" ]; then
   alias cdg='builtin cd -- $(builtin command gits -list-repo-full | builtin command cho || builtin command pwd)'
   alias gl='builtin command gits -- status | builtin command less -R'
@@ -80,9 +82,13 @@ if [ -x "$(builtin command -v sway)" ]; then
   alias sway-without-xwayland='XKB_DEFAULT_LAYOUT=jp XKB_DEFAULT_MODEL=pc106 WLC_REPEAT_DELAY=200 WLC_REPEAT_RATE=30 WLC_XWAYLAND=0 sway'
 fi
 
-## etc
+# termite
 [ "$TERM" = "xterm-termite" ] && alias ssh='TERM=xterm-256color ssh'
+
+# mplayer
 [ -x "$(builtin command -v mplayer)" ] && alias mplayerbgm='builtin command mplayer -ao pulse -vo null'
+
+# systemctl --user
 alias timers &> /dev/null || alias timers='systemctl --no-pager --user list-timers'
 
 # vim: ft=sh

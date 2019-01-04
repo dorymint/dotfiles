@@ -1,8 +1,8 @@
 #!/bin/sh
 set -eu
 
-dotroot="$(dirname "$(readlink -e "$0")")"
-dotgui="$dotroot"/x
+dotroot="$(dirname "$(dirname "$(readlink -e "$0")")")"
+dotx="$dotroot"/x
 options="--verbose -sn"
 force=false
 withgui=false
@@ -24,14 +24,6 @@ Options:
 END
 }
 
-errmsg() {
- echo "[err] setup.sh: $*" 1>&2
-}
-
-split() {
-  printf "\n------- setup %s -------\n" "$*"
-}
-
 main() {
   [ -d "$HOME"/.vim ] || mkdir -v -m 0700 -- "$HOME"/.vim
   [ -d "$HOME"/bin ] || mkdir -v -m 0700 -- "$HOME"/bin
@@ -50,46 +42,46 @@ main() {
 
   # fallthrough
   set +e
-    split "zsh"
+    # zsh
     ln $options -- "$dotroot"/zsh/zshrc "$HOME"/.zshrc
     ln $options -- "$dotroot"/zsh/zprofile "$HOME"/.zprofile
 
-    split "bash"
+    # bash
     ln $options -- "$dotroot"/bash/bashrc "$HOME"/.bashrc
     ln $options -- "$dotroot"/bash/bash_profile "$HOME"/.bash_profile
 
-    split "git"
+    # git
     ln $options -- "$dotroot"/gitconfig "$HOME"/.gitconfig
 
-    split "vim"
+    # vim
     ln $options -- "$dotroot"/vim/vimrc "$HOME"/.vimrc
     ln $options -- "$dotroot"/vim/gvimrc "$HOME"/.gvimrc
 
-    split "tmux"
+    # tmux
     ln $options -- "$dotroot"/tmux/tmux.conf "$HOME"/.tmux.conf
   set -e
 
   # for xorg
   if [ "$withgui" = "true" ]; then
-    split "xorg"
+    # xorg
     [ -d "$HOME"/.config/systemd/user ] || mkdir -v -p -- "$HOME"/.config/systemd/user
 
     # fallthrough
     set +e
-      ln $options -- "$dotgui"/xinitrc "$HOME"/.xinitrc
+      ln $options -- "$dotx"/xinitrc "$HOME"/.xinitrc
       # TODO: consider to remove
-      #ln $options -- "$dotgui"/xserverrc "$HOME"/.xserverrc
-      ln $options -- "$dotgui"/Xresources "$HOME"/.Xresources
-      ln $options -- "$dotgui"/fontconfig/ "$HOME"/.config/fontconfig
+      #ln $options -- "$dotx"/xserverrc "$HOME"/.xserverrc
+      ln $options -- "$dotx"/Xresources "$HOME"/.Xresources
+      ln $options -- "$dotx"/fontconfig/ "$HOME"/.config/fontconfig
 
       # window manager
-      ln $options -- "$dotgui"/i3/ "$HOME"/.i3
-      ln $options -- "$dotgui"/sway/ "$HOME"/.sway
+      ln $options -- "$dotx"/i3/ "$HOME"/.config/i3
+      ln $options -- "$dotx"/sway/ "$HOME"/.config/sway
 
       # config
-      ln $options -- "$dotgui"/termite/ "$HOME"/.config/termite
-      ln $options -- "$dotgui"/conky/ "$HOME"/.config/conky
-      ln $options -- "$dotgui"/dunst/ "$HOME"/.config/dunst
+      ln $options -- "$dotx"/termite/ "$HOME"/.config/termite
+      ln $options -- "$dotx"/conky/ "$HOME"/.config/conky
+      ln $options -- "$dotx"/dunst/ "$HOME"/.config/dunst
     set -e
   fi
 }
@@ -108,7 +100,7 @@ while [ $# -ne 0 ]; do
       ;;
     *)
       helpmsg
-      errmsg "unknown option: $*"
+      echo "unknown option: $*" 1>&2
       exit 1
       ;;
   esac

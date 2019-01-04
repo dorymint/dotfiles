@@ -15,7 +15,7 @@ set $down j
 set $up k
 set $right l
 
-set $i3dir "$HOME"/.i3
+set $i3dir "$HOME"/.config/i3
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below. ISO 10646 = Unicode
@@ -32,20 +32,59 @@ font pango:Orbitron 9
 floating_modifier $mod
 
 # start a terminal
-#bindsym $mod+Return exec i3-sensible-terminal
-#bindsym $mod+Return exec termite
 bindsym $mod+Return exec urxvt
-bindsym $mod+Shift+a exec urxvt
+bindsym $mod+Shift+a exec i3-sensible-terminal
 
 # kill focused window
 bindsym $mod+q kill
 
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+q exec "i3-msg exit"
+
 # start dmenu (a program launcher)
 bindsym $mod+Shift+d exec dmenu_run
+
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+
+# i3lock
+bindsym $mod+Shift+Return exec --no-startup-id /usr/bin/i3lock
+
+# split in horizontal orientation
+#bindsym $mod+h split h
+bindsym $mod+b split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+Space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+Space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
 
 # change focus
 bindsym $mod+$left focus left
@@ -71,33 +110,6 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-# split in horizontal orientation
-#bindsym $mod+h split h
-bindsym $mod+b split h
-
-# split in vertical orientation
-bindsym $mod+v split v
-
-# enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen
-
-# change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
-
-# toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
-
-# change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
-
-# focus the parent container
-bindsym $mod+a focus parent
-
-# focus the child container
-#bindsym $mod+d focus child
-
 # switch to workspace
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
@@ -121,14 +133,6 @@ bindsym $mod+Shift+7 move container to workspace 7
 bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
-
-# reload the configuration file
-bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-#bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-bindsym $mod+Shift+e exec "i3-msg exit"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -179,11 +183,8 @@ mode "volume" {
   bindsym Escape mode "default"
   bindsym q      mode "default"
 }
-#bindsym $mod+Shift+v mode "volume"
-# use mode_selector
 
 # backlight brightness
-# TODO: consider
 mode "backlight" {
   bindsym k exec --no-startup-id sh -c "$i3dir/brightness.sh -inc10per"
   bindsym j exec --no-startup-id sh -c "$i3dir/brightness.sh -dec10per"
@@ -197,14 +198,14 @@ mode "backlight" {
   bindsym q      mode "default"
 }
 
-# for background
-mode "feh_background" {
+# background
+mode "background" {
   bindsym r exec --no-startup-id sh -c '$i3dir/randombg.sh'
   bindsym n exec --no-startup-id sh -c '$i3dir/randombg.sh next'
   bindsym p exec --no-startup-id sh -c '$i3dir/randombg.sh previous'
 
-  bindsym i exec --no-startup-id sh -c 'notify-send "mode: feh_background" "Current background number: $($i3dir/randombg.sh show)"'
-  bindsym h exec --no-startup-id sh -c 'notify-send "mode: feh_background" "$(echo -e "\nr\tRandom\nn\tNext\np\tPrevious\n\nq\tReturn to default")"'
+  bindsym i exec --no-startup-id sh -c 'notify-send "mode: background" "Current background number: $($i3dir/randombg.sh show)"'
+  bindsym h exec --no-startup-id sh -c 'notify-send "mode: background" "$(echo -e "\nr\tRandom\nn\tNext\np\tPrevious\n\nq\tReturn to default")"'
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
@@ -214,21 +215,18 @@ mode "feh_background" {
 # TODO: consider mode selector
 #     : consider notify-send for mode select
 mode "mode_selector" {
-  #bindsym h exec --no-startup-id sh -c 'notify-send "mode: mode_selector" "$(echo -e "[q|Escape|Return]\tmode to default\nv\tvolume\nr\tresize\n")"'
+  bindsym h exec --no-startup-id sh -c 'notify-send "i3 mode: mode_selector" "$(printf "v:volume\nr:resize\nb:backlight\nf:backround\n")"'
 
   bindsym v mode "volume"
   bindsym r mode "resize"
   bindsym b mode "backlight"
-  bindsym f mode "feh_background"
+  bindsym f mode "background"
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
   bindsym q mode "default"
 }
 bindsym $mod+m mode "mode_selector"
-
-# i3lock
-bindsym $mod+Shift+Return exec --no-startup-id /usr/bin/i3lock
 
 # border
 bindsym $mod+t border normal 2
@@ -237,7 +235,7 @@ bindsym $mod+u border none
 
 bindsym $mod+Shift+b bar mode toggle
 
-# TODO: reconsider Colors
+# TODO: is need?
 set $lightgray #AAAAAA
 set $gray      #484848
 set $gray2     #757575
@@ -266,9 +264,6 @@ bar {
 for_window [instance="pavucontrol"] floating enable
 
 # start exec
-# duplication is allowed
 exec_always --no-startup-id sh -c '$i3dir/randombg.sh'
 exec --no-startup-id conky --daemonize
 exec --no-startup-id compton --daemon
-#exec --no-startup-id conky
-#exec --no-startup-id compton --daemon --shadow --menu-opacity=0.75
