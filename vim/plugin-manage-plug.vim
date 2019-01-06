@@ -1,19 +1,19 @@
 scriptencoding utf-8
 call plug#begin('~/.vim/plugged')
 " Edit:
-  " for html css completion
+  " html css completion
   Plug 'mattn/emmet-vim'
-  " for snipets
+  " snipets
   Plug 'mattn/sonictemplate-vim'
 
 " Status:
-  " for status line customize
+  " status line customize
   Plug 'itchyny/lightline.vim'
 
 " Git:
-  " for use git commands in vim
+  " use git commands in vim
   Plug 'tpope/vim-fugitive'
-  " for display a git diff in sign column
+  " display a git diff in sign column
   Plug 'airblade/vim-gitgutter'
 
 " Manage:
@@ -35,22 +35,21 @@ call plug#begin('~/.vim/plugged')
   " preview for markdown
   Plug 'kannokanno/previm'
   " jump to words
-  " NOTE: instead action: '/' or '?' on NORMAL mode
   Plug 'easymotion/vim-easymotion'
 
+  " TODO: use language server protocol
+  " Plug 'prabirshrestha/vim-lsp'
   let s:useALE = v:false
   if s:useALE
     Plug 'w0rp/ale'
   else
-    " NOTE: :help :Errors
-    " see more info is :help syntastic-commands
     Plug 'vim-syntastic/syntastic'
   endif
 
 " Language:
   " dart
   Plug 'dart-lang/dart-vim-plugin'
-  " clang
+  " c
   Plug 'justmao945/vim-clang'
   " javascript
   Plug 'heavenshell/vim-jsdoc'
@@ -58,12 +57,11 @@ call plug#begin('~/.vim/plugged')
   " rust
   Plug 'rust-lang/rust.vim'
   Plug 'racer-rust/vim-racer'
-  " golang
+  " go
   Plug 'fatih/vim-go'
   " python
   Plug 'davidhalter/jedi-vim'
-  " UML
-  " NOTE: Unified Modeling Language, see 'plantuml.com'
+  " UML is Unified Modeling Language, see 'plantuml.com'
   " vim-slumlord is for insert the ASCII diagrams
   Plug 'scrooloose/vim-slumlord'
   Plug 'aklt/plantuml-syntax'
@@ -79,7 +77,7 @@ call plug#begin('~/.vim/plugged')
   " translated vim help
   Plug 'vim-jp/vimdoc-ja'
   " fun
-  Plug 'deris/vim-duzzle', { 'on': 'DuzzleStart' }
+  "Plug 'deris/vim-duzzle', { 'on': 'DuzzleStart' }
 
   " Vim script plugin library
   " TODO: consider to remove
@@ -87,9 +85,6 @@ call plug#begin('~/.vim/plugged')
   "Plug 'google/vim-glaive'
   "Plug 'google/vim-codefmt'
 call plug#end()
-
-" NOTE: プラグインごとの設定が分散して把握しにくいなんとかしたい
-
 
 "-----| let |-----"
 " sonictemplate-vim
@@ -109,8 +104,8 @@ let g:lightline = {
       \ [ 'readonly', 'filename', 'modified' ],
     \ ],
     \ 'right': [
-      \ [ 'lineinfo', 'charvaluehex', 'percent' ],
-      \ [ 'fileformat', 'fileencoding', 'filetype' ],
+      \ [ 'lineinfo', 'charvaluehex', 'percent', 'bufnum' ],
+      \ [ 'spell', 'fileformat', 'fileencoding', 'filetype' ],
       \ [ 'syntastic', 'ale' ],
     \ ],
   \ },
@@ -147,6 +142,8 @@ if (has('win32') || has('win64'))
   " path to local biuld ctags.exe
   if executable(glob('~/opt/ctags/ctags.exe'))
     let g:tagbar_ctags_bin = expand(glob('~/opt/ctags/ctags.exe'))
+  else
+    echoerr 'not found "ctags.exe"'
   endif
 endif
 let g:tagbar_type_go = {
@@ -175,10 +172,10 @@ let g:tagbar_type_go = {
 \ }
 
 " vim-quickrun
-" NOTE: 設定するとデフォルトマップが無効になる
+" 設定するとデフォルトマップが無効になる
 "let g:quickrun_no_default_key_mappings = 1
 let g:quickrun_config = {}
-" NOTE: :QuickRun gotest
+" :QuickRun gotest
 " go test -race $(pwd)
 let g:quickrun_config['gotest'] = { 'command': 'go', 'exec': ['%c test -v -race'] }
 
@@ -197,14 +194,14 @@ if s:useALE
   let g:ale_lint_on_text_changed = 'never'
   let g:ale_lint_on_save = 1
   let g:ale_lint_on_enter = 1
-  " NOTE: rustc is only use nightly
+  " rustc is only use nightly
   " if use on stable or beta then be careful that is make the executable
   let g:ale_linters = {
     \ 'rust': ['cargo', 'rls', 'rustc'],
   \ }
 else
   " syntastic
-  " golang
+  " go
   let g:syntastic_go_checkers = ['gofmt', 'govet', 'golint', 'gotype']
   " rust
   let g:syntastic_rust_checkers = ['cargo']
@@ -228,7 +225,7 @@ let g:go_play_open_browser = 0
 let g:go_fmt_autosave = 0
 let g:go_template_autocreate = 0
 
-" NOTE: for python
+" python
 " jedi-vim
 "let g:jedi#auto_initialization = 0
 let g:jedi#popup_on_dot = 0
@@ -239,8 +236,7 @@ let g:jedi#rename_command = '<LocalLeader>R'
 
 
 "-----| keymap |-----"
-" TODO: consider
-" Filetypeでスイッチするマップは次の autocmd で定義する
+" Filetype でスイッチするマップは次の autocmd で定義する
 " CtrlP emmet sonictemplate はそのまま
 " :help ctrlp-mappings
 
@@ -252,7 +248,7 @@ if s:useALE
   nnoremap <LocalLeader>ap :<C-u>ALEPreviousWrap<CR>
 else
   " syntastic
-  " NOTE: 保存時に常に走らせると少し重い時があるのでトグルをマップ
+  " 保存時に常に走らせると少し重い時があるのでトグルをマップ
   " 非同期でチェックできる良いプラグインがあれば乗り換えたい
   nnoremap <LocalLeader>s :<C-u>SyntasticToggleMode<CR>
   nnoremap <LocalLeader>o :<C-u>Errors<CR>
@@ -267,8 +263,6 @@ nnoremap <LocalLeader>n :<C-u>NERDTreeToggle<CR>
 nnoremap <LocalLeader>t :<C-u>TagbarToggle<CR>
 
 " quickrun
-" NOTE: is not work?
-"nnoremap <LocalLeader>r <Plug>(quickrun)
 nnoremap <LocalLeader>r :<C-u>QuickRun<CR>
 
 " sonictemplate-vim
@@ -290,9 +284,8 @@ nmap <LocalLeader>f <Plug>(easymotion-overwin-w)
 " vim-gitgutter
 nnoremap <LocalLeader>ggt :<C-u>GitGutterToggle<CR>
 
-
 "-----| autocmd |-----"
-function! s:ftgolang()
+function! s:ftgo()
   " vim-go
   nnoremap <buffer> <LocalLeader>i :<C-u>GoImport<Space>
   nnoremap <buffer> <LocalLeader>d :<C-u>GoDrop<Space>
@@ -316,14 +309,12 @@ function! s:ftrust()
   nmap <buffer> <LocalLeader>r <Plug>(quickrun)
 endfunction
 
-" NOTE: plug begin end で含まれてるはずだけど一応
 filetype plugin indent on
 
 augroup plugin_manage_plug
   autocmd!
-  autocmd FileType go call s:ftgolang()
+  autocmd FileType go call s:ftgo()
   autocmd FileType rust call s:ftrust()
 augroup END
-
 
 " vim: textwidth=0

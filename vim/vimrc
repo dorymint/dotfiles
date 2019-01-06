@@ -1,15 +1,13 @@
-"
 " vimrc
-"
+
 "-----| fileencoding |-----"
 set encoding=utf-8
 scriptencoding utf-8
 
-" TODO: 時間が取れたら整理する
+" 時間が取れたら整理する
 " コメント多めに書く
-" fix for windows
 
-" NOTE: 設定の詳細は:helpで調べればまず困らない
+" 設定の詳細は :help で調べればまず困らない
 " <F1> キーで help を開く
 " 日本語のヘルプは https://github.com/vim-jp/vimdoc-ja
 " scriptencoding utf-8 はマルチバイトが現れる前の先頭に書くといい
@@ -17,8 +15,8 @@ scriptencoding utf-8
 " 詳しくはアンチパターンを確認
 " vimrc アンチパターンは https://github.com/vim-jp/reading-vimrc/wiki
 " NORMALモードで : を押すとコマンドを入力するモードに移る
-" setの詳細は :help ${name} もしくは :help set で確認
-" setはできるだけ省略せずに書く set nohl --> set nohlsearch
+" set の詳細は :help ${name} もしくは :help set で確認
+" set はできるだけ省略せずに書く set nohl --> set nohlsearch
 " 現在のオプションの値を確認するには :set {option}? とする
 " Vim script は最初の非空白文字を \ にすることで前の行と連結できる
 " vim の echo は内部変数を除くのにべんり :echo &encoding
@@ -28,14 +26,14 @@ scriptencoding utf-8
 " :echo @%
 " fullpath は :echo expand("%:p")
 
-" NOTE: true and false
+" true and false
 " those variable is read only
 " v:true = 1
 " v:false = 0
 " :echo v:true != v:false
 " :echo v:true == v:false
 
-" NOTE: 以下のヘルプを見ておけば迷わないと思う
+" 以下のヘルプを見ておけば迷わないと思う
 " base
 " :help
 " :help help
@@ -72,17 +70,13 @@ scriptencoding utf-8
 " :help special-buffers
 " :help spell
 
-" NOTE: useful vimgrep
-" バッククォートはunixだけらしい
-" :vim ${pattern} `git ls-files`
-
 "-----| plugin manage |-----"
 if (has('win32') || has('win64')) && isdirectory(glob('~/.vim'))
-  " NOTE: linuxに合わせる
+  " linux に合わせる
   set runtimepath^=~/.vim,~/.vim/after
 endif
 
-" select plugin manager
+" plugin manager
 if v:true
   " plug
   if filereadable(glob('~/.vim/autoload/plug.vim'))
@@ -95,7 +89,6 @@ else
   endif
 endif
 
-
 "-----| set |-----"
 set ttyfast
 set notimeout
@@ -104,14 +97,14 @@ set ttimeout
 set ttimeoutlen=100
 set modeline
 
-" NOTE: modelines ファイル頭と尻尾のコメントを書くとき注意する
-" {vi:|vim:|Vim:|ex:}でぶつかる
+" modelines ファイル頭と尻尾のコメントを書くとき注意する
+" {vi:|vim:|Vim:|ex:} でぶつかる
 set modelines=5
 
 set hidden
 set autoread
 
-" NOTE: 貼り付けで形が崩れる場合は :paste して貼付け後に :nopaste する
+" 貼り付けで形が崩れる場合は :paste して貼付け後に :nopaste する
 set nopaste
 
 set backspace=indent,eol,start
@@ -128,15 +121,15 @@ set scrolloff=5
 set textwidth=0
 set wrap
 
-" NOTE: 折り返しのインデントを合わせる,vim8
+" 折り返しのインデントを合わせる,vim8
 set breakindent
 
-" NOTE: :help revins :)
+" :help revins :)
 set norevins
 
 " spell
-" NOTE: cjk を追加で東アジア圏の言葉をチェックから除外できるらしい
 set nospell
+" cjk を追加で東アジア圏の言葉をチェックから除外できるらしい
 set spelllang=en,cjk
 
 " cursor
@@ -148,7 +141,6 @@ set foldmethod=marker
 set foldmarker={{{,}}}
 set foldlevel=0
 
-" NOTE: デフォルトは開くように
 " :help zi
 set nofoldenable
 function! Giko()
@@ -169,14 +161,14 @@ set wildmenu
 set wildmode=list:longest,full
 set confirm
 
-" NOTE: vimから呼ぶシェルを設定, shell=zsh
+" vimから呼ぶシェルを設定, shell=zsh
 "set shell=bash
 
 " search
 set incsearch
 set hlsearch
 
-" NOTE: 置換処理のマッチにも影響するため注意
+" 置換処理のマッチにも影響するため注意
 " ignorecase 大文字少文字を区別しない
 " smartcase 検索条件に大文字が含まれると noignorecase
 set ignorecase
@@ -195,17 +187,25 @@ set softtabstop=2
 
 " list
 set list
-" NOTE: eolは考慮中 eol:↵
+" eol は考慮中 eol:↵
 set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:<
 
 " statusline
 set laststatus=2
-" NOTE: %[n]?[.] の形式で指定してる、詳細は:help statuslineで確認
-set statusline=%f%m%r%w%y%{&fileencoding}[%{&fileformat}]%=%(buf[%n]hex[%4B]line[%4l/%4L:%4P]%)
+" %[n]?[.] の形式で指定してる、詳細は :help statusline で確認
+set statusline=%f
+set statusline+=%m
+set statusline+=%r
+set statusline+=%w
+set statusline+=%y
+set statusline+=%{&fileencoding}
+set statusline+=[%{&fileformat}]
+set statusline+=%=
+set statusline+=%(buf[%n]hex[%4B]line[%4l/%4L:%4P]%)
 
 " tabline
 set showtabline=1
-" NOTE: 設定はstatuslineと似てる :help tabline
+" 設定は statusline と似てる :help tabline
 "set tabline=
 
 " split
@@ -213,7 +213,7 @@ set splitbelow
 set splitright
 
 " visualbell
-" NOTE: set visualbell でbeep音を画面のフラッシュと置き換える
+" set visualbell でbeep音を画面のフラッシュと置き換える
 " t_vb= でフラッシュのターミナルコードを空指定してフラッシュさせない
 set visualbell
 set t_vb=
@@ -233,14 +233,13 @@ if isdirectory(glob('~/dotfiles/vim/tmp'))
   set swapfile
 endif
 
-
 "-----| color |-----"
 " colorscheme
 "set background=dark
-if $TERM == "xterm-256color" ||
-      \ $TERM == "xterm-termite" ||
-      \ $TERM == "screen-256color" ||
-      \ $TERM == "rxvt-unicode-256color"
+if $TERM == 'xterm-256color' ||
+      \ $TERM == 'xterm-termite' ||
+      \ $TERM == 'screen-256color' ||
+      \ $TERM == 'rxvt-unicode-256color'
   set t_Co=256
   try
     colorscheme jellybeans
@@ -263,78 +262,56 @@ endif
 
 syntax on
 
-
 "-----| key map |-----"
-" NOTE: (,,ﾟДﾟ)つ:help index
-" defaultのマップは :help index で確認できる
+" (,,ﾟДﾟ)つ:help index
+" default のマップは :help index で確認できる
 " user定義のマップは :imap :nmap :vmap :map :verbose map で確認できる
 " なるべくデフォルトを消さないようにマップする
-" <C-s>はttyへの入力受付をロックする?<C-q>で復帰、端末制御に使うキーはマップに注意する
-" <C-b>はtmuxと被る、tmuxを変えずにvimでマップしないようにしてみる
-" <C-z>はサスペンド、jobsでサスペンドの確認、fgでフォアグラウンド
-" <Nop>はマップを削除できる
-" コマンドのキーマップは<C-u>で数値の前置を消しておかないと範囲指定される
-" mapleaderが有用
+" <C-s> は tty への入力受付をロックする? <C-q> で復帰、端末制御に使うキーはマップに注意する
+" <C-b> は tmux と被る、 tmux を変えずに vim でマップしないようにしてみる
+" <C-z> はサスペンド、 jobs でサスペンドの確認、 fg でフォアグラウンド
+" <Nop> はマップを削除できる
+" コマンドのキーマップは <C-u> で数値の前置を消しておかないと範囲指定される
+" mapleader が有用
 " :help <Leader>
 
 " mapleader
-if v:true
-  let g:mapleader = "\<Space>"
-  let g:maplocalleader = "\\"
-endif
+let g:mapleader = "\<Space>"
+let g:maplocalleader = '\'
 
-
-" NORMAL map
-  " NOTE: disable all erase?
+" NORMAL:
+  " disable all erase?
   "nnoremap zE <Nop>
 
-  " Resize window
+  " Nop
   nnoremap <Up> <Nop>
   nnoremap <Down> <Nop>
   nnoremap <Left> <Nop>
   nnoremap <Right> <Nop>
-  " NOTE: <Nop> で消しておくとリサイズの処理が軽くなる?
+
+  " Resize window
   nnoremap <Up> <C-w>+
   nnoremap <Down> <C-w>-
   nnoremap <Left> <C-w><
   nnoremap <Right> <C-w>>
 
   " 行を上下に引っ張る
-  " NOTE: <C-k>はファイルの先頭で入れると行が消える、挙動の理由がよくわかってない
-  " ddまでは動いて、kが失敗すると止まるっぽい? dd && k && P
-  "nnoremap <C-j> ddp
-  "nnoremap <C-k> ddkP
-  " NOTE: reg を汚さない . は現在行、こちらなら行は消えない
+  " . は現在行
   nnoremap <C-j> :<C-u>. move +1<CR>
   nnoremap <C-k> :<C-u>. move -2<CR>
 
-  " Prefix: <Leader>
-    " NOTE: reserved prefixes
-    " Quickfix:
-      " <Leader>c
-      " <Leader>n
-      " <Leader>p
-    " Toggle:
-      " <Leader>t
-    " Set:
-      " <Leader>set
-    " Hex:
-      " <Leader>xxd
-      " <Leader>rxxd
-
+  " <Leader>
     " Buffer
-    nnoremap <Leader>j :<C-u>bnext<CR>
-    nnoremap <Leader>k :<C-u>bprev<CR>
-    nnoremap <Leader>bl :<C-u>ls<CR>:buffer<Space>
-    nnoremap <Leader>bs :<C-u>ls<CR>:sbuffer<Space>
-    nnoremap <Leader>bd :<C-u>ls<CR>:bdelete<Space>
+    nnoremap <Leader>j   :<C-u>bnext<CR>
+    nnoremap <Leader>k   :<C-u>bprev<CR>
+    nnoremap <Leader>ls  :<C-u>ls<CR>:buffer<Space>
+    nnoremap <Leader>bd  :<C-u>ls<CR>:bdelete<Space>
 
     " Tabpage
-    nnoremap <Leader>l :<C-u>tabnext<CR>
-    nnoremap <Leader>h :<C-u>tabprevious<CR>
-    nnoremap <Leader>N :<C-u>tabnew<CR>
-    nnoremap <Leader>C :<C-u>tabclose<CR>
-    " TODO: consider to remove
+    nnoremap <Leader>l  :<C-u>tabnext<CR>
+    nnoremap <Leader>h  :<C-u>tabprevious<CR>
+    nnoremap <Leader>N  :<C-u>tabnew<CR>
+    nnoremap <Leader>C  :<C-u>tabclose<CR>
     nnoremap <Leader>ml :<C-u>+tabmove<CR>
     nnoremap <Leader>mh :<C-u>-tabmove<CR>
 
@@ -342,30 +319,27 @@ endif
     nnoremap <Leader>mm :<C-u>marks<CR>
 
     " Register
-    " NOTE: help: registers
     nnoremap <Leader>reg :<C-u>registers<CR>
 
     " Search and move
-    " NOTE: :help pattern
     " TODO: autocmd FileType で設定したほうがよさそう
-    " ruby なら
-    " autocmd FileType ruby nnoremap <buffer> <Leader>; /end<CR>
-    " とか
+    " ruby なら autocmd FileType ruby nnoremap <buffer> <Leader>; /end<CR>
     nnoremap <Leader>; /}<CR>
     nnoremap <Leader>> /><CR>
-    " NOTE: match over 80 characters
+
+    " match over 80 characters
     nnoremap <Leader>80 /\%80v.\+<CR>
 
-    " Quickfix: <Leader>c
+    " Quickfix:
+    nnoremap <Leader>n  :<C-u>cnext<CR>
     nnoremap <Leader>cn :<C-u>cnext<CR>
-    nnoremap <Leader>n :<C-u>cnext<CR>
+    nnoremap <Leader>p  :<C-u>cprevious<CR>
     nnoremap <Leader>cp :<C-u>cprevious<CR>
-    nnoremap <Leader>p :<C-u>cprevious<CR>
     nnoremap <Leader>co :<C-u>copen<CR>
     nnoremap <Leader>cw :<C-u>cwindow<CR>
     nnoremap <Leader>cc :<C-u>cclose<CR>
 
-    " Toggle: <Leader>t
+    " Toggle:
     nnoremap <Leader>th :<C-u>set hlsearch!<CR>
     nnoremap <Leader>tl :<C-u>set list!<CR>
     nnoremap <Leader>tc :<C-u>set cursorcolumn! cursorline!<CR>
@@ -375,35 +349,32 @@ endif
     nnoremap <Leader>tp :<C-u>setlocal paste!<CR>
     nnoremap <Leader>tr :<C-u>setlocal readonly!
 
-    " Set: <Leader>set
-    nnoremap <Leader>setft :<C-u>setlocal filetype=
-    nnoremap <Leader>settw :<C-u>setlocal textwidth=0
-    nnoremap <Leader>setenc :<C-u>e ++enc=shift_jis
+    " Reset:
+    nnoremap <Leader>sf  :<C-u>setlocal filetype=
+    nnoremap <Leader>st  :<C-u>setlocal textwidth=0
+    nnoremap <Leader>se  :<C-u>e ++enc=shift_jis
 
-    " Hex: <Leader>xxd
-    " Hex: <Leader>rxxd
+    " Hex:
     if executable('xxd')
-      " NOTE: 戻す時は xxd -r
       nnoremap <Leader>xxd :<C-u>setlocal filetype=xxd <Bar> %!xxd<Space>
       nnoremap <Leader>rxxd :<C-u>%!xxd -r<Space>
     endif
 
-
-" INSERT mode
-  " NOTE: <C-[> に慣れた方がいいかも
+" INSERT:
+  " <C-[> に慣れた方がいいかも
   " ノーマルモードに
   "inoremap jj <Esc>
   "inoremap jk <Esc>
   "inoremap kj <Esc>
 
   " インサートモードの移動
-  " TODO: もう少し考える...無くてもいいかも
-  " NOTE: <C-b> tmux とかぶる
-  " <C-f> 再インデントを上書き
+  " <C-b> tmux とかぶる
   " <C-h> バックスペース
+  " <C-f> 再インデントを上書き
   inoremap <C-f> <Right>
   inoremap <C-b> <Left>
-  " NOTE: emacs
+
+  " emacs
   "inoremap <C-a> <Home>
   "inoremap <C-e> <End>
   "inoremap <C-b> <Left>
@@ -412,8 +383,8 @@ endif
   "inoremap <C-n> <Down>
 
   " 閉じ括弧
-  " NOTE: <enter>と<CR>、違いがよくわかってない
-  " 入力は別扱い、挿入が<eol>、書き込みがff依存?
+  " <enter> と <CR> 違いがよくわかってない
+  " 入力は別扱い、挿入が <eol> 、書き込みが ff 依存?
   if v:false
     inoremap {} {}<C-g>U<Left>
     inoremap () ()<C-g>U<Left>
@@ -432,12 +403,12 @@ endif
   " オムニ補完
   inoremap <S-Tab> <C-x><C-o>
 
-  " with undo
+  " for undo
   inoremap <C-u> <C-g>u<C-u>
   inoremap <C-w> <C-g>u<C-w>
 
   " 全角を半角に
-  " NOTE: :help i_ctrl-v
+  " :help i_ctrl-v
   inoremap 　 <Space>
   inoremap （ (
   inoremap ） )
@@ -469,32 +440,7 @@ endif
   "inoremap ー -
   "inoremap 〜 ~
 
-
 "-----| tool |-----"
-" TODO: consider to simple
-" fix for os windows
-let s:errlist = []
-let s:sfile = expand('<sfile>')
-let s:errnum = 1
-function! s:adderr(msg, ...) abort
-  call add(s:errlist, {
-    \ 'nr': s:errnum ,
-    \ 'type': 'W' ,
-    \ 'filename': s:sfile ,
-    \ 'pattern': a:0 == 0 ? a:msg : a:1 ,
-    \ 'text': a:msg ,
-  \ })
-endfunction
-
-" TODO: consider use system("git ls-files")
-function! s:gitgrep(word) abort
-  execute "vimgrep " . a:word . " `git ls-files`"
-  cwindow
-endfunction
-command! -nargs=1 GitGrep call s:gitgrep(<q-args>)
-" instead
-command! -nargs=1 Grep vimgrep <args> `git ls-files` | cwindow
-
 function! s:scratch() abort
   new
   setlocal buftype=nofile
@@ -503,56 +449,33 @@ function! s:scratch() abort
 endfunction
 command! Scratch call s:scratch()
 
-if isdirectory(glob('~/dotfiles/vim/tmp'))
-  " gotcha
-  if executable("gotcha")
-    function! s:gotcha(...) abort
-      vertical new | setlocal buftype=nofile | setlocal bufhidden=hide | setlocal noswapfile
-      let l:word = a:0 == 0 ? "TODO: " : a:1
-      let l:opt = "-word=\"" . l:word . "\" "
-          \ . "-sync "
-          \ . "-total "
-          \ . "-fullpath "
-      let l:cmd = "gotcha " . l:opt
-      put =system(l:cmd)
-    endfunction
-    command! -nargs=? Gotcha call s:gotcha(<f-args>)
-  endif
-
-  " xclip
-  if executable("xclip")
-    command! Paste read !xclip -o
-    command! -range Cut <line1>,<line2>!xclip
-  else
-    call s:adderr("xclip")
-  endif
-
-  " timestamp
-  if exists('*strftime')
-    command! Timestamp :put =strftime('%Y/%m/%d')
-  else
-    call s:adderr('strftime')
-  endif
+" xclip
+if executable('xclip')
+  command! Paste read !xclip -o
+  command! -range Cut <line1>,<line2>!xclip
+else
+  echoerr 'not found "xclip"'
 endif
 
-if !empty(s:errlist)
-  call setqflist(s:errlist, 'r', { 'nr': s:errnum, 'title': 'vimrc tool errlist'})
-  call setqflist(s:errlist, 'a')
-  echoerr 'tools activate error: count=' . len(s:errlist) . ' check to :copen'
+" timestamp
+if exists('*strftime')
+  command! Timestamp :put =strftime('%Y/%m/%d')
+else
+  echoerr 'not found "*strftime"'
 endif
 
-" NOTE: from defaults.vim
+" From: defaults.vim
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
 " Only define it when not defined already.
 " Revert with: ":delcommand DiffOrig".
-if !exists(":DiffOrig")
+if !exists(':DiffOrig')
   command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
 		  \ | wincmd p | diffthis
 endif
 
 "-----| filetype |-----"
-" NOTE: filetypeによる挙動の変化を有効に設定
+" filetypeによる挙動の変化を有効に設定
 " :help filetype
 filetype plugin indent on
 
@@ -566,8 +489,8 @@ function! s:ftsh()
   setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 endfunction
 
-" golang
-function! s:ftgolang()
+" go
+function! s:ftgo()
   setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=2
 endfunction
 
@@ -593,16 +516,16 @@ endfunction
 
 " text
 function! s:fttext()
-  nnoremap <Leader>settw :setlocal textwidth=78
+  nnoremap <Leader>st :setlocal textwidth=78
 endfunction
 
-" NOTE: autocmdは再読込されるたびに重複して登録される
-" autocmd!でnyan_vimrcグループのautocmdを初期化して重複を防ぐ
+" autocmd は再読込されるたびに重複して登録される
+" autocmd! でnyan_vimrc_ft グループの autocmd を初期化して重複を防ぐ
 augroup nyan_vimrc_ft
   autocmd!
   autocmd FileType vim call s:ftvim()
   autocmd FileType sh call s:ftsh()
-  autocmd FileType go call s:ftgolang()
+  autocmd FileType go call s:ftgo()
   autocmd FileType python call s:ftpython()
   autocmd FileType gitcommit call s:ftgitcommit()
   autocmd FileType javascript call s:ftjavascript()
@@ -610,7 +533,18 @@ augroup nyan_vimrc_ft
   autocmd FileType text call s:fttext()
 augroup END
 
-" for toggle background
+" nyan_vimrc_bg for bg None
+augroup nyan_vimrc_bg
+  autocmd!
+  autocmd VimEnter,ColorScheme * highlight Normal ctermbg=NONE
+  autocmd VimEnter,ColorScheme * highlight NonText ctermbg=NONE
+  autocmd VimEnter,ColorScheme * highlight TablineSel ctermbg=NONE
+  autocmd VimEnter,ColorScheme * highlight LineNr ctermbg=NONE
+  autocmd VimEnter,ColorScheme * highlight CursorLineNr ctermbg=NONE
+  autocmd VimEnter,ColorScheme * highlight Terminal ctermbg=NONE
+augroup END
+
+" for toggle
 let s:is_none_bg = v:true
 function! s:toggleBackground() abort
   if s:is_none_bg
@@ -633,24 +567,5 @@ function! s:toggleBackground() abort
   execute 'colorscheme ' . g:colors_name
 endfunction
 command! ToggleBackground call s:toggleBackground()
-
-" nyan_vimrc_bg for bg None
-augroup nyan_vimrc_bg
-  autocmd!
-  autocmd VimEnter,ColorScheme * highlight Normal ctermbg=NONE
-  autocmd VimEnter,ColorScheme * highlight NonText ctermbg=NONE
-  autocmd VimEnter,ColorScheme * highlight TablineSel ctermbg=NONE
-  autocmd VimEnter,ColorScheme * highlight LineNr ctermbg=NONE
-  autocmd VimEnter,ColorScheme * highlight CursorLineNr ctermbg=NONE
-  autocmd VimEnter,ColorScheme * highlight Terminal ctermbg=NONE
-augroup END
-
-
-"-----| nvim |-----"
-" TODO: consider to remove
-if has('nvim')
-  " NOTE: nvimのterminal mode
-  tnoremap <Esc> <C-\><C-n>
-endif
 
 " vim: textwidth=0 expandtab shiftwidth=2 tabstop=2 softtabstop=2
