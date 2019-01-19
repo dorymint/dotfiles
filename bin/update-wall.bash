@@ -39,13 +39,13 @@ confirm() {
   count=1
   while true; do
     [ $count -gt 3 ] && return 1
-    count=$(( $count + 1 ))
+    count=$(( count + 1 ))
     case "$key" in
       n|no) return 1;;
       y|yes) return 0;;
     esac
     echo -n "$msg"
-    read key
+    read -r key
   done
   echo "unreachable" >&2; exit 99
   )
@@ -61,7 +61,7 @@ mklinks() {
   for x in "$from_dir"/*; do
     if [ -f "$x" ]; then
       ln -s "$x" "$links_dir"/"$ln_count"
-      ln_count=$(( $ln_count + 1 ))
+      ln_count=$(( ln_count + 1 ))
     fi
   done
 
