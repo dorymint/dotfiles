@@ -57,7 +57,7 @@ scriptencoding utf-8
 " :help v:false
 " :help g:
 " :help s:
-" extra
+
 " :help grep
 " :help helpgrep
 " :help vimgrep
@@ -69,9 +69,14 @@ scriptencoding utf-8
 " :help registers
 " :help special-buffers
 " :help spell
+" :help eval
+" :help expression-syntax
+" :help expression-commands
 
 "-----| plugin manage |-----"
-if (has('win32') || has('win64')) && isdirectory(glob('~/.vim'))
+if (has('win32') || has('win64')) &&
+      \ isdirectory(expand('~/.vim')) &&
+      \ (matchstr(&runtimepath, expand('~/.vim')) != "")
   " linux に合わせる
   set runtimepath^=~/.vim,~/.vim/after
 endif
@@ -79,12 +84,12 @@ endif
 " plugin manager
 if v:true
   " plug
-  if filereadable(glob('~/.vim/autoload/plug.vim'))
+  if filereadable(expand('~/.vim/autoload/plug.vim'))
     source ~/dotfiles/vim/plugin-manage-plug.vim
   endif
 else
   " minpac
-  if filereadable(glob('~/dotfiles/vim/minpac-pkg.vim'))
+  if filereadable(expand('~/dotfiles/vim/minpac-pkg.vim'))
     source ~/dotfiles/vim/minpac-pkg.vim
   endif
 endif
@@ -95,10 +100,10 @@ set notimeout
 "set timeoutlen=1000
 set ttimeout
 set ttimeoutlen=100
-set modeline
 
-" modelines ファイル頭と尻尾のコメントを書くとき注意する
-" {vi:|vim:|Vim:|ex:} でぶつかる
+" ファイルの先頭行と最終行のコメントで set できる
+set modeline
+" 上下から modeline を確認する行数を指定する
 set modelines=5
 
 set hidden
@@ -138,10 +143,8 @@ set nocursorline
 
 " foldmethod
 set foldmethod=marker
-set foldmarker={{{,}}}
-set foldlevel=0
-
-" :help zi
+"set foldmarker={{{,}}}
+"set foldlevel=0
 set nofoldenable
 function! Giko()
   return ' (,,ﾟДﾟ)' . foldtext()
@@ -187,7 +190,7 @@ set softtabstop=2
 
 " list
 set list
-" eol は考慮中 eol:↵
+" 考慮中 eol:↵
 set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:<
 
 " statusline
@@ -204,9 +207,9 @@ set statusline+=%=
 set statusline+=%(buf[%n]hex[%4B]line[%4l/%4L:%4P]%)
 
 " tabline
-set showtabline=1
+"set showtabline=1
 " 設定は statusline と似てる :help tabline
-"set tabline=
+"set tabline=""
 
 " split
 set splitbelow
@@ -224,7 +227,7 @@ set writebackup
 set noundofile
 set noswapfile
 " tmp directory
-if isdirectory(glob('~/dotfiles/vim/tmp'))
+if isdirectory(expand('~/dotfiles/vim/tmp'))
   set backupdir=~/dotfiles/vim/tmp/backup
   set undodir=~/dotfiles/vim/tmp/undo
   set directory=~/dotfiles/vim/tmp/swap
@@ -255,11 +258,6 @@ else
   endtry
 endif
 
-" set has win
-if has('win32') || has('win64')
-  set t_Co=16
-endif
-
 syntax on
 
 "-----| key map |-----"
@@ -280,19 +278,19 @@ let g:mapleader = "\<Space>"
 let g:maplocalleader = '\'
 
 " NORMAL:
-  " disable all erase?
-  "nnoremap zE <Nop>
+  " disable fold eliminate
+  nnoremap zE <Nop>
 
-  " Nop
-  nnoremap <Up> <Nop>
-  nnoremap <Down> <Nop>
-  nnoremap <Left> <Nop>
+  " Arrow keys
+  nnoremap <Up>    <Nop>
+  nnoremap <Down>  <Nop>
+  nnoremap <Left>  <Nop>
   nnoremap <Right> <Nop>
 
   " Resize window
-  nnoremap <Up> <C-w>+
-  nnoremap <Down> <C-w>-
-  nnoremap <Left> <C-w><
+  nnoremap <Up>    <C-w>+
+  nnoremap <Down>  <C-w>-
+  nnoremap <Left>  <C-w><
   nnoremap <Right> <C-w>>
 
   " 行を上下に引っ張る
@@ -302,10 +300,11 @@ let g:maplocalleader = '\'
 
   " <Leader>
     " Buffer
-    nnoremap <Leader>j   :<C-u>bnext<CR>
-    nnoremap <Leader>k   :<C-u>bprev<CR>
-    nnoremap <Leader>ls  :<C-u>ls<CR>:buffer<Space>
-    nnoremap <Leader>bd  :<C-u>ls<CR>:bdelete<Space>
+    nnoremap <Leader>j  :<C-u>bnext<CR>
+    nnoremap <Leader>k  :<C-u>bprev<CR>
+    nnoremap <Leader>bl :<C-u>ls<CR>:buffer<Space>
+    nnoremap <Leader>bs :<C-u>ls<CR>:sbuffer<Space>
+    nnoremap <Leader>bd :<C-u>ls<CR>:bdelete<Space>
 
     " Tabpage
     nnoremap <Leader>l  :<C-u>tabnext<CR>
@@ -356,7 +355,7 @@ let g:maplocalleader = '\'
 
     " Hex:
     if executable('xxd')
-      nnoremap <Leader>xxd :<C-u>setlocal filetype=xxd <Bar> %!xxd<Space>
+      nnoremap <Leader>xxd  :<C-u>setlocal filetype=xxd <Bar> %!xxd<Space>
       nnoremap <Leader>rxxd :<C-u>%!xxd -r<Space>
     endif
 
@@ -394,11 +393,11 @@ let g:maplocalleader = '\'
     inoremap '' ''<C-g>U<Left>
   endif
   inoremap {<enter> {}<Left><enter><Esc><S-o>
-  inoremap {<CR> {}<Left><CR><Esc><S-o>
+  inoremap {<CR>    {}<Left><CR><Esc><S-o>
   inoremap (<enter> ()<Left><enter><Esc><S-o>
-  inoremap (<CR> ()<Left><CR><Esc><S-o>
+  inoremap (<CR>    ()<Left><CR><Esc><S-o>
   inoremap [<enter> []<Left><enter><Esc><S-o>
-  inoremap [<CR> []<Left><CR><Esc><S-o>
+  inoremap [<CR>    []<Left><CR><Esc><S-o>
 
   " オムニ補完
   inoremap <S-Tab> <C-x><C-o>
@@ -509,6 +508,11 @@ function! s:ftjavascript()
   setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 endfunction
 
+" json
+function! s:ftjson()
+  setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+endfunction
+
 " markdown
 function! s:ftmarkdown()
   setlocal spell
@@ -516,7 +520,7 @@ endfunction
 
 " text
 function! s:fttext()
-  nnoremap <Leader>st :setlocal textwidth=78
+  nnoremap <buffer> <Leader>st :setlocal textwidth=78
 endfunction
 
 " autocmd は再読込されるたびに重複して登録される
@@ -529,6 +533,7 @@ augroup nyan_vimrc_ft
   autocmd FileType python call s:ftpython()
   autocmd FileType gitcommit call s:ftgitcommit()
   autocmd FileType javascript call s:ftjavascript()
+  autocmd FileType json call s:ftjson()
   autocmd FileType markdown call s:ftmarkdown()
   autocmd FileType text call s:fttext()
 augroup END
