@@ -258,9 +258,9 @@ if s:useALE
 else
   " syntastic
   " go
-  let g:syntastic_go_checkers = ['gofmt', 'govet', 'golint', 'gotype']
+  "let g:syntastic_go_checkers = ['gofmt', 'govet', 'golint', 'gotype']
   " rust
-  let g:syntastic_rust_checkers = ['cargo']
+  "let g:syntastic_rust_checkers = ['cargo']
   " cpp
   let g:syntastic_cpp_compiler = 'clang'
   let g:syntastic_cpp_compiler_options = '-std=c++1z --pedantic-errors'

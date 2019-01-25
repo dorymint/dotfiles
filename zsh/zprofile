@@ -26,4 +26,3 @@ source "$HOME"/dotfiles/share/env/rust.sh
 # call rc
 [ -f "$HOME"/.zshrc ] && source "$HOME"/.zshrc
 
-# vim: ft=zsh

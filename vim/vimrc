@@ -76,7 +76,7 @@ scriptencoding utf-8
 "-----| plugin manage |-----"
 if (has('win32') || has('win64')) &&
       \ isdirectory(expand('~/.vim')) &&
-      \ (matchstr(&runtimepath, expand('~/.vim')) != "")
+      \ (matchstr(&runtimepath, expand('~/.vim,')) == "")
   " linux に合わせる
   set runtimepath^=~/.vim,~/.vim/after
 endif

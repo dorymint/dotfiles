@@ -19,13 +19,13 @@ confirm() {
 	key=""
 	count=0
 	while [ $count -lt 3 ]; do
-		count=$(( $count + 1 ))
+		count=$(( count + 1 ))
 		case "$key" in
 			no|n) return 1;;
 			yes|y) return 0;;
 		esac
 		echo -n "$1 [yes:no]?> "
-		read key
+		read -r key
 	done
 	return 1
 	)
@@ -36,14 +36,14 @@ helpmsg() {
 Usage:
   go-build.bash [Options]
 
-options:
+Options:
   -h, --help   Display this message
   -b, --branch Specify build branch (default: $branch)
   -y, --yes    Ignore confirm
 
-example:
+Examples:
   go-build.bash -branch master
-  go-build.bash -branch 1.8.7
+  go-build.bash -branch release-branch.go1.11
 END
 }
 
@@ -125,7 +125,11 @@ build() {
 main() {
 	(
 	if [ -d "$bootstrap_dir" ]; then
-		confirm "build bootstrap $bootstrap_branch" && up_bootstrap || abort "stopped"
+		if confirm "build bootstrap $bootstrap_branch"; then
+			up_bootstrap || abort "stopped"
+		else
+			abort "stopped"
+		fi
 	else
 		up_bootstrap
 	fi
