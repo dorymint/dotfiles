@@ -257,10 +257,6 @@ if s:useALE
   \ }
 else
   " syntastic
-  " go
-  "let g:syntastic_go_checkers = ['gofmt', 'govet', 'golint', 'gotype']
-  " rust
-  "let g:syntastic_rust_checkers = ['cargo']
   " cpp
   let g:syntastic_cpp_compiler = 'clang'
   let g:syntastic_cpp_compiler_options = '-std=c++1z --pedantic-errors'
@@ -298,9 +294,6 @@ if s:useALE
   nnoremap <LocalLeader>ap :<C-u>ALEPreviousWrap<CR>
 else
   " syntastic
-  " 保存時に常に走らせると少し重い時があるのでトグルをマップ
-  " 非同期でチェックできる良いプラグインがあれば乗り換えたい
-  nnoremap <LocalLeader>s :<C-u>SyntasticToggleMode<CR>
   nnoremap <LocalLeader>o :<C-u>Errors<CR>
   nnoremap <LocalLeader>e :<C-u>Errors<CR>
   nnoremap <LocalLeader>c :<C-u>lclose<CR>
