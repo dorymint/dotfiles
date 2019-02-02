@@ -333,14 +333,23 @@ filetype plugin indent on
 " TODO: fix
 function! s:term_lsp() abort
   let l:m = {
-        \  's': 'LspStatus',
-        \  'r': 'LspReferences',
-        \  'd': 'LspDefinition',
-        \  'h': 'LspHover',
-        \  'n': 'LspNextError',
-        \  'p': 'LspPreviousError',
-        \  'f': 'LspDocumentFormat',
-        \ }
+    \ 'a': 'LspCodeAction',
+    \ 'D': 'LspDeclaration',
+    \ 'd': 'LspDefinition',
+    \ 's': 'LspDocumentSymbol',
+    \ 'e': 'LspDocumentDiagnostics',
+    \ 'h': 'LspHover',
+    \ 'n': 'LspNextError',
+    \ 'p': 'LspPreviousError',
+    \ 'r': 'LspReferences',
+    \ 'R': 'LspRename',
+    \ 'w': 'LspWorkspaceSymbol',
+    \ 'f': 'LspDocumentFormat',
+    \ 'F': 'LspDocumentFormatSync',
+    \ 'i': 'LspImplementation',
+    \ 't': 'LspTypeDefinition',
+    \ 'S': 'LspStatus',
+  \ }
   echo "Lsp:"
   for l:key in sort(keys(l:m))
     echo '  ' . l:key . '  ' . string(l:m[l:key])
@@ -354,11 +363,7 @@ function! s:term_lsp() abort
 endfunction
 function! s:mapping_for_lsp() abort
   nmap <buffer> <LocalLeader>s <plug>(lsp-status)
-  nmap <buffer> <LocalLeader>r <plug>(lsp-references)
   nmap <buffer> <LocalLeader>d <plug>(lsp-definition)
-  nmap <buffer> <LocalLeader>h <plug>(lsp-hover)
-  "nmap <buffer> <LocalLeader>n <plug>(lsp-next-error)
-  "nmap <buffer> <LocalLeader>p <plug>(lsp-previous-error)
   nmap <buffer> <LocalLeader>f <plug>(lsp-document-format)
 
   nnoremap <buffer> <LocalLeader>l :<C-u>call <SID>term_lsp()<CR>
