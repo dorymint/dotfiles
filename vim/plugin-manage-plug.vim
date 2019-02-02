@@ -114,42 +114,42 @@ endif
 
 " lightline.vim
 let g:lightline = {
-  \ 'colorscheme': 'jellybeans',
-  \ 'active': {
-    \ 'left': [
-      \ [ 'mode', 'paste', 'fugitive' ],
-      \ [ 'readonly', 'filename', 'modified' ],
-    \ ],
-    \ 'right': [
-      \ [ 'lineinfo', 'charvaluehex', 'percent', 'bufnum' ],
-      \ [ 'spell', 'fileformat', 'fileencoding', 'filetype' ],
-      \ [ 'syntastic', 'ale' ],
-    \ ],
-  \ },
-  \ 'component': {
-    \ 'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}',
-    \ 'charvaluehex': '0x%04B',
-  \ },
-  \ 'component_visible_condition': {
-    \ 'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())',
-  \ },
-  \ 'component_function': {
-    \ 'syntastic': 'SyntasticStatuslineFlag',
-    \ 'ale': 'ALEGetStatusLine',
-  \ },
-\ }
+      \ 'colorscheme': 'jellybeans',
+      \ 'active': {
+        \ 'left': [
+          \ [ 'mode', 'paste', 'fugitive' ],
+          \ [ 'readonly', 'filename', 'modified' ],
+          \ ],
+        \ 'right': [
+          \ [ 'lineinfo', 'charvaluehex', 'percent', 'bufnum' ],
+          \ [ 'spell', 'fileformat', 'fileencoding', 'filetype' ],
+          \ [ 'syntastic', 'ale' ],
+          \ ],
+        \ },
+      \ 'component': {
+        \ 'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}',
+        \ 'charvaluehex': '0x%04B',
+        \ },
+      \ 'component_visible_condition': {
+        \ 'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())',
+        \ },
+      \ 'component_function': {
+        \ 'syntastic': 'SyntasticStatuslineFlag',
+        \ 'ale': 'ALEGetStatusLine',
+        \ },
+      \ }
 let g:lightline.tabline = {
-  \ 'left': [
-    \ [ 'tabs' ],
-  \ ],
-  \ 'right': [
-    \ [ 'close' ],
-  \ ],
-\ }
+      \ 'left': [
+        \ [ 'tabs' ],
+        \ ],
+      \ 'right': [
+        \ [ 'close' ],
+        \ ],
+      \ }
 let g:lightline.enable = {
-  \ 'statusline': 1,
-  \ 'tabline': 1,
-\ }
+      \ 'statusline': 1,
+      \ 'tabline': 1,
+      \ }
 
 
 " vim-gitgutter
@@ -165,32 +165,32 @@ if (has('win32') || has('win64'))
   endif
 endif
 let g:tagbar_type_go = {
-  \ 'ctagstype' : 'go',
-  \ 'kinds' : [
-    \ 'p:package',
-    \ 'i:imports:1',
-    \ 'c:constants',
-    \ 'v:variables',
-    \ 't:types',
-    \ 'n:interfaces',
-    \ 'w:fields',
-    \ 'e:embedded',
-    \ 'm:methods',
-    \ 'r:constructor',
-    \ 'f:functions'
-  \ ],
-  \ 'sro' : '.',
-  \ 'kind2scope' : {
-    \ 't' : 'ctype',
-    \ 'n' : 'ntype'
-  \ },
-  \ 'scope2kind' : {
-    \ 'ctype' : 't',
-    \ 'ntype' : 'n'
-  \ },
-  \ 'ctagsbin' : 'gotags',
-  \ 'ctagsargs' : '-sort -silent'
-\ }
+      \ 'ctagstype' : 'go',
+      \ 'kinds' : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+        \ ],
+      \ 'sro' : '.',
+      \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+        \ },
+      \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+        \ },
+      \ 'ctagsbin' : 'gotags',
+      \ 'ctagsargs' : '-sort -silent'
+      \ }
 
 " vim-quickrun
 " 設定するとデフォルトマップが無効になる
@@ -227,22 +227,16 @@ if executable('golsp')
         \ 'name': 'golsp',
         \ 'cmd': {server_info -> ['golsp', '-mode', 'stdio']},
         \ 'whitelist': ['go'],
-      \ })
+        \ })
 endif
 " Rust:
 if executable('rls')
   autocmd User lsp_setup call lsp#register_server({
-    \ 'name': 'rls',
-    \ 'cmd': {server_info -> ['rustup', 'run', 'nightly', 'rls']},
-    \ 'root_uri': {
-      \ server_info -> lsp#utils#path_to_uri(
-        \ lsp#utils#find_nearest_parent_file_directory(
-          \ lsp#utils#get_buffer_path(), 'Cargo.toml'
-        \ )
-      \ )
-    \ },
-    \ 'whitelist': ['rust'],
-  \ })
+        \ 'name': 'rls',
+        \ 'cmd': {server_info -> ['rustup', 'run', 'stable', 'rls']},
+        \ 'root_uri': {server_info -> lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'Cargo.toml'))},
+        \ 'whitelist': ['rust'],
+        \ })
 endif
 
 if s:useALE
@@ -253,8 +247,8 @@ if s:useALE
   " rustc is only use nightly
   " if use on stable or beta then be careful that is make the executable
   let g:ale_linters = {
-    \ 'rust': ['cargo', 'rls', 'rustc'],
-  \ }
+        \ 'rust': ['cargo', 'rls', 'rustc'],
+        \ }
 else
   " syntastic
   " cpp
@@ -333,23 +327,23 @@ filetype plugin indent on
 " TODO: fix
 function! s:term_lsp() abort
   let l:m = {
-    \ 'a': 'LspCodeAction',
-    \ 'D': 'LspDeclaration',
-    \ 'd': 'LspDefinition',
-    \ 's': 'LspDocumentSymbol',
-    \ 'e': 'LspDocumentDiagnostics',
-    \ 'h': 'LspHover',
-    \ 'n': 'LspNextError',
-    \ 'p': 'LspPreviousError',
-    \ 'r': 'LspReferences',
-    \ 'R': 'LspRename',
-    \ 'w': 'LspWorkspaceSymbol',
-    \ 'f': 'LspDocumentFormat',
-    \ 'F': 'LspDocumentFormatSync',
-    \ 'i': 'LspImplementation',
-    \ 't': 'LspTypeDefinition',
-    \ 'S': 'LspStatus',
-  \ }
+        \ 'a': 'LspCodeAction',
+        \ 'D': 'LspDeclaration',
+        \ 'd': 'LspDefinition',
+        \ 's': 'LspDocumentSymbol',
+        \ 'e': 'LspDocumentDiagnostics',
+        \ 'h': 'LspHover',
+        \ 'n': 'LspNextError',
+        \ 'p': 'LspPreviousError',
+        \ 'r': 'LspReferences',
+        \ 'R': 'LspRename',
+        \ 'w': 'LspWorkspaceSymbol',
+        \ 'f': 'LspDocumentFormat',
+        \ 'F': 'LspDocumentFormatSync',
+        \ 'i': 'LspImplementation',
+        \ 't': 'LspTypeDefinition',
+        \ 'S': 'LspStatus',
+        \ }
   echo "Lsp:"
   for l:key in sort(keys(l:m))
     echo '  ' . l:key . '  ' . string(l:m[l:key])
@@ -395,6 +389,7 @@ function! s:ftrust()
     nmap <buffer> gs <Plug>(rust-def-split)
     nmap <buffer> gx <Plug>(rust-def-vertical)
     nmap <buffer> <LocalLeader>gd <Plug>(rust-doc)
+    nmap <buffer> <LocalLeader>f :<C-u>RustFmt<CR>
   else
     echoerr 'not found "racer"'
   endif

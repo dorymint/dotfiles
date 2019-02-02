@@ -493,6 +493,11 @@ function! s:ftgo()
   setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=2
 endfunction
 
+" rust
+function! s:ftrust()
+  setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+endfunction
+
 " python
 function! s:ftpython()
   setlocal textwidth=78
