@@ -1,10 +1,11 @@
 dotfiles
 ========
-hi!
 
+Respect the KISS principle
 
-Linux
 ```sh
+# Linux
+
 cd "$HOME"
 git clone "$this_repo"
 
@@ -13,7 +14,9 @@ git clone "$this_repo"
 
 # withx
 "$HOME"/dotfiles/setup/setup.sh -withx
-```
+  ```
 
-remember the KISS principle
----------------------------
+TODO
+----
+
+move to config

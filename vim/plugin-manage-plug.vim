@@ -212,7 +212,7 @@ if v:false
 endif
 augroup vimrc_plugin_lsp
   autocmd!
-  " Go:
+  " Go: go get -v -u golang.org/x/tools/cmd/golsp
   if executable('golsp')
     autocmd User lsp_setup call lsp#register_server({
           \ 'name': 'golsp',
@@ -220,7 +220,8 @@ augroup vimrc_plugin_lsp
           \ 'whitelist': ['go'],
           \ })
   endif
-  " Rust:
+  " Rust: rustup update
+  "     : rustup component add rls-preview rust-analysis rust-src
   if executable('rls')
     " TODO: fix
     "autocmd User lsp_setup call lsp#register_server({
@@ -235,12 +236,20 @@ augroup vimrc_plugin_lsp
           \ 'whitelist': ['rust'],
           \ })
   endif
-  " efm-langserver:
-  "   Ref: github.com/mattn/efm-langserver
-  "   Server: go get github.com/mattn/efm-langserver/cmd/efm-langserver
+  " Bash: npm install -g bash-language-server
+  if executable('bash-language-server')
+    autocmd User lsp_setup call lsp#register_server({
+          \ 'name': 'bash-language-server',
+          \ 'cmd': {server_info -> [&shell, &shellcmdflag, 'bash-language-server start']},
+          \ 'whitelist': ['sh'],
+          \ })
+  endif
+  " efm-langserver: go get -v -u github.com/mattn/efm-langserver/cmd/efm-langserver
   "   Linters:
   "     markdown: npm install -g markdownlint-cli
   "     vim: pip install vim-vint
+  "     sh: pacman -S shellcheck # on arch
+  "     bash: npm install -g bash-language-server
   "   DefaultConfig:
   "     Linux: '$HOME/.config/efm-langserver/config.yaml'
   "     Windows: '%APPDATA%\efm-langserver\config.yaml'
@@ -248,7 +257,7 @@ augroup vimrc_plugin_lsp
       autocmd User lsp_setup call lsp#register_server({
             \ 'name': 'efm-langserver',
             \ 'cmd': {server_info -> ['efm-langserver']},
-            \ 'whitelist': ['eruby', 'markdown', 'vim'],
+            \ 'whitelist': ['sh', 'eruby', 'markdown', 'vim'],
             \ })
   endif
 augroup END
@@ -292,6 +301,7 @@ let g:go_template_autocreate = 0
 "
 " Function:
 "
+" mattn/sonictemplate-vim
 " すぐにテンプレートを編集できるように
 function! s:edit_tmpl() abort
   if isdirectory(g:sonictemplate_vim_template_dir)
@@ -302,7 +312,8 @@ function! s:edit_tmpl() abort
   endif
 endfunction
 
-" TODO: consider
+" prabirshrestha/vim-lsp
+" TODO: consider to remove
 function! s:lsp_commands() abort
   let l:m = {
         \ 'a': 'LspCodeAction',
@@ -336,40 +347,51 @@ function! s:lsp_commands() abort
   endif
 endfunction
 
-function! s:mapping_for_lsp() abort
-  nnoremap <buffer> <LocalLeader>s :<C-u>LspStatus<CR>
-  nnoremap <buffer> <LocalLeader>d :<C-u>LspDefinition<CR>
-  nnoremap <buffer> <LocalLeader>f :<C-u>LspDocumentFormat<CR>
-
-  nnoremap <buffer> <LocalLeader>e :<C-u>LspDocumentDiagnostics<CR>
-  nnoremap <buffer> <LocalLeader>n :<C-u>LspNextError<CR>
-  nnoremap <buffer> <LocalLeader>p :<C-u>LspPreviousError<CR>
-  nnoremap <buffer> <LocalLeader>c :<C-u>cclose<CR>
-
-  " TODO: consider
-  "nnoremap <buffer> <LocalLeader>l :<C-u>call <SID>lsp_commands()<CR>
+let s:lsp_state = v:true
+function! s:lsp_toggle() abort
+  if s:lsp_state
+    call lsp#disable()
+    let s:lsp_state = v:false
+    echo "Lsp disabled"
+  else
+    call lsp#enable()
+    let s:lsp_state = v:true
+    echo "Lsp enabled"
+  endif
 endfunction
 
 "
 " Mapping:
 "
-map  <LocalLeader><LocalLeader> <Plug>(easymotion-bd-w)
-nmap <LocalLeader><LocalLeader> <Plug>(easymotion-overwin-w)
+noremap <LocalLeader><LocalLeader> <Nop>
+map     <LocalLeader><LocalLeader> <Plug>(easymotion-bd-w)
+nmap    <LocalLeader><LocalLeader> <Plug>(easymotion-overwin-w)
 
-nnoremap <LocalLeader>c  :<C-u>cclose<CR>
 nnoremap <LocalLeader>gt :<C-u>GitGutterToggle<CR>
 nnoremap <LocalLeader>h  :<C-u>NERDTreeToggle<CR>
 nnoremap <LocalLeader>l  :<C-u>TagbarToggle<CR>
 nnoremap <LocalLeader>r  :<C-u>QuickRun<CR>
 
-" for mattn/sonictemplate-vim
+" mattn/sonictemplate-vim
 nnoremap <LocalLeader>w  :<C-u>call <SID>edit_tmpl()<CR>
+
+" prabirshrestha/vim-lsp
+nnoremap <LocalLeader>s :<C-u>LspStatus<CR>
+nnoremap <LocalLeader>d :<C-u>LspDefinition<CR>
+nnoremap <LocalLeader>f :<C-u>LspDocumentFormat<CR>
+nnoremap <LocalLeader>t :<C-u>call <SID>lsp_toggle()<CR>
+" TODO: consider
+"nnoremap <LocalLeader>l :<C-u>call <SID>lsp_commands()<CR>
+
+" lsp quickfix
+nnoremap <LocalLeader>e :<C-u>LspDocumentDiagnostics<CR>
+nnoremap <LocalLeader>n :<C-u>LspNextError<CR>
+nnoremap <LocalLeader>p :<C-u>LspPreviousError<CR>
+nnoremap <LocalLeader>c  :<C-u>cclose<CR>
 
 augroup vimrc_plugin
   autocmd!
   function! s:ftgo()
-    call s:mapping_for_lsp()
-
     " TODO: remove
     " fatih/vim-go
     nnoremap <buffer> <LocalLeader>i  :<C-u>GoImport<Space>
@@ -379,8 +401,6 @@ augroup vimrc_plugin
   autocmd FileType go call s:ftgo()
 
   function! s:ftrust()
-    call s:mapping_for_lsp()
-
     " racer-rust/vim-racer
     nmap <buffer> gd <Plug>(rust-def)
     nmap <buffer> gs <Plug>(rust-def-split)

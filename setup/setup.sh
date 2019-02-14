@@ -59,6 +59,9 @@ main() {
 
     # tmux
     ln $options -- "$dotroot"/tmux/tmux.conf "$HOME"/.tmux.conf
+
+    # efm-langserver
+    ln $options -- "$dotroot"/config/efm-langserver/ "$HOME"/.config/efm-langserver
   set -e
 
   # for xorg
