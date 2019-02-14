@@ -59,12 +59,8 @@ bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 # i3lock
 bindsym $mod+Shift+Return exec --no-startup-id /usr/bin/i3lock
 
-# split in horizontal orientation
-#bindsym $mod+h split h
-bindsym $mod+b split h
-
-# split in vertical orientation
-bindsym $mod+v split v
+# split
+bindsym $mod+v split toggle
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
