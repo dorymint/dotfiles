@@ -34,7 +34,7 @@ confirm() {
 helpmsg() {
 	cat >&1 <<END
 Usage:
-  go-build.bash [Options]
+  goup.bash [Options]
 
 Options:
   -h, --help   Display this message
@@ -42,8 +42,8 @@ Options:
   -y, --yes    Ignore confirm
 
 Examples:
-  go-build.bash -branch master
-  go-build.bash -branch release-branch.go1.11
+  goup.bash -branch master
+  goup.bash -branch release-branch.go1.11
 END
 }
 

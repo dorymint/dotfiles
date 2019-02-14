@@ -21,7 +21,6 @@ case "$(uname)" in
       --enable-perlinterp=dynamic
       --enable-python3interp=dynamic
       --enable-rubyinterp=dynamic
-      --enable-terminal
       --disable-gui
       --without-x
       --prefix=$prefix"
@@ -36,7 +35,7 @@ esac
 helpmsg() {
   cat >&1 <<END
 Usage:
-  vim-build.bash [Options]
+  vimup.bash [Options]
 
 Options:
   -h, --help      Display this message
@@ -92,10 +91,6 @@ main() {
     git checkout master
   fi
 
-
-  # build
-  cd "$vimdir/src"
-
   # information
   echo ""
   echo "configure options"
@@ -104,6 +99,9 @@ main() {
   done
   echo "\$cc_clang=$cc_clang"
 
+  cd "$vimdir/src"
+
+  # configure
   confirm "make distclean && ./configure"
   make distclean
   if [ "$cc_clang" = "true" ]; then
@@ -112,6 +110,7 @@ main() {
     ./configure $buildoption
   fi
 
+  # make
   confirm "make clean && make"
   if [ -n "$logfile" ]; then
     date > "$logfile"
