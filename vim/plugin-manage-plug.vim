@@ -238,10 +238,11 @@ augroup vimrc_plugin_lsp
   endif
   " Bash: npm install -g bash-language-server
   if executable('bash-language-server')
+    " TODO: consider
     autocmd User lsp_setup call lsp#register_server({
           \ 'name': 'bash-language-server',
           \ 'cmd': {server_info -> [&shell, &shellcmdflag, 'bash-language-server start']},
-          \ 'whitelist': ['sh'],
+          \ 'whitelist': [],
           \ })
   endif
   " efm-langserver: go get -v -u github.com/mattn/efm-langserver/cmd/efm-langserver
@@ -249,7 +250,6 @@ augroup vimrc_plugin_lsp
   "     markdown: npm install -g markdownlint-cli
   "     vim: pip install vim-vint
   "     sh: pacman -S shellcheck # on arch
-  "     bash: npm install -g bash-language-server
   "   DefaultConfig:
   "     Linux: '$HOME/.config/efm-langserver/config.yaml'
   "     Windows: '%APPDATA%\efm-langserver\config.yaml'

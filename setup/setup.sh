@@ -1,9 +1,10 @@
 #!/bin/sh
 set -eu
 
+# TODO: move to $dotroot/config for .config files
+
 dotroot="$(dirname "$(dirname "$(readlink -e "$0")")")"
 dotx="$dotroot"/x
-options="--verbose -sn"
 force=false
 withgui=false
 
@@ -24,18 +25,26 @@ Options:
 END
 }
 
+mkd() {
+  [ -d "$1" ] || mkdir -v -m 0700 -- "$1"
+}
+
 main() {
-  [ -d "$HOME"/.vim ] || mkdir -v -m 0700 -- "$HOME"/.vim
-  [ -d "$HOME"/bin ] || mkdir -v -m 0700 -- "$HOME"/bin
-  [ -d "$HOME"/.config ] || mkdir -v -m 0700 -- "$HOME"/.config
+  mkd "$HOME"/bin
+  mkd "$HOME"/.config
 
-  # TODO: coonsider mkdir for golang
-  if [ ! -d "$HOME"/go ]; then
-    mkdir -v -p -- "$HOME"/go/bin
-    mkdir -v -- "$HOME"/go/pkg
-    mkdir -v -- "$HOME"/go/src
-  fi
+  mkd "$HOME"/.vim
+  mkd "$HOME"/.config/efm-langserver
 
+  mkd "$HOME"/go
+  mkd "$HOME"/go/bin
+  mkd "$HOME"/go/pkg
+  mkd "$HOME"/go/src
+
+  mkd "$HOME"/.config/systemd
+  mkd "$HOME"/.config/systemd/user
+
+  options="--verbose -sn"
   if [ "$force" = "true" ]; then
     options="$options --force"
   fi
@@ -61,14 +70,11 @@ main() {
     ln $options -- "$dotroot"/tmux/tmux.conf "$HOME"/.tmux.conf
 
     # efm-langserver
-    ln $options -- "$dotroot"/config/efm-langserver/ "$HOME"/.config/efm-langserver
+    ln $options -- "$dotroot"/config/efm-langserver/config.yaml "$HOME"/.config/efm-langserver/config.yaml
   set -e
 
   # for xorg
   if [ "$withgui" = "true" ]; then
-    # xorg
-    [ -d "$HOME"/.config/systemd/user ] || mkdir -v -p -- "$HOME"/.config/systemd/user
-
     # fallthrough
     set +e
       ln $options -- "$dotx"/xinitrc "$HOME"/.xinitrc
