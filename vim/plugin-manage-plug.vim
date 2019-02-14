@@ -1,6 +1,6 @@
 scriptencoding utf-8
 call plug#begin('~/.vim/plugged')
-" Base:
+  " Base:
   " help for japanese
   Plug 'vim-jp/vimdoc-ja'
 
@@ -37,14 +37,14 @@ call plug#begin('~/.vim/plugged')
   " jump to words
   Plug 'easymotion/vim-easymotion'
 
-" Git:
+  " Git:
   " run git commands in vim
   Plug 'tpope/vim-fugitive'
 
   " display a git diff in sign column
   Plug 'airblade/vim-gitgutter'
 
-" Language:
+  " Language:
   " language server protocol
   Plug 'prabirshrestha/vim-lsp'
   Plug 'prabirshrestha/async.vim'
@@ -84,33 +84,25 @@ call plug#begin('~/.vim/plugged')
   " html css
   Plug 'mattn/emmet-vim'
 
-" Colorscheme:
+  " Colorscheme:
   Plug 'nanotech/jellybeans.vim'
   Plug 'w0ng/vim-hybrid'
   Plug 'cocopon/Iceberg.vim'
   Plug 'tomasr/molokai'
   "Plug 'trusktr/seti.vim'
 
-" Workaround:
+  " Workaround:
   Plug 'vim-jp/syntax-vim-ex'
 call plug#end()
-
 filetype plugin indent on
 
+"
+" Config:
+"
 " mattn/sonictemplate-vim
 let s:sonicdir = expand('~/dotfiles/vim/sonictemplate')
 if isdirectory(s:sonicdir)
   let g:sonictemplate_vim_template_dir = s:sonicdir
-  " すぐにテンプレートを編集できるように
-  function! s:edit_tmpl() abort
-    if isdirectory(g:sonictemplate_vim_template_dir)
-      " open by NERDTree or netrw
-      execute "vsplit" . " " . g:sonictemplate_vim_template_dir
-    else
-      echoerr "not directory g:sonictemplate_vim_template_dir"
-    endif
-  endfunction
-  nnoremap <LocalLeader>ww :<C-u>call <SID>edit_tmpl()<CR>
 else
   echoerr "not found " . s:sonicdir
 endif
@@ -155,7 +147,6 @@ let g:lightline.enable = {
 
 " airblade/vim-gitgutter
 let g:gitgutter_map_keys = v:false
-nnoremap <LocalLeader>ggt :<C-u>GitGutterToggle<CR>
 
 " majutsushi/tagbar
 if has('win32') || has('win64')
@@ -193,14 +184,12 @@ let g:tagbar_type_go = {
       \ 'ctagsbin' : 'gotags',
       \ 'ctagsargs' : '-sort -silent'
       \ }
-nnoremap <LocalLeader>t :<C-u>TagbarToggle<CR>
 
 " thinca/vim-quickrun
 " 設定するとデフォルトマップが無効になる
 "let g:quickrun_no_default_key_mappings = 1
 let g:quickrun_config = {}
 let g:quickrun_config['gotest'] = {'command': 'go', 'exec': ['%c test -v -race']}
-nnoremap <LocalLeader>r :<C-u>QuickRun<CR>
 
 " kannokanno/previm
 if executable('firefox')
@@ -211,8 +200,6 @@ endif
 
 " easymotion/vim-easymotion
 let g:EasyMotion_do_mapping = 0
-map <LocalLeader>e <Plug>(easymotion-bd-w)
-nmap <LocalLeader>e <Plug>(easymotion-overwin-w)
 
 " prabirshrestha/vim-lsp
 let g:lsp_signs_enabled = 1
@@ -267,18 +254,22 @@ augroup vimrc_plugin_lsp
 augroup END
 
 " vim-syntastic/syntastic
-" cpp
 let g:syntastic_cpp_compiler = 'clang'
 let g:syntastic_cpp_compiler_options = '-std=c++1z --pedantic-errors'
 let g:syntastic_cpp_checkers = ['clang_check']
-" javascript
 let g:syntastic_javascript_checkers = ['eslint']
-nnoremap <LocalLeader>o :<C-u>Errors<CR>
-nnoremap <LocalLeader>c :<C-u>lclose<CR>
 
 " justmao945/vim-clang
 let g:clang_c_options = '-std=c11'
 let g:clang_cpp_options = '-std=c++1z --pedantic-errors'
+
+" racer-rust/vim-racer
+if executable(expand('~/.cargo/bin/racer'))
+  let g:racer_cmd = expand('~/.cargo/bin/racer')
+  let g:racer_experimental_completer = 1
+else
+  echoerr 'not found "racer"'
+endif
 
 " TODO: remove
 " fatih/vim-go
@@ -298,62 +289,92 @@ let g:go_template_autocreate = 0
 "let g:jedi#show_call_signatures = 0
 "let g:jedi#rename_command = '<LocalLeader>R'
 
-" scrooloose/nerdtree
-nnoremap <LocalLeader>n :<C-u>NERDTreeToggle<CR>
+"
+" Function:
+"
+" すぐにテンプレートを編集できるように
+function! s:edit_tmpl() abort
+  if isdirectory(g:sonictemplate_vim_template_dir)
+    " open by NERDTree or netrw
+    execute "vsplit" . " " . g:sonictemplate_vim_template_dir
+  else
+    echoerr "not directory g:sonictemplate_vim_template_dir"
+  endif
+endfunction
 
+" TODO: consider
+function! s:lsp_commands() abort
+  let l:m = {
+        \ 'a': 'LspCodeAction',
+        \ 'D': 'LspDeclaration',
+        \ 'd': 'LspDefinition',
+        \ 's': 'LspDocumentSymbol',
+        \ 'e': 'LspDocumentDiagnostics',
+        \ 'h': 'LspHover',
+        \ 'n': 'LspNextError',
+        \ 'p': 'LspPreviousError',
+        \ 'r': 'LspReferences',
+        \ 'R': 'LspRename',
+        \ 'w': 'LspWorkspaceSymbol',
+        \ 'f': 'LspDocumentFormat',
+        \ 'F': 'LspDocumentFormatSync',
+        \ 'i': 'LspImplementation',
+        \ 't': 'LspTypeDefinition',
+        \ 'S': 'LspStatus',
+        \ }
+  echo "Lsp:"
+  for l:key in sort(keys(l:m))
+    echo '  ' . l:key . '  ' . string(l:m[l:key])
+  endfor
+  echo 'Input:>'
+  let l:c = nr2char(getchar())
+  echo 'Input:' . l:c
+  if has_key(l:m, l:c)
+    execute l:m[l:c]
+  else
+    echo 'Invalid keys: ' . l:c
+  endif
+endfunction
+
+function! s:mapping_for_lsp() abort
+  nnoremap <buffer> <LocalLeader>s :<C-u>LspStatus<CR>
+  nnoremap <buffer> <LocalLeader>d :<C-u>LspDefinition<CR>
+  nnoremap <buffer> <LocalLeader>f :<C-u>LspDocumentFormat<CR>
+
+  nnoremap <buffer> <LocalLeader>e :<C-u>LspDocumentDiagnostics<CR>
+  nnoremap <buffer> <LocalLeader>n :<C-u>LspNextError<CR>
+  nnoremap <buffer> <LocalLeader>p :<C-u>LspPreviousError<CR>
+  nnoremap <buffer> <LocalLeader>c :<C-u>cclose<CR>
+
+  " TODO: consider
+  "nnoremap <buffer> <LocalLeader>l :<C-u>call <SID>lsp_commands()<CR>
+endfunction
+
+"
+" Mapping:
+"
+map  <LocalLeader><LocalLeader> <Plug>(easymotion-bd-w)
+nmap <LocalLeader><LocalLeader> <Plug>(easymotion-overwin-w)
+
+nnoremap <LocalLeader>c  :<C-u>cclose<CR>
+nnoremap <LocalLeader>gt :<C-u>GitGutterToggle<CR>
+nnoremap <LocalLeader>h  :<C-u>NERDTreeToggle<CR>
+nnoremap <LocalLeader>l  :<C-u>TagbarToggle<CR>
+nnoremap <LocalLeader>r  :<C-u>QuickRun<CR>
+
+" for mattn/sonictemplate-vim
+nnoremap <LocalLeader>w  :<C-u>call <SID>edit_tmpl()<CR>
 
 augroup vimrc_plugin
   autocmd!
-
-  " TODO: consider
-  function! s:lsp_commands() abort
-    let l:m = {
-          \ 'a': 'LspCodeAction',
-          \ 'D': 'LspDeclaration',
-          \ 'd': 'LspDefinition',
-          \ 's': 'LspDocumentSymbol',
-          \ 'e': 'LspDocumentDiagnostics',
-          \ 'h': 'LspHover',
-          \ 'n': 'LspNextError',
-          \ 'p': 'LspPreviousError',
-          \ 'r': 'LspReferences',
-          \ 'R': 'LspRename',
-          \ 'w': 'LspWorkspaceSymbol',
-          \ 'f': 'LspDocumentFormat',
-          \ 'F': 'LspDocumentFormatSync',
-          \ 'i': 'LspImplementation',
-          \ 't': 'LspTypeDefinition',
-          \ 'S': 'LspStatus',
-          \ }
-    echo "Lsp:"
-    for l:key in sort(keys(l:m))
-      echo '  ' . l:key . '  ' . string(l:m[l:key])
-    endfor
-    echo 'Input:>'
-    let l:c = nr2char(getchar())
-    echo 'Input:' . l:c
-    if has_key(l:m, l:c)
-      execute l:m[l:c]
-    else
-      echo 'Invalid keys: ' . l:c
-    endif
-  endfunction
-  function! s:mapping_for_lsp() abort
-    nmap <buffer> <LocalLeader>s <plug>(lsp-status)
-    nmap <buffer> <LocalLeader>d <plug>(lsp-definition)
-    nmap <buffer> <LocalLeader>f <plug>(lsp-document-format)
-    nnoremap <buffer> <LocalLeader>l :<C-u>call <SID>lsp_commands()<CR>
-  endfunction
-
   function! s:ftgo()
     call s:mapping_for_lsp()
 
     " TODO: remove
     " fatih/vim-go
-    nnoremap <buffer> <LocalLeader>i :<C-u>GoImport<Space>
-    nnoremap <buffer> <LocalLeader>d :<C-u>GoDrop<Space>
-    nnoremap <buffer> <LocalLeader>gd :<C-u>GoDoc<Space>
-    nnoremap <buffer> <LocalLeader>gf :<C-u>GoFmt<Space>
+    nnoremap <buffer> <LocalLeader>i  :<C-u>GoImport<Space>
+    nnoremap <buffer> <LocalLeader>d  :<C-u>GoDrop<Space>
+    nnoremap <buffer> <LocalLeader>gd :<C-u>GoDoc<CR>
   endfunction
   autocmd FileType go call s:ftgo()
 
@@ -361,17 +382,13 @@ augroup vimrc_plugin
     call s:mapping_for_lsp()
 
     " racer-rust/vim-racer
-    if executable(expand('~/.cargo/bin/racer'))
-      let g:racer_cmd = expand('~/.cargo/bin/racer')
-      let g:racer_experimental_completer = 1
-      nmap <buffer> gd <Plug>(rust-def)
-      nmap <buffer> gs <Plug>(rust-def-split)
-      nmap <buffer> gx <Plug>(rust-def-vertical)
-      nmap <buffer> <LocalLeader>gd <Plug>(rust-doc)
-      nmap <buffer> <LocalLeader>f :<C-u>RustFmt<CR>
-    else
-      echoerr 'not found "racer"'
-    endif
+    nmap <buffer> gd <Plug>(rust-def)
+    nmap <buffer> gs <Plug>(rust-def-split)
+    nmap <buffer> gx <Plug>(rust-def-vertical)
+    nmap <buffer> <LocalLeader>gd <Plug>(rust-doc)
+
+    " rust-lang/rust.vim
+    nmap <buffer> <LocalLeader>f :<C-u>RustFmt<CR>
   endfunction
   autocmd FileType rust call s:ftrust()
 augroup END
