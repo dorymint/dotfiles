@@ -72,6 +72,7 @@ scriptencoding utf-8
 " :help eval
 " :help expression-syntax
 " :help expression-commands
+" :help :bar
 
 "-----| plugin manage |-----"
 if (has('win32') || has('win64')) &&
@@ -115,7 +116,7 @@ set nopaste
 set backspace=indent,eol,start
 set completeopt=menuone,preview
 set display=truncate
-set nrformats=bin,octal,hex
+"set nrformats=bin,octal,hex
 set helplang=ja,en
 
 set title
@@ -277,8 +278,12 @@ syntax on
 let g:mapleader = "\<Space>"
 let g:maplocalleader = '\'
 
-" NORMAL:
-  " disable fold eliminate
+" Nop:
+  " netrw
+  nnoremap gx <Nop>
+  vnoremap gx <Nop>
+
+  " fold eliminate
   nnoremap zE <Nop>
 
   " Arrow keys
@@ -287,6 +292,7 @@ let g:maplocalleader = '\'
   nnoremap <Left>  <Nop>
   nnoremap <Right> <Nop>
 
+" NORMAL:
   " Resize window
   nnoremap <Up>    <C-w>+
   nnoremap <Down>  <C-w>-
@@ -478,73 +484,73 @@ endif
 " :help filetype
 filetype plugin indent on
 
-" vim
-function! s:ftvim()
-  setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-endfunction
-
-" sh
-function! s:ftsh()
-  setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-endfunction
-
-" go
-function! s:ftgo()
-  setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=2
-endfunction
-
-" rust
-function! s:ftrust()
-  "setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4 textwidth=99
-endfunction
-
-" python
-function! s:ftpython()
-  setlocal textwidth=78
-endfunction
-
-" gitcommit
-function! s:ftgitcommit()
-  setlocal spell
-endfunction
-
-" javascript
-function! s:ftjavascript()
-  setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-endfunction
-
-" json
-function! s:ftjson()
-  setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-endfunction
-
-" markdown
-function! s:ftmarkdown()
-  setlocal spell
-endfunction
-
-" text
-function! s:fttext()
-  nnoremap <buffer> <Leader>st :setlocal textwidth=78
-endfunction
-
 " autocmd は再読込されるたびに重複して登録される
-" autocmd! でnyan_vimrc_ft グループの autocmd を初期化して重複を防ぐ
-augroup nyan_vimrc_ft
+" autocmd! で my_vimrc_ft グループの autocmd を初期化して重複を防ぐ
+augroup my_vimrc_ft
   autocmd!
+  " vim
+  function! s:ftvim()
+    setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+  endfunction
   autocmd FileType vim call s:ftvim()
+
+  " sh
+  function! s:ftsh()
+    setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+  endfunction
   autocmd FileType sh call s:ftsh()
+
+  " go
+  function! s:ftgo()
+    setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=2
+  endfunction
   autocmd FileType go call s:ftgo()
+
+  " rust
+  function! s:ftrust()
+    "setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4 textwidth=99
+  endfunction
+  autocmd FileType rust call s:ftrust()
+
+  " python
+  function! s:ftpython()
+    setlocal textwidth=78
+  endfunction
   autocmd FileType python call s:ftpython()
+
+  " gitcommit
+  function! s:ftgitcommit()
+    setlocal spell
+  endfunction
   autocmd FileType gitcommit call s:ftgitcommit()
+
+  " javascript
+  function! s:ftjavascript()
+    setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+  endfunction
   autocmd FileType javascript call s:ftjavascript()
+
+  " json
+  function! s:ftjson()
+    setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+  endfunction
   autocmd FileType json call s:ftjson()
+
+  " markdown
+  function! s:ftmarkdown()
+    setlocal spell
+  endfunction
   autocmd FileType markdown call s:ftmarkdown()
+
+  " text
+  function! s:fttext()
+    nnoremap <buffer> <Leader>st :setlocal textwidth=78
+  endfunction
   autocmd FileType text call s:fttext()
 augroup END
 
-" nyan_vimrc_bg for bg None
-augroup nyan_vimrc_bg
+" my_vimrc_bg for bg None
+augroup my_vimrc_bg
   autocmd!
   autocmd VimEnter,ColorScheme * highlight Normal ctermbg=NONE
   autocmd VimEnter,ColorScheme * highlight NonText ctermbg=NONE
@@ -553,17 +559,15 @@ augroup nyan_vimrc_bg
   autocmd VimEnter,ColorScheme * highlight CursorLineNr ctermbg=NONE
   autocmd VimEnter,ColorScheme * highlight Terminal ctermbg=NONE
 augroup END
-
-" for toggle
 let s:is_none_bg = v:true
 function! s:toggleBackground() abort
   if s:is_none_bg
-    augroup nyan_vimrc_bg
+    augroup my_vimrc_bg
       autocmd!
     augroup END
     let s:is_none_bg = v:false
   else
-    augroup nyan_vimrc_bg
+    augroup my_vimrc_bg
       autocmd!
       autocmd ColorScheme * highlight Normal ctermbg=NONE
       autocmd ColorScheme * highlight NonText ctermbg=NONE
