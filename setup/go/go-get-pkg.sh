@@ -2,7 +2,7 @@
 set -eu
 
 options="-v"
-pkglist="$HOME/dotfiles/setup/golang/gopkg.list"
+pkglist="$HOME/dotfiles/setup/go/gopkg.list"
 upgrade=false
 
 helpmsg() {
@@ -28,13 +28,13 @@ confirm() {
 	count=1
 	while true; do
 		[ $count -gt 3 ] && return 1
-		count=$(( $count + 1 ))
+		count=$(( count + 1 ))
 		case "$key" in
 			n|no) return 1;;
 			y|yes) return 0;;
 		esac
-		echo -n "$msg"
-		read key
+		printf "%s\n" "$msg"
+		read -r key
 	done
 	echo "unreachable" >&2; exit 99
 	)
@@ -46,7 +46,7 @@ abort() {
 }
 
 ckcom() {
-	command -v "$1" &> /dev/null || abort "command not found"
+	command -v "$1" 1> /dev/null || abort "command not found"
 }
 
 main() {

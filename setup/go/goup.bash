@@ -71,10 +71,9 @@ up_bootstrap() {
 	# NOTE: build with gcc is failed
 	command -v clang > /dev/null || abort "command not found \"clang\""
 	command -v clang++ > /dev/null || abort "command not found \"clang++\""
-	echo "--- clang version ---"
-	echo "clang --version"
+	echo "--- clang --version ---"
 	clang --version
-	echo "clang++ --version"
+	echo "--- clang++ --version ---"
 	clang++ --version
 	echo "---------------------"
 
@@ -95,7 +94,6 @@ build() {
 	(
 	# cd "$goroot"
 	if [ ! -e "$goroot" ];then
-		echo "not found $goroot"
 		confirm "git clone $repo $goroot" || abort "stopped"
 		git clone "$repo" "$goroot"
 		cd "$goroot"
@@ -103,7 +101,7 @@ build() {
 		cd "$goroot"
 		git fetch
 	else
-		abort "invalid path of goroot: $goroot"
+		abort "not directory: $goroot"
 	fi
 
 	git checkout "$branch"
@@ -127,8 +125,6 @@ main() {
 	if [ -d "$bootstrap_dir" ]; then
 		if confirm "build bootstrap $bootstrap_branch"; then
 			up_bootstrap || abort "stopped"
-		else
-			abort "stopped"
 		fi
 	else
 		up_bootstrap

@@ -17,7 +17,7 @@ var pkglist = func() string {
 	if err != nil {
 		return "gopkg.list"
 	}
-	return filepath.Join(u.HomeDir, "dotfiles", "setup", "golang", "gopkg.list")
+	return filepath.Join(u.HomeDir, "dotfiles", "setup", "go", "gopkg.list")
 }()
 
 const template = `
