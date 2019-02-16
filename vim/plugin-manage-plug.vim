@@ -69,11 +69,11 @@ call plug#begin('~/.vim/plugged')
   Plug 'racer-rust/vim-racer'
 
   " go
-  " TODO: remove
+  " TODO: remove?
   Plug 'fatih/vim-go'
 
   " python
-  " TODO: remove
+  " TODO: remove?
   "Plug 'davidhalter/jedi-vim'
 
   " UML is Unified Modeling Language, see 'plantuml.com'
@@ -103,8 +103,6 @@ filetype plugin indent on
 let s:sonicdir = expand('~/dotfiles/vim/sonictemplate')
 if isdirectory(s:sonicdir)
   let g:sonictemplate_vim_template_dir = s:sonicdir
-else
-  echoerr "not found " . s:sonicdir
 endif
 
 " itchyny/lightline.vim
@@ -112,7 +110,7 @@ let g:lightline = {
       \ 'colorscheme': 'jellybeans',
       \ 'active': {
         \ 'left': [
-          \ [ 'mode', 'paste', 'fugitive' ],
+          \ [ 'mode', 'fugitive', 'paste' ],
           \ [ 'readonly', 'filename', 'modified' ],
           \ ],
         \ 'right': [
@@ -153,8 +151,6 @@ if has('win32') || has('win64')
   " path to local biuld ctags.exe
   if executable(expand('~/opt/ctags/ctags.exe'))
     let g:tagbar_ctags_bin = expand('~/opt/ctags/ctags.exe')
-  else
-    echoerr 'not found "ctags.exe"'
   endif
 endif
 let g:tagbar_type_go = {
@@ -209,6 +205,7 @@ if v:false
   let g:lsp_log_verbose = 1
   " check: tail --follow $logfile
   let g:lsp_log_file = expand('~/tmp/vim-lsp.log')
+  let g:asyncomplete_log_file = expand('~/tmp/asyncomplete.log')
 endif
 augroup vimrc_plugin_lsp
   autocmd!
@@ -220,6 +217,7 @@ augroup vimrc_plugin_lsp
           \ 'whitelist': ['go'],
           \ })
   endif
+
   " Rust: rustup update
   "     : rustup component add rls-preview rust-analysis rust-src
   if executable('rls')
@@ -236,6 +234,7 @@ augroup vimrc_plugin_lsp
           \ 'whitelist': ['rust'],
           \ })
   endif
+
   " Bash: npm install -g bash-language-server
   if executable('bash-language-server')
     " TODO: consider
@@ -245,6 +244,7 @@ augroup vimrc_plugin_lsp
           \ 'whitelist': [],
           \ })
   endif
+
   " efm-langserver: go get -v -u github.com/mattn/efm-langserver/cmd/efm-langserver
   "   Linters:
   "     markdown: npm install -g markdownlint-cli
@@ -280,7 +280,6 @@ else
   echoerr 'not found "racer"'
 endif
 
-" TODO: remove
 " fatih/vim-go
 if isdirectory(expand('~/dotfiles/vim/tmp/bin'))
   let g:go_bin_path = expand('~/dotfiles/vim/tmp/bin')
@@ -289,7 +288,6 @@ let g:go_play_open_browser = 0
 let g:go_fmt_autosave = 0
 let g:go_template_autocreate = 0
 
-" TODO: remove
 " davidhalter/jedi-vim
 ""let g:jedi#auto_initialization = 0
 "let g:jedi#popup_on_dot = 0
@@ -306,9 +304,7 @@ let g:go_template_autocreate = 0
 function! s:edit_tmpl() abort
   if isdirectory(g:sonictemplate_vim_template_dir)
     " open by NERDTree or netrw
-    execute "vsplit" . " " . g:sonictemplate_vim_template_dir
-  else
-    echoerr "not directory g:sonictemplate_vim_template_dir"
+    execute "vsplit " . g:sonictemplate_vim_template_dir
   endif
 endfunction
 
@@ -368,12 +364,14 @@ map     <LocalLeader><LocalLeader> <Plug>(easymotion-bd-w)
 nmap    <LocalLeader><LocalLeader> <Plug>(easymotion-overwin-w)
 
 nnoremap <LocalLeader>gt :<C-u>GitGutterToggle<CR>
+nnoremap <LocalLeader>N  :<C-u>NERDTreeToggle<CR>
 nnoremap <LocalLeader>h  :<C-u>NERDTreeToggle<CR>
+nnoremap <LocalLeader>T  :<C-u>TagbarToggle<CR>
 nnoremap <LocalLeader>l  :<C-u>TagbarToggle<CR>
 nnoremap <LocalLeader>r  :<C-u>QuickRun<CR>
 
 " mattn/sonictemplate-vim
-nnoremap <LocalLeader>w  :<C-u>call <SID>edit_tmpl()<CR>
+nnoremap <LocalLeader>w :<C-u>call <SID>edit_tmpl()<CR>
 
 " prabirshrestha/vim-lsp
 nnoremap <LocalLeader>s :<C-u>LspStatus<CR>
@@ -384,18 +382,17 @@ nnoremap <LocalLeader>t :<C-u>call <SID>lsp_toggle()<CR>
 "nnoremap <LocalLeader>l :<C-u>call <SID>lsp_commands()<CR>
 
 " lsp quickfix
+nnoremap <LocalLeader>o :<C-u>LspDocumentDiagnostics<CR>
 nnoremap <LocalLeader>e :<C-u>LspDocumentDiagnostics<CR>
+nnoremap <LocalLeader>c :<C-u>cclose<CR>
 nnoremap <LocalLeader>n :<C-u>LspNextError<CR>
 nnoremap <LocalLeader>p :<C-u>LspPreviousError<CR>
-nnoremap <LocalLeader>c  :<C-u>cclose<CR>
 
 augroup vimrc_plugin
   autocmd!
   function! s:ftgo()
-    " TODO: remove
     " fatih/vim-go
-    nnoremap <buffer> <LocalLeader>i  :<C-u>GoImport<Space>
-    nnoremap <buffer> <LocalLeader>d  :<C-u>GoDrop<Space>
+    nnoremap <buffer> <LocalLeader>i  :<C-u>GoImports<Space>
     nnoremap <buffer> <LocalLeader>gd :<C-u>GoDoc<CR>
   endfunction
   autocmd FileType go call s:ftgo()

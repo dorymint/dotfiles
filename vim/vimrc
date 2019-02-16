@@ -1,6 +1,6 @@
 " vimrc
 
-"-----| fileencoding |-----"
+"-----| encoding |-----"
 set encoding=utf-8
 scriptencoding utf-8
 
@@ -10,30 +10,44 @@ scriptencoding utf-8
 " 設定の詳細は :help で調べればまず困らない
 " <F1> キーで help を開く
 " 日本語のヘルプは https://github.com/vim-jp/vimdoc-ja
-" scriptencoding utf-8 はマルチバイトが現れる前の先頭に書くといい
-" また set encoding=utf-8 を付けるなら scriptencoding の前にする
+
+" NORMALモードで : を押すとExコマンドを入力するモードに移る
+" vimrc の設定は Vim script によって書かれる、基本はExコマンドの列挙
+
+" set の詳細は :help :set で確認
+" :help option-summary にオプションの要約が列挙されている
+" :help option-list でオプションのリストが見れる
+" 現在のオプションの値を確認するには :set {OptionName}? で見れる
+" 例えば :set encoding?
+
+" scriptencoding utf-8 はマルチバイト文字が現れる前に書くといい
+" set encoding=utf-8 を付けるなら scriptencoding の前にする
+" set はできるだけ省略せずに書く set nohl -> set nohlsearch
 " 詳しくはアンチパターンを確認
 " vimrc アンチパターンは https://github.com/vim-jp/reading-vimrc/wiki
-" NORMALモードで : を押すとコマンドを入力するモードに移る
-" set の詳細は :help ${name} もしくは :help set で確認
-" set はできるだけ省略せずに書く set nohl --> set nohlsearch
-" 現在のオプションの値を確認するには :set {option}? とする
-" Vim script は最初の非空白文字を \ にすることで前の行と連結できる
-" vim の echo は内部変数を除くのにべんり :echo &encoding
+
+" Vim script の文は行頭の非空白文字を \ にすることで直前の行と連結できる
+
+" :echo は内部変数を除くのにべんり :echo &encoding
 " 関数の結果を見るにもべんり :echo expand("%:p")
 " :help echo
-" @% で現在のファイルパスが取れる
-" :echo @%
-" fullpath は :echo expand("%:p")
 
-" true and false
-" those variable is read only
+" expand("%:p") で fullpath が取れる
+" 現在開いているファイルのフルパス :echo expand("%:p")
+" ホームの展開 :echo expand("~/")
+
+" boolean
+" :help expr4
 " v:true = 1
 " v:false = 0
-" :echo v:true != v:false
-" :echo v:true == v:false
 
 " 以下のヘルプを見ておけば迷わないと思う
+" :help vimtutor
+" :help quickref
+" :help index
+" :help script
+
+" 見ておきたいヘルプ
 " base
 " :help
 " :help help
@@ -41,8 +55,10 @@ scriptencoding utf-8
 " :help search-commands
 " :help set-option
 " :help option-summary
+" :help option-list
 " mapping
 " :help index
+" :help mapping
 " :help motion
 " :help operator
 " function
@@ -51,17 +67,13 @@ scriptencoding utf-8
 " :help function-list
 " :help expand
 " variable
+" :help variables
 " :help internal-variables
-" :help v:
-" :help v:true
-" :help v:false
-" :help g:
-" :help s:
-
+" etc
 " :help grep
 " :help helpgrep
 " :help vimgrep
-" :help {file}
+" :help :filenamme
 " :help quickfix
 " :help runtimepath
 " :help scriptnames
@@ -73,11 +85,12 @@ scriptencoding utf-8
 " :help expression-syntax
 " :help expression-commands
 " :help :bar
+" :help 8g8
 
 "-----| plugin manage |-----"
 if (has('win32') || has('win64')) &&
       \ isdirectory(expand('~/.vim')) &&
-      \ (matchstr(&runtimepath, expand('~/.vim,')) == "")
+      \ (matchstr(&runtimepath, expand('~/.vim,')) ==# "")
   " linux に合わせる
   set runtimepath^=~/.vim,~/.vim/after
 endif
@@ -240,10 +253,10 @@ endif
 "-----| color |-----"
 " colorscheme
 "set background=dark
-if $TERM == 'xterm-256color' ||
-      \ $TERM == 'xterm-termite' ||
-      \ $TERM == 'screen-256color' ||
-      \ $TERM == 'rxvt-unicode-256color'
+if $TERM ==# 'xterm-256color' ||
+      \ $TERM ==# 'xterm-termite' ||
+      \ $TERM ==# 'screen-256color' ||
+      \ $TERM ==# 'rxvt-unicode-256color'
   set t_Co=256
   try
     colorscheme jellybeans
@@ -266,13 +279,13 @@ syntax on
 " default のマップは :help index で確認できる
 " user定義のマップは :imap :nmap :vmap :map :verbose map で確認できる
 " なるべくデフォルトを消さないようにマップする
-" <C-s> は tty への入力受付をロックする? <C-q> で復帰、端末制御に使うキーはマップに注意する
-" <C-b> は tmux と被る、 tmux を変えずに vim でマップしないようにしてみる
+" 端末制御が使うキーはマップに注意する
+" <C-s> は tty への入力受付をロックする? <C-q> で復帰
+" <C-b> は tmux と被る、 tmux を変えずに vim でマップしないように
 " <C-z> はサスペンド、 jobs でサスペンドの確認、 fg でフォアグラウンド
-" <Nop> はマップを削除できる
+" <Nop> でマップを無効にできる
 " コマンドのキーマップは <C-u> で数値の前置を消しておかないと範囲指定される
-" mapleader が有用
-" :help <Leader>
+" mapleader が有用 :help <Leader>
 
 " mapleader
 let g:mapleader = "\<Space>"
@@ -285,6 +298,10 @@ let g:maplocalleader = '\'
 
   " fold eliminate
   nnoremap zE <Nop>
+
+  " exit
+  nnoremap ZZ <Nop>
+  nnoremap ZQ <Nop>
 
   " Arrow keys
   nnoremap <Up>    <Nop>
@@ -304,66 +321,62 @@ let g:maplocalleader = '\'
   nnoremap <C-j> :<C-u>. move +1<CR>
   nnoremap <C-k> :<C-u>. move -2<CR>
 
+  " カーソル移動後、画面中央にフォーカス
+  nnoremap n nzz
+  nnoremap N Nzz
+
   " <Leader>
     " Buffer
-    nnoremap <Leader>j  :<C-u>bnext<CR>
-    nnoremap <Leader>k  :<C-u>bprev<CR>
-    nnoremap <Leader>bl :<C-u>ls<CR>:buffer<Space>
-    nnoremap <Leader>bs :<C-u>ls<CR>:sbuffer<Space>
-    nnoremap <Leader>bd :<C-u>ls<CR>:bdelete<Space>
+    nnoremap <Leader>j :<C-u>bnext<CR>
+    nnoremap <Leader>k :<C-u>bprev<CR>
+    nnoremap <Leader>b :<C-u>ls<CR>:buffer<Space>
+    nnoremap <Leader>d :<C-u>ls<CR>:bdelete<Space>
 
     " Tabpage
-    nnoremap <Leader>l  :<C-u>tabnext<CR>
-    nnoremap <Leader>h  :<C-u>tabprevious<CR>
-    nnoremap <Leader>N  :<C-u>tabnew<CR>
-    nnoremap <Leader>C  :<C-u>tabclose<CR>
-    nnoremap <Leader>ml :<C-u>+tabmove<CR>
-    nnoremap <Leader>mh :<C-u>-tabmove<CR>
+    nnoremap <Leader>N :<C-u>tabnew<CR>
+    nnoremap <Leader>C :<C-u>tabclose<CR>
+    nnoremap <Leader>l :<C-u>tabnext<CR>
+    nnoremap <Leader>h :<C-u>tabprevious<CR>
+    nnoremap <Leader>L :<C-u>+tabmove<CR>
+    nnoremap <Leader>H :<C-u>-tabmove<CR>
 
     " Mark
-    nnoremap <Leader>mm :<C-u>marks<CR>
+    nnoremap <Leader>m :<C-u>marks<CR>
 
     " Register
-    nnoremap <Leader>reg :<C-u>registers<CR>
+    nnoremap <Leader>r :<C-u>registers<CR>
 
-    " Search and move
-    " TODO: autocmd FileType で設定したほうがよさそう
-    " ruby なら autocmd FileType ruby nnoremap <buffer> <Leader>; /end<CR>
-    nnoremap <Leader>; /}<CR>
-    nnoremap <Leader>> /><CR>
+    " Quickfix
+    nnoremap <Leader>o :<C-u>copen<CR>
+    nnoremap <Leader>e :<C-u>copen<CR>
+    nnoremap <Leader>w :<C-u>cwindow<CR>
+    nnoremap <Leader>c :<C-u>cclose<CR>
+    nnoremap <Leader>n :<C-u>cnext<CR>
+    nnoremap <Leader>p :<C-u>cprevious<CR>
 
-    " match over 80 characters
-    nnoremap <Leader>80 /\%80v.\+<CR>
-
-    " Quickfix:
-    nnoremap <Leader>n  :<C-u>cnext<CR>
-    nnoremap <Leader>cn :<C-u>cnext<CR>
-    nnoremap <Leader>p  :<C-u>cprevious<CR>
-    nnoremap <Leader>cp :<C-u>cprevious<CR>
-    nnoremap <Leader>co :<C-u>copen<CR>
-    nnoremap <Leader>cw :<C-u>cwindow<CR>
-    nnoremap <Leader>cc :<C-u>cclose<CR>
-
-    " Toggle:
-    nnoremap <Leader>th :<C-u>set hlsearch!<CR>
-    nnoremap <Leader>tl :<C-u>set list!<CR>
-    nnoremap <Leader>tc :<C-u>set cursorcolumn! cursorline!<CR>
+    " Toggle
+    nnoremap <Leader>/  :<C-u>set hlsearch!<CR>
     nnoremap <Leader>tn :<C-u>set number!<CR>
+    nnoremap <Leader>tc :<C-u>set cursorline! cursorcolumn!<CR>
     nnoremap <Leader>te :<C-u>setlocal expandtab!<CR>
     nnoremap <Leader>ts :<C-u>setlocal spell!<CR>
     nnoremap <Leader>tp :<C-u>setlocal paste!<CR>
-    nnoremap <Leader>tr :<C-u>setlocal readonly!
 
-    " Reset:
-    nnoremap <Leader>sf  :<C-u>setlocal filetype=
-    nnoremap <Leader>st  :<C-u>setlocal textwidth=0
-    nnoremap <Leader>se  :<C-u>e ++enc=shift_jis
+    " Reset
+    nnoremap <Leader>f  :<C-u>setlocal filetype=
+    nnoremap <Leader>st :<C-u>setlocal textwidth=0
+    nnoremap <Leader>se :<C-u>e ++enc=shift_jis
 
-    " Hex:
-    if executable('xxd')
-      nnoremap <Leader>xxd  :<C-u>setlocal filetype=xxd <Bar> %!xxd<Space>
-      nnoremap <Leader>rxxd :<C-u>%!xxd -r<Space>
-    endif
+    " Search and move
+    " :help n
+    " :help }
+    " TODO: autocmd FileType で設定したほうがよさそう?
+    " c: autocmd FileType c nnoremap <buffer> <Leader>; /}<RC>
+    " ruby: autocmd FileType ruby nnoremap <buffer> <Leader>; /end<CR>
+    nnoremap <Leader>; /^$<CR>
+
+    " match over 80 characters
+    nnoremap <Leader>80 /\%80v.\+<CR>
 
 " INSERT:
   " <C-[> に慣れた方がいいかも
@@ -373,11 +386,11 @@ let g:maplocalleader = '\'
   "inoremap kj <Esc>
 
   " インサートモードの移動
-  " <C-b> tmux とかぶる
+  " <C-b> tmux
   " <C-h> バックスペース
-  " <C-f> 再インデントを上書き
-  inoremap <C-f> <Right>
-  inoremap <C-b> <Left>
+  " <C-f> 再インデント
+  "inoremap <C-f> <Right>
+  "inoremap <C-b> <Left>
 
   " emacs
   "inoremap <C-a> <Home>
@@ -398,11 +411,11 @@ let g:maplocalleader = '\'
     inoremap "" ""<C-g>U<Left>
     inoremap '' ''<C-g>U<Left>
   endif
-  inoremap {<enter> {}<Left><enter><Esc><S-o>
+  inoremap {<Enter> {}<Left><Enter><Esc><S-o>
   inoremap {<CR>    {}<Left><CR><Esc><S-o>
-  inoremap (<enter> ()<Left><enter><Esc><S-o>
+  inoremap (<Enter> ()<Left><Enter><Esc><S-o>
   inoremap (<CR>    ()<Left><CR><Esc><S-o>
-  inoremap [<enter> []<Left><enter><Esc><S-o>
+  inoremap [<Enter> []<Left><Enter><Esc><S-o>
   inoremap [<CR>    []<Left><CR><Esc><S-o>
 
   " オムニ補完
@@ -445,7 +458,9 @@ let g:maplocalleader = '\'
   "inoremap ー -
   "inoremap 〜 ~
 
-"-----| tool |-----"
+"-----| command |-----"
+command! -complete=command -nargs=1 Type verbose command <args>
+
 function! s:scratch() abort
   new
   setlocal buftype=nofile
@@ -454,19 +469,28 @@ function! s:scratch() abort
 endfunction
 command! Scratch call s:scratch()
 
-" xclip
 if executable('xclip')
   command! Paste read !xclip -o
   command! -range Cut <line1>,<line2>!xclip
-else
-  echoerr 'not found "xclip"'
+  command! -range Yank execute "<line1>,<line2>!xclip" | undo
 endif
 
-" timestamp
 if exists('*strftime')
-  command! Timestamp :put =strftime('%Y/%m/%d')
-else
-  echoerr 'not found "*strftime"'
+  command! Timestamp put =strftime('%Y-%m-%d %T')
+endif
+
+" for edit the binary files
+if executable('xxd')
+  function! s:toggle_xxd() abort
+    if &filetype ==# 'xxd'
+      setlocal filetype=
+      %!xxd -r
+    else
+      setlocal filetype=xxd
+      %!xxd
+    endif
+  endfunction
+  command! Xxd call s:toggle_xxd()
 endif
 
 " From: defaults.vim
@@ -485,7 +509,9 @@ endif
 filetype plugin indent on
 
 " autocmd は再読込されるたびに重複して登録される
-" autocmd! で my_vimrc_ft グループの autocmd を初期化して重複を防ぐ
+" autocmd! でグループの autocmd を初期化して重複を防ぐ
+
+" for filetype
 augroup my_vimrc_ft
   autocmd!
   " vim
@@ -549,7 +575,7 @@ augroup my_vimrc_ft
   autocmd FileType text call s:fttext()
 augroup END
 
-" my_vimrc_bg for bg None
+" for bg NONE
 augroup my_vimrc_bg
   autocmd!
   autocmd VimEnter,ColorScheme * highlight Normal ctermbg=NONE
