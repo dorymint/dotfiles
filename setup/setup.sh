@@ -44,7 +44,7 @@ main() {
   mkd "$HOME"/.config/systemd
   mkd "$HOME"/.config/systemd/user
 
-  options="--verbose -sn"
+  options="--verbose --symbolic --no-dereference"
   if [ "$force" = "true" ]; then
     options="$options --force"
   fi
