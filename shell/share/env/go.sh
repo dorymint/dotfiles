@@ -1,4 +1,4 @@
-# golang
+# go
 
 # GOROOT
 if [ -x "$HOME"/github.com/golang/go/bin/go ]; then

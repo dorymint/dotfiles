@@ -64,10 +64,10 @@ while true; do
       main
       ;;
     next|-next)
-      next_bg="$walldir"/"$(( "$current_bg_id" + 1 ))"
+      next_bg="$walldir"/"$(( current_bg_id + 1 ))"
       ;;
     previous|-previous)
-      next_bg="$walldir"/"$(( "$current_bg_id" - 1 ))"
+      next_bg="$walldir"/"$(( current_bg_id - 1 ))"
       ;;
     with-id|--with-id)
       with_bg_id="true"

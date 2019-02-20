@@ -4,7 +4,6 @@ set -eu
 # TODO: move to $dotroot/config for .config files
 
 dotroot="$(dirname "$(dirname "$(readlink -e "$0")")")"
-dotx="$dotroot"/x
 force=false
 withgui=false
 
@@ -30,6 +29,13 @@ mkd() {
 }
 
 main() {
+  builtin command -v ln > /dev/null
+  ln="ln --verbose --symbolic --no-dereference"
+  if [ "$force" = "true" ]; then
+    ln="$ln --force"
+  fi
+  ln="$ln --"
+
   mkd "$HOME"/bin
   mkd "$HOME"/.config
 
@@ -44,53 +50,49 @@ main() {
   mkd "$HOME"/.config/systemd
   mkd "$HOME"/.config/systemd/user
 
-  options="--verbose --symbolic --no-dereference"
-  if [ "$force" = "true" ]; then
-    options="$options --force"
-  fi
-
   # fallthrough
   set +e
     # zsh
-    ln $options -- "$dotroot"/shell/zsh/zshrc "$HOME"/.zshrc
-    ln $options -- "$dotroot"/shell/zsh/zprofile "$HOME"/.zprofile
+    $ln "$dotroot"/shell/zsh/zshrc "$HOME"/.zshrc
+    $ln "$dotroot"/shell/zsh/zprofile "$HOME"/.zprofile
 
     # bash
-    ln $options -- "$dotroot"/shell/bash/bashrc "$HOME"/.bashrc
-    ln $options -- "$dotroot"/shell/bash/bash_profile "$HOME"/.bash_profile
+    $ln "$dotroot"/shell/bash/bashrc "$HOME"/.bashrc
+    $ln "$dotroot"/shell/bash/bash_profile "$HOME"/.bash_profile
 
     # git
-    ln $options -- "$dotroot"/gitconfig "$HOME"/.gitconfig
+    $ln "$dotroot"/gitconfig "$HOME"/.gitconfig
 
     # vim
-    ln $options -- "$dotroot"/vim/vimrc "$HOME"/.vimrc
-    ln $options -- "$dotroot"/vim/gvimrc "$HOME"/.gvimrc
+    $ln "$dotroot"/vim/vimrc "$HOME"/.vimrc
+    $ln "$dotroot"/vim/gvimrc "$HOME"/.gvimrc
 
     # tmux
-    ln $options -- "$dotroot"/tmux/tmux.conf "$HOME"/.tmux.conf
+    $ln "$dotroot"/tmux/tmux.conf "$HOME"/.tmux.conf
 
     # efm-langserver
-    ln $options -- "$dotroot"/config/efm-langserver/config.yaml "$HOME"/.config/efm-langserver/config.yaml
+    $ln "$dotroot"/config/efm-langserver/config.yaml "$HOME"/.config/efm-langserver/config.yaml
   set -e
 
-  # for xorg
+  # for gui
   if [ "$withgui" = "true" ]; then
     # fallthrough
     set +e
-      ln $options -- "$dotx"/xinitrc "$HOME"/.xinitrc
+      $ln "$dotroot"/x/xinitrc "$HOME"/.xinitrc
       # TODO: consider to remove
-      #ln $options -- "$dotx"/xserverrc "$HOME"/.xserverrc
-      ln $options -- "$dotx"/Xresources "$HOME"/.Xresources
-      ln $options -- "$dotx"/fontconfig/ "$HOME"/.config/fontconfig
+      #$ln "$dotroot"/x/xserverrc "$HOME"/.xserverrc
+      $ln "$dotroot"/x/Xresources "$HOME"/.Xresources
+
+      $ln "$dotroot"/config/fontconfig/ "$HOME"/.config/fontconfig
 
       # window manager
-      ln $options -- "$dotx"/i3/ "$HOME"/.config/i3
-      ln $options -- "$dotx"/sway/ "$HOME"/.config/sway
+      $ln "$dotroot"/config/i3/ "$HOME"/.config/i3
+      $ln "$dotroot"/config/sway/ "$HOME"/.config/sway
 
       # config
-      ln $options -- "$dotx"/termite/ "$HOME"/.config/termite
-      ln $options -- "$dotx"/conky/ "$HOME"/.config/conky
-      ln $options -- "$dotx"/dunst/ "$HOME"/.config/dunst
+      $ln "$dotroot"/config/termite/ "$HOME"/.config/termite
+      $ln "$dotroot"/config/conky/ "$HOME"/.config/conky
+      $ln "$dotroot"/config/dunst/ "$HOME"/.config/dunst
     set -e
   fi
 }
