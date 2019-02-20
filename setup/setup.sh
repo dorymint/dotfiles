@@ -52,12 +52,12 @@ main() {
   # fallthrough
   set +e
     # zsh
-    ln $options -- "$dotroot"/zsh/zshrc "$HOME"/.zshrc
-    ln $options -- "$dotroot"/zsh/zprofile "$HOME"/.zprofile
+    ln $options -- "$dotroot"/shell/zsh/zshrc "$HOME"/.zshrc
+    ln $options -- "$dotroot"/shell/zsh/zprofile "$HOME"/.zprofile
 
     # bash
-    ln $options -- "$dotroot"/bash/bashrc "$HOME"/.bashrc
-    ln $options -- "$dotroot"/bash/bash_profile "$HOME"/.bash_profile
+    ln $options -- "$dotroot"/shell/bash/bashrc "$HOME"/.bashrc
+    ln $options -- "$dotroot"/shell/bash/bash_profile "$HOME"/.bash_profile
 
     # git
     ln $options -- "$dotroot"/gitconfig "$HOME"/.gitconfig

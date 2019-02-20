@@ -10,13 +10,13 @@ if command -v keychain > /dev/null; then
 fi
 
 # environments
-source "$HOME"/dotfiles/share/env/locale.sh
+source "$HOME"/dotfiles/shell/share/env/locale.sh
 
 # lang
-source "$HOME"/dotfiles/share/env/nodejs.sh
-source "$HOME"/dotfiles/share/env/golang.sh
-source "$HOME"/dotfiles/share/env/ruby.sh
-source "$HOME"/dotfiles/share/env/rust.sh
+source "$HOME"/dotfiles/shell/share/env/go.sh
+source "$HOME"/dotfiles/shell/share/env/nodejs.sh
+source "$HOME"/dotfiles/shell/share/env/ruby.sh
+source "$HOME"/dotfiles/shell/share/env/rust.sh
 
 # priority local bin
 [ -d "$HOME"/bin ] && export PATH="$HOME"/bin:"$PATH"

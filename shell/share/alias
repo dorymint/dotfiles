@@ -2,6 +2,7 @@
 # for bash, zsh
 
 # Common
+alias l='builtin command ls -lv --color=auto'
 alias la='builtin command ls -halv --color=auto'
 alias lale='builtin command ls -halv --color=always | builtin command less -R'
 alias lat='builtin command ls -halvt --color=auto'
@@ -90,6 +91,6 @@ fi
 [ -x "$(builtin command -v mplayer)" ] && alias mplayerbgm='builtin command mplayer -ao pulse -vo null'
 
 # systemctl --user
-alias timers &> /dev/null || alias timers='systemctl --no-pager --user list-timers'
+alias timers > /dev/null 2>&1 || alias timers='systemctl --no-pager --user list-timers'
 
 # vim: ft=sh

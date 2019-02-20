@@ -60,9 +60,9 @@ confirm() {
   key=""
   counter=0
   while [ $counter -lt 3 ]; do
-    counter=$(expr $counter + 1)
-    echo -n "$1 [yes:no]?>"
-    read key || return 1
+    counter=$(( counter + 1 ))
+    printf "%s" "$1 [yes:no]?>"
+    read -r key || return 1
     case "$key" in
       no|n) return 1;;
       yes|y) return 0;;
@@ -84,10 +84,12 @@ gcommit() {
   cd "$(dirname "$file")"
   git status
   git diff -- "$base"
-  confirm "git add -- \"$base\" && git commit -m \"$msg\" -- \"$base\"" &&
-    git add -- "$base" &&
-    git commit -m "$msg" -- "$base" ||
+  if confirm "git add -- \"$base\" && git commit -m \"$msg\" -- \"$base\""; then
+    git add -- "$base"
+    git commit -m "$msg" -- "$base"
+  else
     abort "stopped"
+  fi
   )
 }
 gpush() {
@@ -95,11 +97,13 @@ gpush() {
   git status
   git diff --stat origin master
   printf "git diff origin master <enter>"
-  read
+  read -r
   git diff origin master
-  confirm "git push origin master" &&
-    git push origin master ||
+  if confirm "git push origin master"; then
+    git push origin master
+  else
     abort "stopped"
+  fi
 }
 
 main() {

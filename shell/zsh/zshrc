@@ -11,8 +11,7 @@ if command -v pacman &> /dev/null; then
 fi
 
 # alias
-source "$HOME"/dotfiles/share/alias
-[ -f "$HOME"/dotfiles/etc/alias ] && source "$HOME"/dotfiles/etc/alias
+source "$HOME"/dotfiles/shell/share/alias
 
 # setopt
 setopt autocd

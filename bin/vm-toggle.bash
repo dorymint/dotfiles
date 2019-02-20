@@ -14,9 +14,9 @@ confirm() {
   local key=""
   local counter=0
   while [ $counter -lt 3 ]; do
-    counter=`expr $counter + 1`
-    echo -n "$1 [yes:no]?>"
-    read -t 60 key || return 1
+    counter=$(( counter + 1 ))
+    printf "%s" "$1 [yes:no]?>"
+    read -r key || return 1
     case "$key" in
       no|n) return 1;;
       yes|y) return 0;;
@@ -85,12 +85,12 @@ unset -f helpmsg
 if systemctl --user is-active $service &> /dev/null; then
   confirm "STOP $(cat "$HOME"/dotfiles/etc/systemd/currentvm)"
   echo "please wait for stop VM process"
-  which "fortune" &> /dev/null && fortune -a
+  command -v "fortune" &> /dev/null && fortune -a
   systemctl --user stop $service
   echo "inactivate"
 else
   confirm "START $(cat "$HOME"/dotfiles/etc/systemd/currentvm)"
   systemctl --user start $service
   echo "activate"
-  which "fortune" &> /dev/null && fortune -a
+  command -v "fortune" &> /dev/null && fortune -a
 fi

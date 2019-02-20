@@ -56,12 +56,12 @@ chsize_inter() {
   echo "press \"Enter\" to exit"
   while read -r -n 1 x; do
     printf "\r"
-    [ "$x" = "n" ] && size=$(( $size + 1 ))
-    [ "$x" = "p" ] && size=$(( $size - 1 ))
+    [ "$x" = "n" ] && size=$(( size + 1 ))
+    [ "$x" = "p" ] && size=$(( size - 1 ))
     [ "$x" = "d" ] && size=$defsize
     [ "$x" = "" ] && break
     chsize "$size"
-    printf "Current Size $size > "
+    printf "%s" "Current Size $size > "
   done
   )
 }

@@ -21,7 +21,7 @@ esac
 prof="$(pwd)"/cover.prof
 if [ -f "${prof}" ]; then
 	echo -e -n "${prof}\noverride? [yes:no]>"
-	read -t 60 key
+	read -r key
 	[ "${key}" = "yes" ] || exit 1
 fi
 

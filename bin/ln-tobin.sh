@@ -31,13 +31,13 @@ main() {
   (
   [ -d "$dir" ] || abort "not directory: $dir"
   fullpaths="$(readlink --verbose -e -- "$@")"
-  for x in "$fullpaths"; do
+  for x in $fullpaths; do
     if [ ! -x "$x" ]; then
       echo "unexecutable: $x"
       continue
     fi
 
-    options="--verbose --symbolic --target-directory="$dir""
+    options="--verbose --symbolic --target-directory=\"$dir\""
     if [ "$force" = "true" ]; then
       options="--force $options"
     fi

@@ -4,8 +4,8 @@
 [[ $- != *i* ]] && return
 
 # alias
-if [ -f "$HOME"/dotfiles/share/alias ]; then
-  source "$HOME"/dotfiles/share/alias
+if [ -f "$HOME"/dotfiles/shell/share/alias ]; then
+  source "$HOME"/dotfiles/shell/share/alias
 fi
 
 # PS1

@@ -256,8 +256,9 @@ bar {
   hidden_state hide
 }
 
-# set floating
+# window
 for_window [instance="pavucontrol"] floating enable
+for_window [title="^Page Info .*$"] floating enable
 
 # start exec
 exec_always --no-startup-id sh -c '$i3dir/randombg.sh'

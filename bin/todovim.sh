@@ -1,8 +1,8 @@
 #!/bin/sh
 set -eu
 
-[ -x "$(which gotcha)" ]
-[ -x "$(which peco)" ]
+[ -x "$(command -v gotcha)" ]
+[ -x "$(command -v peco)" ]
 
 word="TODO: "
 file=""
