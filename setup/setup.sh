@@ -7,6 +7,8 @@ dotroot="$(dirname "$(dirname "$(readlink -e "$0")")")"
 force=false
 withgui=false
 
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-"$HOME"/.config}"
+
 helpmsg() {
   cat >&1 <<END
 Description:
@@ -36,19 +38,23 @@ main() {
   fi
   ln="$ln --"
 
+  # base
   mkd "$HOME"/bin
-  mkd "$HOME"/.config
+  mkd "$XDG_CONFIG_HOME"
 
+  # vim
   mkd "$HOME"/.vim
-  mkd "$HOME"/.config/efm-langserver
+  mkd "$XDG_CONFIG_HOME"/efm-langserver
 
+  # go
   mkd "$HOME"/go
   mkd "$HOME"/go/bin
   mkd "$HOME"/go/pkg
   mkd "$HOME"/go/src
 
-  mkd "$HOME"/.config/systemd
-  mkd "$HOME"/.config/systemd/user
+  # systemd
+  mkd "$XDG_CONFIG_HOME"/systemd
+  mkd "$XDG_CONFIG_HOME"/systemd/user
 
   # fallthrough
   set +e
@@ -71,10 +77,10 @@ main() {
     $ln "$dotroot"/tmux/tmux.conf "$HOME"/.tmux.conf
 
     # efm-langserver
-    $ln "$dotroot"/config/efm-langserver/config.yaml "$HOME"/.config/efm-langserver/config.yaml
+    $ln "$dotroot"/config/efm-langserver/config.yaml "$XDG_CONFIG_HOME"/efm-langserver/config.yaml
   set -e
 
-  # for gui
+  # with gui
   if [ "$withgui" = "true" ]; then
     # fallthrough
     set +e
@@ -83,16 +89,16 @@ main() {
       #$ln "$dotroot"/x/xserverrc "$HOME"/.xserverrc
       $ln "$dotroot"/x/Xresources "$HOME"/.Xresources
 
-      $ln "$dotroot"/config/fontconfig/ "$HOME"/.config/fontconfig
+      $ln "$dotroot"/config/fontconfig/ "$XDG_CONFIG_HOME"/fontconfig
 
       # window manager
-      $ln "$dotroot"/config/i3/ "$HOME"/.config/i3
-      $ln "$dotroot"/config/sway/ "$HOME"/.config/sway
+      $ln "$dotroot"/config/i3/ "$XDG_CONFIG_HOME"/i3
+      $ln "$dotroot"/config/sway/ "$XDG_CONFIG_HOME"/sway
 
       # config
-      $ln "$dotroot"/config/termite/ "$HOME"/.config/termite
-      $ln "$dotroot"/config/conky/ "$HOME"/.config/conky
-      $ln "$dotroot"/config/dunst/ "$HOME"/.config/dunst
+      $ln "$dotroot"/config/termite/ "$XDG_CONFIG_HOME"/termite
+      $ln "$dotroot"/config/conky/ "$XDG_CONFIG_HOME"/conky
+      $ln "$dotroot"/config/dunst/ "$XDG_CONFIG_HOME"/dunst
     set -e
   fi
 }
