@@ -376,7 +376,7 @@ nnoremap <LocalLeader>w :<C-u>call <SID>edit_tmpl()<CR>
 " prabirshrestha/vim-lsp
 nnoremap <LocalLeader>s :<C-u>LspStatus<CR>
 nnoremap <LocalLeader>d :<C-u>LspDefinition<CR>
-nnoremap <LocalLeader>f :<C-u>LspDocumentFormat<CR>
+nnoremap <LocalLeader>f :<C-u>LspDocumentFormatSync<CR>
 nnoremap <LocalLeader>t :<C-u>call <SID>lsp_toggle()<CR>
 " TODO: consider
 "nnoremap <LocalLeader>l :<C-u>call <SID>lsp_commands()<CR>
