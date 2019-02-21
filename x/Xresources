@@ -1,11 +1,28 @@
 ! xrdb -merge ~/.Xresources
 
+!
+! xft
+!
 xft.dpi: 96
 xft.antialias: false
 xft.rgba: rgb
 xft.hinting: true
 xft.hintstyle: hitslight
 
+!
+! xterm
+!
+xterm*termName: xterm-256color
+xterm*locale: true
+xterm*saveLines: 4096
+xterm*reverseVideo: on
+xterm*faceName: Inconsolata
+xterm*faceNameDoublesize: Noto Sanse Mono CJK JP
+xterm*faceSize: 11
+
+!
+! urxvt
+!
 urxvt.saveLines: 512
 urxvt.scrollBar: false
 urxvt.pointerBlank: true
@@ -26,6 +43,7 @@ urxvt.keysym.Control-Right: \033[1;5C
 !urxvt.inputMethod: fcitx
 !urxvt.preeditType: OnTheSpot
 
+! color
 urxvt.depth: 32
 urxvt.background: [85]#000000
 urxvt.foreground: #c8c8c8

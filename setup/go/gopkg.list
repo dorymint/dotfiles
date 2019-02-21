@@ -1,5 +1,4 @@
-
-# go package list
+# go packages
 
 # golang.org
 golang.org/x/tools/cmd/...
@@ -9,16 +8,18 @@ github.com/golang/lint/golint
 github.com/golang/dep/cmd/dep
 
 # github.com
-github.com/google/gops
-github.com/github/hub
-github.com/mattn/cho
-github.com/mattn/gof
-github.com/nsf/gocode
 github.com/derekparker/delve/cmd/dlv
+github.com/github/hub
+github.com/google/gops
 github.com/josharian/impl
 github.com/jstemmer/gotags
+github.com/mattn/cho
+github.com/mattn/efm-langserver/cmd/efm-langserver
+github.com/mattn/gof
+github.com/nsf/gocode
 github.com/rogpeppe/godef
 
+# honnef.co
 #honnef.co/go/tools/cmd/gosimple
 #honnef.co/go/tools/cmd/unused
 #honnef.co/go/tools/cmd/staticcheck

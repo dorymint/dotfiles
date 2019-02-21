@@ -37,7 +37,7 @@ main() {
       continue
     fi
 
-    options="--verbose --symbolic --target-directory=\"$dir\""
+    options="--verbose --symbolic --target-directory=$dir"
     if [ "$force" = "true" ]; then
       options="--force $options"
     fi
