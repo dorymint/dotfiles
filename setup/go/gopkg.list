@@ -19,6 +19,9 @@ github.com/mattn/gof
 github.com/nsf/gocode
 github.com/rogpeppe/godef
 
+github.com/yaeshimo/gits
+github.com/yaeshimo/fdup
+
 # honnef.co
 #honnef.co/go/tools/cmd/gosimple
 #honnef.co/go/tools/cmd/unused

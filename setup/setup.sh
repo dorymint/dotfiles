@@ -82,24 +82,47 @@ main() {
 
   # with gui
   if [ "$withgui" = "true" ]; then
+
+
+    mkd "$XDG_CONFIG_HOME"/fontconfig
+    mkd "$XDG_CONFIG_HOME"/sway
+
+    # TODO: fix
+    #mkd "$XDG_CONFIG_HOME"/i3
+
+    mkd "$XDG_CONFIG_HOME"/termite
+    mkd "$XDG_CONFIG_HOME"/conky
+    mkd "$XDG_CONFIG_HOME"/dunst
+
     # fallthrough
     set +e
+      # x
       $ln "$dotroot"/x/xinitrc "$HOME"/.xinitrc
-      # TODO: consider to remove
-      #$ln "$dotroot"/x/xserverrc "$HOME"/.xserverrc
       $ln "$dotroot"/x/Xresources "$HOME"/.Xresources
 
-      $ln "$dotroot"/config/fontconfig/ "$XDG_CONFIG_HOME"/fontconfig
+      # remove?
+      #$ln "$dotroot"/x/xserverrc "$HOME"/.xserverrc
+
+      $ln "$dotroot"/config/fontconfig/fonts.conf "$XDG_CONFIG_HOME"/fontconfig/fonts.conf
 
       # window manager
-      $ln "$dotroot"/config/i3/ "$XDG_CONFIG_HOME"/i3
-      $ln "$dotroot"/config/sway/ "$XDG_CONFIG_HOME"/sway
 
-      # config
-      $ln "$dotroot"/config/termite/ "$XDG_CONFIG_HOME"/termite
-      $ln "$dotroot"/config/conky/ "$XDG_CONFIG_HOME"/conky
-      $ln "$dotroot"/config/dunst/ "$XDG_CONFIG_HOME"/dunst
+      # TODO: fix
+      $ln "$dotroot"/config/i3/ "$XDG_CONFIG_HOME"/i3
+
+      $ln "$dotroot"/config/sway/config "$XDG_CONFIG_HOME"/sway/config
+
+      # termite
+      $ln "$dotroot"/config/termite/config "$XDG_CONFIG_HOME"/termite/config
+      $ln "$dotroot"/config/termite/gtk.css "$XDG_CONFIG_HOME"/termite/gtk.css
+
+      # conky
+      $ln "$dotroot"/config/conky/conky.conf "$XDG_CONFIG_HOME"/conky/conky.conf
+
+      # dunst
+      $ln "$dotroot"/config/dunst/dunstrc "$XDG_CONFIG_HOME"/dunst/dunstrc
     set -e
+
   fi
 }
 

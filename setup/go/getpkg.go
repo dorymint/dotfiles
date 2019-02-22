@@ -3,6 +3,7 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"flag"
 	"fmt"
 	"os"
@@ -11,14 +12,6 @@ import (
 	"path/filepath"
 	"strings"
 )
-
-var pkglist = func() string {
-	u, err := user.Current()
-	if err != nil {
-		return "gopkg.list"
-	}
-	return filepath.Join(u.HomeDir, "dotfiles", "setup", "go", "gopkg.list")
-}()
 
 const template = `
 # Comment
@@ -29,38 +22,43 @@ github.com/golang/lint/golint
 github.com/golang/dep/cmd/dep
 `
 
-func main() {
-	opt := struct {
-		ignoreConfirm bool
-		upgrade       bool
-		file          string
-		dryRun        bool
-		template      bool
-	}{}
+// hard code
+var DefaultPackageList = func() string {
+	u, err := user.Current()
+	if err != nil {
+		panic(err)
+	} else if u.HomeDir == "" {
+		panic("not defined: u.HomeDir")
+	}
+	return filepath.Join(u.HomeDir, "dotfiles", "setup", "go", "gopkg.list")
+}()
+
+var opt struct {
+	file          string
+	upgrade       bool
+	ignoreConfirm bool
+	dryrun        bool
+	template      bool
+}
+
+func init() {
+	flag.StringVar(&opt.file, "file", DefaultPackageList, "Specify path of package list")
+	flag.StringVar(&opt.file, "f", DefaultPackageList, `Alias of "-file"`)
+	flag.BoolVar(&opt.upgrade, "upgrade", false, "Install and Upgrade binaries")
+	flag.BoolVar(&opt.upgrade, "u", false, `Alias of "-upgrade"`)
 	flag.BoolVar(&opt.ignoreConfirm, "yes", false, "Ignore confirm")
 	flag.BoolVar(&opt.ignoreConfirm, "y", false, `Alias of "-yes"`)
-	flag.BoolVar(&opt.upgrade, "upgrade", false, "Ignore confirm")
-	flag.BoolVar(&opt.upgrade, "u", false, `Alias of "-upgrade"`)
-	flag.StringVar(&opt.file, "file", "", fmt.Sprintf("Specify path of package list (default: %q)", pkglist))
-	flag.StringVar(&opt.file, "f", "", `Alias of "-file"`)
-	flag.BoolVar(&opt.dryRun, "dry-run", false, "Only display target packages")
-	flag.BoolVar(&opt.dryRun, "d", false, `Alias of "-dry-run"`)
+	flag.BoolVar(&opt.dryrun, "dry-run", false, "Only display target packages")
+	flag.BoolVar(&opt.dryrun, "d", false, `Alias of "-dry-run"`)
 	flag.BoolVar(&opt.template, "template", false, "Display template of package list")
 	flag.BoolVar(&opt.template, "t", false, `Alias of "-template"`)
 	flag.Parse()
+}
 
-	if opt.template {
-		fmt.Println(template)
-		return
-	}
-
-	if opt.file != "" {
-		pkglist = opt.file
-	}
-
-	f, err := os.Open(pkglist)
+func run(file string, cmdline []string, ignoreConfirm bool, dryrun bool) error {
+	f, err := os.Open(file)
 	if err != nil {
-		panic(err)
+		return err
 	}
 	defer f.Close()
 
@@ -68,7 +66,7 @@ func main() {
 	sc := bufio.NewScanner(f)
 	for sc.Scan() {
 		if err := sc.Err(); err != nil {
-			panic(err)
+			return err
 		}
 		ss := strings.Fields(sc.Text())
 		if len(ss) == 0 {
@@ -80,55 +78,65 @@ func main() {
 		urls = append(urls, ss[0])
 	}
 	if len(urls) == 0 {
-		fmt.Printf("package not found in \"%s\"\n", pkglist)
-		return
+		return fmt.Errorf("package not found in \"%s\"", file)
 	}
 
 	fmt.Printf("Packages:\n\t%s\n", strings.Join(urls, "\n\t"))
-
-	options := []string{"get", "-v"}
-	if opt.upgrade {
-		options = append(options, "-u")
+	fmt.Printf("Run:\n\t%q\n", append(cmdline, "package"))
+	if dryrun {
+		return nil
 	}
 
-	fmt.Printf("Run:\n\t%s %q\n", "go", append(options, "package"))
-
-	if opt.dryRun {
-		return
-	}
-
-	if !opt.ignoreConfirm {
+	if !ignoreConfirm {
 		fmt.Printf("[yes|no]?> ")
-		var stop bool
-		func() {
-			sc := bufio.NewScanner(os.Stdin)
-			for sc.Scan() {
-				if err := sc.Err(); err != nil {
-					panic(err)
-				}
-				switch sc.Text() {
-				case "y", "yes":
-					return
-				case "n", "no":
-					stop = true
-					return
-				}
+		sc := bufio.NewScanner(os.Stdin)
+		for {
+			if !sc.Scan() {
+				return errors.New("scan failed")
 			}
-			panic("stdin scan error")
-		}()
-		if stop == true {
-			fmt.Println("stopped")
-			return
+			if err := sc.Err(); err != nil {
+				return err
+			}
+			switch sc.Text() {
+			case "y", "yes":
+				break
+			case "n", "no":
+				return errors.New("stopped")
+			}
 		}
 	}
 
 	for _, url := range urls {
-		cmd := exec.Command("go", append(options, url)...)
+		cmd := exec.Command(cmdline[0], append(cmdline, url)[1:]...)
 		cmd.Stderr = os.Stderr
 		cmd.Stdout = os.Stdout
 		cmd.Stdin = os.Stdin
 		if err := cmd.Run(); err != nil {
-			panic(err)
+			return err
 		}
+	}
+
+	return nil
+}
+
+func main() {
+	if flag.NArg() != 0 {
+		flag.Usage()
+		os.Exit(1)
+	}
+
+	if opt.template {
+		fmt.Println(template)
+		return
+	}
+
+	cmdline := []string{"go", "get", "-v"}
+	if opt.upgrade {
+		cmdline = append(cmdline, "-u")
+	}
+
+	if err := run(opt.file, cmdline, opt.ignoreConfirm, opt.dryrun); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
 	}
 }
