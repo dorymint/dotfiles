@@ -156,13 +156,8 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-# for modify volume
-# TODO: fix notify-send
-#     : fix pactl sink number
-#     : consider make volume control scripts
+# volume
 mode "volume" {
-  #bindsym h exec --no-startup-id sh -c 'notify-send "mode: volume" "$(echo -e "alse\tpulse\nj\td\tvolume down\nk\tu\tvolume up\nm\tM\tset volume to zero\n")"'
-
   bindsym j exec --no-startup-id amixer -q set Master 5%- unmute
   bindsym d exec --no-startup-id pactl set-sink-volume 6 -5%
 
@@ -194,29 +189,30 @@ mode "backlight" {
   bindsym q      mode "default"
 }
 
-# background
+# background image
 mode "background" {
   bindsym r exec --no-startup-id sh -c '$i3dir/randombg.sh'
   bindsym n exec --no-startup-id sh -c '$i3dir/randombg.sh next'
   bindsym p exec --no-startup-id sh -c '$i3dir/randombg.sh previous'
 
   bindsym i exec --no-startup-id sh -c 'notify-send "mode: background" "Current background number: $($i3dir/randombg.sh show)"'
-  bindsym h exec --no-startup-id sh -c 'notify-send "mode: background" "$(echo -e "\nr\tRandom\nn\tNext\np\tPrevious\n\nq\tReturn to default")"'
+  bindsym h exec --no-startup-id sh -c 'notify-send "mode: background" "$(printf "\nr\tRandom\nn\tNext\np\tPrevious\n\nq\tReturn to default")"'
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
   bindsym q      mode "default"
 }
 
+# mode selector
 # TODO: consider mode selector
 #     : consider notify-send for mode select
 mode "mode_selector" {
-  bindsym h exec --no-startup-id sh -c 'notify-send "i3 mode: mode_selector" "$(printf "v:volume\nr:resize\nb:backlight\nf:backround\n")"'
-
   bindsym v mode "volume"
   bindsym r mode "resize"
   bindsym b mode "backlight"
   bindsym f mode "background"
+
+  bindsym h exec --no-startup-id sh -c 'notify-send "i3 mode: mode_selector" "$(printf "v:volume\nr:resize\nb:backlight\nf:backround\n")"'
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
@@ -264,3 +260,5 @@ for_window [title="^Page Info .*$"] floating enable
 exec_always --no-startup-id sh -c '$i3dir/randombg.sh'
 exec --no-startup-id conky --daemonize
 exec --no-startup-id compton --daemon
+
+# vim: expandtab
