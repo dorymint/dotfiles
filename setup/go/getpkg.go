@@ -90,6 +90,7 @@ func run(file string, cmdline []string, ignoreConfirm bool, dryrun bool) error {
 	if !ignoreConfirm {
 		fmt.Printf("[yes|no]?> ")
 		sc := bufio.NewScanner(os.Stdin)
+	L:
 		for {
 			if !sc.Scan() {
 				return errors.New("scan failed")
@@ -99,7 +100,7 @@ func run(file string, cmdline []string, ignoreConfirm bool, dryrun bool) error {
 			}
 			switch sc.Text() {
 			case "y", "yes":
-				break
+				break L
 			case "n", "no":
 				return errors.New("stopped")
 			}
