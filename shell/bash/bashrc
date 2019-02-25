@@ -16,6 +16,7 @@ cyan="\[$(tput setaf 6)\]"
 blue="\[$(tput setaf 4)\]"
 reset="\[$(tput sgr0)\]"
 bold="\[$(tput bold)\]"
+# append? unset -v
 
 # PS1
 code="$blue\$?$reset"
@@ -25,11 +26,12 @@ w="$bold\w$reset"
 if [ -f /usr/share/git/completion/git-prompt.sh ]; then
   source /usr/share/git/completion/git-prompt.sh
   export GIT_PS1_SHOWDIRTYSTATE=1
-  gitps="\$(__git_ps1 \" $magenta($green%s$magenta)$reset \")"
+  gitps="\[\$(__git_ps1 \" $magenta($green%s$magenta)$reset \")\]"
   export PS1="$code $u@$h:$w$gitps$"
 else
   export PS1="$code $u@$h:$w$"
 fi
+# append? unset -v
 
 # man colors
 man() {
