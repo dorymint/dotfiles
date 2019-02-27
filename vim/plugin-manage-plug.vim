@@ -8,7 +8,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'itchyny/lightline.vim'
 
   " preview on browser
-  Plug 'kannokanno/previm'
+  Plug 'previm/previm'
 
   " fizzy finder
   Plug 'ctrlpvim/ctrlp.vim'
