@@ -2,9 +2,8 @@
 set -eu
 
 # TODO: rewrite
-
-bgcmd="feh"
-option="--scale-down"
+background=false
+file="$HOME"/dotfiles/etc/getter/conf2.json
 
 helpmsg() {
   cat >&1 <<END
@@ -14,7 +13,6 @@ getter-feh.sh
 options:
   -h --help help
   -bg --background
-  -sway --background-sway
 END
 }
 
@@ -24,14 +22,11 @@ while [ -n "${1:-}" ]; do
     helpmsg
     exit 0
     ;;
-  -bg|-background|--background)
-    option="--bg-max"
-    ;;
-  -sway|-background-sway|--background-sway)
-    bgcmd='swaymsg -t command output "*" bg'
-    option="fit"
+  -b|-bg|--bg|-background|--background)
+    background=true
     ;;
   "")
+    # pass
     ;;
   *)
     echo "unknown option: ${*}"
@@ -42,10 +37,12 @@ while [ -n "${1:-}" ]; do
 done
 
 [ -x "$(command which getter)" ]
-bg="$(getter)"
+bg="$(getter -conf "$file")"
 
-if [ "$bgcmd" = "feh" ];then
-  $bgcmd $option -- "$bg"
+if [ "$background" = "true" ]; then
+  feh="feh --bg-max --"
 else
-  $bgcmd "$(getter)" $option
+  feh="feh --scale-down --"
 fi
+$feh "$bg"
+

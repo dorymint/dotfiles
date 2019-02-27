@@ -26,7 +26,7 @@ alias chmod='builtin command chmod --preserve-root'
 alias chgrp='builtin command chgrp --preserve-root'
 #alias dd='builtin command dd status=progress'
 alias emacs='builtin command emacs -nw'
-alias grep='builtin command grep --color=auto'
+alias grep='builtin command grep --ignore-case --color=auto'
 
 # Which one use
 alias manja='LC_ALL=ja_JP.UTF-8 builtin command man'
