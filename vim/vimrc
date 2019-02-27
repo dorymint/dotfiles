@@ -367,7 +367,6 @@ let g:maplocalleader = '\'
     " Reset
     nnoremap <Leader>f  :<C-u>setlocal filetype=
     nnoremap <Leader>st :<C-u>setlocal textwidth=0
-    nnoremap <Leader>se :<C-u>e ++enc=shift_jis
 
     " Search and move
     " :help n
@@ -460,7 +459,39 @@ let g:maplocalleader = '\'
   "inoremap ー -
   "inoremap 〜 ~
 
+" CommandLine:
+  " prefix: <C-@>
+  cnoremap <C-@><C-@> <C-u>cd %:p:h
+  cnoremap <C-@>ft    <C-u>setlocal filetype=
+  cnoremap <C-@>jis   <C-u>e ++enc=shift_jis
+
 "-----| command |-----"
+" delcommand:
+  " getscript
+  if exists(':GLVS')
+    delcommand GLVS
+  endif
+  if exists(':GetScripts')
+    delcommand GetScripts
+  endif
+  if exists(':GetLatestVimScripts')
+    delcommand GetLatestVimScripts
+  endif
+
+  " vimball
+  if exists(':MkVimball')
+    delcommand MkVimball
+  endif
+  if exists(':UseVimball')
+    delcommand UseVimball
+  endif
+  if exists(':VimballList')
+    delcommand VimballList
+  endif
+  if exists(':RmVimball')
+    delcommand RmVimball
+  endif
+
 command! -complete=command -nargs=1 Type verbose command <args>
 
 function! s:scratch() abort
@@ -599,5 +630,9 @@ function! s:toggleBackground() abort
   execute 'colorscheme ' . g:colors_name
 endfunction
 command! ToggleBackground call s:toggleBackground()
+
+" disable
+let g:loaded_vimballPlugin = 1
+let g:loaded_getscriptPlugin = 1
 
 " vim: textwidth=0 expandtab shiftwidth=2 tabstop=2 softtabstop=2
