@@ -1,15 +1,16 @@
 # go packages
 
 # golang.org
+golang.org/x/lint/golint
 golang.org/x/tools/cmd/...
+golang.org/x/tour
 
 # github.com/golang
-github.com/golang/lint/golint
 github.com/golang/dep/cmd/dep
 
 # github.com
-github.com/derekparker/delve/cmd/dlv
 github.com/github/hub
+github.com/go-delve/delve/cmd/dlv
 github.com/google/gops
 github.com/josharian/impl
 github.com/jstemmer/gotags
