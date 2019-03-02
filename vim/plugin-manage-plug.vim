@@ -32,6 +32,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'thinca/vim-quickrun'
 
   " check references from current cursors words
+  " TODO: remove? if worked LspReferences
   Plug 'thinca/vim-ref'
 
   " jump to words
@@ -394,6 +395,8 @@ augroup vimrc_plugin
     " fatih/vim-go
     nnoremap <buffer> <LocalLeader>i  :<C-u>GoImports<Space>
     nnoremap <buffer> <LocalLeader>gd :<C-u>GoDoc<CR>
+    cnoremap <buffer> <C-o>i :<C-u>GoImport<space>
+    cnoremap <buffer> <C-o>d :<C-u>GoDrop<space>
   endfunction
   autocmd FileType go call s:ftgo()
 

@@ -5,17 +5,14 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 )
 
-const (
-	Name    = "{{_expr_:expand("%:p:h:t")}}"
+var (
+	// Name = "{{_expr_:expand("%:p:h:t")}}"
+	Name    = filepath.Base(os.Args[0])
 	Version = "0.0.0"
 )
-
-var opt struct {
-	help    bool
-	version bool
-}
 
 // Name string for specify command name
 func makeUsage(w *io.Writer) func() {
@@ -35,19 +32,26 @@ func makeUsage(w *io.Writer) func() {
 	}
 }
 
+var opt struct {
+	help    bool
+	version bool
+}
+
+func init() {
+	flag.BoolVar(&opt.help, "help", false, "Display this message")
+	flag.BoolVar(&opt.version, "version", false, "Display version")
+}
+
 func main() {
 	var usageWriter io.Writer = os.Stdout
 	usage := makeUsage(&usageWriter)
 	flag.Usage = usage
-
-	flag.BoolVar(&opt.help, "help", false, "Display this message")
-	flag.BoolVar(&opt.version, "version", false, "Display version")
-
 	flag.Parse()
 	if flag.NArg() != 0 {
 		usageWriter = os.Stderr
 		flag.Usage()
 		fmt.Fprintf(os.Stderr, "Invalid arguments: %v\n", flag.Args())
+		os.Exit(1)
 	}
 
 	switch {

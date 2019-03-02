@@ -460,10 +460,13 @@ let g:maplocalleader = '\'
   "inoremap 〜 ~
 
 " CommandLine:
-  " prefix: <C-@>
+  " Prefix:
+  "   base   <C-@>
+  "   plugin <C-o>
   cnoremap <C-@><C-@> <C-u>cd %:p:h
-  cnoremap <C-@>ft    <C-u>setlocal filetype=
-  cnoremap <C-@>jis   <C-u>e ++enc=shift_jis
+  cnoremap <C-@>f     <C-u>setlocal filetype=
+  cnoremap <C-@>j     <C-u>e ++enc=shift_jis
+  cnoremap <C-@>u     <C-u>e ++enc=utf-8
 
 "-----| command |-----"
 " delcommand:
@@ -495,7 +498,7 @@ let g:maplocalleader = '\'
 command! -complete=command -nargs=1 Type verbose command <args>
 
 function! s:scratch() abort
-  new
+  vnew
   setlocal buftype=nofile
   setlocal bufhidden=hide
   setlocal noswapfile
