@@ -538,7 +538,7 @@ filetype plugin indent on
 " autocmd! でグループの autocmd を初期化して重複を防ぐ
 
 " for filetype
-augroup my_vimrc_ft
+augroup vimrc_ft
   autocmd!
   " vim
   function! s:ftvim()
@@ -602,7 +602,7 @@ augroup my_vimrc_ft
 augroup END
 
 " for bg NONE
-augroup my_vimrc_bg
+augroup vimrc_bg
   autocmd!
   autocmd VimEnter,ColorScheme * highlight Normal ctermbg=NONE
   autocmd VimEnter,ColorScheme * highlight NonText ctermbg=NONE
@@ -614,12 +614,12 @@ augroup END
 let s:is_none_bg = v:true
 function! s:toggleBackground() abort
   if s:is_none_bg
-    augroup my_vimrc_bg
+    augroup vimrc_bg
       autocmd!
     augroup END
     let s:is_none_bg = v:false
   else
-    augroup my_vimrc_bg
+    augroup vimrc_bg
       autocmd!
       autocmd ColorScheme * highlight Normal ctermbg=NONE
       autocmd ColorScheme * highlight NonText ctermbg=NONE
@@ -634,8 +634,20 @@ function! s:toggleBackground() abort
 endfunction
 command! ToggleBackground call s:toggleBackground()
 
-" disable
+" fcitx auto inactive
+if executable('fcitx-remote')
+  " TODO: to handle? case of not running fcitx
+  function! s:fcitx_inactive() abort
+    call system('fcitx-remote -c')
+  endfunction
+  augroup vimrc_fcitx_inactive
+    autocmd!
+    autocmd InsertLeave * call s:fcitx_inactive()
+  augroup END
+endif
+
+"-----| diable |-----"
 let g:loaded_vimballPlugin = 1
 let g:loaded_getscriptPlugin = 1
 
-" vim: textwidth=0 expandtab shiftwidth=2 tabstop=2 softtabstop=2
+" vim: expandtab shiftwidth=2 tabstop=2 softtabstop=2
