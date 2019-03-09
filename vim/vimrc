@@ -225,7 +225,7 @@ set statusline+=%(buf[%n]hex[%4B]line[%4l/%4L:%4P]%)
 " tabline
 "set showtabline=1
 " 設定は statusline と似てる :help tabline
-"set tabline=""
+"set tabline=
 
 " split
 set splitbelow
@@ -326,6 +326,9 @@ let g:maplocalleader = '\'
   " カーソル移動後、画面中央にフォーカス
   nnoremap n nzz
   nnoremap N Nzz
+
+  " open terminal
+  nnoremap <C-@> :<C-u>vertical terminal<CR>
 
   " <Leader>
     " Buffer
