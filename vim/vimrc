@@ -594,6 +594,7 @@ augroup vimrc_ft
   " markdown
   function! s:ftmarkdown()
     setlocal spell
+    setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
   endfunction
   autocmd FileType markdown call s:ftmarkdown()
 

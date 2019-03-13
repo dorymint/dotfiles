@@ -370,7 +370,7 @@ nnoremap <LocalLeader>w :<C-u>call <SID>edit_tmpl()<CR>
 " prabirshrestha/vim-lsp
 nnoremap <LocalLeader>s :<C-u>LspStatus<CR>
 nnoremap <LocalLeader>d :<C-u>LspDefinition<CR>
-nnoremap <LocalLeader>f :<C-u>LspDocumentFormatSync<CR>
+nnoremap <LocalLeader>f :<C-u>LspDocumentFormat<CR>
 nnoremap <LocalLeader>t :<C-u>call <SID>lsp_toggle()<CR>
 " TODO: consider
 "nnoremap <LocalLeader>l :<C-u>call <SID>lsp_commands()<CR>
@@ -386,6 +386,7 @@ augroup vimrc_plugin
   autocmd!
   function! s:ftgo()
     " fatih/vim-go
+    nnoremap <buffer> <LocalLeader>f  :<C-u>GoFmt<CR>
     nnoremap <buffer> <LocalLeader>i  :<C-u>GoImports<Space>
     nnoremap <buffer> <LocalLeader>gd :<C-u>GoDoc<CR>
     cnoremap <buffer> <C-o>i :<C-u>GoImport<space>
