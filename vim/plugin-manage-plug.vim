@@ -71,7 +71,7 @@ call plug#begin('~/.vim/plugged')
 
   " go
   " TODO: remove?
-  Plug 'fatih/vim-go'
+  Plug 'fatih/vim-go', { 'tag': 'v1.19' }
 
   " python
   " TODO: remove?
@@ -210,11 +210,11 @@ if v:false
 endif
 augroup vimrc_plugin_lsp
   autocmd!
-  " Go: go get -v -u golang.org/x/tools/cmd/golsp
-  if executable('golsp')
+  " Go: go get -v -u golang.org/x/tools/cmd/gopls
+  if executable('gopls')
     autocmd User lsp_setup call lsp#register_server({
-          \ 'name': 'golsp',
-          \ 'cmd': {server_info -> ['golsp', '-mode', 'stdio']},
+          \ 'name': 'gopls',
+          \ 'cmd': {server_info -> ['gopls', '-mode', 'stdio']},
           \ 'whitelist': ['go'],
           \ })
   endif

@@ -1,4 +1,4 @@
-# share/alias
+# alias
 # for bash, zsh
 
 # Common
@@ -13,6 +13,7 @@ alias :q='builtin exit'
 alias hi='builtin command grep --color=always -e "$" -e'
 alias ..='builtin cd ..'
 alias gitroot='builtin command git rev-parse --show-toplevel > /dev/null && builtin cd "$(builtin command git rev-parse --show-toplevel)"'
+alias todo='$EDITOR "$HOME"/todo.md'
 
 # Override
 alias mkdir='builtin command mkdir -p -v'

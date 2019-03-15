@@ -1,5 +1,6 @@
+// makeUsage:
 // Name is name of executable
-// Example:
+// Examples:
 //	var usageWriter io.Writer = os.Stdout
 //	flag.Usage = makeUsage(&usageWriter)
 //	flag.Usage()
@@ -13,7 +14,8 @@ func makeUsage(w *io.Writer) func() {
 		fmt.Fprintf(*w, "  %s [Options]\n\n", Name)
 		fmt.Fprintf(*w, "Options:\n")
 		flag.PrintDefaults()
-		examples := `"Examples:
+		fmt.Fprintf(*w, "\n")
+		examples := `Examples:
   $ ` + Name + ` -help # Display help message
 `
 		fmt.Fprintf(*w, "%s\n", examples)
