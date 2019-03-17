@@ -165,7 +165,7 @@ mode "volume" {
   bindsym u exec --no-startup-id pactl set-sink-volume 6 +5%
 
   bindsym m exec --no-startup-id amixer -q set Master 0%
-  bindsym Sift+m exec --no-startup-id pactl set-sink-volume 6 0%
+  bindsym Shift+m exec --no-startup-id pactl set-sink-volume 6 0%
 
   bindsym i exec --no-startup-id notify-send "$(amixer get Master)"
   bindsym c exec --no-startup-id notify-send "$(amixer get Master)"

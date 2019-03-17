@@ -1,4 +1,5 @@
 scriptencoding utf-8
+
 call plug#begin('~/.vim/plugged')
   " Base:
   " help for japanese
@@ -95,6 +96,7 @@ call plug#begin('~/.vim/plugged')
   " Workaround:
   Plug 'vim-jp/syntax-vim-ex'
 call plug#end()
+
 filetype plugin indent on
 
 "
@@ -210,7 +212,7 @@ if v:false
 endif
 augroup vimrc_plugin_lsp
   autocmd!
-  " Go: go get -v -u golang.org/x/tools/cmd/gopls
+  " Go: go get golang.org/x/tools/cmd/gopls
   if executable('gopls')
     autocmd User lsp_setup call lsp#register_server({
           \ 'name': 'gopls',

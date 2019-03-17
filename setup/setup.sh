@@ -86,6 +86,7 @@ main() {
 
     mkd "$XDG_CONFIG_HOME"/fontconfig
     mkd "$XDG_CONFIG_HOME"/sway
+    mkd "$XDG_CONFIG_HOME"/sway/local.d
 
     # TODO: fix
     #mkd "$XDG_CONFIG_HOME"/i3
@@ -99,6 +100,8 @@ main() {
       # x
       $ln "$dotroot"/x/xinitrc "$HOME"/.xinitrc
       $ln "$dotroot"/x/Xresources "$HOME"/.Xresources
+      # reuse
+      $ln "$dotroot"/x/Xresources "$HOME"/.Xdefaults
 
       # remove?
       #$ln "$dotroot"/x/xserverrc "$HOME"/.xserverrc
@@ -111,6 +114,7 @@ main() {
       $ln "$dotroot"/config/i3/ "$XDG_CONFIG_HOME"/i3
 
       $ln "$dotroot"/config/sway/config "$XDG_CONFIG_HOME"/sway/config
+      $ln "$dotroot"/config/sway/mode.conf "$XDG_CONFIG_HOME"/sway/mode.conf
 
       # termite
       $ln "$dotroot"/config/termite/config "$XDG_CONFIG_HOME"/termite/config

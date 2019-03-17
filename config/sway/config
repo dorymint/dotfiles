@@ -1,7 +1,11 @@
-# config for sway
+# Default config for sway
+#
+# Copy this to ~/.config/sway/config and edit it to your liking.
+#
 # Read `man 5 sway` for a complete reference.
 
 ### Variables
+#
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
 # Home row direction keys, like vim
@@ -12,16 +16,36 @@ set $right l
 # Your preferred terminal emulator
 set $term urxvt
 # Your preferred application launcher
-set $menu dmenu_run
+# Note: it's recommended that you pass the final command to sway
+set $menu dmenu_path | dmenu | xargs swaymsg exec --
 
 ### Output configuration
-# Default wallpaper (more resolutions are available in /usr/share/sway/)
-output * bg /usr/share/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-output LVDS-1 disable
-output HDMI-A-1 resolution 1920x1080 position 0,0
+#
+# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
+output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+#
+# Example configuration:
+#
+#   output HDMI-A-1 resolution 1920x1080 position 1920,0
+#
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
+### Idle configuration
+#
+# Example configuration:
+#
+# exec swayidle -w \
+#          timeout 300 'swaylock -f -c 000000' \
+#          timeout 600 'swaymsg "output * dpms off"' \
+#               resume 'swaymsg "output * dpms on"' \
+#          before-sleep 'swaylock -f -c 000000'
+#
+# This will lock your screen after 300 seconds of inactivity, then turn off
+# your displays after another 300 seconds, and turn your screens back on when
+# resumed. It will also lock your screen before your computer goes to sleep.
+
 ### Input configuration
+#
 # Example configuration:
 #
 #   input "2:14:SynPS/2_Synaptics_TouchPad" {
@@ -33,12 +57,8 @@ output HDMI-A-1 resolution 1920x1080 position 0,0
 #
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
-input "2:7:SynPS/2_Synaptics_TouchPad" {
-    dwt enabled
-    tap enabled
-    natural_scroll enabled
-    middle_emulation enabled
-}
+input * repeat_delay 200
+input * repeat_rate 30
 
 ### Key bindings
 #
@@ -63,8 +83,8 @@ input "2:7:SynPS/2_Synaptics_TouchPad" {
     # reload the configuration file
     bindsym $mod+Shift+c reload
 
-    # exit sway (logs you out of your wayland session)
-    bindsym $mod+Shift+e exit
+    # exit sway (logs you out of your Wayland session)
+    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 #
 # Moving around:
 #
@@ -122,8 +142,9 @@ input "2:7:SynPS/2_Synaptics_TouchPad" {
     # You can "split" the current object of your focus with
     # $mod+b or $mod+v, for horizontal and vertical splits
     # respectively.
-    bindsym $mod+b splith
-    bindsym $mod+v splitv
+    #bindsym $mod+b splith
+    #bindsym $mod+v splitv
+    bindsym $mod+v split toggle
 
     # Switch the current container between different layout styles
     bindsym $mod+s layout stacking
@@ -161,16 +182,16 @@ mode "resize" {
     # right will grow the containers width
     # up will shrink the containers height
     # down will grow the containers height
-    bindsym $left resize shrink width 5 px or 5 ppt
-    bindsym $down resize grow height 5 px or 5 ppt
-    bindsym $up resize shrink height 5 px or 5 ppt
-    bindsym $right resize grow width 5 px or 5 ppt
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
 
     # ditto, with arrow keys
-    bindsym Left resize shrink width 10 px or 10 ppt
-    bindsym Down resize grow height 10 px or 10 ppt
-    bindsym Up resize shrink height 10 px or 10 ppt
-    bindsym Right resize grow width 10 px or 10 ppt
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
 
     # return to default mode
     bindsym Return mode "default"
@@ -179,62 +200,10 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-# for modify volume
-mode "volume" {
-  bindsym j exec amixer -q set Master 2dB- unmute
-  bindsym k exec amixer -q set Master 2dB+ unmute
-  bindsym m exec amixer -q set Master 0%
-
-  bindsym Return mode "default"
-  bindsym Escape mode "default"
-  bindsym q      mode "default"
-}
-bindsym $mod+Shift+v mode "volume"
-
-# TODO: make border mode?
-# border
-bindsym $mod+t border normal 2
-bindsym $mod+y border pixel 15
-bindsym $mod+u border none
-bindsym $mod+Shift+b bar mode toggle
-
-mode "wallpaper" {
-  bindsym q mode "default"
-  bindsym Escape mode "default"
-  bindsym Return mode "default"
-
-  bindsym n exec sh -c 'sway-bg-random.sh'
-}
-
-# TODO: consider mode selector
-mode "mode_selector" {
-  bindsym q mode "default"
-  bindsym Escape mode "default"
-  bindsym Return mode "default"
-
-  bindsym v mode "volume"
-  bindsym r mode "resize"
-  bindsym w mode "wallpaper"
-}
-bindsym $mod+m mode "mode_selector"
-
-### default color
-# client
-# class                  border      background  text      indicator   child_border
-#background #ffffff
-#client.focused #4c7899 #285577 #ffffff #2e9ef4 #285577
-#client.focused_inactiv #333333 #5f676a #ffffff #484e50 #5f676a
-#client.unfocused #333333 #222222 #888888 #292d2e #222222
-#client.urgent #2f343a #900000 #ffffff #900000 #900000
-#client.placeholder #000000 #0c0c0c #ffffff #000000 #0c0c0c
-
-
-#default_border normal 5
-# TODO: transparency
-#client.focused #4c7899 #285577 #ffffff #2e9ef4 #28557700
-#client.focused_inactiv #333333 #5f676a #ffffff #484e50 #5f676a00
-#client.unfocused #33333300 #22222200 #888888 #292d2e #22222200
-
+#
+# Include custom modes:
+#
+include "$HOME"/.config/sway/mode.conf
 
 #
 # Status Bar:
@@ -242,11 +211,11 @@ bindsym $mod+m mode "mode_selector"
 # Read `man 5 sway-bar` for more information about this section.
 bar {
     position top
-    #position bottom
-    status_command i3status
-    #mode hide
-    #hidden_state hide
-    #workspace_buttons yes
+
+    # When the status_command prints a new line to stdout, swaybar updates.
+    # The default just shows the current date and time.
+    status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
+
     colors {
         statusline #ffffff
         background #323232
@@ -254,10 +223,17 @@ bar {
     }
 }
 
-### exec
-exec sh -c '[ -f ~/.Xresources ] && xrdb ~/.Xresources'
-exec sh -c '[ -f "$HOME"/dotfiles/etc/sway/currentsock ] && : > "$HOME"/dotfiles/etc/sway/currentsock && sync'
-exec sh -c '[ -f "$HOME"/dotfiles/etc/sway/currentsock ] && echo "SWAYSOCK=$SWAYSOCK" > "$HOME"/dotfiles/etc/sway/currentsock && sync'
-#exec_always sh -c '[ -x $(command -v sway-bg-random.sh) ] && sway-bg-random.sh &'
+#
+# Include local config
+#
+include "$HOME"/.config/sway/local.d/*.conf
+
+#
+# Exec:
+#
+#exec --no-startup-id conky --daemonize
+#exec --no-startup-id compton --daemon
+exec --no-startup-id dunst
 
 include /etc/sway/config.d/*
+# vim: expandtab softtabstop=2 shiftwidth=2
