@@ -2,9 +2,8 @@
 
 set -eu
 
-# depends
-# awk
-# sed
+#which awk
+#which sed
 
 current_bg="$(awk '/feh --bg-max/ { print $3 }' "$HOME"/.fehbg |
   sed "s/^'\(.*\)'$/\1/")"
@@ -60,7 +59,7 @@ while true; do
       exit 0
       ;;
     ""|random|-random)
-      [ -z "$next_bg" ] && next_bg="$walldir"/"$(ls "$walldir" | shuf -n 1)"
+      [ -z "$next_bg" ] && next_bg="$walldir"/"$(basename "$(find "$walldir" -type l | shuf -n 1)")"
       main
       ;;
     next|-next)
