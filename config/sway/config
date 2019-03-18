@@ -201,11 +201,6 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 #
-# Include custom modes:
-#
-include "$HOME"/.config/sway/mode.conf
-
-#
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
@@ -223,17 +218,17 @@ bar {
     }
 }
 
+include /etc/sway/config.d/*
+
+### Include
 #
-# Include local config
+# Custom modes:
+#
+include "$HOME"/.config/sway/mode.conf
+
+#
+# Local config:
 #
 include "$HOME"/.config/sway/local.d/*.conf
 
-#
-# Exec:
-#
-#exec --no-startup-id conky --daemonize
-#exec --no-startup-id compton --daemon
-exec --no-startup-id dunst
-
-include /etc/sway/config.d/*
 # vim: expandtab softtabstop=2 shiftwidth=2

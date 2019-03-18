@@ -15,10 +15,14 @@ fi
 export XDG_CONFIG_HOME="$HOME"/.config
 export XDG_CACHE_HOME="$HOME"/.cache
 export XDG_DATA_HOME="$HOME"/.local/share
-# set by pam_systemd
+# set with pam_systemd
 #XDG_RUNTIME_DIR
 
 if builtin command -v vim > /dev/null 2>&1; then
   export EDITOR="vim"
+fi
+
+if builtin command -v firefox > /dev/null 2>&1; then
+  export BROWSER="firefox"
 fi
 
