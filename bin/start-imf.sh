@@ -1,12 +1,13 @@
 #!/bin/sh
 set -eu
 
-name="{{_expr_:expand("%:t")}}"
+name="start-imf.sh"
+imf=${XMODIFIERS#@im=}
 
 helpmsg() {
   cat >&1 <<END
 Description:
-  {{_cursor_}}short description
+  start input method frameworks for sway (default $imf)
 
 Usage:
   $name [Options]
@@ -30,7 +31,11 @@ abort() {
 }
 
 main() {
-  echo "not implemented \"$*\""
+  case "$imf" in
+    ibus) ibus-daemon -drx ;;
+    fcitx) fcitx-autostart;;
+    *) abort "can not manage $imf";;
+  esac
 }
 
 while [ $# -ne 0 ]; do

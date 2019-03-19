@@ -254,12 +254,7 @@ endif
 
 "-----| color |-----"
 " colorscheme
-"set background=dark
-if $TERM ==# 'xterm-256color' ||
-      \ $TERM ==# 'xterm-termite' ||
-      \ $TERM ==# 'screen-256color' ||
-      \ $TERM ==# 'rxvt-unicode-256color'
-  set t_Co=256
+if &t_Co == 256
   try
     colorscheme jellybeans
     "colorscheme hybrid
@@ -268,10 +263,7 @@ if $TERM ==# 'xterm-256color' ||
   catch
   endtry
 else
-  try
-    colorscheme elflord
-  catch
-  endtry
+  colorscheme elflord
 endif
 
 syntax on
@@ -405,8 +397,6 @@ let g:maplocalleader = '\'
   "inoremap <C-n> <Down>
 
   " 閉じ括弧
-  " <enter> と <CR> 違いがよくわかってない
-  " 入力は別扱い、挿入が <eol> 、書き込みが ff 依存?
   if v:false
     inoremap {} {}<C-g>U<Left>
     inoremap () ()<C-g>U<Left>
@@ -415,11 +405,8 @@ let g:maplocalleader = '\'
     inoremap "" ""<C-g>U<Left>
     inoremap '' ''<C-g>U<Left>
   endif
-  inoremap {<Enter> {}<Left><Enter><Esc><S-o>
   inoremap {<CR>    {}<Left><CR><Esc><S-o>
-  inoremap (<Enter> ()<Left><Enter><Esc><S-o>
   inoremap (<CR>    ()<Left><CR><Esc><S-o>
-  inoremap [<Enter> []<Left><Enter><Esc><S-o>
   inoremap [<CR>    []<Left><CR><Esc><S-o>
 
   " オムニ補完
@@ -468,7 +455,7 @@ let g:maplocalleader = '\'
   "   plugin <C-o>
   cnoremap <C-@><C-@> <C-u>cd %:p:h
   cnoremap <C-@>f     <C-u>setlocal filetype=
-  cnoremap <C-@>j     <C-u>e ++enc=shift_jis
+  cnoremap <C-@>s     <C-u>e ++enc=shift_jis
   cnoremap <C-@>u     <C-u>e ++enc=utf-8
 
 "-----| command |-----"
@@ -638,17 +625,29 @@ function! s:toggleBackground() abort
 endfunction
 command! ToggleBackground call s:toggleBackground()
 
-" fcitx auto inactive
-if executable('fcitx-remote')
-  " TODO: to handle? case of not running fcitx
-  function! s:fcitx_inactive() abort
-    call system('fcitx-remote -c')
-  endfunction
-  augroup vimrc_fcitx_inactive
-    autocmd!
-    autocmd InsertLeave * call s:fcitx_inactive()
-  augroup END
+" TODO: fix
+" use?:
+"   iminsert=2
+"   imstatusfunc=<FUNCTION_REF>
+"
+" Input method frameworks
+let s:imf_name = $XMODIFIERS
+let s:imf_name = substitute(s:imf_name, '^@im=\(.*\)$', '\1', '')
+let s:imf = {
+      \ "ibus": { -> system('ibus engine') isnot# 'xkb:jp::jpn' . "\n" ?
+      \ system('ibus engine xkb:jp::jpn') : v:true },
+      \ "fcitx": { -> system('fcitx-remote')[0] is# '2' ?
+      \ system('fcitx-remote -c') : v:true },
+      \}
+let s:imf_inactive_func = {-> v:true}
+if s:imf_name !=# $XMODIFIERS
+  let s:imf_inactive_func = s:imf[s:imf_name]
 endif
+augroup vimrc_imf
+  autocmd!
+  autocmd InsertLeave * call s:imf_inactive_func()
+augroup END
+
 
 "-----| diable |-----"
 let g:loaded_vimballPlugin = 1

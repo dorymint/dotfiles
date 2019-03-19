@@ -5,14 +5,35 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"path/filepath"
 )
 
 var (
-	// Name = "{{_expr_:expand("%:p:h:t")}}"
-	Name    = filepath.Base(os.Args[0])
+	Name = "{{_expr_:expand("%:p:h:t")}}"
 	Version = "0.0.0"
 )
+
+// example and comment for print usage
+type Examples []struct {
+	c string
+	e string
+}
+
+func (es *Examples) Sprint() string {
+	var s string
+	for _, e := range *es {
+		s += fmt.Sprintf("  %s\n", e.c)
+		s += fmt.Sprintf("  $ %s\n\n", e.e)
+	}
+	return s
+}
+
+// append flag -example and trim from -help?
+var examples = &Examples{
+	{
+		c: "Display help message",
+		e: Name + " -help",
+	},
+}
 
 // Name string for specify command name
 func makeUsage(w *io.Writer) func() {
@@ -25,10 +46,7 @@ func makeUsage(w *io.Writer) func() {
 		fmt.Fprintf(*w, "Options:\n")
 		flag.PrintDefaults()
 		fmt.Fprintf(*w, "\n")
-		examples := `Examples:
-  $ ` + Name + ` -help # Display help message
-`
-		fmt.Fprintf(*w, "%s\n", examples)
+		fmt.Fprintf(*w, "Examples:\n%s", examples.Sprint())
 	}
 }
 
@@ -42,24 +60,35 @@ func init() {
 	flag.BoolVar(&opt.version, "version", false, "Display version")
 }
 
-func main() {
-	var usageWriter io.Writer = os.Stdout
+func run() error {
+	var usageWriter io.Writer = os.Stderr
 	usage := makeUsage(&usageWriter)
 	flag.Usage = usage
+
 	flag.Parse()
 	if flag.NArg() != 0 {
-		usageWriter = os.Stderr
 		flag.Usage()
-		fmt.Fprintf(os.Stderr, "Invalid arguments: %v\n", flag.Args())
-		os.Exit(1)
+		return fmt.Errorf("invalid arguments: %v", flag.Args())
 	}
 
 	switch {
 	case opt.help:
+		usageWriter = os.Stdout
 		flag.Usage()
-		os.Exit(0)
+		return nil
 	case opt.version:
 		fmt.Printf("%s %s\n", Name, Version)
-		os.Exit(0)
+		return nil
+	}
+
+	// do
+
+	return fmt.Errorf("not implemented")
+}
+
+func main() {
+	if err := run(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
 	}
 }

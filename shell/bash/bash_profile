@@ -5,9 +5,9 @@ umask 022
 
 # TODO: remove?
 # keychain
-if command -v keychain > /dev/null; then
-  eval $(keychain --eval --quiet)
-fi
+#if command -v keychain > /dev/null; then
+#  eval $(keychain --eval --quiet)
+#fi
 
 # environments
 source "$HOME"/dotfiles/shell/share/env/locale.sh

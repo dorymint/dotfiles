@@ -231,4 +231,4 @@ include "$HOME"/.config/sway/mode.conf
 #
 include "$HOME"/.config/sway/local.d/*.conf
 
-# vim: expandtab softtabstop=2 shiftwidth=2
+# vim: expandtab softtabstop=4 shiftwidth=4

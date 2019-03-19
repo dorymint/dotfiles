@@ -72,7 +72,8 @@ call plug#begin('~/.vim/plugged')
 
   " go
   " TODO: remove?
-  Plug 'fatih/vim-go', { 'tag': 'v1.19' }
+  "Plug 'fatih/vim-go', { 'tag': 'v1.19' }
+  Plug 'yaeshimo/vim-go', { 'branch': 'disable-omnifunc' }
 
   " python
   " TODO: remove?
@@ -388,7 +389,6 @@ augroup vimrc_plugin
   autocmd!
   function! s:ftgo()
     " fatih/vim-go
-    nnoremap <buffer> <LocalLeader>f  :<C-u>GoFmt<CR>
     nnoremap <buffer> <LocalLeader>i  :<C-u>GoImports<Space>
     nnoremap <buffer> <LocalLeader>gd :<C-u>GoDoc<CR>
     cnoremap <buffer> <C-o>i :<C-u>GoImport<space>
