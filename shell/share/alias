@@ -39,7 +39,9 @@ alias ww='builtin cd -- "$HOME"/github.com/"$(git config --global user.name)"'
 alias dotfiles='builtin cd -- "$HOME"/dotfiles'
 alias tmp='builtin cd -- "$HOME"/tmp'
 if [ -x "$(builtin command -v gof)" ]; then
-  alias cdgof='builtin cd -- "$(gof="$(gof -f)";[ $? -ne 0 ] && pwd && exit 1;[ -d "$gof" ] && echo "$gof" && exit 0;dirname "$gof"; exit 1)"'
+  alias goc='builtin cd -- "$(p="$(gof)";[ $? -ne 0 ] && pwd && exit 1;[ -d "$p" ] && echo "$p" && exit 0;dirname "$p"; exit 1)"'
+  alias gocf='builtin cd -- "$(p="$(gof -f)";[ $? -ne 0 ] && pwd && exit 1;[ -d "$p" ] && echo "$p" && exit 0;dirname "$p"; exit 1)"'
+  alias goe='gof -e'
 fi
 
 # pacman
@@ -81,7 +83,8 @@ fi
 
 # sway
 if [ -x "$(builtin command -v sway)" ]; then
-  alias sway='XKB_DEFAULT_LAYOUT=jp XKB_DEFAULT_MODEL=pc106 sway'
+  #alias sway='XKB_DEFAULT_LAYOUT=jp XKB_DEFAULT_MODEL=pc106 sway'
+  alias sway='XKB_DEFAULT_LAYOUT=jp sway'
 fi
 
 # termite

@@ -15,8 +15,6 @@ set $down j
 set $up k
 set $right l
 
-set $i3dir "$HOME"/.config/i3
-
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below. ISO 10646 = Unicode
 #font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -168,7 +166,6 @@ mode "volume" {
   bindsym Shift+m exec --no-startup-id pactl set-sink-volume 6 0%
 
   bindsym i exec --no-startup-id notify-send "$(amixer get Master)"
-  bindsym c exec --no-startup-id notify-send "$(amixer get Master)"
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
@@ -177,12 +174,14 @@ mode "volume" {
 
 # backlight brightness
 mode "backlight" {
-  bindsym k exec --no-startup-id sh -c "$i3dir/brightness.sh -inc10per"
-  bindsym j exec --no-startup-id sh -c "$i3dir/brightness.sh -dec10per"
+  bindsym k exec --no-startup-id brightness.sh -inc
+  bindsym j exec --no-startup-id brightness.sh -dec
 
-  bindsym h exec --no-startup-id sh -c "$i3dir/brightness.sh -set max"
-  bindsym m exec --no-startup-id sh -c "$i3dir/brightness.sh -set mid"
-  bindsym l exec --no-startup-id sh -c "$i3dir/brightness.sh -set min"
+  bindsym h exec --no-startup-id brightness.sh -set max
+  bindsym m exec --no-startup-id brightness.sh -set mid
+  bindsym l exec --no-startup-id brightness.sh -set min
+
+  bindsym i exec --no-startup-id notify-send "mode: backlight" "current brightness: $(brightness.sh -get)"
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
@@ -191,12 +190,11 @@ mode "backlight" {
 
 # background image
 mode "background" {
-  bindsym r exec --no-startup-id sh -c '$i3dir/randombg.sh'
-  bindsym n exec --no-startup-id sh -c '$i3dir/randombg.sh next'
-  bindsym p exec --no-startup-id sh -c '$i3dir/randombg.sh previous'
+  bindsym r exec --no-startup-id randombg.sh
+  bindsym n exec --no-startup-id randombg.sh next
+  bindsym p exec --no-startup-id randombg.sh previous
 
-  bindsym i exec --no-startup-id sh -c 'notify-send "mode: background" "Current background number: $($i3dir/randombg.sh show)"'
-  bindsym h exec --no-startup-id sh -c 'notify-send "mode: background" "$(printf "\nr\tRandom\nn\tNext\np\tPrevious\n\nq\tReturn to default")"'
+  bindsym i exec --no-startup-id notify-send "mode: background" "Current background number: $(randombg.sh show)"
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
@@ -204,15 +202,11 @@ mode "background" {
 }
 
 # mode selector
-# TODO: consider mode selector
-#     : consider notify-send for mode select
 mode "mode_selector" {
   bindsym v mode "volume"
   bindsym r mode "resize"
   bindsym b mode "backlight"
   bindsym f mode "background"
-
-  bindsym h exec --no-startup-id sh -c 'notify-send "i3 mode: mode_selector" "$(printf "v:volume\nr:resize\nb:backlight\nf:backround\n")"'
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
@@ -257,7 +251,7 @@ for_window [instance="pavucontrol"] floating enable
 for_window [title="^Page Info .*$"] floating enable
 
 # start exec
-exec_always --no-startup-id sh -c '$i3dir/randombg.sh'
+exec_always --no-startup-id randombg.sh
 exec --no-startup-id conky --daemonize
 exec --no-startup-id compton --daemon
 

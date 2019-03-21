@@ -4,6 +4,7 @@ set -eu
 
 #which awk
 #which sed
+#which feh
 
 current_bg="$(awk '/feh --bg-max/ { print $3 }' "$HOME"/.fehbg |
   sed "s/^'\(.*\)'$/\1/")"
