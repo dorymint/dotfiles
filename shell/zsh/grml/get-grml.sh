@@ -40,10 +40,10 @@ wget -O ./new/zshrc.grml.local -- "$url_grml_local"
 if command -v diff > /dev/null 2>&1; then
   diff="command diff -u --color=always"
 
-  echo "diff zshrc.grml"
+  echo "diff zshrc.grml <ENTER>"
   read -r && $diff ./zshrc.grml ./new/zshrc.grml | less -R
 
-  echo "diff zshrc.grml.local"
+  echo "diff zshrc.grml.local <ENTER>"
   read -r && $diff ./zshrc.grml.local ./new/zshrc.grml.local | less -R
 fi
 

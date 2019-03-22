@@ -11,7 +11,7 @@ if command -v pacman &> /dev/null; then
 fi
 
 # alias
-source "$HOME"/dotfiles/shell/share/alias
+source "$HOME"/dotfiles/shell/alias
 
 # setopt
 setopt autocd
@@ -19,14 +19,10 @@ setopt autopushd
 setopt pushdignoredups
 
 # syntax highlight
-f="/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+f=/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 if [ -f "$f" ] && [ -r "$f" ]; then
   source "$f"
 fi
-unset -v f
+unset f
 
-# lily
-if [[ "$(uname -n)" == *lily* ]] && [ "$SHLVL" -eq 1 ]; then
-  command -v fortune &> /dev/null && fortune
-fi
-
+# vim:ft=zsh:

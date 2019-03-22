@@ -3,37 +3,41 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# alias
-if [ -f "$HOME"/dotfiles/shell/share/alias ]; then
-  source "$HOME"/dotfiles/shell/share/alias
+## alias
+if [ -f "$HOME"/dotfiles/shell/alias ]; then
+  source "$HOME"/dotfiles/shell/alias
 fi
 
-# tput
-#red="\[$(tput setaf 1)\]"
+## PS1
+red="\[$(tput setaf 1)\]"
 green="\[$(tput setaf 2)\]"
 magenta="\[$(tput setaf 5)\]"
 cyan="\[$(tput setaf 6)\]"
 blue="\[$(tput setaf 4)\]"
 reset="\[$(tput sgr0)\]"
 bold="\[$(tput bold)\]"
-# append? unset -v
 
-# PS1
 code="$blue\$?$reset"
 u="$cyan\u$reset"
 h="\h"
 w="$bold\w$reset"
-if [ -f /usr/share/git/completion/git-prompt.sh ]; then
-  source /usr/share/git/completion/git-prompt.sh
+
+f=/usr/share/git/completion/git-prompt.sh
+if [ -f "$f" ]; then
+  source "$f"
   export GIT_PS1_SHOWDIRTYSTATE=1
   gitps="\[\$(__git_ps1 \" $magenta($green%s$magenta)$reset \")\]"
   export PS1="$code $u@$h:$w$gitps$"
+  unset gitps
 else
   export PS1="$code $u@$h:$w$"
 fi
-# append? unset -v
 
-# man colors
+unset red green magenta cyan blue reset bold
+unset code u h w
+unset f
+
+## man
 man() {
   LESS_TERMCAP_mb=$'\E[01;31m' \
   LESS_TERMCAP_md=$'\E[01;31m' \
@@ -45,8 +49,6 @@ man() {
   command man "$@"
 }
 
-# lily
 if [[ "$(uname -n)" == *lily* ]] && [ "$SHLVL" -eq 1 ]; then
   command -v fortune &> /dev/null && fortune -a
 fi
-

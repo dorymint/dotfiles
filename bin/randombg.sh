@@ -5,6 +5,7 @@ set -eu
 #which awk
 #which sed
 #which feh
+#which swaymsg
 
 current_bg="$(awk '/feh --bg-max/ { print $3 }' "$HOME"/.fehbg |
   sed "s/^'\(.*\)'$/\1/")"
@@ -45,12 +46,17 @@ END
 
 main() {
   if [ -f "$next_bg" ]; then
-    feh --bg-max -- "$next_bg"
+    if [ -n "${SWAYSOCK:-}" ]; then
+      swaymsg -- output "*" background "$next_bg" fill
+    else
+      feh --bg-max -- "$next_bg"
+    fi
+
     [ "$with_bg_id" = "true" ] && echo "$current_bg_id"
     exit 0
   else
     abort "invalid file path: $next_bg"
-  fi
+    fi
 }
 
 while true; do

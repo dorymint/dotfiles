@@ -22,7 +22,6 @@ Options:
   -f, --force Allow override exist files
   -x, --withx Setup with xorg configuration
   -g, --gui   Setup with gui, same -x
-
 END
 }
 
@@ -84,37 +83,30 @@ main() {
   if [ "$withgui" = "true" ]; then
 
 
-    mkd "$XDG_CONFIG_HOME"/fontconfig
+    mkd "$XDG_CONFIG_HOME"/i3
     mkd "$XDG_CONFIG_HOME"/sway
     mkd "$XDG_CONFIG_HOME"/sway/local.d
-
-    # TODO: fix
-    #mkd "$XDG_CONFIG_HOME"/i3
-
+    mkd "$XDG_CONFIG_HOME"/fontconfig
     mkd "$XDG_CONFIG_HOME"/termite
     mkd "$XDG_CONFIG_HOME"/conky
     mkd "$XDG_CONFIG_HOME"/dunst
 
     # fallthrough
     set +e
-      # x
       $ln "$dotroot"/x/xinitrc "$HOME"/.xinitrc
       $ln "$dotroot"/x/Xresources "$HOME"/.Xresources
-      # reuse
       $ln "$dotroot"/x/Xresources "$HOME"/.Xdefaults
 
       # remove?
       #$ln "$dotroot"/x/xserverrc "$HOME"/.xserverrc
 
-      $ln "$dotroot"/config/fontconfig/fonts.conf "$XDG_CONFIG_HOME"/fontconfig/fonts.conf
-
-      # window manager
-
-      # TODO: fix
-      $ln "$dotroot"/config/i3/ "$XDG_CONFIG_HOME"/i3
-
+      # wm
+      $ln "$dotroot"/config/i3/config "$XDG_CONFIG_HOME"/i3/config
       $ln "$dotroot"/config/sway/config "$XDG_CONFIG_HOME"/sway/config
       $ln "$dotroot"/config/sway/mode.conf "$XDG_CONFIG_HOME"/sway/mode.conf
+
+      # font
+      $ln "$dotroot"/config/fontconfig/fonts.conf "$XDG_CONFIG_HOME"/fontconfig/fonts.conf
 
       # termite
       $ln "$dotroot"/config/termite/config "$XDG_CONFIG_HOME"/termite/config
@@ -126,7 +118,6 @@ main() {
       # dunst
       $ln "$dotroot"/config/dunst/dunstrc "$XDG_CONFIG_HOME"/dunst/dunstrc
     set -e
-
   fi
 }
 

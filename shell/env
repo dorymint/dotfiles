@@ -1,0 +1,96 @@
+# env for bash and zsh
+
+umask 022
+
+## LC
+export LC_MESSAGES=C
+export LC_COLLATE=C
+
+## Lang
+if true; then
+  export LANG=ja_JP.UTF-8
+  export LANGUAGE=ja_JP:en_US
+else
+  export LANG=en_US.UTF-8
+  export LANGUAGE=en_US
+fi
+
+## XDG
+export XDG_CONFIG_HOME="$HOME"/.config
+export XDG_CACHE_HOME="$HOME"/.cache
+export XDG_DATA_HOME="$HOME"/.local/share
+
+## Default command
+if builtin command -v vim > /dev/null 2>&1; then
+  export EDITOR="vim"
+fi
+if builtin command -v firefox > /dev/null 2>&1; then
+  export BROWSER="firefox"
+fi
+
+## Input method frameworks
+# TODO: check
+imf="ibus"
+case "$imf" in
+  fcitx)
+    if builtin command -v fcitx-autostart > /dev/null 2>&1; then
+      export GTK_IM_MODULE=fcitx
+      export XMODIFIERS=@im=fcitx
+      export QT_IM_MODULE=fcitx
+      fcitx-autostart
+    fi
+    ;;
+  ibus)
+    if builtin command -v ibus-daemon > /dev/null 2>&1; then
+      export GTK_IM_MODULE=ibus
+      export XMODIFIERS=@im=ibus
+      export QT_IM_MODULE=ibus
+      ibus-daemon -drx
+    fi
+    ;;
+  *)
+    ;;
+esac
+unset -v imf
+
+## go
+if [ -x "$HOME"/github.com/golang/go/bin/go ]; then
+  export GOROOT="$HOME"/github.com/golang/go
+
+  # prioritize
+  export PATH="$GOROOT"/bin:"$PATH"
+fi
+if [ -d "$HOME"/go ]; then
+  export GOPATH="$HOME"/go
+  export PATH="$PATH":"$GOPATH"/bin
+fi
+
+## rust
+if [ -f "$HOME"/.cargo/env ]; then
+  source "$HOME"/.cargo/env
+fi
+
+## ruby
+if command -v ruby >/dev/null 2>&1; then
+  d="$(ruby -e 'print Gem.user_dir')"/bin
+  if [ -d "$d" ]; then
+    export PATH="$PATH":"$d"
+  fi
+  unset d
+fi
+
+## python
+# declar in alias
+#alias pyactivate='source "$HOME"/python/venv/bin/activate'
+# if want to exit the venv
+#deactivate
+
+## nodejs
+if [ -d "$HOME"/.node_modules/bin ];then
+  export PATH="$PATH":"$HOME"/.node_modules/bin
+fi
+
+## Users bin
+[ -d "$HOME"/bin ] && export PATH="$HOME"/bin:"$PATH"
+
+# vim:ft=sh:

@@ -1,29 +1,18 @@
 # zprofile
 
-# umask
-umask 022
-
 # remove?
-# keychain
 #if command -v keychain > /dev/null; then
 #  eval $(keychain --eval --quiet)
 #fi
 
-# environments
-source "$HOME"/dotfiles/shell/share/env/locale.sh
+f="$HOME"/dotfiles/shell/env
+[ -f "$f" ] && source "$f"
+unset f
 
-# lang
-source "$HOME"/dotfiles/shell/share/env/nodejs.sh
-source "$HOME"/dotfiles/shell/share/env/go.sh
-source "$HOME"/dotfiles/shell/share/env/ruby.sh
-source "$HOME"/dotfiles/shell/share/env/rust.sh
+d="$HOME"/dotfiles/shell/zsh/completion
+[ -d "$d" ] && fpath+="$d"
+unset d
 
-# bin
-[ -d "$HOME"/bin ] && export PATH="$HOME"/bin:"$PATH"
-
-# completions
-[ -d "$HOME"/dotfiles/shell/zsh/functions/completions ] && fpath+="$HOME"/dotfiles/shell/zsh/functions/completins
-
-# rc
 [ -f "$HOME"/.zshrc ] && source "$HOME"/.zshrc
 
+# vim:ft=zsh:

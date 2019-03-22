@@ -1,5 +1,4 @@
 languages:
-  # wait to implement of warn level
   sh:
     lint-command: 'shellcheck -f gcc -'
     lint-stdin: true
@@ -19,4 +18,3 @@ languages:
     lint-stdin: true
     lint-formats:
       - '%f: %l: %m'
-

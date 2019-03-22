@@ -1,26 +1,14 @@
 # bash_profile
 
-# umask
-umask 022
-
-# TODO: remove?
-# keychain
+# remove?
 #if command -v keychain > /dev/null; then
 #  eval $(keychain --eval --quiet)
 #fi
 
-# environments
-source "$HOME"/dotfiles/shell/share/env/locale.sh
+f="$HOME"/dotfiles/shell/env
+[ -f "$f" ] && source "$f"
+unset f
 
-# lang
-source "$HOME"/dotfiles/shell/share/env/go.sh
-source "$HOME"/dotfiles/shell/share/env/nodejs.sh
-source "$HOME"/dotfiles/shell/share/env/ruby.sh
-source "$HOME"/dotfiles/shell/share/env/rust.sh
-
-# priority local bin
-[ -d "$HOME"/bin ] && export PATH="$HOME"/bin:"$PATH"
-
-# call rc
 [ -f "$HOME"/.bashrc ] && source "$HOME"/.bashrc
 
+# vim:ft=sh:
