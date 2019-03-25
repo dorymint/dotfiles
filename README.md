@@ -1,23 +1,16 @@
-dotfiles
-========
+# dotfiles
 
 Respect the KISS principle
 
-```sh
-# Linux
+## Linux
 
+```sh
 cd "$HOME"
-git clone "$this_repo"
+git clone github.com/yaeshimo/dotfiles.git
 
 # run setup
-"$HOME"/dotfiles/setup/setup.sh
+./dotfiles/setup/setup.sh
 
 # withx
-"$HOME"/dotfiles/setup/setup.sh -withx
-  ```
-
-TODO
-----
-
-move to config
-change the permission
+./dotfiles/setup/setup.sh -withx
+```

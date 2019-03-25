@@ -1,8 +1,6 @@
 " vimrc
 
 source $VIMRUNTIME/defaults.vim
-
-"-----| encoding |-----"
 set encoding=utf-8
 scriptencoding utf-8
 
@@ -98,16 +96,8 @@ if (has('win32') || has('win64')) &&
 endif
 
 " plugin manager
-if v:true
-  " plug
-  if filereadable(expand('~/.vim/autoload/plug.vim'))
-    source ~/dotfiles/vim/plugin-manage-plug.vim
-  endif
-else
-  " minpac
-  if filereadable(expand('~/dotfiles/vim/minpac-pkg.vim'))
-    source ~/dotfiles/vim/minpac-pkg.vim
-  endif
+if filereadable(expand('~/.vim/autoload/plug.vim'))
+  source ~/dotfiles/vim/plugin.vim
 endif
 
 "-----| set |-----"
@@ -280,6 +270,7 @@ syntax on
 " <Nop> でマップを無効にできる
 " コマンドのキーマップは <C-u> で数値の前置を消しておかないと範囲指定される
 " mapleader が有用 :help <Leader>
+" <C-@> は <Nul> に map される
 
 " mapleader
 let g:mapleader = "\<Space>"
@@ -450,13 +441,10 @@ let g:maplocalleader = '\'
   "inoremap 〜 ~
 
 " CommandLine:
-  " Prefix:
-  "   base   <C-@>
-  "   plugin <C-o>
-  cnoremap <C-@><C-@> <C-u>cd %:p:h
-  cnoremap <C-@>f     <C-u>setlocal filetype=
-  cnoremap <C-@>s     <C-u>e ++enc=shift_jis
-  cnoremap <C-@>u     <C-u>e ++enc=utf-8
+  cnoremap <C-o><C-o> <C-u>cd %:p:h
+  cnoremap <C-o>f     <C-u>setlocal filetype=
+  cnoremap <C-o>s     <C-u>e ++enc=shift_jis
+  cnoremap <C-o>u     <C-u>e ++enc=utf-8
 
 "-----| command |-----"
 " delcommand:
@@ -580,8 +568,7 @@ augroup vimrc_ft
 
   " markdown
   function! s:ftmarkdown()
-    setlocal spell
-    setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+    setlocal spell expandtab shiftwidth=2 tabstop=2 softtabstop=2
   endfunction
   autocmd FileType markdown call s:ftmarkdown()
 
@@ -648,9 +635,8 @@ augroup vimrc_imf
   autocmd InsertLeave * call s:imf_inactive_func()
 augroup END
 
-
 "-----| diable |-----"
 let g:loaded_vimballPlugin = 1
 let g:loaded_getscriptPlugin = 1
 
-" vim: expandtab shiftwidth=2 tabstop=2 softtabstop=2
+" vim:expandtab:shiftwidth=2:tabstop=2:softtabstop=2:

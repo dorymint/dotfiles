@@ -85,7 +85,7 @@ main() {
 
     mkd "$XDG_CONFIG_HOME"/i3
     mkd "$XDG_CONFIG_HOME"/sway
-    mkd "$XDG_CONFIG_HOME"/sway/local.d
+    mkd "$XDG_CONFIG_HOME"/sway/config.d
     mkd "$XDG_CONFIG_HOME"/fontconfig
     mkd "$XDG_CONFIG_HOME"/termite
     mkd "$XDG_CONFIG_HOME"/conky
@@ -96,9 +96,6 @@ main() {
       $ln "$dotroot"/x/xinitrc "$HOME"/.xinitrc
       $ln "$dotroot"/x/Xresources "$HOME"/.Xresources
       $ln "$dotroot"/x/Xresources "$HOME"/.Xdefaults
-
-      # remove?
-      #$ln "$dotroot"/x/xserverrc "$HOME"/.xserverrc
 
       # wm
       $ln "$dotroot"/config/i3/config "$XDG_CONFIG_HOME"/i3/config

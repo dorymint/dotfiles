@@ -24,7 +24,6 @@ Options:
 
 Examples:
   $name --help
-
 END
 }
 

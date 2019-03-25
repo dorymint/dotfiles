@@ -44,7 +44,8 @@ setxkbmap jp 106
 
 # input method frameworks
 
-case "${XMODIFIERS#@im=}" in
+imf=ibus
+case "$imf" in
   fcitx)
     if builtin command -v fcitx-autostart > /dev/null 2>&1; then
       export GTK_IM_MODULE=fcitx

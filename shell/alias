@@ -81,12 +81,6 @@ if [ -x "$(builtin command -v gits)" ] && [ -x "$(builtin command -v cho)" ]; th
   alias gl='builtin command gits -- status | builtin command less -R'
 fi
 
-# sway
-if [ -x "$(builtin command -v sway)" ]; then
-  #alias sway='XKB_DEFAULT_LAYOUT=jp XKB_DEFAULT_MODEL=pc106 sway'
-  alias sway='XKB_DEFAULT_LAYOUT=jp sway'
-fi
-
 # termite
 [ "$TERM" = "xterm-termite" ] && alias ssh='TERM=xterm-256color ssh'
 

@@ -47,7 +47,7 @@ END
 main() {
   if [ -f "$next_bg" ]; then
     if [ -n "${SWAYSOCK:-}" ]; then
-      swaymsg -- output "*" background "$next_bg" fill
+      swaymsg -- output "*" background "$next_bg" fit "#000000"
     else
       feh --bg-max -- "$next_bg"
     fi

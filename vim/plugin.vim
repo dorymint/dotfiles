@@ -1,15 +1,11 @@
 scriptencoding utf-8
-
 call plug#begin('~/.vim/plugged')
-  " Base:
+" Base:
   " help for japanese
   Plug 'vim-jp/vimdoc-ja'
 
   " status line
   Plug 'itchyny/lightline.vim'
-
-  " preview on browser
-  Plug 'previm/previm'
 
   " fizzy finder
   Plug 'ctrlpvim/ctrlp.vim'
@@ -17,36 +13,20 @@ call plug#begin('~/.vim/plugged')
   " directory tree
   Plug 'scrooloose/nerdtree'
 
-  " tags information, require ctags
-  Plug 'majutsushi/tagbar'
-
-  " for generate tags file
-  " TODO: consider tags directory
-  " let g:vim_tags_cache_dir = expand($HOME)
-  " default .vt_location is .git directory
-  Plug 'szw/vim-tags'
-
-  " template
-  Plug 'mattn/sonictemplate-vim'
-
-  " command runner
-  Plug 'thinca/vim-quickrun'
-
-  " check references from current cursors words
-  " TODO: remove? if worked LspReferences
-  Plug 'thinca/vim-ref'
-
   " jump to words
   Plug 'easymotion/vim-easymotion'
 
-  " Git:
+" Git:
   " run git commands in vim
   Plug 'tpope/vim-fugitive'
 
   " display a git diff in sign column
   Plug 'airblade/vim-gitgutter'
 
-  " Language:
+" Language Base:
+  " template
+  Plug 'mattn/sonictemplate-vim'
+
   " language server protocol
   Plug 'prabirshrestha/vim-lsp'
   Plug 'prabirshrestha/async.vim'
@@ -56,6 +36,17 @@ call plug#begin('~/.vim/plugged')
   " diagnostics
   Plug 'vim-syntastic/syntastic'
 
+  " tags information, require ctags
+  Plug 'majutsushi/tagbar'
+
+  " command runner
+  Plug 'thinca/vim-quickrun'
+
+  " check references from current cursors words
+  " TODO: remove? if worked LspReferences
+  Plug 'thinca/vim-ref'
+
+" Language:
   " dart
   Plug 'dart-lang/dart-vim-plugin'
 
@@ -75,6 +66,13 @@ call plug#begin('~/.vim/plugged')
   "Plug 'fatih/vim-go', { 'tag': 'v1.19' }
   Plug 'yaeshimo/vim-go', { 'branch': 'disable-omnifunc' }
 
+  " ruby
+  " TODO: remove?
+  " for generate tags file
+  " let g:vim_tags_cache_dir = expand($HOME)
+  " default .vt_location is .git directory
+  "Plug 'szw/vim-tags'
+
   " python
   " TODO: remove?
   "Plug 'davidhalter/jedi-vim'
@@ -87,14 +85,17 @@ call plug#begin('~/.vim/plugged')
   " html css
   Plug 'mattn/emmet-vim'
 
-  " Colorscheme:
+  " markdown preview on browser
+  Plug 'previm/previm'
+
+" Colorscheme:
   Plug 'nanotech/jellybeans.vim'
   Plug 'w0ng/vim-hybrid'
   Plug 'cocopon/Iceberg.vim'
   Plug 'tomasr/molokai'
   "Plug 'trusktr/seti.vim'
 
-  " Workaround:
+" Workaround:
   Plug 'vim-jp/syntax-vim-ex'
 call plug#end()
 
@@ -153,8 +154,8 @@ let g:gitgutter_map_keys = v:false
 " majutsushi/tagbar
 if has('win32') || has('win64')
   " path to local biuld ctags.exe
-  if executable(expand('~/opt/ctags/ctags.exe'))
-    let g:tagbar_ctags_bin = expand('~/opt/ctags/ctags.exe')
+  if executable(expand('ctags.exe'))
+    let g:tagbar_ctags_bin = expand('ctags.exe')
   endif
 endif
 let g:tagbar_type_go = {
@@ -207,7 +208,7 @@ let g:lsp_diagnostics_echo_cursor = 1
 " for debug
 if v:false
   let g:lsp_log_verbose = 1
-  " check: tail --follow $logfile
+  " check: `tail --follow $logfile`
   let g:lsp_log_file = expand('~/tmp/vim-lsp.log')
   let g:asyncomplete_log_file = expand('~/tmp/asyncomplete.log')
 endif
@@ -222,8 +223,8 @@ augroup vimrc_plugin_lsp
           \ })
   endif
 
-  " Rust: rustup update
-  "     : rustup component add rls-preview rust-analysis rust-src
+  " Rust: `rustup update`
+  "     : `rustup component add rls-preview rust-analysis rust-src`
   if executable('rls')
     autocmd User lsp_setup call lsp#register_server({
           \ 'name': 'rls',
@@ -232,7 +233,7 @@ augroup vimrc_plugin_lsp
           \ })
   endif
 
-  " Bash: npm install -g bash-language-server
+  " Bash: `npm install -g bash-language-server`
   if executable('bash-language-server')
     " TODO: consider
     autocmd User lsp_setup call lsp#register_server({
@@ -242,12 +243,12 @@ augroup vimrc_plugin_lsp
           \ })
   endif
 
-  " efm-langserver: go get -v -u github.com/mattn/efm-langserver/cmd/efm-langserver
+  " efm-langserver: `go get -v -u github.com/mattn/efm-langserver/cmd/efm-langserver`
   "   Linters:
-  "     markdown: npm install -g markdownlint-cli
-  "     vim: pip install vim-vint
-  "     sh: pacman -S shellcheck # on arch
-  "   DefaultConfig:
+  "     markdown: `npm install -g markdownlint-cli`
+  "     vim: `pip install vim-vint`
+  "     sh: `pacman -S shellcheck` # on arch
+  "   DefaultConfigPath:
   "     Linux: '$HOME/.config/efm-langserver/config.yaml'
   "     Windows: '%APPDATA%\efm-langserver\config.yaml'
   if executable('efm-langserver')
@@ -294,49 +295,24 @@ let g:go_template_autocreate = 0
 "let g:jedi#rename_command = '<LocalLeader>R'
 
 "
-" Function:
+" Mapping:
 "
+noremap <LocalLeader><LocalLeader> <Nop>
+map     <LocalLeader><LocalLeader> <Plug>(easymotion-bd-w)
+nmap    <LocalLeader><LocalLeader> <Plug>(easymotion-overwin-w)
+
+nnoremap <LocalLeader>gt :<C-u>GitGutterToggle<CR>
+nnoremap <LocalLeader>N  :<C-u>NERDTreeToggle<CR>
+nnoremap <LocalLeader>h  :<C-u>NERDTreeToggle<CR>
+nnoremap <LocalLeader>T  :<C-u>TagbarToggle<CR>
+nnoremap <LocalLeader>l  :<C-u>TagbarToggle<CR>
+nnoremap <LocalLeader>r  :<C-u>QuickRun<CR>
+
 " mattn/sonictemplate-vim
-" すぐにテンプレートを編集できるように
 function! s:edit_tmpl() abort
   if isdirectory(g:sonictemplate_vim_template_dir)
     " open by NERDTree or netrw
     execute "vsplit " . g:sonictemplate_vim_template_dir
-  endif
-endfunction
-
-" prabirshrestha/vim-lsp
-" TODO: consider to remove
-function! s:lsp_commands() abort
-  let l:m = {
-        \ 'a': 'LspCodeAction',
-        \ 'D': 'LspDeclaration',
-        \ 'd': 'LspDefinition',
-        \ 's': 'LspDocumentSymbol',
-        \ 'e': 'LspDocumentDiagnostics',
-        \ 'h': 'LspHover',
-        \ 'n': 'LspNextError',
-        \ 'p': 'LspPreviousError',
-        \ 'r': 'LspReferences',
-        \ 'R': 'LspRename',
-        \ 'w': 'LspWorkspaceSymbol',
-        \ 'f': 'LspDocumentFormat',
-        \ 'F': 'LspDocumentFormatSync',
-        \ 'i': 'LspImplementation',
-        \ 't': 'LspTypeDefinition',
-        \ 'S': 'LspStatus',
-        \ }
-  echo "Lsp:"
-  for l:key in sort(keys(l:m))
-    echo '  ' . l:key . '  ' . string(l:m[l:key])
-  endfor
-  echo 'Input:>'
-  let l:c = nr2char(getchar())
-  echo 'Input:' . l:c
-  if has_key(l:m, l:c)
-    execute l:m[l:c]
-  else
-    echo 'Invalid keys: ' . l:c
   endif
 endfunction
 
@@ -352,22 +328,6 @@ function! s:lsp_toggle() abort
     echo "Lsp enabled"
   endif
 endfunction
-
-"
-" Mapping:
-"
-noremap <LocalLeader><LocalLeader> <Nop>
-map     <LocalLeader><LocalLeader> <Plug>(easymotion-bd-w)
-nmap    <LocalLeader><LocalLeader> <Plug>(easymotion-overwin-w)
-
-nnoremap <LocalLeader>gt :<C-u>GitGutterToggle<CR>
-nnoremap <LocalLeader>N  :<C-u>NERDTreeToggle<CR>
-nnoremap <LocalLeader>h  :<C-u>NERDTreeToggle<CR>
-nnoremap <LocalLeader>T  :<C-u>TagbarToggle<CR>
-nnoremap <LocalLeader>l  :<C-u>TagbarToggle<CR>
-nnoremap <LocalLeader>r  :<C-u>QuickRun<CR>
-
-" mattn/sonictemplate-vim
 nnoremap <LocalLeader>w :<C-u>call <SID>edit_tmpl()<CR>
 
 " prabirshrestha/vim-lsp
@@ -375,8 +335,6 @@ nnoremap <LocalLeader>s :<C-u>LspStatus<CR>
 nnoremap <LocalLeader>d :<C-u>LspDefinition<CR>
 nnoremap <LocalLeader>f :<C-u>LspDocumentFormat<CR>
 nnoremap <LocalLeader>t :<C-u>call <SID>lsp_toggle()<CR>
-" TODO: consider
-"nnoremap <LocalLeader>l :<C-u>call <SID>lsp_commands()<CR>
 
 " lsp quickfix
 nnoremap <LocalLeader>o :<C-u>LspDocumentDiagnostics<CR>
@@ -408,4 +366,3 @@ augroup vimrc_plugin
   endfunction
   autocmd FileType rust call s:ftrust()
 augroup END
-
