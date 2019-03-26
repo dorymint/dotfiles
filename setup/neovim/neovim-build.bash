@@ -8,7 +8,7 @@ set -eu
 use="make"
 #use="cmake"
 repo="https://github.com/neovim/neovim"
-srcroot="$HOME/github.com/neovim/neovim"
+srcroot="$HOME/src/github.com/neovim/neovim"
 installdir="$HOME/opt/neovim"
 
 # confirm $1=msg return bool

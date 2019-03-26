@@ -1,5 +1,6 @@
 # env for bash and zsh
 
+## umask
 umask 022
 
 ## LC
@@ -25,17 +26,37 @@ export XDG_CONFIG_HOME="$HOME"/.config
 export XDG_CACHE_HOME="$HOME"/.cache
 export XDG_DATA_HOME="$HOME"/.local/share
 
+## Input method frameworks
+imf=ibus
+case "$imf" in
+  ibus)
+    if command -v ibus-daemon >/dev/null 2>&1; then
+      export GTK_IM_MODULE=ibus
+      export XMODIFIERS=@im=ibus
+      export QT_IM_MODULE=ibus
+    fi
+    ;;
+  fcitx)
+    if command -v fcitx-autostart >/dev/null 2>&1; then
+      export GTK_IM_MODULE=fcitx
+      export XMODIFIERS=@im=fcitx
+      export QT_IM_MODULE=fcitx
+    fi
+    ;;
+esac
+unset imf
+
 ## Default command
-if builtin command -v vim >/dev/null 2>&1; then
+if command -v vim >/dev/null 2>&1; then
   export EDITOR="vim"
 fi
-if builtin command -v firefox >/dev/null 2>&1; then
+if command -v firefox >/dev/null 2>&1; then
   export BROWSER="firefox"
 fi
 
 ## go
-if [ -x "$HOME"/github.com/golang/go/bin/go ]; then
-  export GOROOT="$HOME"/github.com/golang/go
+if [ -x "$HOME"/src/github.com/golang/go/bin/go ]; then
+  export GOROOT="$HOME"/src/github.com/golang/go
 
   # prioritize
   export PATH="$GOROOT"/bin:"$PATH"

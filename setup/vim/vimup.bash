@@ -5,7 +5,7 @@
 set -eu
 
 vimrepo="https://github.com/vim/vim"
-vimdir="$HOME/github.com/vim/vim"
+vimdir="$HOME/src/github.com/vim/vim"
 prefix="$HOME/opt/vim"
 ignore_confirm=false
 

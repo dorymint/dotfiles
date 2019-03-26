@@ -18,14 +18,20 @@ case "${1:-}" in
 	-h|-help|--help) helpmsg; exit 0;;
 esac
 
-prof="$(pwd)"/cover.prof
-if [ -f "${prof}" ]; then
-	echo -e -n "${prof}\noverride? [yes:no]>"
+prof=cover.prof
+if [ -f "$prof" ]; then
+	printf "%s\noverride? [yes:no]>" "$prof"
 	read -r key
-	[ "${key}" = "yes" ] || exit 1
+	case "$key" in
+		yes|y);;
+		*)
+			printf "stopped\n"
+			exit 2
+			;;
+	esac
 fi
 
-go test -race -cover -coverprofile "${prof}"
-go tool cover -html "${prof}"
+go test -race -cover -coverprofile "$prof"
+go tool cover -html "$prof"
 
-# vim: noexpandtab shiftwidth=2 tabstop=2 softtabstop=2
+# vim:noexpandtab:shiftwidth=2:tabstop=2:softtabstop=2:

@@ -5,10 +5,10 @@ set -eu
 repo="https://go.googlesource.com/go"
 branch="release-branch.go1.12"
 #branch="master"
-goroot="$HOME/github.com/golang/go"
+goroot="$HOME/src/github.com/golang/go"
 
 bootstrap_branch="release-branch.go1.4"
-bootstrap_dir="$HOME"/"$bootstrap_branch"
+bootstrap_dir="$HOME"/src/local/"$bootstrap_branch"
 
 ignore_confirm=false
 
@@ -157,4 +157,4 @@ done
 
 main
 
-# vim: noexpandtab shiftwidth=2 tabstop=2 softtabstop=2
+# vim:noexpandtab:shiftwidth=2:tabstop=2:softtabstop=2:

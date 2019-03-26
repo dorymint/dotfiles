@@ -6,7 +6,7 @@ editor="${EDITOR:-"vim"}"
 
 # TODO: consider
 user="$(git config --global user.name)"
-file="$(readlink -e "$HOME"/github.com/"$user"/hello-world/md/utils.md)"
+file="$(readlink -e "$HOME"/src/github.com/"$user"/hello-world/md/utils.md)"
 
 # grep options
 options="--line-number --ignore-case --after-context=5"

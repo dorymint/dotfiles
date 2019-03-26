@@ -1,93 +1,102 @@
-# alias
-# for bash, zsh
+# alias for bash and zsh
 
-# Common
-alias l='builtin command ls -lv --color=auto'
-alias la='builtin command ls -halv --color=auto'
-alias lale='builtin command ls -halv --color=always | builtin command less -R'
-alias lat='builtin command ls -halvt --color=auto'
-alias latle='builtin command ls -halvt --color=always | builtin command less -R'
-alias lah='builtin command ls -halvd --color=auto .*'
-alias dmesgl='builtin command dmesg --color=always | builtin command less -R'
-alias :q='builtin exit'
-alias hi='builtin command grep --color=always -e "$" -e'
-alias ..='builtin cd ..'
-alias gitroot='builtin command git rev-parse --show-toplevel > /dev/null && builtin cd "$(builtin command git rev-parse --show-toplevel)"'
+## Common
+alias l='command ls -lv --color=auto'
+alias la='command ls -halv --color=auto'
+alias lale='command ls -halv --color=always | command less -R'
+alias lat='command ls -halvt --color=auto'
+alias latle='command ls -halvt --color=always | command less -R'
+alias lah='command ls -halvd --color=auto .*'
+alias dmesgl='command dmesg --color=always | command less -R'
+alias :q='command exit'
+alias hi='command grep --color=always -e "$" -e'
+alias ..='command cd ..'
+alias gitroot='command git rev-parse --show-toplevel > /dev/null && command cd "$(command git rev-parse --show-toplevel)"'
 alias todo='$EDITOR "$HOME"/todo.md'
 
-# Override
-alias mkdir='builtin command mkdir -p -v'
-alias ping='builtin command ping -c 3'
-alias diff='builtin command diff --color=auto'
-alias rm='builtin command rm -I -v'
-alias cp='builtin command cp -i'
-alias ln='builtin command ln -i'
-alias chown='builtin command chown --preserve-root'
-alias chmod='builtin command chmod --preserve-root'
-alias chgrp='builtin command chgrp --preserve-root'
-#alias dd='builtin command dd status=progress'
-alias emacs='builtin command emacs -nw'
-alias grep='builtin command grep --ignore-case --color=auto'
+## Override
+alias mkdir='command mkdir -p -v'
+alias ping='command ping -c 3'
+alias diff='command diff --color=auto'
+alias rm='command rm -I -v'
+alias cp='command cp -i'
+alias ln='command ln -i'
+alias chown='command chown --preserve-root'
+alias chmod='command chmod --preserve-root'
+alias chgrp='command chgrp --preserve-root'
+#alias dd='command dd status=progress'
+alias emacs='command emacs -nw'
+alias grep='command grep --ignore-case --color=auto'
 
-# Which one use
-alias manja='LC_ALL=ja_JP.UTF-8 builtin command man'
-#alias manja='LC_MESSAGES=ja_JP.UTF-8 builtin command man'
+## man
+alias manja='LC_ALL=ja_JP.UTF-8 command man'
 
-# cd
-alias gw='builtin cd -- "$GOPATH"/src/github.com/"$(git config --global user.name)"'
-alias ww='builtin cd -- "$HOME"/github.com/"$(git config --global user.name)"'
-alias dotfiles='builtin cd -- "$HOME"/dotfiles'
-alias tmp='builtin cd -- "$HOME"/tmp'
-if [ -x "$(builtin command -v gof)" ]; then
-  alias goc='builtin cd -- "$(p="$(gof)";[ $? -ne 0 ] && pwd && exit 1;[ -d "$p" ] && echo "$p" && exit 0;dirname "$p"; exit 1)"'
-  alias gocf='builtin cd -- "$(p="$(gof -f)";[ $? -ne 0 ] && pwd && exit 1;[ -d "$p" ] && echo "$p" && exit 0;dirname "$p"; exit 1)"'
+## cd
+alias gw='command cd -- "$GOPATH"/src/github.com/"$(git config --global user.name)"'
+alias ww='command cd -- "$HOME"/src/github.com/"$(git config --global user.name)"'
+alias dotfiles='command cd -- "$HOME"/dotfiles'
+alias tmp='command cd -- "$HOME"/tmp'
+alias github='command cd -- "$HOME"/src/github.com'
+if command -v gof >/dev/null 2>&1; then
+  alias goc='command cd -- "$(p="$(gof)";[ $? -ne 0 ] &&
+    pwd &&
+    exit 1;[ -d "$p" ] &&
+    echo "$p" &&
+    exit 0;dirname "$p"; exit 1)"'
+  alias gocf='command cd -- "$(p="$(gof -f)";[ $? -ne 0 ] &&
+    pwd &&
+    exit 1;[ -d "$p" ] &&
+    echo "$p" &&
+    exit 0;dirname "$p"; exit 1)"'
   alias goe='gof -e'
 fi
 
-# pacman
-alias checkupdates='builtin command date > "$HOME"/tmp/checkupdates.log && builtin command checkupdates >> "$HOME"/tmp/checkupdates.log && builtin command cat "$HOME"/tmp/checkupdates.log'
-alias checklog='builtin command cat -- "$HOME"/tmp/checkupdates.log'
+## pacman
+alias checkupdates='command date > "$HOME"/tmp/checkupdates.log &&
+  command checkupdates >> "$HOME"/tmp/checkupdates.log &&
+  command cat "$HOME"/tmp/checkupdates.log'
+alias checklog='command cat -- "$HOME"/tmp/checkupdates.log'
 
-# vim -R gosrc
+## vim -R gosrc
 if [ -d "$GOROOT"/src ]; then
-  alias gosrc='(builtin cd -- "$GOROOT/src" && vim -R .)'
+  alias gosrc='(command cd -- "$GOROOT/src" && vim -R .)'
 fi
 
-# vim -R rustsrc
-if [ -x "$(builtin command -v rustc)" ]; then
+## vim -R rustsrc
+if command -v rustc >/dev/null 2>&1; then
   if [ -d "$(rustc --print sysroot)"/lib/rustlib/src/rust/src ]; then
-    alias rustsrc='(builtin cd -- "$(rustc --print sysroot)"/lib/rustlib/src/rust/src && vim -R .)'
+    alias rustsrc='(command cd -- "$(rustc --print sysroot)"/lib/rustlib/src/rust/src && vim -R .)'
   fi
 fi
 
-# vim
+## vim
 if [ -x "$HOME"/opt/vim/bin/vim ]; then
   alias viml='"$HOME"/opt/vim/bin/vim'
 fi
 
-# nvim
+## nvim
 if [ -x "$HOME"/opt/neovim/bin/nvim ]; then
   alias nvim='"$HOME"/opt/neovim/bin/nvim'
 fi
 
-# python
+## python
 if [ -r "$HOME"/python/venv/bin/activate ]; then
-  alias pyactivate='builtin source "$HOME"/python/venv/bin/activate'
+  alias pyactivate='command source "$HOME"/python/venv/bin/activate'
 fi
 
-# gits && cho
-if [ -x "$(builtin command -v gits)" ] && [ -x "$(builtin command -v cho)" ]; then
-  alias cdg='builtin cd -- $(builtin command gits -list-repo-full | builtin command cho || builtin command pwd)'
-  alias gl='builtin command gits -- status | builtin command less -R'
+## gits && cho
+if command -v gits >/dev/null 2>&1 && command -v cho >/dev/null 2>&1; then
+  alias cdg='command cd -- $(command gits -list-repo-full | command cho || command pwd)'
+  alias gl='command gits -- status | command less -R'
 fi
 
-# termite
+## termite
 [ "$TERM" = "xterm-termite" ] && alias ssh='TERM=xterm-256color ssh'
 
-# mplayer
-[ -x "$(builtin command -v mplayer)" ] && alias mplayerbgm='builtin command mplayer -ao pulse -vo null'
+## mplayer
+command -v mplayer >/dev/null 2>&1 && alias mplayerbgm='command mplayer -ao pulse -vo null'
 
-# systemctl --user
-alias timers > /dev/null 2>&1 || alias timers='systemctl --no-pager --user list-timers'
+## systemctl --user
+command -v systemctl >/dev/null 2>&1 && alias timers='systemctl --no-pager --user list-timers'
 
-# vim: ft=sh
+# vim:ft=sh:
