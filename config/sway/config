@@ -30,11 +30,11 @@ set $ws7 7
 set $ws8 8
 set $ws9 9
 # Colors for client
-set $border #000000
-set $black  #000000
-set $white  #FFFFFF
-set $gray   #484848
-set $blue   #0000FF
+set $border #000000dd
+set $black  #000000dd
+set $white  #ffffffdd
+set $gray   #484848dd
+set $blue   #0000ffdd
 
 ### Output configuration
 #
@@ -230,17 +230,17 @@ bar {
     status_command i3status
 
     colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
+        statusline #ffffffdd
+        background #323232dd
+        inactive_workspace #323232dd #323232dd #5c5c5cdd
+        focused_workspace #4c7899dd #285577dd #ffffffdd
     }
 }
 
-include /etc/sway/config.d/*
 
 ### Client
 #
-# <class> <border> <text> <indicator> <child_border>
+# <colorclass> <border> <background> <text> <indicator> <child_border>
 client.focused          $border $black $white $blue   $border
 client.unfocused        $border $black $gray  $border $border
 client.focused_inactive $border $black $gray  $border $border
@@ -250,6 +250,7 @@ for_window [title=".*"] title_format %title (class=%class instance=%instance she
 
 ### Include
 #
+include /etc/sway/config.d/*
 # Custom modes:
 include "$HOME"/.config/sway/mode.conf
 # Local config:

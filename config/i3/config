@@ -224,9 +224,9 @@ bindsym $mod+Shift+b bar mode toggle
 
 set $border #000000
 set $black  #000000
-set $white  #FFFFFF
+set $white  #ffffff
 set $gray   #484848
-set $blue   #0000FF
+set $blue   #0000ff
 
 # class                 border  backgr txt    indicator child_border
 client.focused          $border $black $white $blue     $border

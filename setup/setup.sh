@@ -30,7 +30,7 @@ mkd() {
 }
 
 main() {
-  builtin command -v ln > /dev/null
+  command -v ln > /dev/null
   ln="ln --verbose --symbolic --no-dereference"
   if [ "$force" = "true" ]; then
     ln="$ln --force"
