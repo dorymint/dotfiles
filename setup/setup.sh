@@ -40,7 +40,7 @@ main() {
   # base
   mkd "$HOME"/bin
   mkd "$HOME"/src
-  mkd "$HOME"/src/local
+  mkd "$HOME"/src/.local
   mkd "$XDG_CONFIG_HOME"
 
   # vim
