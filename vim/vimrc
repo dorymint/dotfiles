@@ -107,6 +107,9 @@ set notimeout
 set ttimeout
 set ttimeoutlen=100
 
+" 短形ビジュアルモードで仮想編集を有効にする
+set virtualedit=block
+
 " ファイルの先頭行と最終行のコメントで set できる
 set modeline
 " 上下から modeline を確認する行数を指定する
