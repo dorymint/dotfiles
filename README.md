@@ -11,6 +11,6 @@ git clone github.com/yaeshimo/dotfiles.git
 # run setup
 ./dotfiles/setup/setup.sh
 
-# withx
-./dotfiles/setup/setup.sh -withx
+# with gui
+./dotfiles/setup/setup.sh --gui
 ```

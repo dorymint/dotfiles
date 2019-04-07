@@ -1,3 +1,12 @@
 [user]
 	name = yaeshimo
 	email = hatsushimoyae@gmail.com
+
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
+	di = diff
+	dr = add --dry-run
+	alias = config --get-regexp "alias"
