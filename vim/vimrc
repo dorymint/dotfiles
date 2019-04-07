@@ -403,9 +403,6 @@ let g:maplocalleader = '\'
   inoremap (<CR>    ()<Left><CR><Esc><S-o>
   inoremap [<CR>    []<Left><CR><Esc><S-o>
 
-  " オムニ補完
-  inoremap <S-Tab> <C-x><C-o>
-
   " for undo
   inoremap <C-u> <C-g>u<C-u>
   inoremap <C-w> <C-g>u<C-w>

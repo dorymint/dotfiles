@@ -51,7 +51,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'dart-lang/dart-vim-plugin'
 
   " c
-  Plug 'justmao945/vim-clang'
+  "Plug 'justmao945/vim-clang'
 
   " javascript
   Plug 'heavenshell/vim-jsdoc'
@@ -104,13 +104,19 @@ filetype plugin indent on
 "
 " Config:
 "
-" mattn/sonictemplate-vim
+" sonictemplate-vim
 let s:sonicdir = expand('~/dotfiles/vim/sonictemplate')
 if isdirectory(s:sonicdir)
   let g:sonictemplate_vim_template_dir = s:sonicdir
 endif
+function! s:edit_templ() abort
+  if isdirectory(g:sonictemplate_vim_template_dir)
+    " open by NERDTree or netrw
+    execute "vsplit " . g:sonictemplate_vim_template_dir
+  endif
+endfunction
 
-" itchyny/lightline.vim
+" lightline.vim
 let g:lightline = {
       \ 'colorscheme': 'jellybeans',
       \ 'active': {
@@ -148,10 +154,10 @@ let g:lightline.enable = {
       \ 'tabline': 1,
       \ }
 
-" airblade/vim-gitgutter
+" vim-gitgutter
 let g:gitgutter_map_keys = v:false
 
-" majutsushi/tagbar
+" tagbar
 if has('win32') || has('win64')
   " path to local biuld ctags.exe
   if executable(expand('ctags.exe'))
@@ -186,25 +192,94 @@ let g:tagbar_type_go = {
       \ 'ctagsargs' : '-sort -silent'
       \ }
 
-" thinca/vim-quickrun
+" vim-quickrun
 " 設定するとデフォルトマップが無効になる
 "let g:quickrun_no_default_key_mappings = 1
 let g:quickrun_config = {}
 let g:quickrun_config['gotest'] = {'command': 'go', 'exec': ['%c test -v -race']}
 
-" kannokanno/previm
+" previm
 if executable('firefox')
   let g:previm_open_cmd = 'exec firefox'
 elseif executable('chromium')
   let g:previm_open_cmd = 'exec chromium'
 endif
 
-" easymotion/vim-easymotion
+" vim-easymotion
 let g:EasyMotion_do_mapping = 0
 
-" prabirshrestha/vim-lsp
+" vim-lsp
 let g:lsp_signs_enabled = 1
 let g:lsp_diagnostics_echo_cursor = 1
+let s:lsp_state = v:true
+function! s:lsp_toggle() abort
+  if s:lsp_state
+    call lsp#disable()
+    let s:lsp_state = v:false
+    echo "Lsp disabled"
+  else
+    call lsp#enable()
+    let s:lsp_state = v:true
+    echo "Lsp enabled"
+  endif
+endfunction
+" Go:
+"   Install: go get golang.org/x/tools/cmd/gopls
+if executable('gopls')
+  au User lsp_setup call lsp#register_server({
+        \ 'name': 'gopls',
+        \ 'cmd': {server_info -> ['gopls', '-mode', 'stdio']},
+        \ 'whitelist': ['go'],
+        \ })
+endif
+" Rust:
+"   Install: `rustup update`
+"          : `rustup component add rls-preview rust-analysis rust-src`
+if executable('rls')
+  au User lsp_setup call lsp#register_server({
+        \ 'name': 'rls',
+        \ 'cmd': {server_info -> ['rustup', 'run', 'stable', 'rls']},
+        \ 'whitelist': ['rust'],
+        \ })
+endif
+" C++:
+"   Install: pacman -S clang-tools-extra # on Arch Linux
+if executable('clangd')
+  au User lsp_setup call lsp#register_server({
+        \ 'name': 'clangd',
+        \ 'cmd': {server_info -> ['clangd', '-background-index']},
+        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+        \ })
+endif
+
+
+" Bash:
+"   Install: `npm install -g bash-language-server`
+"   TODO: consider
+if executable('bash-language-server')
+  au User lsp_setup call lsp#register_server({
+        \ 'name': 'bash-language-server',
+        \ 'cmd': {server_info -> [&shell, &shellcmdflag, 'bash-language-server start']},
+        \ 'whitelist': [],
+        \ })
+endif
+" Genelic:
+"   Install: `go get github.com/mattn/efm-langserver/cmd/efm-langserver`
+"   Linters:
+"     Markdown: `npm install -g markdownlint-cli`
+"     Vim: `pip install vim-vint`
+"     Shell: `pacman -S shellcheck` # on Arch Linux
+"   DefaultConfigPath:
+"     Linux: '$HOME/.config/efm-langserver/config.yaml'
+"     Windows: '%APPDATA%\efm-langserver\config.yaml'
+"   State: unstable
+if executable('efm-langserver')
+    autocmd User lsp_setup call lsp#register_server({
+          \ 'name': 'efm-langserver',
+          \ 'cmd': {server_info -> ['efm-langserver']},
+          \ 'whitelist': ['sh', 'eruby', 'markdown', 'vim'],
+          \ })
+endif
 " for debug
 if v:false
   let g:lsp_log_verbose = 1
@@ -212,65 +287,18 @@ if v:false
   let g:lsp_log_file = expand('~/tmp/vim-lsp.log')
   let g:asyncomplete_log_file = expand('~/tmp/asyncomplete.log')
 endif
-augroup vimrc_plugin_lsp
-  autocmd!
-  " Go: go get golang.org/x/tools/cmd/gopls
-  if executable('gopls')
-    autocmd User lsp_setup call lsp#register_server({
-          \ 'name': 'gopls',
-          \ 'cmd': {server_info -> ['gopls', '-mode', 'stdio']},
-          \ 'whitelist': ['go'],
-          \ })
-  endif
 
-  " Rust: `rustup update`
-  "     : `rustup component add rls-preview rust-analysis rust-src`
-  if executable('rls')
-    autocmd User lsp_setup call lsp#register_server({
-          \ 'name': 'rls',
-          \ 'cmd': {server_info -> ['rustup', 'run', 'stable', 'rls']},
-          \ 'whitelist': ['rust'],
-          \ })
-  endif
-
-  " Bash: `npm install -g bash-language-server`
-  if executable('bash-language-server')
-    " TODO: consider
-    autocmd User lsp_setup call lsp#register_server({
-          \ 'name': 'bash-language-server',
-          \ 'cmd': {server_info -> [&shell, &shellcmdflag, 'bash-language-server start']},
-          \ 'whitelist': [],
-          \ })
-  endif
-
-  " efm-langserver: `go get -v -u github.com/mattn/efm-langserver/cmd/efm-langserver`
-  "   Linters:
-  "     markdown: `npm install -g markdownlint-cli`
-  "     vim: `pip install vim-vint`
-  "     sh: `pacman -S shellcheck` # on arch
-  "   DefaultConfigPath:
-  "     Linux: '$HOME/.config/efm-langserver/config.yaml'
-  "     Windows: '%APPDATA%\efm-langserver\config.yaml'
-  if executable('efm-langserver')
-      autocmd User lsp_setup call lsp#register_server({
-            \ 'name': 'efm-langserver',
-            \ 'cmd': {server_info -> ['efm-langserver']},
-            \ 'whitelist': ['sh', 'eruby', 'markdown', 'vim'],
-            \ })
-  endif
-augroup END
-
-" vim-syntastic/syntastic
-let g:syntastic_cpp_compiler = 'clang'
-let g:syntastic_cpp_compiler_options = '-std=c++1z --pedantic-errors'
-let g:syntastic_cpp_checkers = ['clang_check']
+" syntastic
+"let g:syntastic_cpp_compiler = 'clang'
+"let g:syntastic_cpp_compiler_options = '-std=c++1z --pedantic-errors'
+"let g:syntastic_cpp_checkers = ['clang_check']
 let g:syntastic_javascript_checkers = ['eslint']
 
-" justmao945/vim-clang
-let g:clang_c_options = '-std=c11'
-let g:clang_cpp_options = '-std=c++1z --pedantic-errors'
+" vim-clang
+"let g:clang_c_options = '-std=c11'
+"let g:clang_cpp_options = '-std=c++1z --pedantic-errors'
 
-" racer-rust/vim-racer
+" vim-racer
 if executable(expand('~/.cargo/bin/racer'))
   let g:racer_cmd = expand('~/.cargo/bin/racer')
   let g:racer_experimental_completer = 1
@@ -278,7 +306,7 @@ else
   echoerr 'not found "racer"'
 endif
 
-" fatih/vim-go
+" vim-go
 if isdirectory(expand('~/dotfiles/vim/tmp/bin'))
   let g:go_bin_path = expand('~/dotfiles/vim/tmp/bin')
 endif
@@ -286,7 +314,7 @@ let g:go_play_open_browser = 0
 let g:go_fmt_autosave = 0
 let g:go_template_autocreate = 0
 
-" davidhalter/jedi-vim
+" jedi-vim
 ""let g:jedi#auto_initialization = 0
 "let g:jedi#popup_on_dot = 0
 "let g:jedi#auto_close_doc = 0
@@ -308,45 +336,32 @@ nnoremap <LocalLeader>T  :<C-u>TagbarToggle<CR>
 nnoremap <LocalLeader>l  :<C-u>TagbarToggle<CR>
 nnoremap <LocalLeader>r  :<C-u>QuickRun<CR>
 
-" mattn/sonictemplate-vim
-function! s:edit_tmpl() abort
-  if isdirectory(g:sonictemplate_vim_template_dir)
-    " open by NERDTree or netrw
-    execute "vsplit " . g:sonictemplate_vim_template_dir
-  endif
-endfunction
+" sonictemplate
+nnoremap <LocalLeader>w :<C-u>call <SID>edit_templ()<CR>
 
-let s:lsp_state = v:true
-function! s:lsp_toggle() abort
-  if s:lsp_state
-    call lsp#disable()
-    let s:lsp_state = v:false
-    echo "Lsp disabled"
-  else
-    call lsp#enable()
-    let s:lsp_state = v:true
-    echo "Lsp enabled"
-  endif
-endfunction
-nnoremap <LocalLeader>w :<C-u>call <SID>edit_tmpl()<CR>
-
-" prabirshrestha/vim-lsp
+" vim-lsp
 nnoremap <LocalLeader>s :<C-u>LspStatus<CR>
 nnoremap <LocalLeader>d :<C-u>LspDefinition<CR>
 nnoremap <LocalLeader>f :<C-u>LspDocumentFormat<CR>
 nnoremap <LocalLeader>t :<C-u>call <SID>lsp_toggle()<CR>
-
-" lsp quickfix
+" quickfix
 nnoremap <LocalLeader>o :<C-u>LspDocumentDiagnostics<CR>
 nnoremap <LocalLeader>e :<C-u>LspDocumentDiagnostics<CR>
 nnoremap <LocalLeader>c :<C-u>cclose<CR>
 nnoremap <LocalLeader>n :<C-u>LspNextError<CR>
 nnoremap <LocalLeader>p :<C-u>LspPreviousError<CR>
 
+" asynccomplete.vim
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<CR>"
+" TODO: fix for ibus
+"imap <C-Space> <Plug>(asynccomplete_force_refresh)
+
 augroup vimrc_plugin
   autocmd!
   function! s:ftgo()
-    " fatih/vim-go
+    " vim-go
     nnoremap <buffer> <LocalLeader>i  :<C-u>GoImports<Space>
     nnoremap <buffer> <LocalLeader>gd :<C-u>GoDoc<CR>
     cnoremap <buffer> <C-o>i :<C-u>GoImport<space>
@@ -355,13 +370,13 @@ augroup vimrc_plugin
   autocmd FileType go call s:ftgo()
 
   function! s:ftrust()
-    " racer-rust/vim-racer
+    " vim-racer
     nmap <buffer> gd <Plug>(rust-def)
     nmap <buffer> gs <Plug>(rust-def-split)
     nmap <buffer> gx <Plug>(rust-def-vertical)
     nmap <buffer> <LocalLeader>gd <Plug>(rust-doc)
 
-    " rust-lang/rust.vim
+    " rust.vim
     nmap <buffer> <LocalLeader>f :<C-u>RustFmt<CR>
   endfunction
   autocmd FileType rust call s:ftrust()
