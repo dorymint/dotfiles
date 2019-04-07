@@ -445,9 +445,10 @@ let g:maplocalleader = '\'
 
 " CommandLine:
   cnoremap <C-o><C-o> <C-u>cd %:p:h
+  cnoremap <C-o>t     <C-u>vertical terminal<Space>
   cnoremap <C-o>f     <C-u>setlocal filetype=
-  cnoremap <C-o>s     <C-u>e ++enc=shift_jis
-  cnoremap <C-o>u     <C-u>e ++enc=utf-8
+  cnoremap <C-o>S     <C-u>e ++enc=shift_jis
+  cnoremap <C-o>U     <C-u>e ++enc=utf-8
 
 "-----| command |-----"
 " delcommand:
