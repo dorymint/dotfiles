@@ -351,12 +351,25 @@ nnoremap <LocalLeader>c :<C-u>cclose<CR>
 nnoremap <LocalLeader>n :<C-u>LspNextError<CR>
 nnoremap <LocalLeader>p :<C-u>LspPreviousError<CR>
 
-" asynccomplete.vim
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<CR>"
-" TODO: fix for ibus
-"imap <C-Space> <Plug>(asynccomplete_force_refresh)
+" asyncomplete.vim
+if v:true
+  inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+  inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<CR>"
+  " TODO: fix for ibus
+  imap <C-Space> <Plug>(asyncomplete_force_refresh)
+else
+  let g:asyncomplete_auto_popup = 0
+  function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1] =~ '\s'
+  endfunction
+  inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ asyncomplete#force_refresh()
+  inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+endif
 
 augroup vimrc_plugin
   autocmd!
