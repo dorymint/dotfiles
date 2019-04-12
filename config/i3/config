@@ -237,7 +237,7 @@ client.focused_inactive $border $black $gray  $border   $border
 # finds out, if available)
 bar {
   status_command i3status
-  position bottom
+  position top
   mode dock
   workspace_buttons yes
   hidden_state hide
