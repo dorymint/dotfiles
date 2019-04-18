@@ -62,8 +62,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'racer-rust/vim-racer'
 
   " go
-  " TODO: remove?
   "Plug 'fatih/vim-go', { 'tag': 'v1.19' }
+  " TODO: if effective g:go_autocomplete_enabled = 0 then to revert
   Plug 'yaeshimo/vim-go', { 'branch': 'disable-omnifunc' }
 
   " ruby
@@ -313,6 +313,8 @@ endif
 let g:go_play_open_browser = 0
 let g:go_fmt_autosave = 0
 let g:go_template_autocreate = 0
+" Workaround:
+let g:go_autocomplete_enabled = 0
 
 " jedi-vim
 ""let g:jedi#auto_initialization = 0
