@@ -8,7 +8,7 @@ branch="release-branch.go1.12"
 goroot="$HOME/src/github.com/golang/go"
 
 bootstrap_branch="release-branch.go1.4"
-bootstrap_dir="$HOME"/src/.local/"$bootstrap_branch"
+bootstrap_dir="$HOME"/src/localhost/"$bootstrap_branch"
 
 ignore_confirm=false
 

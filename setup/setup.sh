@@ -40,7 +40,7 @@ main() {
   # base
   mkd "$HOME"/bin
   mkd "$HOME"/src
-  mkd "$HOME"/src/.local
+  mkd "$HOME"/src/localhost
   mkd "$XDG_CONFIG_HOME"
 
   # vim
@@ -90,7 +90,7 @@ main() {
     mkd "$XDG_CONFIG_HOME"/sway/config.d
     mkd "$XDG_CONFIG_HOME"/fontconfig
     mkd "$XDG_CONFIG_HOME"/termite
-    mkd "$XDG_CONFIG_HOME"/conky
+    #mkd "$XDG_CONFIG_HOME"/conky
     mkd "$XDG_CONFIG_HOME"/dunst
 
     # fallthrough
@@ -112,7 +112,7 @@ main() {
       $ln "$dotroot"/config/termite/gtk.css "$XDG_CONFIG_HOME"/termite/gtk.css
 
       # conky
-      $ln "$dotroot"/config/conky/conky.conf "$XDG_CONFIG_HOME"/conky/conky.conf
+      #$ln "$dotroot"/config/conky/conky.conf "$XDG_CONFIG_HOME"/conky/conky.conf
 
       # dunst
       $ln "$dotroot"/config/dunst/dunstrc "$XDG_CONFIG_HOME"/dunst/dunstrc
