@@ -6,11 +6,13 @@ Respect the KISS principle
 
 ```sh
 cd "$HOME"
-git clone github.com/yaeshimo/dotfiles.git
+git clone https://github.com/yaeshimo/dotfiles.git
 
-# run setup
-./dotfiles/setup/setup.sh
+cd dotfiles
+
+# setup
+./setup/setup.sh
 
 # with gui
-./dotfiles/setup/setup.sh --gui
+./setup/setup.sh --gui
 ```
