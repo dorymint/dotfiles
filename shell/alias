@@ -11,9 +11,9 @@ alias dmesgl='command dmesg --color=always | command less -R'
 alias :q='builtin exit'
 alias hi='command grep --color=always -e "$" -e'
 alias ..='command cd ..'
-alias gitroot='command git rev-parse --show-toplevel >/dev/null &&
+alias groot='command git rev-parse --show-toplevel >/dev/null &&
   command cd "$(command git rev-parse --show-toplevel)"'
-alias todo='$EDITOR "$HOME"/todo.md'
+alias todo='${EDITOR:-vim} "$HOME"/todo.md'
 
 ## Override
 alias mkdir='command mkdir -p -v'
@@ -61,6 +61,12 @@ alias checkupdates='command date >"$HOME"/tmp/checkupdates.log &&
   command cat "$HOME"/tmp/checkupdates.log'
 alias checklog='command cat -- "$HOME"/tmp/checkupdates.log'
 
+## systemd
+alias enabled='command systemctl list-unit-files --state=enabled'
+alias timers='command systemctl list-timers --no-pager'
+alias user-enabled='command systemctl --user list-unit-files --state=enabled'
+alias user-timers='command systemctl --user list-timers --no-pager'
+
 ## vim -R gosrc
 if [ -d "$GOROOT"/src ]; then
   alias gosrc='(command cd -- "$GOROOT/src" && vim -R .)'
@@ -99,8 +105,5 @@ fi
 
 ## mplayer
 command -v mplayer >/dev/null 2>&1 && alias mplayerbgm='command mplayer -ao pulse -vo null'
-
-## systemctl --user
-command -v systemctl >/dev/null 2>&1 && alias timers='systemctl --no-pager --user list-timers'
 
 # vim:ft=sh:
