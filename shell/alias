@@ -91,7 +91,7 @@ fi
 
 ## python
 if [ -r "$HOME"/python/venv/bin/activate ]; then
-  alias pyactivate='command source "$HOME"/python/venv/bin/activate'
+  alias pyactivate='builtin source "$HOME"/python/venv/bin/activate'
 fi
 
 ## gits && cho
