@@ -91,7 +91,11 @@ fi
 
 ## python
 if [ -r "$HOME"/python/venv/bin/activate ]; then
-  alias pyactivate='builtin source "$HOME"/python/venv/bin/activate'
+  alias pyactivate='builtin source "$HOME"/python/venv/bin/activate &&
+    echo "virtual environments for python is activated" &&
+    python --version &&
+    builtin type python &&
+    echo "run \"deactivate\" to stop it"'
 fi
 
 ## gits && cho
