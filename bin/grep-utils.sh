@@ -2,7 +2,7 @@
 set -eu
 
 name="grep-utils.sh"
-editor="${EDITOR:-"vim"}"
+editor="${EDITOR:-vim}"
 
 # TODO: consider
 user="$(git config --global user.name)"

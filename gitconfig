@@ -9,4 +9,5 @@
 	st = status
 	di = diff
 	dr = add --dry-run
+	ls = ls-files
 	alias = config --get-regexp "alias"

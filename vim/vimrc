@@ -439,6 +439,9 @@ let g:maplocalleader = '\'
   inoremap ！ !
   "inoremap ー -
   "inoremap 〜 ~
+  inoremap 「 「」<Left>
+  inoremap 『 『』<Left>
+  inoremap 【 【】<Left>
 
 " CommandLine:
   cnoremap <C-o><C-o> <C-u>cd %:p:h
