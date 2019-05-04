@@ -96,8 +96,9 @@ if (has('win32') || has('win64')) &&
 endif
 
 " plugin manager
-if filereadable(expand('~/.vim/autoload/plug.vim'))
-  source ~/dotfiles/vim/plugin.vim
+if filereadable(expand('~/.vim/autoload/plug.vim')) &&
+      \ filereadable(expand('~/dotfiles/vim/vimrc_plugin.vim'))
+  source ~/dotfiles/vim/vimrc_plugin.vim
 endif
 
 "-----| set |-----"
@@ -481,9 +482,7 @@ command! -complete=command -nargs=1 Type verbose command <args>
 
 function! s:scratch() abort
   vnew
-  setlocal buftype=nofile
-  setlocal bufhidden=hide
-  setlocal noswapfile
+  setlocal buftype=nofile bufhidden=hide noswapfile
 endfunction
 command! Scratch call s:scratch()
 
@@ -510,6 +509,23 @@ if executable('xxd')
   endfunction
   command! Xxd call s:toggle_xxd()
 endif
+
+" put the command output
+function! s:putEx(exe) abort
+  let l:save_more = &more
+  set nomore
+  redir @">
+  try
+    execute a:exe
+    vnew
+    setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted
+    put "
+  finally
+    redir END
+    let &more = l:save_more
+  endtry
+endfunction
+command! -nargs=+ -complete=command PutEx call s:putEx(<q-args>)
 
 "-----| filetype |-----"
 " filetypeによる挙動の変化を有効に設定

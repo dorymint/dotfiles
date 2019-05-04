@@ -223,66 +223,69 @@ function! s:lsp_toggle() abort
     echo "Lsp enabled"
   endif
 endfunction
-" Go:
-"   Install: go get golang.org/x/tools/cmd/gopls
-if executable('gopls')
-  au User lsp_setup call lsp#register_server({
-        \ 'name': 'gopls',
-        \ 'cmd': {server_info -> ['gopls', '-mode', 'stdio']},
-        \ 'whitelist': ['go'],
-        \ })
-endif
-" Rust:
-"   Install: `rustup update`
-"          : `rustup component add rls-preview rust-analysis rust-src`
-if executable('rls')
-  au User lsp_setup call lsp#register_server({
-        \ 'name': 'rls',
-        \ 'cmd': {server_info -> ['rustup', 'run', 'stable', 'rls']},
-        \ 'workspace_config': {'rust': {'clippy_preference': 'on'}},
-        \ 'whitelist': ['rust'],
-        \ })
-endif
-" C++:
-"   Install: pacman -S clang-tools-extra # on Arch Linux
-if executable('clangd')
-  au User lsp_setup call lsp#register_server({
-        \ 'name': 'clangd',
-        \ 'cmd': {server_info -> ['clangd', '-background-index']},
-        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
-        \ })
-endif
-
-
-" Bash:
-"   Install: `npm install -g bash-language-server`
-"   TODO: consider
-if executable('bash-language-server')
-  au User lsp_setup call lsp#register_server({
-        \ 'name': 'bash-language-server',
-        \ 'cmd': {server_info -> [&shell, &shellcmdflag, 'bash-language-server start']},
-        \ 'whitelist': [],
-        \ })
-endif
-" Genelic:
-"   Install: `go get github.com/mattn/efm-langserver/cmd/efm-langserver`
-"   Linters:
-"     Markdown: `npm install -g markdownlint-cli`
-"     Vim: `pip install vim-vint`
-"     Shell: `pacman -S shellcheck` # on Arch Linux
-"   DefaultConfigPath:
-"     Linux: '$HOME/.config/efm-langserver/config.yaml'
-"     Windows: '%APPDATA%\efm-langserver\config.yaml'
-"   State: unstable
-if executable('efm-langserver')
+augroup plugin_LSP
+  autocmd!
+  " Go:
+  "   Install: go get golang.org/x/tools/cmd/gopls
+  if executable('gopls')
     autocmd User lsp_setup call lsp#register_server({
-          \ 'name': 'efm-langserver',
-          \ 'cmd': {server_info -> ['efm-langserver']},
-          \ 'whitelist': ['sh', 'eruby', 'markdown', 'vim'],
+          \ 'name': 'gopls',
+          \ 'cmd': {server_info -> ['gopls', '-mode', 'stdio']},
+          \ 'whitelist': ['go'],
           \ })
-endif
-" for debug
+  endif
+  " Rust:
+  "   Install: `rustup update`
+  "          : `rustup component add rls-preview rust-analysis rust-src`
+  if executable('rls')
+    autocmd User lsp_setup call lsp#register_server({
+          \ 'name': 'rls',
+          \ 'cmd': {server_info -> ['rustup', 'run', 'stable', 'rls']},
+          \ 'workspace_config': {'rust': {'clippy_preference': 'on'}},
+          \ 'whitelist': ['rust'],
+          \ })
+  endif
+  " C++:
+  "   Install: pacman -S clang-tools-extra # on Arch Linux
+  if executable('clangd')
+    autocmd User lsp_setup call lsp#register_server({
+          \ 'name': 'clangd',
+          \ 'cmd': {server_info -> ['clangd', '-background-index']},
+          \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+          \ })
+  endif
+
+
+  " Bash:
+  "   Install: `npm install -g bash-language-server`
+  "   TODO: consider
+  if executable('bash-language-server')
+    autocmd User lsp_setup call lsp#register_server({
+          \ 'name': 'bash-language-server',
+          \ 'cmd': {server_info -> [&shell, &shellcmdflag, 'bash-language-server start']},
+          \ 'whitelist': [],
+          \ })
+  endif
+  " Genelic:
+  "   Install: `go get github.com/mattn/efm-langserver/cmd/efm-langserver`
+  "   Linters:
+  "     Markdown: `npm install -g markdownlint-cli`
+  "     Vim: `pip install vim-vint`
+  "     Shell: `pacman -S shellcheck` # on Arch Linux
+  "   DefaultConfigPath:
+  "     Linux: '$HOME/.config/efm-langserver/config.yaml'
+  "     Windows: '%APPDATA%\efm-langserver\config.yaml'
+  "   State: unstable
+  if executable('efm-langserver')
+      autocmd User lsp_setup call lsp#register_server({
+            \ 'name': 'efm-langserver',
+            \ 'cmd': {server_info -> ['efm-langserver']},
+            \ 'whitelist': ['sh', 'eruby', 'markdown', 'vim'],
+            \ })
+  endif
+augroup END
 if v:false
+  " for debug
   let g:lsp_log_verbose = 1
   " check: `tail --follow $logfile`
   let g:lsp_log_file = expand('~/tmp/vim-lsp.log')
