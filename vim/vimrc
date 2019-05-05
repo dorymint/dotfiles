@@ -7,9 +7,9 @@ scriptencoding utf-8
 " 時間が取れたら整理する
 " コメント多めに書く
 
-" 設定の詳細は :help で調べればまず困らない
-" <F1> キーで help を開く
-" 日本語のヘルプは https://github.com/vim-jp/vimdoc-ja
+" 詳細は :help で調べる
+" <F1> キーで help を開ける
+" ヘルプの日本語訳は https://github.com/vim-jp/vimdoc-ja
 
 " NORMALモードで : を押すとExコマンドを入力するモードに移る
 " vimrc の設定は Vim script によって書かれる、基本はExコマンドの列挙
@@ -17,20 +17,23 @@ scriptencoding utf-8
 " set の詳細は :help :set で確認
 " :help option-summary にオプションの要約が列挙されている
 " :help option-list でオプションのリストが見れる
-" 現在のオプションの値を確認するには :set {OptionName}? で見れる
-" 例えば :set encoding?
+" 現在のオプションの値は ? を付けると確認できる
+" 例えば :set encoding? で encoding の値表示される
 
-" scriptencoding utf-8 はマルチバイト文字が現れる前に書くといい
-" set encoding=utf-8 を付けるなら scriptencoding の前にする
 " set はできるだけ省略せずに書く set nohl -> set nohlsearch
 " 詳しくはアンチパターンを確認
 " vimrc アンチパターンは https://github.com/vim-jp/reading-vimrc/wiki
 
-" Vim script の文は行頭の非空白文字を \ にすることで直前の行と連結できる
+" scriptencoding utf-8 はマルチバイト文字が現れる前に書くといい
+" set encoding=utf-8 を付けるなら scriptencoding の前にする
 
-" :echo は内部変数を除くのにべんり :echo &encoding
-" 関数の結果を見るにもべんり :echo expand("%:p")
-" :help echo
+" Vim script の文は行頭の非空白文字を \ にすることで直前の行と連結できる
+" 例えば、
+      \この行は、上の行と連結されてコメントとして処理される
+
+" echo
+" 内部変数をみる   :echo &encoding
+" 関数の結果を見る :echo expand("%:p")
 
 " expand("%:p") で fullpath が取れる
 " 現在開いているファイルのフルパス :echo expand("%:p")
@@ -41,11 +44,15 @@ scriptencoding utf-8
 " v:true = 1
 " v:false = 0
 
-" 以下のヘルプを見ておけば迷わないと思う
+" 横にヘルプウィンドウを作る
+" :vert help
+
+" まずは以下のヘルプがおすすめ
+" :help reference
 " :help vimtutor
 " :help quickref
 " :help index
-" :help script
+" :help vim-script-intro
 
 " 見ておきたいヘルプ
 " base
@@ -131,9 +138,7 @@ set helplang=ja,en
 set title
 set ruler
 set number
-set norelativenumber
 set scrolloff=5
-set textwidth=0
 set wrap
 
 " 折り返しのインデントを合わせる,vim8
@@ -447,6 +452,7 @@ let g:maplocalleader = '\'
 " CommandLine:
   cnoremap <C-o><C-o> <C-u>cd %:p:h
   cnoremap <C-o>t     <C-u>vertical terminal<Space>
+  cnoremap <C-o>h     <C-u>vertical help<Space>
   cnoremap <C-o>f     <C-u>setlocal filetype=
   cnoremap <C-o>S     <C-u>e ++enc=shift_jis
   cnoremap <C-o>U     <C-u>e ++enc=utf-8
