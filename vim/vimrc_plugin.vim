@@ -1,16 +1,16 @@
 scriptencoding utf-8
 call plug#begin('~/.vim/plugged')
 " Base:
-  " help for japanese
+  " japanese help
   Plug 'vim-jp/vimdoc-ja'
 
   " status line
   Plug 'itchyny/lightline.vim'
 
-  " fizzy finder
+  " fuzzy finder
   Plug 'ctrlpvim/ctrlp.vim'
 
-  " directory tree
+  " file explorer
   Plug 'scrooloose/nerdtree'
 
   " jump to words
@@ -23,7 +23,7 @@ call plug#begin('~/.vim/plugged')
   " display a git diff in sign column
   Plug 'airblade/vim-gitgutter'
 
-" Language Base:
+" Language:
   " template
   Plug 'mattn/sonictemplate-vim'
 
@@ -33,20 +33,19 @@ call plug#begin('~/.vim/plugged')
   Plug 'prabirshrestha/asyncomplete.vim'
   Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
+  " TODO: remove
   " diagnostics
   Plug 'vim-syntastic/syntastic'
 
-  " tags information, require ctags
+  " browsing the tags
   Plug 'majutsushi/tagbar'
 
   " command runner
   Plug 'thinca/vim-quickrun'
 
-  " check references from current cursors words
   " TODO: remove? if worked LspReferences
   Plug 'thinca/vim-ref'
 
-" Language:
   " dart
   Plug 'dart-lang/dart-vim-plugin'
 
@@ -55,7 +54,8 @@ call plug#begin('~/.vim/plugged')
 
   " javascript
   Plug 'heavenshell/vim-jsdoc'
-  Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
+  " TODO: remove
+  "Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 
   " rust
   Plug 'rust-lang/rust.vim'
@@ -223,7 +223,7 @@ function! s:lsp_toggle() abort
     echo "Lsp enabled"
   endif
 endfunction
-augroup plugin_LSP
+augroup vimrc_plugin_LSP
   autocmd!
   " Go:
   "   Install: go get golang.org/x/tools/cmd/gopls
@@ -377,7 +377,7 @@ else
   inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 endif
 
-augroup vimrc_plugin
+augroup vimrc_plugin_ft
   autocmd!
   function! s:ftgo()
     " vim-go

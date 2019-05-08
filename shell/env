@@ -17,8 +17,10 @@ else
 fi
 
 ## ssh-agent
-if command -v ssh-agent >/dev/null 2>&1; then
-  eval $(ssh-agent)
+if [ -z "$SSH_AGENT_PID" ]; then
+  if command -v ssh-agent >/dev/null 2>&1; then
+    eval $(ssh-agent)
+  fi
 fi
 
 ## XDG

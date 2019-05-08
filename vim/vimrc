@@ -179,7 +179,7 @@ set wildmenu
 set wildmode=list:longest,full
 set confirm
 
-" vimから呼ぶシェルを設定, shell=zsh
+" vimから呼ぶシェルを設定
 "set shell=bash
 
 " search

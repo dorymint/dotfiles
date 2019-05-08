@@ -10,9 +10,6 @@ if command -v pacman &> /dev/null; then
     echo "recommend: pacman -S grml-zsh-config"
 fi
 
-# alias
-source "$HOME"/dotfiles/shell/alias
-
 # setopt
 setopt autocd
 setopt autopushd
@@ -24,5 +21,16 @@ if [ -f "$f" ] && [ -r "$f" ]; then
   source "$f"
 fi
 unset f
+
+if command -v tmux &>/dev/null; then
+  if [ -z "$TMUX" ] && command tmux ls &>/dev/null; then
+    printf -- "--- tmux ls ---\n"
+    tmux ls
+    printf -- "---------------\n"
+  fi
+fi
+
+# alias
+source "$HOME"/dotfiles/shell/alias
 
 # vim:ft=zsh:

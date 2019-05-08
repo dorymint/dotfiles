@@ -3,13 +3,8 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-## alias
-if [ -f "$HOME"/dotfiles/shell/alias ]; then
-  source "$HOME"/dotfiles/shell/alias
-fi
-
 ## PS1
-red="\[$(tput setaf 1)\]"
+#red="\[$(tput setaf 1)\]"
 green="\[$(tput setaf 2)\]"
 magenta="\[$(tput setaf 5)\]"
 cyan="\[$(tput setaf 6)\]"
@@ -32,10 +27,22 @@ if [ -f "$f" ]; then
 else
   export PS1="$code $u@$h:$w$"
 fi
-
+unset f
 unset red green magenta cyan blue reset bold
 unset code u h w
-unset f
+
+if command -v tmux &>/dev/null; then
+  if [ -z "$TMUX" ] && command tmux ls &>/dev/null; then
+    printf -- "--- tmux ls ---\n"
+    command tmux ls
+    printf -- "---------------\n"
+  fi
+fi
+
+## alias
+if [ -f "$HOME"/dotfiles/shell/alias ]; then
+  source "$HOME"/dotfiles/shell/alias
+fi
 
 ## man
 man() {
@@ -49,6 +56,8 @@ man() {
   command man "$@"
 }
 
-if [[ "$(uname -n)" == *lily* ]] && [ "$SHLVL" -eq 1 ]; then
-  command -v fortune &> /dev/null && fortune -a
+if [ "$SHLVL" -eq 1 ]; then
+  if command -v fortune &>/dev/null; then
+    command fortune -a
+  fi
 fi
