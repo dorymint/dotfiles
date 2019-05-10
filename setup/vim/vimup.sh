@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # build script for vim
 
@@ -60,7 +60,7 @@ confirm() {
       y|yes) return 0;;
       n|no) return 1;;
     esac
-    echo -n "$msg"
+    printf "%s" "$msg"
     read -r key
   done
   )
@@ -69,63 +69,64 @@ confirm() {
 main() {
   echo "Starting build scripts"
 
-  # src
+  echo "--- get latest source ---"
   if [ -d "$vimdir" ]; then
     cd "$vimdir"
     git checkout master
-    if confirm "git fetch && git merge origin/master"; then
-      git fetch
-      git merge origin/master
-      # fail through
-      if [ "$ignore_confirm" = "false" ]; then
-        if confirm "git log -p"; then
-          git log -p || :
-        fi
+    git fetch
+    if confirm "clean the repository"; then
+      git reset --hard
+      git clean -f -d
+    fi
+    if confirm "merge"; then
+      git merge
+    fi
+    if [ "$ignore_confirm" = "false" ]; then
+      # ignore fail
+      if confirm "git log -p"; then
+        git log -p || :
+        confirm "continue" || exit 2
       fi
     fi
   else
-    echo "not found vim src directory"
-    confirm "git clone" || exit 2
+    confirm "git clone to $vimdir" || exit 2
     git clone "$vimrepo" "$vimdir"
     cd "$vimdir"
     git checkout master
   fi
 
-  # information
-  echo ""
-  echo "configure options"
+  echo "--- configure ---"
+  # information and confirm
+  echo "options"
   for x in $buildoption; do
     echo "$x"
   done
   echo "\$cc_clang=$cc_clang"
-
-  cd "$vimdir/src"
+  confirm "continue" || exit 2
 
   # configure
-  confirm "make distclean && ./configure"
-  make distclean
+  cd "$vimdir/src"
   if [ "$cc_clang" = "true" ]; then
     CC="clang" CXX="clang++" ./configure $buildoption
   else
     ./configure $buildoption
   fi
 
-  # make
-  confirm "make clean && make"
+  echo "--- make ---"
   if [ -n "$logfile" ]; then
+    echo "logfile $logfile"
+    confirm "continue" || exit 2
     date > "$logfile"
-    make clean && make 2>&1 | tee --append -- "$logfile"
+    make 2>&1 | tee --append -- "$logfile"
   else
-    make clean && make
+    make
   fi
-  echo "install to $prefix"
-  confirm "make install"
-  make install
-  make clean
 
-  echo ""
-  echo "Finishing build scripts"
-  echo ""
+  echo "--- install ---"
+  confirm "install to $prefix" || exit 2
+  make install
+
+  echo "... complete"
 }
 
 while [ $# -ne 0 ]; do

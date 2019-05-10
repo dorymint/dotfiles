@@ -115,61 +115,66 @@ set notimeout
 set ttimeout
 set ttimeoutlen=100
 
-" 短形ビジュアルモードで仮想編集を有効にする
-set virtualedit=block
+" backup, swap, undo
+set nobackup
+set writebackup
+set noundofile
+set noswapfile
+
+" tmp directory
+if isdirectory(expand('~/dotfiles/vim/tmp'))
+  set backupdir=~/dotfiles/vim/tmp/backup
+  set undodir=~/dotfiles/vim/tmp/undo
+  set directory=~/dotfiles/vim/tmp/swap
+  set backup
+  set undofile
+  set swapfile
+endif
 
 " ファイルの先頭行と最終行のコメントで set できる
 set modeline
-" 上下から modeline を確認する行数を指定する
 set modelines=5
 
+" 短形ビジュアルモードで仮想編集を有効にする
+set virtualedit=block
+
+set backspace=indent,eol,start
 set hidden
 set autoread
+
+" visualbell
+" set visualbell でbeep音を画面のフラッシュと置き換える
+" t_vb= でフラッシュのターミナルコードを空指定してフラッシュさせない
+set visualbell
+set t_vb=
+
+" vimから呼ぶシェルを設定
+"set shell=bash
+
+" split
+set splitbelow
+set splitright
 
 " 貼り付けで形が崩れる場合は :paste して貼付け後に :nopaste する
 set nopaste
 
-set backspace=indent,eol,start
-set completeopt=menuone,preview
-set display=truncate
-"set nrformats=bin,octal,hex
-set helplang=ja,en
-
-set title
-set ruler
-set number
-set scrolloff=5
-set wrap
-
-" 折り返しのインデントを合わせる,vim8
-set breakindent
-
 " :help revins :)
 set norevins
 
-" spell
-set nospell
+"set nrformats=bin,octal,hex
+
+set helplang=ja,en
+
 " cjk を追加で東アジア圏の言葉をチェックから除外できるらしい
+set nospell
 set spelllang=en,cjk
-
-" cursor
-set nocursorcolumn
-set nocursorline
-
-" foldmethod
-set foldmethod=marker
-"set foldmarker={{{,}}}
-"set foldlevel=0
-set nofoldenable
-function! Giko()
-  return ' (,,ﾟДﾟ)' . foldtext()
-endfunction
-set foldtext=Giko()
 
 " showmatch
 set showmatch
 set matchtime=1
 set matchpairs=(:),{:},[:],<:>
+
+set completeopt=menuone,preview
 
 " cmdline
 set showcmd
@@ -178,19 +183,6 @@ set cmdheight=1
 set wildmenu
 set wildmode=list:longest,full
 set confirm
-
-" vimから呼ぶシェルを設定
-"set shell=bash
-
-" search
-set incsearch
-set hlsearch
-
-" 置換処理のマッチにも影響するため注意
-" ignorecase 大文字少文字を区別しない
-" smartcase 検索条件に大文字が含まれると noignorecase
-set ignorecase
-set smartcase
 
 " indent
 set autoindent
@@ -203,10 +195,26 @@ set noexpandtab
 set tabstop=2
 set softtabstop=2
 
+" search
+set incsearch
+set hlsearch
+
+" 置換処理のマッチにも影響するため注意
+" ignorecase 大文字少文字を区別しない
+" smartcase 検索条件に大文字が含まれると noignorecase
+set ignorecase
+set smartcase
+
 " list
 set list
 " 考慮中 eol:↵
 set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:<
+
+set display=truncate
+
+set title
+set ruler
+set number
 
 " statusline
 set laststatus=2
@@ -226,33 +234,26 @@ set statusline+=%(buf[%n]hex[%4B]line[%4l/%4L:%4P]%)
 " 設定は statusline と似てる :help tabline
 "set tabline=
 
-" split
-set splitbelow
-set splitright
+" cursor
+set nocursorcolumn
+set nocursorline
 
-" visualbell
-" set visualbell でbeep音を画面のフラッシュと置き換える
-" t_vb= でフラッシュのターミナルコードを空指定してフラッシュさせない
-set visualbell
-set t_vb=
+set wrap
+set breakindent
+set colorcolumn=+1
+set scrolloff=5
 
-" backup, swap, undo
-set nobackup
-set writebackup
-set noundofile
-set noswapfile
-" tmp directory
-if isdirectory(expand('~/dotfiles/vim/tmp'))
-  set backupdir=~/dotfiles/vim/tmp/backup
-  set undodir=~/dotfiles/vim/tmp/undo
-  set directory=~/dotfiles/vim/tmp/swap
-  set backup
-  set undofile
-  set swapfile
-endif
+" foldmethod
+set foldmethod=marker
+"set foldmarker={{{,}}}
+"set foldlevel=0
+set nofoldenable
+function! Giko()
+  return ' (,,ﾟДﾟ)' . foldtext()
+endfunction
+set foldtext=Giko()
 
 "-----| color |-----"
-" colorscheme
 if &t_Co == 256
   try
     colorscheme jellybeans
@@ -415,7 +416,7 @@ let g:maplocalleader = '\'
 
   " 全角を半角に
   " :help i_ctrl-v
-  inoremap 　 <Space>
+  "inoremap 　 <Space>
   inoremap （ (
   inoremap ） )
   inoremap ｛ {
@@ -605,7 +606,7 @@ augroup vimrc_ft
   autocmd FileType text call s:fttext()
 augroup END
 
-" for bg NONE
+" background
 augroup vimrc_bg
   autocmd!
   autocmd VimEnter,ColorScheme * highlight Normal ctermbg=NONE
@@ -614,7 +615,9 @@ augroup vimrc_bg
   autocmd VimEnter,ColorScheme * highlight LineNr ctermbg=NONE
   autocmd VimEnter,ColorScheme * highlight CursorLineNr ctermbg=NONE
   autocmd VimEnter,ColorScheme * highlight Terminal ctermbg=NONE
+  autocmd VimEnter,ColorScheme * highlight ColorColumn ctermbg=235
 augroup END
+
 let s:is_none_bg = v:true
 function! s:toggleBackground() abort
   if s:is_none_bg
@@ -631,6 +634,7 @@ function! s:toggleBackground() abort
       autocmd ColorScheme * highlight LineNr ctermbg=NONE
       autocmd ColorScheme * highlight CursorLineNr ctermbg=NONE
       autocmd ColorScheme * highlight Terminal ctermbg=NONE
+      autocmd ColorScheme * highlight ColorColumn ctermbg=235
     augroup END
     let s:is_none_bg = v:true
   endif
@@ -642,7 +646,6 @@ command! ToggleBackground call s:toggleBackground()
 " use?:
 "   iminsert=2
 "   imstatusfunc=<FUNCTION_REF>
-"
 " Input method frameworks
 let s:imf_name = $XMODIFIERS
 let s:imf_name = substitute(s:imf_name, '^@im=\(.*\)$', '\1', '')
