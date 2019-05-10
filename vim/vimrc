@@ -564,14 +564,15 @@ augroup vimrc_ft
   autocmd FileType go call s:ftgo()
 
   " rust
-  function! s:ftrust()
-    "setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4 textwidth=99
-  endfunction
-  autocmd FileType rust call s:ftrust()
+  " provided by $VIMRUNTIME/ftplugin/rust.vim
+  "function! s:ftrust()
+  "  setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4 textwidth=99
+  "endfunction
+  "autocmd FileType rust call s:ftrust()
 
   " python
   function! s:ftpython()
-    setlocal textwidth=78
+    setlocal textwidth=79
   endfunction
   autocmd FileType python call s:ftpython()
 
@@ -595,7 +596,7 @@ augroup vimrc_ft
 
   " markdown
   function! s:ftmarkdown()
-    setlocal spell expandtab shiftwidth=2 tabstop=2 softtabstop=2
+    setlocal textwidth=79 spell expandtab shiftwidth=2 tabstop=2 softtabstop=2
   endfunction
   autocmd FileType markdown call s:ftmarkdown()
 
