@@ -240,6 +240,10 @@ set nocursorline
 
 set wrap
 set breakindent
+
+" :help formatoptions
+set textwidth=79
+
 set colorcolumn=+1
 set scrolloff=5
 
@@ -254,7 +258,7 @@ endfunction
 set foldtext=Giko()
 
 "-----| color |-----"
-if &t_Co == 256
+if &t_Co == 256 || has('gui_running')
   try
     colorscheme jellybeans
     "colorscheme hybrid
