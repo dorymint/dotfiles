@@ -1,4 +1,10 @@
 
+CMDNAME = commandname
+
+REMOTEUSER = user
+REMOTEHOST = remote.local
+REMOTETARGET = ~/target/
+
 all : build
 
 build :
@@ -13,3 +19,5 @@ arm7 :
 win :
 	GOOS=windows GOARCH=amd64 go build
 
+deploy :
+	rsync -P -e ssh $(CMDNAME) $(REMOTEUSER)@$(REMOTEHOST):$(REMOTETARGET)
