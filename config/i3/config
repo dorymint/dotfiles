@@ -34,7 +34,6 @@ bindsym $mod+Return exec urxvt
 bindsym $mod+Shift+a exec i3-sensible-terminal
 
 # kill focused window
-bindsym $mod+q kill
 bindsym $mod+Shift+q kill
 
 # reload the configuration file
