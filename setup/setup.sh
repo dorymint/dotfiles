@@ -1,18 +1,17 @@
 #!/bin/sh
 set -eu
 
-# TODO: move to $dotroot/config for .config files
-
 dotroot="$(dirname "$(dirname "$(readlink -e "$0")")")"
 force=false
 withgui=false
 
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-"$HOME"/.config}"
+XDG_DATA_HOME="${XDG_DATA_HOME:-"$HOME"/.local/share}"
 
 helpmsg() {
   cat >&1 <<END
 Description:
-  make configuration directories and symbolic links
+  Make configuration directories and symbolic links
 
 Usage:
   setup.sh [Options]
@@ -22,15 +21,15 @@ Options:
   -f, --force Allow override exist files
   -x, --withx Setup with xorg configuration
   -g, --gui   Setup with gui, same -x
+  -u, --umask Specify umask (default $(umask))
 END
 }
 
 mkd() {
-  [ -d "$1" ] || mkdir -v -m 0700 -- "$1"
+  [ -d "$1" ] || mkdir -p -v -- "$1"
 }
 
 main() {
-  command -v ln > /dev/null
   ln="ln --verbose --symbolic --no-dereference"
   if [ "$force" = "true" ]; then
     ln="$ln --force"
@@ -38,10 +37,15 @@ main() {
   ln="$ln --"
 
   # base
+  mkd "$XDG_CONFIG_HOME"
+  mkd "$XDG_DATA_HOME"
   mkd "$HOME"/bin
   mkd "$HOME"/src
   mkd "$HOME"/src/localhost
-  mkd "$XDG_CONFIG_HOME"
+
+  # shell
+  mkd "$XDG_DATA_HOME"/bash-completion/completions
+  mkd "$HOME"/.zfunc
 
   # vim
   mkd "$HOME"/.vim
@@ -57,7 +61,7 @@ main() {
   mkd "$XDG_CONFIG_HOME"/systemd
   mkd "$XDG_CONFIG_HOME"/systemd/user
 
-  # fallthrough
+  # make links
   set +e
     # zsh
     $ln "$dotroot"/shell/zsh/zshrc "$HOME"/.zshrc
@@ -83,8 +87,6 @@ main() {
 
   # with gui
   if [ "$withgui" = "true" ]; then
-
-
     mkd "$XDG_CONFIG_HOME"/i3
     mkd "$XDG_CONFIG_HOME"/sway
     mkd "$XDG_CONFIG_HOME"/sway/config.d
@@ -93,7 +95,7 @@ main() {
     #mkd "$XDG_CONFIG_HOME"/conky
     mkd "$XDG_CONFIG_HOME"/dunst
 
-    # fallthrough
+    # make links
     set +e
       $ln "$dotroot"/x/xinitrc "$HOME"/.xinitrc
       $ln "$dotroot"/x/Xresources "$HOME"/.Xresources
@@ -132,6 +134,10 @@ while [ $# -ne 0 ]; do
     -withx|--withx|-x|-g|--gui)
       withgui=true
       ;;
+    -u|--umask)
+      shift
+      umask "$1"
+      ;;
     *)
       helpmsg
       echo "unknown option: $*" 1>&2
@@ -142,4 +148,3 @@ while [ $# -ne 0 ]; do
 done
 
 main
-

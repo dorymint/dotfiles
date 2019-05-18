@@ -1,4 +1,4 @@
-# alias for bash and zsh
+# alias for bashrc and zshrc
 
 ## Common
 alias l='command ls -lv --color=auto'
@@ -63,10 +63,10 @@ alias checkupdates='command date >"$HOME"/tmp/checkupdates.log &&
 alias checklog='command cat -- "$HOME"/tmp/checkupdates.log'
 
 ## systemd
-alias enabled='command systemctl list-unit-files --state=enabled'
-alias timers='command systemctl list-timers --no-pager'
-alias user-enabled='command systemctl --user list-unit-files --state=enabled'
-alias user-timers='command systemctl --user list-timers --no-pager'
+alias ls-enabled='command systemctl list-unit-files --state=enabled'
+alias ls-timers='command systemctl list-timers --no-pager'
+alias ls-user-enabled='command systemctl --user list-unit-files --state=enabled'
+alias ls-user-timers='command systemctl --user list-timers --no-pager'
 
 ## vim -R gosrc
 if [ -d "$GOROOT"/src ]; then
@@ -109,6 +109,9 @@ fi
 [ "$TERM" = "xterm-termite" ] && alias ssh='TERM=xterm-256color ssh'
 
 ## mplayer
-command -v mplayer >/dev/null 2>&1 && alias mplayerbgm='command mplayer -ao pulse -vo null'
+type -a mpbgm 2>/dev/null || alias mpbgm='command mplayer -ao pulse -vo null'
+
+## mpd
+type -a audio 2>/dev/null || alias audio='ncmpc -h 127.0.0.1 -p 6600'
 
 # vim:ft=sh:

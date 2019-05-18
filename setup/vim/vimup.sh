@@ -50,7 +50,7 @@ END
 confirm() {
   (
   [ "$ignore_confirm" = "true" ] && return 0
-  msg="${1:-} [yes|no]?> "
+  msg="$1 [yes|no]?> "
   key=""
   count=0
   while true; do
@@ -74,7 +74,7 @@ main() {
     cd "$vimdir"
     git checkout master
     git fetch
-    if confirm "clean the repository"; then
+    if confirm "git reset --hard && git clean -f -d on $PWD"; then
       git reset --hard
       git clean -f -d
     fi
@@ -97,7 +97,6 @@ main() {
 
   echo "--- configure ---"
   # information and confirm
-  echo "options"
   for x in $buildoption; do
     echo "$x"
   done

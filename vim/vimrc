@@ -93,6 +93,7 @@ scriptencoding utf-8
 " :help expression-commands
 " :help :bar
 " :help 8g8
+" :help mark
 
 "-----| plugin manage |-----"
 if (has('win32') || has('win64')) &&
@@ -647,27 +648,61 @@ function! s:toggleBackground() abort
 endfunction
 command! ToggleBackground call s:toggleBackground()
 
-" TODO: fix
-" use?:
-"   iminsert=2
-"   imstatusfunc=<FUNCTION_REF>
-" Input method frameworks
-let s:imf_name = $XMODIFIERS
-let s:imf_name = substitute(s:imf_name, '^@im=\(.*\)$', '\1', '')
-let s:imf = {
-      \ "ibus": { -> system('ibus engine') isnot# 'xkb:jp::jpn' . "\n" ?
-      \ system('ibus engine xkb:jp::jpn') : v:true },
-      \ "fcitx": { -> system('fcitx-remote')[0] is# '2' ?
-      \ system('fcitx-remote -c') : v:true },
-      \}
-let s:imf_inactive_func = {-> v:true}
-if s:imf_name !=# $XMODIFIERS
-  let s:imf_inactive_func = s:imf[s:imf_name]
-endif
+" Input Method Framework
+let s:imf_name = substitute($XMODIFIERS, '^@im=\(.*\)$', '\1', '')
 augroup vimrc_imf
   autocmd!
-  autocmd InsertLeave * call s:imf_inactive_func()
+
+  if s:imf_name ==# "ibus"
+    let s:imf_default_engine = 'xkb:jp::jpn'
+    let s:imf_save_engine = trim(system('ibus engine'))
+
+    function s:imf_inactive_func() abort
+      let s:imf_save_engine = trim(system('ibus engine'))
+      if s:imf_save_engine isnot# s:imf_default_engine
+        call system('ibus engine ' . s:imf_default_engine)
+      endif
+    endfunction
+    autocmd InsertLeave * call s:imf_inactive_func()
+
+    function s:imf_active_func() abort
+      if s:imf_save_engine isnot# s:imf_default_engine
+        call system('ibus engine ' . s:imf_save_engine)
+      endif
+    endfunction
+    autocmd InsertEnter * call s:imf_active_func()
+
+  elseif s:imf_name ==# "fcitx"
+    function s:imf_inactive_func() abort
+      if system('fcitx-remote')[0] is# '2'
+        call system('fcitx-remote -c')
+      endif
+    endfunction
+    autocmd InsertLeave * call s:imf_inactive_func()
+  endif
 augroup END
+
+" Too late
+"if s:imf_name ==# "ibus"
+"  set iminsert=2
+"  set imsearch=2
+"
+"  let s:ibus_default_engine = 'xkb:jp::jpn'
+"  let s:ibus_engine = 'anthy'
+"  set imactivatefunc=ImActivate
+"  function! ImActivate(active)
+"    if a:active
+"      call system('ibus engine ' . s:ibus_engine)
+"    else
+"      call system('ibus engine ' . s:ibus_default_engine)
+"    endif
+"  endfunction
+"
+"  set imstatusfunc=ImStatus
+"  function! ImStatus()
+"    return trim(system('ibus engine')) is# s:ibus_engine
+"  endfunction
+"endif
 
 "-----| diable |-----"
 let g:loaded_vimballPlugin = 1

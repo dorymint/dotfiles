@@ -4,10 +4,6 @@ f="$HOME"/dotfiles/shell/env
 [ -f "$f" ] && source "$f"
 unset f
 
-d="$HOME"/dotfiles/shell/zsh/completion
-[ -d "$d" ] && fpath+="$d"
-unset d
-
 [ -f "$HOME"/.zshrc ] && source "$HOME"/.zshrc
 
 # vim:ft=zsh:

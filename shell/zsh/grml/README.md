@@ -1,3 +1,3 @@
-grml zsh
-========
-ref: https://grml.org/zsh
+# grml-zsh-config
+
+Ref: <https://grml.org/zsh>

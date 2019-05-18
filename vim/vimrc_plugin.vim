@@ -35,7 +35,7 @@ call plug#begin('~/.vim/plugged')
 
   " TODO: remove
   " diagnostics
-  Plug 'vim-syntastic/syntastic'
+  "Plug 'vim-syntastic/syntastic'
 
   " browsing the tags
   Plug 'majutsushi/tagbar'
@@ -47,13 +47,13 @@ call plug#begin('~/.vim/plugged')
   Plug 'thinca/vim-ref'
 
   " dart
-  Plug 'dart-lang/dart-vim-plugin'
+  "Plug 'dart-lang/dart-vim-plugin'
 
   " c
   "Plug 'justmao945/vim-clang'
 
   " javascript
-  Plug 'heavenshell/vim-jsdoc'
+  "Plug 'heavenshell/vim-jsdoc'
   " TODO: remove
   "Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 

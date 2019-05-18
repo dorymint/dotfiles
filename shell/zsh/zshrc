@@ -3,11 +3,23 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+# fpath
+d="$HOME"/.zfunc
+[ -d "$d" ] && fpath+="$d"
+unset d
+
+autoload -U compinit
+compinit
+
 # grml zshrc
 # TODO: consider to remove
 if command -v pacman &> /dev/null; then
-  pacman -Q grml-zsh-config &> /dev/null ||
+  if ! pacman -Q grml-zsh-config &> /dev/null; then
     echo "recommend: pacman -S grml-zsh-config"
+    autoload -U promptinit
+    promptinit
+    prompt walters
+  fi
 fi
 
 # setopt
@@ -33,4 +45,4 @@ fi
 # alias
 source "$HOME"/dotfiles/shell/alias
 
-# vim:ft=zsh:
+# vim:ft=zsh:expandtab:tabstop=2:softtabstop=2:
