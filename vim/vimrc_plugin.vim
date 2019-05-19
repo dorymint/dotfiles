@@ -233,6 +233,7 @@ augroup vimrc_plugin_LSP
           \ 'cmd': {server_info -> ['gopls', '-mode', 'stdio']},
           \ 'whitelist': ['go'],
           \ })
+    autocmd BufWritePre *.go LspDocumentFormatSync
   endif
   " Rust:
   "   Install: `rustup update`
