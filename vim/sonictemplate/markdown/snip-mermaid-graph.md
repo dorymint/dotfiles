@@ -1,5 +1,4 @@
-
 ```mermaid
-graph TD
+graph RL
   {{_cursor_}}
 ```

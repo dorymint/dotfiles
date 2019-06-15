@@ -63,10 +63,17 @@ alias checkupdates='command date >"$HOME"/tmp/checkupdates.log &&
 alias checklog='command cat -- "$HOME"/tmp/checkupdates.log'
 
 ## systemd
-alias ls-enabled='command systemctl list-unit-files --state=enabled'
-alias ls-timers='command systemctl list-timers --no-pager'
-alias ls-user-enabled='command systemctl --user list-unit-files --state=enabled'
-alias ls-user-timers='command systemctl --user list-timers --no-pager'
+alias sys-failed='command systemctl --failed'
+alias sys-enabled='command systemctl list-unit-files --state=enabled'
+alias sys-timers='command systemctl list-timers --no-pager'
+
+alias sys-user-failed='command systemctl --user --failed'
+alias sys-user-enabled='command systemctl --user list-unit-files --state=enabled'
+alias sys-user-timers='command systemctl --user list-timers --no-pager'
+
+alias timers='sys-timers; sys-user-timers'
+alias failed='sys-failed; sys-user-failed'
+alias enabled='sys-enabled; sys-user-enabled'
 
 ## vim -R gosrc
 if [ -d "$GOROOT"/src ]; then
@@ -113,5 +120,10 @@ type -a mpbgm 2>/dev/null || alias mpbgm='command mplayer -ao pulse -vo null'
 
 ## mpd
 type -a audio 2>/dev/null || alias audio='ncmpc -h 127.0.0.1 -p 6600'
+
+## cache trans
+if command -v cclo >/dev/null 2>&1 && command -v trans >/dev/null 2>&1; then
+  alias trans='cclo -- trans'
+fi
 
 # vim:ft=sh:

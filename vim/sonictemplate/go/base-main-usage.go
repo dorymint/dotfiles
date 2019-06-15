@@ -54,8 +54,7 @@ func run() (err error) {
 }
 
 func main() {
-	err := run()
-	if err != nil {
+	if err := run(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}

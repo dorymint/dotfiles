@@ -1,7 +1,7 @@
 scriptencoding utf-8
 call plug#begin('~/.vim/plugged')
 " Base:
-  " japanese help
+  " Japanese help
   Plug 'vim-jp/vimdoc-ja'
 
   " status line
@@ -62,7 +62,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'racer-rust/vim-racer'
 
   " go
-  Plug 'fatih/vim-go', { 'tag': '*' }
+  " run GoUpdateBinaries manually after update
+  "Plug 'fatih/vim-go', { 'tag': 'v1.20' }
+  Plug 'fatih/vim-go'
 
   " ruby
   " TODO: remove?
@@ -83,7 +85,7 @@ call plug#begin('~/.vim/plugged')
   " html css
   Plug 'mattn/emmet-vim'
 
-  " markdown preview on browser
+  " markdown preview
   Plug 'previm/previm'
 
 " Colorscheme:
@@ -225,14 +227,16 @@ augroup vimrc_plugin_LSP
   autocmd!
   " Go:
   "   Install: go get golang.org/x/tools/cmd/gopls
+  "   temporarily disabled
   if executable('gopls')
     autocmd User lsp_setup call lsp#register_server({
           \ 'name': 'gopls',
           \ 'cmd': {server_info -> ['gopls', '-mode', 'stdio']},
           \ 'whitelist': ['go'],
           \ })
-    autocmd BufWritePre *.go LspDocumentFormatSync
+    "autocmd BufWritePre *.go LspDocumentFormatSync
   endif
+
   " Rust:
   "   Install: `rustup update`
   "          : `rustup component add rls-preview rust-analysis rust-src`
@@ -244,6 +248,7 @@ augroup vimrc_plugin_LSP
           \ 'whitelist': ['rust'],
           \ })
   endif
+
   " C++:
   "   Install: pacman -S clang-tools-extra # on Arch Linux
   if executable('clangd')
@@ -253,7 +258,6 @@ augroup vimrc_plugin_LSP
           \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
           \ })
   endif
-
 
   " Bash:
   "   Install: `npm install -g bash-language-server`
@@ -265,6 +269,7 @@ augroup vimrc_plugin_LSP
           \ 'whitelist': [],
           \ })
   endif
+
   " Genelic:
   "   Install: `go get github.com/mattn/efm-langserver/cmd/efm-langserver`
   "   Linters:
@@ -283,11 +288,14 @@ augroup vimrc_plugin_LSP
             \ })
   endif
 augroup END
+
+" for debug
 if v:false
-  " for debug
   let g:lsp_log_verbose = 1
+
   " check: `tail --follow $logfile`
   let g:lsp_log_file = expand('~/tmp/vim-lsp.log')
+
   let g:asyncomplete_log_file = expand('~/tmp/asyncomplete.log')
 endif
 
@@ -295,7 +303,7 @@ endif
 "let g:syntastic_cpp_compiler = 'clang'
 "let g:syntastic_cpp_compiler_options = '-std=c++1z --pedantic-errors'
 "let g:syntastic_cpp_checkers = ['clang_check']
-let g:syntastic_javascript_checkers = ['eslint']
+"let g:syntastic_javascript_checkers = ['eslint']
 
 " vim-clang
 "let g:clang_c_options = '-std=c11'
@@ -317,7 +325,8 @@ endif
 let g:go_play_open_browser = 0
 let g:go_fmt_autosave = 0
 let g:go_template_autocreate = 0
-let g:go_code_completion = 0
+" pick vim-go or vim-lsp
+let g:go_code_completion_enabled = 0
 
 " jedi-vim
 ""let g:jedi#auto_initialization = 0
@@ -334,27 +343,13 @@ noremap <LocalLeader><LocalLeader> <Nop>
 map     <LocalLeader><LocalLeader> <Plug>(easymotion-bd-w)
 nmap    <LocalLeader><LocalLeader> <Plug>(easymotion-overwin-w)
 
-nnoremap <LocalLeader>gt :<C-u>GitGutterToggle<CR>
-nnoremap <LocalLeader>N  :<C-u>NERDTreeToggle<CR>
-nnoremap <LocalLeader>h  :<C-u>NERDTreeToggle<CR>
-nnoremap <LocalLeader>T  :<C-u>TagbarToggle<CR>
-nnoremap <LocalLeader>l  :<C-u>TagbarToggle<CR>
-nnoremap <LocalLeader>r  :<C-u>QuickRun<CR>
+nnoremap <LocalLeader>ggt :<C-u>GitGutterToggle<CR>
+nnoremap <LocalLeader>h   :<C-u>NERDTreeToggle<CR>
+nnoremap <LocalLeader>l   :<C-u>TagbarToggle<CR>
+nnoremap <LocalLeader>r   :<C-u>QuickRun<CR>
 
 " sonictemplate
 nnoremap <LocalLeader>w :<C-u>call <SID>edit_templ()<CR>
-
-" vim-lsp
-nnoremap <LocalLeader>s :<C-u>LspStatus<CR>
-nnoremap <LocalLeader>d :<C-u>LspDefinition<CR>
-nnoremap <LocalLeader>f :<C-u>LspDocumentFormat<CR>
-nnoremap <LocalLeader>t :<C-u>call <SID>lsp_toggle()<CR>
-" quickfix
-nnoremap <LocalLeader>o :<C-u>LspDocumentDiagnostics<CR>
-nnoremap <LocalLeader>e :<C-u>LspDocumentDiagnostics<CR>
-nnoremap <LocalLeader>c :<C-u>cclose<CR>
-nnoremap <LocalLeader>n :<C-u>LspNextError<CR>
-nnoremap <LocalLeader>p :<C-u>LspPreviousError<CR>
 
 " asyncomplete.vim
 if v:true
@@ -376,26 +371,39 @@ else
   inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 endif
 
+" vim-lsp
+nnoremap <LocalLeader>s :<C-u>LspStatus<CR>
+nnoremap <LocalLeader>d :<C-u>LspDefinition<CR>
+nnoremap <LocalLeader>f :<C-u>LspDocumentFormat<CR>
+nnoremap <LocalLeader>t :<C-u>call <SID>lsp_toggle()<CR>
+" quickfix
+nnoremap <LocalLeader>o :<C-u>LspDocumentDiagnostics<CR>
+nnoremap <LocalLeader>e :<C-u>LspDocumentDiagnostics<CR>
+nnoremap <LocalLeader>c :<C-u>cclose<CR>
+nnoremap <LocalLeader>n :<C-u>LspNextError<CR>
+nnoremap <LocalLeader>p :<C-u>LspPreviousError<CR>
+
+function! s:ftgo()
+  " vim-go
+  nnoremap <buffer> <LocalLeader>i  :<C-u>GoImports<Space>
+  nnoremap <buffer> <LocalLeader>gd :<C-u>GoDoc<CR>
+  cnoremap <buffer> <C-o>i :<C-u>GoImport<space>
+  cnoremap <buffer> <C-o>d :<C-u>GoDrop<space>
+endfunction
+
+function! s:ftrust()
+  " vim-racer
+  nmap <buffer> gd <Plug>(rust-def)
+  nmap <buffer> gs <Plug>(rust-def-split)
+  nmap <buffer> gx <Plug>(rust-def-vertical)
+  nmap <buffer> <LocalLeader>gd <Plug>(rust-doc)
+
+  " rust.vim
+  nmap <buffer> <LocalLeader>f :<C-u>RustFmt<CR>
+endfunction
+
 augroup vimrc_plugin_ft
   autocmd!
-  function! s:ftgo()
-    " vim-go
-    nnoremap <buffer> <LocalLeader>i  :<C-u>GoImports<Space>
-    nnoremap <buffer> <LocalLeader>gd :<C-u>GoDoc<CR>
-    cnoremap <buffer> <C-o>i :<C-u>GoImport<space>
-    cnoremap <buffer> <C-o>d :<C-u>GoDrop<space>
-  endfunction
   autocmd FileType go call s:ftgo()
-
-  function! s:ftrust()
-    " vim-racer
-    nmap <buffer> gd <Plug>(rust-def)
-    nmap <buffer> gs <Plug>(rust-def-split)
-    nmap <buffer> gx <Plug>(rust-def-vertical)
-    nmap <buffer> <LocalLeader>gd <Plug>(rust-doc)
-
-    " rust.vim
-    nmap <buffer> <LocalLeader>f :<C-u>RustFmt<CR>
-  endfunction
   autocmd FileType rust call s:ftrust()
 augroup END

@@ -1,9 +1,13 @@
 " vimrc
 
+unlet! skip_defaults_vim
 source $VIMRUNTIME/defaults.vim
+
+"-----| encoding |-----"
 set encoding=utf-8
 scriptencoding utf-8
 
+"-----| intro |-----"
 " 時間が取れたら整理する
 " コメント多めに書く
 
@@ -95,7 +99,7 @@ scriptencoding utf-8
 " :help 8g8
 " :help mark
 
-"-----| plugin manage |-----"
+"-----| plugin |-----"
 if (has('win32') || has('win64')) &&
       \ isdirectory(expand('~/.vim')) &&
       \ (matchstr(&runtimepath, expand('~/.vim,')) ==# "")
@@ -103,10 +107,10 @@ if (has('win32') || has('win64')) &&
   set runtimepath^=~/.vim,~/.vim/after
 endif
 
-" plugin manager
+" plug
 if filereadable(expand('~/.vim/autoload/plug.vim')) &&
-      \ filereadable(expand('~/dotfiles/vim/vimrc_plugin.vim'))
-  source ~/dotfiles/vim/vimrc_plugin.vim
+      \ filereadable(expand('~/dotfiles/vim/plugin.vim'))
+  source ~/dotfiles/vim/plugin.vim
 endif
 
 "-----| set |-----"
@@ -124,13 +128,16 @@ set noswapfile
 
 " tmp directory
 if isdirectory(expand('~/dotfiles/vim/tmp'))
-  set backupdir=~/dotfiles/vim/tmp/backup
-  set undodir=~/dotfiles/vim/tmp/undo
-  set directory=~/dotfiles/vim/tmp/swap
   set backup
+  set backupdir=~/dotfiles/vim/tmp/backup
   set undofile
+  set undodir=~/dotfiles/vim/tmp/undo
   set swapfile
+  set directory=~/dotfiles/vim/tmp/swap
 endif
+
+" tags
+set tags+=.git/tags
 
 " ファイルの先頭行と最終行のコメントで set できる
 set modeline
@@ -260,20 +267,17 @@ set foldtext=Giko()
 
 "-----| color |-----"
 if &t_Co == 256 || has('gui_running')
-  try
-    colorscheme jellybeans
-    "colorscheme hybrid
-    "colorscheme iceberg
-    "colorscheme molokai
-  catch
-  endtry
+  silent! colorscheme jellybeans
+  "colorscheme hybrid
+  "colorscheme iceberg
+  "colorscheme molokai
 else
-  colorscheme elflord
+  silent! colorscheme elflord
 endif
 
 syntax on
 
-"-----| key map |-----"
+"-----| mapping |-----"
 " (,,ﾟДﾟ)つ:help index
 " default のマップは :help index で確認できる
 " user定義のマップは :imap :nmap :vmap :map :verbose map で確認できる
@@ -287,9 +291,9 @@ syntax on
 " mapleader が有用 :help <Leader>
 " <C-@> は <Nul> に map される
 
-" mapleader
-let g:mapleader = "\<Space>"
-let g:maplocalleader = '\'
+" Leader:
+  let g:mapleader = "\<Space>"
+  let g:maplocalleader = '\'
 
 " Nop:
   " netrw
@@ -317,9 +321,8 @@ let g:maplocalleader = '\'
   nnoremap <Right> <C-w>>
 
   " 行を上下に引っ張る
-  " . は現在行
-  nnoremap <C-j> :<C-u>. move +1<CR>
-  nnoremap <C-k> :<C-u>. move -2<CR>
+  nnoremap <C-j> :<C-u>move +1<CR>==
+  nnoremap <C-k> :<C-u>move -2<CR>==
 
   " カーソル移動後、画面中央にフォーカス
   nnoremap n nzz
@@ -328,7 +331,7 @@ let g:maplocalleader = '\'
   " open terminal
   nnoremap <C-@> :<C-u>vertical terminal<CR>
 
-  " <Leader>
+  " Leader:
     " Buffer
     nnoremap <Leader>j :<C-u>bnext<CR>
     nnoremap <Leader>k :<C-u>bprev<CR>
@@ -410,12 +413,17 @@ let g:maplocalleader = '\'
     inoremap <> <><C-g>U<Left>
     inoremap "" ""<C-g>U<Left>
     inoremap '' ''<C-g>U<Left>
-  endif
-  inoremap {<CR>    {}<Left><CR><Esc><S-o>
-  inoremap (<CR>    ()<Left><CR><Esc><S-o>
-  inoremap [<CR>    []<Left><CR><Esc><S-o>
+    inoremap `` ``<C-g>U<Left>
 
-  " for undo
+    inoremap 「 「」<C-g>U<Left>
+    inoremap 『 『』<C-g>U<Left>
+    inoremap 【 【】<C-g>U<Left>
+  endif
+  inoremap {<CR> {}<Left><CR><Esc><S-o>
+  inoremap (<CR> ()<Left><CR><Esc><S-o>
+  inoremap [<CR> []<Left><CR><Esc><S-o>
+
+  " leave deleted words and lines
   inoremap <C-u> <C-g>u<C-u>
   inoremap <C-w> <C-g>u<C-w>
 
@@ -451,9 +459,6 @@ let g:maplocalleader = '\'
   inoremap ！ !
   "inoremap ー -
   "inoremap 〜 ~
-  inoremap 「 「」<Left>
-  inoremap 『 『』<Left>
-  inoremap 【 【】<Left>
 
 " CommandLine:
   cnoremap <C-o><C-o> <C-u>cd %:p:h
@@ -463,32 +468,34 @@ let g:maplocalleader = '\'
   cnoremap <C-o>S     <C-u>e ++enc=shift_jis
   cnoremap <C-o>U     <C-u>e ++enc=utf-8
 
-"-----| command |-----"
-" delcommand:
-  " getscript
-  if exists(':GLVS')
-    delcommand GLVS
-  endif
-  if exists(':GetScripts')
-    delcommand GetScripts
-  endif
-  if exists(':GetLatestVimScripts')
-    delcommand GetLatestVimScripts
-  endif
+"-----| delcommand |-----"
+" getscript
+if exists(':GLVS')
+  delcommand GLVS
+endif
+if exists(':GetScripts')
+  delcommand GetScripts
+endif
+if exists(':GetLatestVimScripts')
+  delcommand GetLatestVimScripts
+endif
 
-  " vimball
-  if exists(':MkVimball')
-    delcommand MkVimball
-  endif
-  if exists(':UseVimball')
-    delcommand UseVimball
-  endif
-  if exists(':VimballList')
-    delcommand VimballList
-  endif
-  if exists(':RmVimball')
-    delcommand RmVimball
-  endif
+" vimball
+if exists(':MkVimball')
+  delcommand MkVimball
+endif
+if exists(':UseVimball')
+  delcommand UseVimball
+endif
+if exists(':VimballList')
+  delcommand VimballList
+endif
+if exists(':RmVimball')
+  delcommand RmVimball
+endif
+
+"-----| command |-----"
+command! Vimrc vsplit $MYVIMRC
 
 command! -complete=command -nargs=1 Type verbose command <args>
 
@@ -544,75 +551,40 @@ command! -nargs=+ -complete=command PutEx call s:putEx(<q-args>)
 " :help filetype
 filetype plugin indent on
 
-" autocmd は再読込されるたびに重複して登録される
-" autocmd! でグループの autocmd を初期化して重複を防ぐ
-
-" for filetype
 augroup vimrc_ft
+  " autocmd は再読込されるたびに重複して登録される
+  " autocmd! によってグループの autocmd を初期化して重複を防ぐ
   autocmd!
-  " vim
-  function! s:ftvim()
-    setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-  endfunction
-  autocmd FileType vim call s:ftvim()
-
-  " sh
-  function! s:ftsh()
-    setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-  endfunction
-  autocmd FileType sh call s:ftsh()
-
-  " go
-  function! s:ftgo()
-    setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=2
-  endfunction
-  autocmd FileType go call s:ftgo()
-
-  " rust
+  autocmd FileType vim setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+  autocmd FileType sh setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+  autocmd FileType go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=2
   " provided by $VIMRUNTIME/ftplugin/rust.vim
-  "function! s:ftrust()
-  "  setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4 textwidth=99
-  "endfunction
-  "autocmd FileType rust call s:ftrust()
-
-  " python
-  function! s:ftpython()
-    setlocal textwidth=79
-  endfunction
-  autocmd FileType python call s:ftpython()
-
-  " gitcommit
-  function! s:ftgitcommit()
-    setlocal spell
-  endfunction
-  autocmd FileType gitcommit call s:ftgitcommit()
-
-  " javascript
-  function! s:ftjavascript()
-    setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-  endfunction
-  autocmd FileType javascript call s:ftjavascript()
-
-  " json
-  function! s:ftjson()
-    setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-  endfunction
-  autocmd FileType json call s:ftjson()
-
-  " markdown
-  function! s:ftmarkdown()
-    setlocal textwidth=79 spell expandtab shiftwidth=2 tabstop=2 softtabstop=2
-  endfunction
-  autocmd FileType markdown call s:ftmarkdown()
-
-  " text
-  function! s:fttext()
-    nnoremap <buffer> <Leader>st :setlocal textwidth=78
-  endfunction
-  autocmd FileType text call s:fttext()
+  "autocmd FileType rust setlocal
+        \ expandtab
+        \ shiftwidth=4
+        \ tabstop=4
+        \ softtabstop=4
+        \ textwidth=99
+  autocmd FileType python setlocal textwidth=79
+  autocmd FileType gitcommit setlocal spell
+  autocmd FileType javascript setlocal
+        \ expandtab
+        \ shiftwidth=2
+        \ tabstop=2
+        \ softtabstop=2
+  autocmd FileType json setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+  autocmd FileType markdown setlocal
+        \ textwidth=79
+        \ spell
+        \ expandtab
+        \ shiftwidth=2
+        \ tabstop=2
+        \ softtabstop=2
+  autocmd FileType text nnoremap <buffer> <Leader>st :setlocal textwidth=78
 augroup END
 
 " background
+let s:none_bg = v:true
 augroup vimrc_bg
   autocmd!
   autocmd VimEnter,ColorScheme * highlight Normal ctermbg=NONE
@@ -623,14 +595,12 @@ augroup vimrc_bg
   autocmd VimEnter,ColorScheme * highlight Terminal ctermbg=NONE
   autocmd VimEnter,ColorScheme * highlight ColorColumn ctermbg=235
 augroup END
-
-let s:is_none_bg = v:true
 function! s:toggleBackground() abort
-  if s:is_none_bg
+  if s:none_bg
     augroup vimrc_bg
       autocmd!
     augroup END
-    let s:is_none_bg = v:false
+    let s:none_bg = v:false
   else
     augroup vimrc_bg
       autocmd!
@@ -642,7 +612,7 @@ function! s:toggleBackground() abort
       autocmd ColorScheme * highlight Terminal ctermbg=NONE
       autocmd ColorScheme * highlight ColorColumn ctermbg=235
     augroup END
-    let s:is_none_bg = v:true
+    let s:none_bg = v:true
   endif
   execute 'colorscheme ' . g:colors_name
 endfunction
@@ -652,7 +622,6 @@ command! ToggleBackground call s:toggleBackground()
 let s:imf_name = substitute($XMODIFIERS, '^@im=\(.*\)$', '\1', '')
 augroup vimrc_imf
   autocmd!
-
   if s:imf_name ==# "ibus"
     let s:imf_default_engine = 'xkb:jp::jpn'
     let s:imf_save_engine = trim(system('ibus engine'))
