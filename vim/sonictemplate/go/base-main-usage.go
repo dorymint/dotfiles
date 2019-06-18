@@ -10,14 +10,15 @@ import (
 
 const (
 	Name    = `{{_expr_:expand('%:p:h:t')}}`
-	Version = `0.1.0`
+	Version = `0.0.0`
 )
 
 const usage = `Usage:
   {{_expr_:expand('%:p:h:t')}} [Options]
 
 Options:
-  -help Display this message
+  -help    Display this message
+  -version Display version
 
 Examples:
   # help
@@ -25,6 +26,8 @@ Examples:
 `
 
 var usageWriter io.Writer = os.Stderr
+
+func printUsage() { fmt.Fprintln(usageWriter, usage) }
 
 var opt struct {
 	help    bool
@@ -34,9 +37,10 @@ var opt struct {
 func init() {
 	flag.BoolVar(&opt.help, "help", false, "Display this message")
 	flag.BoolVar(&opt.version, "version", false, "Display version")
+	flag.Usage = printUsage
 }
 
-func run() (err error) {
+func run() error {
 	flag.Parse()
 	switch {
 	case opt.help:
@@ -44,7 +48,7 @@ func run() (err error) {
 		flag.Usage()
 		return nil
 	case opt.version:
-		_, err = fmt.Printf("%s %s\n", Name, Version)
+		_, err := fmt.Printf("%s %s\n", Name, Version)
 		return err
 	}
 

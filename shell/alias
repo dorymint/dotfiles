@@ -56,12 +56,6 @@ if command -v gof >/dev/null 2>&1; then
   alias goe='gof -e'
 fi
 
-## pacman
-alias checkupdates='command date >"$HOME"/tmp/checkupdates.log &&
-  command checkupdates >>"$HOME"/tmp/checkupdates.log &&
-  command cat "$HOME"/tmp/checkupdates.log'
-alias checklog='command cat -- "$HOME"/tmp/checkupdates.log'
-
 ## systemd
 alias sys-failed='command systemctl --failed'
 alias sys-enabled='command systemctl list-unit-files --state=enabled'
@@ -121,8 +115,12 @@ type -a mpbgm 2>/dev/null || alias mpbgm='command mplayer -ao pulse -vo null'
 ## mpd
 type -a audio 2>/dev/null || alias audio='ncmpc -h 127.0.0.1 -p 6600'
 
-## cache trans
-if command -v cclo >/dev/null 2>&1 && command -v trans >/dev/null 2>&1; then
+## cclo
+if command -v cclo >/dev/null 2>&1; then
+  ### pacman
+  alias checkupdates='cclo -f -- checkupdates'
+  alias checklog='cclo -- checkupdates'
+  ### trans
   alias trans='cclo -- trans'
 fi
 
