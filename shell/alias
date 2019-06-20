@@ -121,7 +121,8 @@ if command -v cclo >/dev/null 2>&1; then
   alias checkupdates='cclo -f -- checkupdates'
   alias checklog='cclo -- checkupdates'
   ### trans
-  alias trans='cclo -- trans'
+  alias trans='cclo -stderr -- trans'
+  alias transf='cclo -stderr -f -- trans'
 fi
 
 # vim:ft=sh:
