@@ -248,7 +248,6 @@ for_window [instance="pavucontrol"] floating enable
 for_window [title="^Page Info .*$"] floating enable
 
 # start exec
-exec_always --no-startup-id randombg.sh
 exec --no-startup-id conky --daemonize
 exec --no-startup-id compton --daemon
 
