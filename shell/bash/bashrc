@@ -4,13 +4,15 @@
 [[ $- != *i* ]] && return
 
 ## PS1
-#red="\[$(tput setaf 1)\]"
-green="\[$(tput setaf 2)\]"
-magenta="\[$(tput setaf 5)\]"
-cyan="\[$(tput setaf 6)\]"
-blue="\[$(tput setaf 4)\]"
-reset="\[$(tput sgr0)\]"
-bold="\[$(tput bold)\]"
+reset="\[\e[0m\]"
+bold="\[\e[1m\]"
+red="\[\e[31m\]"
+green="\[\e[32m\]"
+yellow="\[\e[33m\]"
+blue="\[\e[34m\]"
+magenta="\[\e[35m\]"
+cyan="\[\e[36m\]"
+
 
 code="$blue\$?$reset"
 u="$cyan\u$reset"
