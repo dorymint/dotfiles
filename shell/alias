@@ -56,7 +56,7 @@ if command -v gof >/dev/null 2>&1; then
   alias goe='gof -e'
 fi
 
-# cat
+## cat
 alias file-max='command cat /proc/sys/fs/file-max'
 
 ## systemd
@@ -71,6 +71,9 @@ alias sys-user-timers='command systemctl --user list-timers --no-pager'
 alias timers='sys-timers; sys-user-timers'
 alias failed='sys-failed; sys-user-failed'
 alias enabled='sys-enabled; sys-user-enabled'
+
+## w3m
+alias duck='w3m https://duckduckgo.com/'
 
 ## vim -R gosrc
 if [ -d "$GOROOT"/src ]; then
