@@ -1,6 +1,5 @@
 scriptencoding utf-8
 call plug#begin('~/.vim/plugged')
-" Base:
   " Japanese help
   Plug 'vim-jp/vimdoc-ja'
 
@@ -16,66 +15,33 @@ call plug#begin('~/.vim/plugged')
   " jump to words
   Plug 'easymotion/vim-easymotion'
 
-" Git:
   " run git commands in vim
   Plug 'tpope/vim-fugitive'
 
   " display a git diff in sign column
   Plug 'airblade/vim-gitgutter'
 
-" Language:
   " template
   Plug 'mattn/sonictemplate-vim'
 
   " language server protocol
   Plug 'prabirshrestha/vim-lsp'
   Plug 'prabirshrestha/async.vim'
-  Plug 'prabirshrestha/asyncomplete.vim'
-  Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
   " TODO: remove
-  " diagnostics
-  "Plug 'vim-syntastic/syntastic'
-
-  " browsing the tags
-  Plug 'majutsushi/tagbar'
+  " auto complete
+  "Plug 'prabirshrestha/asyncomplete.vim'
+  "Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
   " command runner
   Plug 'thinca/vim-quickrun'
-
-  " TODO: remove? if worked LspReferences
-  Plug 'thinca/vim-ref'
-
-  " dart
-  "Plug 'dart-lang/dart-vim-plugin'
-
-  " c
-  "Plug 'justmao945/vim-clang'
-
-  " javascript
-  "Plug 'heavenshell/vim-jsdoc'
-  " TODO: remove
-  "Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 
   " rust
   Plug 'rust-lang/rust.vim'
   Plug 'racer-rust/vim-racer'
 
   " go
-  " run GoUpdateBinaries manually after update
-  "Plug 'fatih/vim-go', { 'tag': 'v1.20' }
   Plug 'fatih/vim-go'
-
-  " ruby
-  " TODO: remove?
-  " for generate tags file
-  " let g:vim_tags_cache_dir = expand($HOME)
-  " default .vt_location is .git directory
-  "Plug 'szw/vim-tags'
-
-  " python
-  " TODO: remove?
-  "Plug 'davidhalter/jedi-vim'
 
   " UML is Unified Modeling Language, see 'plantuml.com'
   " vim-slumlord is for insert the ASCII diagrams
@@ -88,33 +54,34 @@ call plug#begin('~/.vim/plugged')
   " markdown preview
   Plug 'previm/previm'
 
-" Colorscheme:
+  " colorscheme
   Plug 'nanotech/jellybeans.vim'
   Plug 'w0ng/vim-hybrid'
   Plug 'cocopon/Iceberg.vim'
   Plug 'tomasr/molokai'
   "Plug 'trusktr/seti.vim'
 
-" Workaround:
   Plug 'vim-jp/syntax-vim-ex'
 call plug#end()
 
 filetype plugin indent on
 
-"
 " Config:
-"
+
 " sonictemplate-vim
-let s:sonicdir = expand('~/dotfiles/vim/sonictemplate')
-if isdirectory(s:sonicdir)
-  let g:sonictemplate_vim_template_dir = s:sonicdir
+let s:d = expand('~/dotfiles/vim/sonictemplate')
+if isdirectory(s:d)
+  let g:sonictemplate_vim_template_dir = s:d
 endif
+unlet s:d
 function! s:edit_templ() abort
   if isdirectory(g:sonictemplate_vim_template_dir)
     " open by NERDTree or netrw
     execute "vsplit " . g:sonictemplate_vim_template_dir
   endif
 endfunction
+nnoremap <LocalLeader>w :<C-u>call <SID>edit_templ()<CR>
+
 
 " lightline.vim
 let g:lightline = {
@@ -227,15 +194,14 @@ augroup vimrc_plugin_LSP
   autocmd!
   " Go:
   "   Install: go get golang.org/x/tools/cmd/gopls
-  "   temporarily disabled
-  if executable('gopls')
-    autocmd User lsp_setup call lsp#register_server({
-          \ 'name': 'gopls',
-          \ 'cmd': {server_info -> ['gopls', '-mode', 'stdio']},
-          \ 'whitelist': ['go'],
-          \ })
-    "autocmd BufWritePre *.go LspDocumentFormatSync
-  endif
+  "if executable('gopls')
+  "  autocmd User lsp_setup call lsp#register_server({
+  "        \ 'name': 'gopls',
+  "        \ 'cmd': {server_info -> ['gopls', '-mode', 'stdio']},
+  "        \ 'whitelist': ['go'],
+  "        \ })
+  "  "autocmd BufWritePre *.go LspDocumentFormatSync
+  "endif
 
   " Rust:
   "   Install: `rustup update`
@@ -299,16 +265,6 @@ if v:false
   let g:asyncomplete_log_file = expand('~/tmp/asyncomplete.log')
 endif
 
-" syntastic
-"let g:syntastic_cpp_compiler = 'clang'
-"let g:syntastic_cpp_compiler_options = '-std=c++1z --pedantic-errors'
-"let g:syntastic_cpp_checkers = ['clang_check']
-"let g:syntastic_javascript_checkers = ['eslint']
-
-" vim-clang
-"let g:clang_c_options = '-std=c11'
-"let g:clang_cpp_options = '-std=c++1z --pedantic-errors'
-
 " vim-racer
 if executable(expand('~/.cargo/bin/racer'))
   let g:racer_cmd = expand('~/.cargo/bin/racer')
@@ -326,19 +282,10 @@ let g:go_play_open_browser = 0
 let g:go_fmt_autosave = 0
 let g:go_template_autocreate = 0
 " pick vim-go or vim-lsp
-let g:go_code_completion_enabled = 0
+"let g:go_code_completion_enabled = 0
 
-" jedi-vim
-""let g:jedi#auto_initialization = 0
-"let g:jedi#popup_on_dot = 0
-"let g:jedi#auto_close_doc = 0
-""let g:jedi#popup_select_first = 0
-"let g:jedi#show_call_signatures = 0
-"let g:jedi#rename_command = '<LocalLeader>R'
-
-"
 " Mapping:
-"
+
 noremap <LocalLeader><LocalLeader> <Nop>
 map     <LocalLeader><LocalLeader> <Plug>(easymotion-bd-w)
 nmap    <LocalLeader><LocalLeader> <Plug>(easymotion-overwin-w)
