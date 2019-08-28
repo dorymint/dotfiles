@@ -1,9 +1,18 @@
-# go packages
+# pakcage list for go
 
 # golang.org
 golang.org/x/lint/golint
-golang.org/x/tools/cmd/...
 golang.org/x/tour
+
+# golang.org/x/tools/cmd/...
+golang.org/x/tools/cmd/stringer
+golang.org/x/tools/cmd/gopls
+golang.org/x/tools/cmd/guru
+golang.org/x/tools/cmd/gotype
+golang.org/x/tools/cmd/gorename
+golang.org/x/tools/cmd/godoc
+golang.org/x/tools/cmd/cover
+golang.org/x/tools/cmd/benchcmp
 
 # github.com/golang
 github.com/golang/dep/cmd/dep
@@ -15,7 +24,7 @@ github.com/google/gops
 github.com/josharian/impl
 github.com/jstemmer/gotags
 github.com/mattn/cho
-github.com/mattn/efm-langserver/cmd/efm-langserver
+github.com/mattn/efm-langserver
 github.com/mattn/gof
 github.com/nsf/gocode
 github.com/rogpeppe/godef

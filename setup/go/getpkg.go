@@ -88,12 +88,12 @@ func run(file string, cmdline []string, ignoreConfirm bool, dryrun bool) error {
 	}
 
 	if !ignoreConfirm {
-		fmt.Printf("[yes|no]?> ")
-		sc := bufio.NewScanner(os.Stdin)
 	L:
 		for {
+			fmt.Printf("[yes|no]?> ")
+			sc := bufio.NewScanner(os.Stdin)
 			if !sc.Scan() {
-				return errors.New("scan failed")
+				return errors.New("scan failed: " + sc.Err().Error())
 			}
 			if err := sc.Err(); err != nil {
 				return err
@@ -103,6 +103,8 @@ func run(file string, cmdline []string, ignoreConfirm bool, dryrun bool) error {
 				break L
 			case "n", "no":
 				return errors.New("stopped")
+			default:
+				fmt.Println(sc.Text())
 			}
 		}
 	}
