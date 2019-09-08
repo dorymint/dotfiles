@@ -8,8 +8,8 @@ set encoding=utf-8
 scriptencoding utf-8
 
 "-----| intro |-----"
-" 時間が取れたら整理する
-" コメント多めに書く
+" 余裕があれば整理する
+" コメントを多めに書く
 
 " 詳細は :help で調べる
 " <F1> キーで help を開ける
@@ -31,9 +31,9 @@ scriptencoding utf-8
 " scriptencoding utf-8 はマルチバイト文字が現れる前に書くといい
 " set encoding=utf-8 を付けるなら scriptencoding の前にする
 
-" Vim script の文は行頭の非空白文字を \ にすることで直前の行と連結できる
+" Vim script は行頭の非空白文字を '\' にすることで直前の行と連結できる
 " 例えば、
-      \この行は、上の行と連結されてコメントとして処理される
+      \この行は上の行と連結されてコメントとして処理される
 
 " echo
 " 内部変数をみる   :echo &encoding
@@ -328,9 +328,6 @@ syntax on
   nnoremap n nzz
   nnoremap N Nzz
 
-  " open terminal
-  nnoremap <C-@> :<C-u>vertical terminal<CR>
-
   " Leader:
     " Buffer
     nnoremap <Leader>j :<C-u>bnext<CR>
@@ -353,12 +350,14 @@ syntax on
     nnoremap <Leader>r :<C-u>registers<CR>
 
     " Quickfix
-    nnoremap <Leader>o :<C-u>copen<CR>
-    nnoremap <Leader>e :<C-u>copen<CR>
+    nnoremap <Leader>q :<C-u>copen<CR>
     nnoremap <Leader>w :<C-u>cwindow<CR>
     nnoremap <Leader>c :<C-u>cclose<CR>
     nnoremap <Leader>n :<C-u>cnext<CR>
     nnoremap <Leader>p :<C-u>cprevious<CR>
+
+    " open terminal
+    nnoremap <Leader>o :<C-u>vertical terminal<CR>
 
     " Toggle
     nnoremap <Leader>/  :<C-u>set hlsearch!<CR>
