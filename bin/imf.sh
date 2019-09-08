@@ -36,15 +36,18 @@ main() {
     ibus)
       if command -v ibus-daemon > /dev/null 2>&1; then
         ibus-daemon -r --xim &
+        return
       fi
       ;;
     fcitx)
       if command -v fcitx-autostart > /dev/null 2>&1; then
         fcitx-autostart
+        return
       fi
       ;;
     *) abort "invalid imf $imf";;
   esac
+  abort "not found imf: $imf"
 }
 
 while [ $# -ne 0 ]; do

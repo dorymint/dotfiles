@@ -29,7 +29,8 @@ export XDG_CACHE_HOME="$HOME"/.cache
 export XDG_DATA_HOME="$HOME"/.local/share
 
 ## Input method frameworks
-imf=ibus
+#imf=ibus
+imf=fcitx
 case "$imf" in
   ibus)
     if command -v ibus-daemon >/dev/null 2>&1; then

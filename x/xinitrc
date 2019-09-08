@@ -43,9 +43,7 @@ xset r rate 200 30
 setxkbmap jp 106
 
 # input method frameworks
-
-imf=ibus
-case "$imf" in
+case "${XMODIFIERS#@im=}" in
   fcitx)
     if command -v fcitx-autostart > /dev/null 2>&1; then
       export GTK_IM_MODULE=fcitx
