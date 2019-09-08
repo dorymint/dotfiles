@@ -1,9 +1,0 @@
-[Unit]
-Description=wall getter timer
-
-[Timer]
-OnUnitActiveSec=2h 20min
-Unit=getter.service
-
-[Install]
-WantedBy=

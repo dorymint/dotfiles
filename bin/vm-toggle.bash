@@ -3,6 +3,9 @@ set -eu
 
 # TODO: consider
 
+echo "exit"
+exit 1
+
 service=vboxheadless.service
 if ! systemctl --user cat $service &> /dev/null; then
   echo "not found: systemctl --user $service"

@@ -3,6 +3,9 @@ set -eu
 
 # TODO: consider to remove
 
+echo "exit"
+exit 1
+
 ### variable
 # destination directory path
 dst=""

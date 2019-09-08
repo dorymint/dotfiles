@@ -1,9 +1,0 @@
-[Unit]
-Description=wall getter timer for sway
-
-[Timer]
-OnUnitActiveSec=2h 20min
-Unit=sway-getter.service
-
-[Install]
-WantedBy=
