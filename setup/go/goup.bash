@@ -3,7 +3,7 @@
 set -eu
 
 repo="https://go.googlesource.com/go"
-branch="release-branch.go1.12"
+branch="release-branch.go1.13"
 #branch="master"
 goroot="$HOME/src/github.com/golang/go"
 
