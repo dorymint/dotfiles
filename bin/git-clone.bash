@@ -19,7 +19,6 @@ case $# in
 esac
 
 url="$1"
-
 path="$url"
 case "$url" in
   http://*)
@@ -33,6 +32,7 @@ case "$url" in
     exit 1
     ;;
 esac
+path="$(readlink -m "$path")"
 path="${path%".git"}"
 
 dir="$HOME/src"
