@@ -6,6 +6,7 @@ source $VIMRUNTIME/defaults.vim
 "-----| encoding |-----"
 set encoding=utf-8
 scriptencoding utf-8
+set fileencodings=ucs-bom,utf-8,shift_jis,default,latin1
 
 "-----| intro |-----"
 " 余裕があれば整理する
@@ -464,8 +465,6 @@ syntax on
   cnoremap <C-o>t     <C-u>vertical terminal<Space>
   cnoremap <C-o>h     <C-u>vertical help<Space>
   cnoremap <C-o>f     <C-u>setlocal filetype=
-  cnoremap <C-o>S     <C-u>e ++enc=shift_jis
-  cnoremap <C-o>U     <C-u>e ++enc=utf-8
 
 "-----| delcommand |-----"
 " getscript
@@ -495,7 +494,8 @@ endif
 
 "-----| command |-----"
 command! Vimrc vsplit $MYVIMRC
-
+command! JIS e ++enc=shift_jis
+command! UTF8 e ++enc=utf-8
 command! -complete=command -nargs=1 Type verbose command <args>
 
 function! s:scratch() abort
