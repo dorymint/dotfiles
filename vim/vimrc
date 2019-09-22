@@ -14,20 +14,20 @@ set fileencodings=ucs-bom,utf-8,shift_jis,default,latin1
 
 " 詳細は :help で調べる
 " <F1> キーで help を開ける
-" ヘルプの日本語訳は https://github.com/vim-jp/vimdoc-ja
+" ヘルプの日本語訳は <https://github.com/vim-jp/vimdoc-ja>
 
 " NORMALモードで : を押すとExコマンドを入力するモードに移る
 " vimrc の設定は Vim script によって書かれる、基本はExコマンドの列挙
 
-" set の詳細は :help :set で確認
+" vim は :set {OPTION} で基本的な設定が行える
+" set の詳細は :help set で確認
 " :help option-summary にオプションの要約が列挙されている
 " :help option-list でオプションのリストが見れる
 " 現在のオプションの値は ? を付けると確認できる
 " 例えば :set encoding? で encoding の値表示される
 
-" set はできるだけ省略せずに書く set nohl -> set nohlsearch
-" 詳しくはアンチパターンを確認
-" vimrc アンチパターンは https://github.com/vim-jp/reading-vimrc/wiki
+" set {OPTION} は省略せずに書く、 set nohl は set nohlsearch に
+" 詳しくはアンチパターンを確認 <https://github.com/vim-jp/reading-vimrc/wiki>
 
 " scriptencoding utf-8 はマルチバイト文字が現れる前に書くといい
 " set encoding=utf-8 を付けるなら scriptencoding の前にする
@@ -37,7 +37,7 @@ set fileencodings=ucs-bom,utf-8,shift_jis,default,latin1
       \この行は上の行と連結されてコメントとして処理される
 
 " echo
-" 内部変数をみる   :echo &encoding
+" 内部変数を見る   :echo &encoding
 " 関数の結果を見る :echo expand("%:p")
 
 " expand("%:p") で fullpath が取れる
@@ -52,7 +52,7 @@ set fileencodings=ucs-bom,utf-8,shift_jis,default,latin1
 " 横にヘルプウィンドウを作る
 " :vert help
 
-" まずは以下のヘルプがおすすめ
+" まずは以下のヘルプを
 " :help reference
 " :help vimtutor
 " :help quickref
@@ -85,7 +85,7 @@ set fileencodings=ucs-bom,utf-8,shift_jis,default,latin1
 " :help grep
 " :help helpgrep
 " :help vimgrep
-" :help :filenamme
+" :help :filename
 " :help quickfix
 " :help runtimepath
 " :help scriptnames
@@ -283,10 +283,10 @@ syntax on
 " default のマップは :help index で確認できる
 " user定義のマップは :imap :nmap :vmap :map :verbose map で確認できる
 " なるべくデフォルトを消さないようにマップする
-" 端末制御が使うキーはマップに注意する
+" 端末制御に使うキーはマップに注意する
 " <C-s> は tty への入力受付をロックする? <C-q> で復帰
 " <C-b> は tmux と被る、 tmux を変えずに vim でマップしないように
-" <C-z> はサスペンド、 jobs でサスペンドの確認、 fg でフォアグラウンド
+" <C-z> はサスペンド、 jobs でサスペンドの確認、 端末上 fg でフォアグラウンド
 " <Nop> でマップを無効にできる
 " コマンドのキーマップは <C-u> で数値の前置を消しておかないと範囲指定される
 " mapleader が有用 :help <Leader>
@@ -375,9 +375,9 @@ syntax on
     " Search and move
     " :help n
     " :help }
-    " TODO: autocmd FileType で設定したほうがよさそう?
-    " c: autocmd FileType c nnoremap <buffer> <Leader>; /}<RC>
-    " ruby: autocmd FileType ruby nnoremap <buffer> <Leader>; /end<CR>
+    " autocmd FileType で設定したほうがよさそう?
+    "autocmd FileType c nnoremap <buffer> <Leader>; /}<RC>
+    "autocmd FileType ruby nnoremap <buffer> <Leader>; /end<CR>
     nnoremap <Leader>; /^$<CR>
 
     " match over 80 characters
@@ -621,10 +621,10 @@ command! ToggleBackground call s:toggleBackground()
 let s:imf_name = substitute($XMODIFIERS, '^@im=\(.*\)$', '\1', '')
 augroup vimrc_imf
   autocmd!
+  " ibus
   if s:imf_name ==# "ibus"
     let s:imf_default_engine = 'xkb:jp::jpn'
     let s:imf_save_engine = trim(system('ibus engine'))
-
     function s:imf_inactive_func() abort
       let s:imf_save_engine = trim(system('ibus engine'))
       if s:imf_save_engine isnot# s:imf_default_engine
@@ -632,7 +632,6 @@ augroup vimrc_imf
       endif
     endfunction
     autocmd InsertLeave * call s:imf_inactive_func()
-
     function s:imf_active_func() abort
       if s:imf_save_engine isnot# s:imf_default_engine
         call system('ibus engine ' . s:imf_save_engine)
@@ -640,6 +639,7 @@ augroup vimrc_imf
     endfunction
     autocmd InsertEnter * call s:imf_active_func()
 
+  " fcitx
   elseif s:imf_name ==# "fcitx"
     function s:imf_inactive_func() abort
       if system('fcitx-remote')[0] is# '2'
