@@ -194,14 +194,14 @@ augroup vimrc_plugin_LSP
   autocmd!
   " Go:
   "   Install: go get golang.org/x/tools/cmd/gopls
-  "if executable('gopls')
-  "  autocmd User lsp_setup call lsp#register_server({
-  "        \ 'name': 'gopls',
-  "        \ 'cmd': {server_info -> ['gopls', '-mode', 'stdio']},
-  "        \ 'whitelist': ['go'],
-  "        \ })
-  "  "autocmd BufWritePre *.go LspDocumentFormatSync
-  "endif
+  if executable('gopls')
+    autocmd User lsp_setup call lsp#register_server({
+          \ 'name': 'gopls',
+          \ 'cmd': {server_info -> ['gopls', '-mode', 'stdio']},
+          \ 'whitelist': ['go'],
+          \ })
+    "autocmd BufWritePre *.go LspDocumentFormatSync
+  endif
 
   " Rust:
   "   Install: `rustup update`
