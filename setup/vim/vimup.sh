@@ -8,10 +8,7 @@ vimrepo="https://github.com/vim/vim"
 vimdir="$HOME/src/github.com/vim/vim"
 prefix="$HOME/opt/vim"
 ignore_confirm=false
-
-# TODO: consider to remove
 cc_clang=false
-logfile=""
 
 buildoption=""
 case "$(uname)" in
@@ -38,11 +35,10 @@ Usage:
   vimup.bash [Options]
 
 Options:
-  -h, --help      Display this message
-  -d, --default   Set default configure options
-  -y, --yes       Ignore confirm
-  --with-log FILE With build log
-  --cc-clang      Use CC=clang
+  -h, --help          Display this message
+  -d, --default       Set default configure options
+  -y, --yes           Ignore confirm
+  --cc-clang, --clang Use CC=clang
 END
 }
 
@@ -74,7 +70,10 @@ main() {
     cd "$vimdir"
     git checkout master
     git fetch
-    if confirm "git reset --hard && git clean -f -d on $PWD"; then
+    if confirm "to clean"; then
+      cd src
+      make distclean
+      cd ..
       git reset --hard
       git clean -f -d
     fi
@@ -106,20 +105,13 @@ main() {
   # configure
   cd "$vimdir/src"
   if [ "$cc_clang" = "true" ]; then
-    CC="clang" CXX="clang++" ./configure $buildoption
+    CC=clang CXX=clang++ ./configure $buildoption
   else
     ./configure $buildoption
   fi
 
   echo "--- make ---"
-  if [ -n "$logfile" ]; then
-    echo "logfile $logfile"
-    confirm "continue" || exit 2
-    date > "$logfile"
-    make 2>&1 | tee --append -- "$logfile"
-  else
-    make
-  fi
+  make
 
   echo "--- install ---"
   confirm "install to $prefix" || exit 2
@@ -140,15 +132,7 @@ while [ $# -ne 0 ]; do
     -y|--yes)
       ignore_confirm=true
       ;;
-    --with-log)
-      shift
-      logfile="$(readlink -f "$1")"
-      if [ -e "$logfile" ];then
-        echo "specified file exists: $1" >&2
-        exit 1
-      fi
-      ;;
-    -cc-clang|--cc-clang)
+    -cc-clang|--cc-clang|--clang)
       cc_clang=true
       ;;
     *)
