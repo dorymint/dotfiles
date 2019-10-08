@@ -2,15 +2,17 @@
 
 set -eu
 
-repo="https://go.googlesource.com/go"
+url="https://go.googlesource.com/go"
+
 branch="release-branch.go1.13"
 #branch="master"
 goroot="$HOME/src/github.com/golang/go"
 
-bootstrap_branch="release-branch.go1.4"
-bootstrap_dir="$HOME"/src/localhost/"$bootstrap_branch"
+branch_bootstrap="release-branch.go1.4"
+goroot_bootstrap="$HOME"/src/localhost/"$branch_bootstrap"
 
 ignore_confirm=false
+fetch_only=false
 
 # confirm $1=msg return bool
 confirm() {
@@ -40,6 +42,7 @@ Options:
   -h, --help   Display this message
   -b, --branch Specify build branch (default: $branch)
   -y, --yes    Ignore confirm
+  --fetch      Only fetch
 
 Examples:
   goup.bash -branch master
@@ -52,23 +55,53 @@ abort() {
 	exit 2
 }
 
-up_bootstrap() {
+fetch() {
 	(
-	# cd  "$bootstrap_dir"
-	if [ -d "$bootstrap_dir" ]; then
-		cd "$bootstrap_dir"
+	bra="$1"
+	dir="$2"
+
+	if [ -d "$dir" ]; then
+		cd "$dir"
 		git fetch
-	elif [ ! -e "$bootstrap_dir" ]; then
-		git clone "$repo" "$bootstrap_dir"
-		cd "$bootstrap_dir"
+	elif [ ! -e "$dir" ]; then
+		confirm "git clone $url $dir" || abort "stopped"
+		git clone "$url" "$dir"
 	else
-		abort "invalid path of bootstrap: $bootstrap_dir"
+		abort "already exist: $dir"
+	fi
+	git checkout "$bra"
+	git merge
+	)
+}
+
+build() {
+	(
+	bra="$1"
+	dir="$2"
+
+	cd "$dir"/src
+
+	echo "--- git clean --force --dry-run ---"
+	git clean --force --dry-run
+	echo "-----------------------------------"
+	if confirm "$bra prebuild: git clean --force"; then
+		git clean --force
 	fi
 
-	git checkout "$bootstrap_branch"
-	git merge
+	case "$bra" in
+		"$branch")
+			GOROOT_BOOTSTRAP="$goroot_bootstrap" ./all.bash
+		;;
+		"$branch_bootstrap")
+			CC=clang CXX=clang++ CGO_ENABLED=0 ./make.bash
+		;;
+		*) abort "invalid branche: $bra";;
+	esac
+	)
+}
 
-	# NOTE: build with gcc is failed
+main() {
+	(
 	command -v clang > /dev/null || abort "command not found \"clang\""
 	command -v clang++ > /dev/null || abort "command not found \"clang++\""
 	echo "--- clang --version ---"
@@ -77,61 +110,22 @@ up_bootstrap() {
 	clang++ --version
 	echo "---------------------"
 
-	cd "$bootstrap_dir"/src
-
-	echo "--- git clean --force --dry-run ---"
-	git clean --force --dry-run
-	echo "-----------------------------------"
-	if confirm "$bootstrap_branch prebuild: git clean --force"; then
-		git clean --force
+	fetch "$branch" "$goroot"
+	fetch "$branch_bootstrap" "$goroot_bootstrap"
+	if [ "$fetch_only" = "true" ]; then
+		return
 	fi
 
-	CC=clang CXX=clang++ CGO_ENABLED=0 ./make.bash
-	)
-}
-
-build() {
-	(
-	# cd "$goroot"
-	if [ ! -e "$goroot" ];then
-		confirm "git clone $repo $goroot" || abort "stopped"
-		git clone "$repo" "$goroot"
-		cd "$goroot"
-	elif [ -d "$goroot" ]; then
-		cd "$goroot"
-		git fetch
-	else
-		abort "not directory: $goroot"
-	fi
-
-	git checkout "$branch"
-	git merge
-
-	cd "$goroot"/src
-
-	echo "--- git clean --force --dry-run ---"
-	git clean --force --dry-run
-	echo "-----------------------------------"
-	if confirm "$branch prebuild: git clean --force"; then
-		git clean --force
-	fi
-
-	GOROOT_BOOTSTRAP="$bootstrap_dir" ./all.bash
-	)
-}
-
-main() {
-	(
-	if [ -d "$bootstrap_dir" ]; then
-		if confirm "build bootstrap $bootstrap_branch"; then
-			up_bootstrap || abort "stopped"
+	if [ -d "$goroot_bootstrap" ]; then
+		if confirm "rebuild bootstrap $branch_bootstrap"; then
+			build "$branch_bootstrap" "$goroot_bootstrap" || abort "stopped"
 		fi
 	else
-		up_bootstrap
+		build "$branch_bootstrap" "$goroot_bootstrap"
 	fi
 
 	confirm "build $branch" || abort "stopped"
-	build
+	build "$branch" "$goroot"
 	)
 }
 
@@ -147,6 +141,9 @@ while [ $# -ne 0 ]; do
 			;;
 		-y|--yes)
 			ignore_confirm=true
+			;;
+		--fetch)
+			fetch_only=true
 			;;
 		*)
 			abort "unexpected arguments $*"
