@@ -76,8 +76,8 @@ alias enabled='sys-enabled; sys-user-enabled'
 alias duck='w3m https://duckduckgo.com/'
 
 ## vim -R gosrc
-if [ -d "$GOROOT"/src ]; then
-  alias gosrc='(builtin cd -- "$GOROOT/src" && vim -R .)'
+if [ -d "$(go env GOROOT)/src" ]; then
+  alias gosrc='(builtin cd -- "$(go env GOROOT)/src" && vim -R .)'
 fi
 
 ## vim -R rustsrc
