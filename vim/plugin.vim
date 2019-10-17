@@ -82,7 +82,6 @@ function! s:edit_templ() abort
 endfunction
 nnoremap <LocalLeader>w :<C-u>call <SID>edit_templ()<CR>
 
-
 " lightline.vim
 let g:lightline = {
       \ 'colorscheme': 'jellybeans',
@@ -123,41 +122,6 @@ let g:lightline.enable = {
 
 " vim-gitgutter
 let g:gitgutter_map_keys = v:false
-
-" tagbar
-if has('win32') || has('win64')
-  " path to local biuld ctags.exe
-  if executable(expand('ctags.exe'))
-    let g:tagbar_ctags_bin = expand('ctags.exe')
-  endif
-endif
-let g:tagbar_type_go = {
-      \ 'ctagstype' : 'go',
-      \ 'kinds' : [
-        \ 'p:package',
-        \ 'i:imports:1',
-        \ 'c:constants',
-        \ 'v:variables',
-        \ 't:types',
-        \ 'n:interfaces',
-        \ 'w:fields',
-        \ 'e:embedded',
-        \ 'm:methods',
-        \ 'r:constructor',
-        \ 'f:functions'
-        \ ],
-      \ 'sro' : '.',
-      \ 'kind2scope' : {
-        \ 't' : 'ctype',
-        \ 'n' : 'ntype'
-        \ },
-      \ 'scope2kind' : {
-        \ 'ctype' : 't',
-        \ 'ntype' : 'n'
-        \ },
-      \ 'ctagsbin' : 'gotags',
-      \ 'ctagsargs' : '-sort -silent'
-      \ }
 
 " vim-quickrun
 " 設定するとデフォルトマップが無効になる
@@ -292,7 +256,6 @@ nmap    <LocalLeader><LocalLeader> <Plug>(easymotion-overwin-w)
 
 nnoremap <LocalLeader>ggt :<C-u>GitGutterToggle<CR>
 nnoremap <LocalLeader>h   :<C-u>NERDTreeToggle<CR>
-nnoremap <LocalLeader>l   :<C-u>TagbarToggle<CR>
 nnoremap <LocalLeader>r   :<C-u>QuickRun<CR>
 
 " sonictemplate
