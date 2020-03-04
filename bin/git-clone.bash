@@ -55,10 +55,10 @@ fi
 
 echo "URL:   $url"
 echo "Path:  $path"
-echo "Local: $dir"
+echo "Clone to: $dir"
 
 echo
-echo "<Enter>"
+echo "<Enter> Start"
 read -r
 
 if [ "$dry" = true ]; then
