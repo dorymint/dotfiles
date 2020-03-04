@@ -18,7 +18,7 @@ xterm*saveLines: 4096
 xterm*reverseVideo: on
 xterm*faceName: Inconsolata
 xterm*faceNameDoublesize: Noto Sanse Mono CJK JP
-xterm*faceSize: 11
+xterm*faceSize: 13
 
 !
 ! urxvt
@@ -65,6 +65,6 @@ urxvt.color14: #93e0e3
 urxvt.color15: #ffffff
 
 urxvt.font: \
-  xft:Inconsolata:size=11, \
-  xft:Noto Sanse Mono CJK JP:size=11, \
-  xft:Ricty:size=11
+  xft:Inconsolata:size=13, \
+  xft:Noto Sanse Mono CJK JP:size=13, \
+  xft:Ricty:size=13
