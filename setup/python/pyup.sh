@@ -3,7 +3,6 @@ set -eu
 
 # req: python >=3.6
 
-#name="$(basename $0)"
 name="pyup.sh"
 
 root="$HOME"/python/venv
@@ -12,7 +11,7 @@ force=false
 helpmsg() {
   cat >&1 <<END
 Description:
-  create "venv" in "$root"
+  create or upgrade "venv" in "$root"
   see "python -m venv --help"
 
 Usage:
