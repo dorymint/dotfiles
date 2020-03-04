@@ -1,12 +1,19 @@
 #!/bin/bash
 
+# doc: <https://golang.org/doc/install/source>
+
 set -eu
 
 url="https://go.googlesource.com/go"
+#url="https://github.com/golang/go"
 
-branch="release-branch.go1.13"
+path="${url#https://}"
+
+goroot="$HOME/src/$path"
+
+#branch="release-branch.go1.13"
 #branch="master"
-goroot="$HOME/src/github.com/golang/go"
+branch="go1.14"
 
 branch_bootstrap="release-branch.go1.4"
 goroot_bootstrap="$HOME"/src/localhost/"$branch_bootstrap"
@@ -70,7 +77,6 @@ fetch() {
 		abort "already exist: $dir"
 	fi
 	git checkout "$bra"
-	git merge
 	)
 }
 
@@ -81,11 +87,14 @@ build() {
 
 	cd "$dir"/src
 
-	echo "--- git clean --force --dry-run ---"
-	git clean --force --dry-run
-	echo "-----------------------------------"
-	if confirm "$bra prebuild: git clean --force"; then
-		git clean --force
+	out="$(git clean --force --dry-run)"
+	if [ ! "$out" = "" ]; then
+		echo "--- git clean --force --dry-run ---"
+		echo "$out"
+		echo "-----------------------------------"
+		if confirm "$bra prebuild: git clean --force"; then
+			git clean --force
+		fi
 	fi
 
 	case "$bra" in
