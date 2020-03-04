@@ -469,6 +469,7 @@ command! Scratch call s:scratch()
 
 if executable('xclip')
   command! Paste read !xclip -o
+  command! Put read !xclip -o
   command! -range Cut <line1>,<line2>!xclip
   command! -range Yank execute "<line1>,<line2>!xclip" | undo
 endif
