@@ -5,14 +5,16 @@
 # Read `man 5 sway` for a complete reference.
 
 ### Variables
-#
+
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
+
 # Home row direction keys, like vim
 set $left h
 set $down j
 set $up k
 set $right l
+
 # Your preferred terminal emulator
 set $term  alacritty
 set $terms urxvt
@@ -20,6 +22,7 @@ set $terms urxvt
 # Your preferred application launcher
 # Note: it's recommended that you pass the final command to sway
 set $menu dmenu_path | dmenu | xargs swaymsg exec --
+
 # Workspace
 set $ws10 10
 set $ws1 1
@@ -31,17 +34,19 @@ set $ws6 6
 set $ws7 7
 set $ws8 8
 set $ws9 9
+
 # Colors for client
 set $border #000000dd
 set $black  #000000dd
 set $white  #ffffffdd
 set $gray   #484848dd
 set $blue   #0000ffdd
+
 # defualt bg
 set $bg #232323
 
 ### Output configuration
-#
+
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 #output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 output * bg $bg solid_color
@@ -86,14 +91,14 @@ input * repeat_rate 30
 #
 # Basics:
 #
-    # start a terminal
+    # Start a terminal
     bindsym $mod+Return exec $term
     bindsym $mod+Shift+Return exec $terms
 
-    # kill focused window
+    # Kill focused window
     bindsym $mod+Shift+q kill
 
-    # start your launcher
+    # Start your launcher
     bindsym $mod+d exec $menu
 
     # Drag floating windows by holding down $mod and left mouse button.
@@ -103,10 +108,11 @@ input * repeat_rate 30
     # mouse button for dragging.
     floating_modifier $mod normal
 
-    # reload the configuration file
+    # Reload the configuration file
     bindsym $mod+Shift+c reload
+    bindsym $mod+Shift+r reload
 
-    # exit sway (logs you out of your Wayland session)
+    # Exit sway (logs you out of your Wayland session)
     bindsym $mod+Shift+e exit
 #
 # Moving around:
@@ -116,18 +122,18 @@ input * repeat_rate 30
     bindsym $mod+$down focus down
     bindsym $mod+$up focus up
     bindsym $mod+$right focus right
-    # or use $mod+[up|down|left|right]
+    # Or use $mod+[up|down|left|right]
     bindsym $mod+Left focus left
     bindsym $mod+Down focus down
     bindsym $mod+Up focus up
     bindsym $mod+Right focus right
 
-    # _move_ the focused window with the same, but add Shift
+    # Move the focused window with the same, but add Shift
     bindsym $mod+Shift+$left move left
     bindsym $mod+Shift+$down move down
     bindsym $mod+Shift+$up move up
     bindsym $mod+Shift+$right move right
-    # ditto, with arrow keys
+    # Ditto, with arrow keys
     bindsym $mod+Shift+Left move left
     bindsym $mod+Shift+Down move down
     bindsym $mod+Shift+Up move up
@@ -135,7 +141,7 @@ input * repeat_rate 30
 #
 # Workspaces:
 #
-    # switch to workspace
+    # Switch to workspace
     bindsym $mod+1 workspace $ws1
     bindsym $mod+2 workspace $ws2
     bindsym $mod+3 workspace $ws3
@@ -146,7 +152,7 @@ input * repeat_rate 30
     bindsym $mod+8 workspace $ws8
     bindsym $mod+9 workspace $ws9
     bindsym $mod+0 workspace $ws10
-    # move focused container to workspace
+    # Move focused container to workspace
     bindsym $mod+Shift+1 move container to workspace $ws1
     bindsym $mod+Shift+2 move container to workspace $ws2
     bindsym $mod+Shift+3 move container to workspace $ws3
@@ -183,7 +189,7 @@ input * repeat_rate 30
     # Swap focus between the tiling area and the floating area
     bindsym $mod+space focus mode_toggle
 
-    # move focus to the parent container
+    # Move focus to the parent container
     bindsym $mod+a focus parent
 #
 # Scratchpad:
@@ -210,13 +216,13 @@ mode "resize" {
     bindsym $up resize shrink height 10px
     bindsym $right resize grow width 10px
 
-    # ditto, with arrow keys
+    # Ditto, with arrow keys
     bindsym Left resize shrink width 10px
     bindsym Down resize grow height 10px
     bindsym Up resize shrink height 10px
     bindsym Right resize grow width 10px
 
-    # return to default mode
+    # Return to default mode
     bindsym Return mode "default"
     bindsym Escape mode "default"
     bindsym q mode "default"
@@ -256,10 +262,13 @@ for_window [title=".*"] title_format %title (class=%class instance=%instance she
 for_window [class="Blender"] floating enabled
 
 ### Include
-#
+
+# System:
 include /etc/sway/config.d/*
+
 # Custom modes:
 include "$HOME"/.config/sway/mode.conf
+
 # Local config:
 include "$HOME"/.config/sway/config.d/*.conf
 
