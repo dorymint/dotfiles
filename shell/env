@@ -58,8 +58,10 @@ if command -v firefox >/dev/null 2>&1; then
 fi
 
 ## go
-if [ -x "$HOME"/src/github.com/golang/go/bin/go ]; then
-  export GOROOT="$HOME"/src/github.com/golang/go
+repo="$HOME/src/go.googlesource.com/go"
+#repo="$HOME/src/github.com/golang/go"
+if [ -d "$repo" ]; then
+  export GOROOT="$repo"
 
   # prioritize
   export PATH="$GOROOT"/bin:"$PATH"
@@ -68,6 +70,7 @@ if [ -d "$HOME"/go ]; then
   export GOPATH="$HOME"/go
   export PATH="$PATH":"$GOPATH"/bin
 fi
+unset repo
 
 ## rust
 if [ -f "$HOME"/.cargo/env ]; then
