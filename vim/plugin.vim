@@ -28,7 +28,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'prabirshrestha/vim-lsp'
   Plug 'prabirshrestha/async.vim'
 
-  " TODO: remove
+  " TODO: remove?
   " auto complete
   "Plug 'prabirshrestha/asyncomplete.vim'
   "Plug 'prabirshrestha/asyncomplete-lsp.vim'
@@ -140,8 +140,8 @@ endif
 let g:EasyMotion_do_mapping = 0
 
 " vim-lsp
-let g:lsp_signs_enabled = 1
 let g:lsp_diagnostics_echo_cursor = 1
+let g:lsp_signs_enabled = 1
 let s:lsp_state = v:true
 function! s:lsp_toggle() abort
   if s:lsp_state
@@ -200,6 +200,16 @@ augroup vimrc_plugin_LSP
           \ })
   endif
 
+  " Python:
+  "   Install: pip install python-language-server
+  if executable('pyls')
+    autocmd User lsp_setup call lsp#register_server({
+          \ 'name': 'pyls',
+          \ 'cmd': {server_info -> ['pyls']},
+          \ 'whitelist': ['python'],
+          \ })
+  endif
+
   " Genelic:
   "   Install: `go get github.com/mattn/efm-langserver/cmd/efm-langserver`
   "   Linters:
@@ -219,15 +229,28 @@ augroup vimrc_plugin_LSP
   endif
 augroup END
 
-" for debug
-if v:false
-  let g:lsp_log_verbose = 1
-
-  " check: `tail --follow $logfile`
-  let g:lsp_log_file = expand('~/tmp/vim-lsp.log')
-
-  let g:asyncomplete_log_file = expand('~/tmp/asyncomplete.log')
-endif
+" TODO: make debug function for LSP
+"if v:false
+"  let g:lsp_log_verbose = 1
+"
+"  " check: `tail --follow $logfile`
+"  let g:lsp_log_file = expand('~/tmp/vim-lsp.log')
+"
+"  let g:asyncomplete_log_file = expand('~/tmp/asyncomplete.log')
+"endif
+"if executable('mktemp') && executable('mkfifo') && executable('cat') && executable('rm')
+"  function! DebugLsp() abort
+"    let l:d = ""
+"    try
+"      silent let l:d = system('mktemp -d')
+"      silent let l:fifo = system("mkfifo \"l:d/debug_lsp.fifo\"")
+"    finally
+"      if l:d != ""
+"        call system("rm -rf l:d")
+"      endif
+"    endtry
+"  endfunction
+"endif
 
 " vim-racer
 if executable(expand('~/.cargo/bin/racer'))
@@ -247,6 +270,7 @@ let g:go_fmt_autosave = 0
 let g:go_template_autocreate = 0
 " pick vim-go or vim-lsp
 "let g:go_code_completion_enabled = 0
+"let g:go_gopls_enabled = 0
 
 " Mapping:
 
@@ -256,7 +280,7 @@ nmap    <LocalLeader><LocalLeader> <Plug>(easymotion-overwin-w)
 
 nnoremap <LocalLeader>ggt :<C-u>GitGutterToggle<CR>
 nnoremap <LocalLeader>h   :<C-u>NERDTreeToggle<CR>
-nnoremap <LocalLeader>r   :<C-u>QuickRun<CR>
+nnoremap <LocalLeader>r   :<C-u>QuickRun<Space>
 
 " sonictemplate
 nnoremap <LocalLeader>w :<C-u>call <SID>edit_templ()<CR>

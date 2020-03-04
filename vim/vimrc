@@ -358,15 +358,11 @@ syntax on
     nnoremap <Leader>p :<C-u>cprevious<CR>
 
     " open terminal
-    nnoremap <Leader>o :<C-u>vertical terminal<CR>
+    nnoremap <Leader>o :<C-u>terminal<CR>
+    nnoremap <Leader>t :<C-u>terminal<CR>
 
-    " Toggle
+    " move
     nnoremap <Leader>/  :<C-u>set hlsearch!<CR>
-    nnoremap <Leader>tn :<C-u>set number!<CR>
-    nnoremap <Leader>tc :<C-u>set cursorline! cursorcolumn!<CR>
-    nnoremap <Leader>te :<C-u>setlocal expandtab!<CR>
-    nnoremap <Leader>ts :<C-u>setlocal spell!<CR>
-    nnoremap <Leader>tp :<C-u>setlocal paste!<CR>
 
     " Reset
     nnoremap <Leader>f  :<C-u>setlocal filetype=
@@ -426,39 +422,6 @@ syntax on
   " leave deleted words and lines
   inoremap <C-u> <C-g>u<C-u>
   inoremap <C-w> <C-g>u<C-w>
-
-  " 全角を半角に
-  " :help i_ctrl-v
-  "inoremap 　 <Space>
-  inoremap （ (
-  inoremap ） )
-  inoremap ｛ {
-  inoremap ｝ }
-  inoremap ； ;
-  inoremap ： :
-  inoremap ｜ <Bar>
-  inoremap ＜ <
-  inoremap ＞ >
-  inoremap ＊ *
-  inoremap ＠ @
-  inoremap ％ %
-  inoremap ＃ #
-  inoremap ’ '
-  inoremap ＋ +
-  inoremap ０ 0
-  inoremap １ 1
-  inoremap ２ 2
-  inoremap ３ 3
-  inoremap ４ 4
-  inoremap ５ 5
-  inoremap ６ 6
-  inoremap ７ 7
-  inoremap ８ 8
-  inoremap ９ 9
-  inoremap ？ ?
-  inoremap ！ !
-  "inoremap ー -
-  "inoremap 〜 ~
 
 " CommandLine:
   cnoremap <C-o><C-o> <C-u>cd %:p:h
@@ -565,7 +528,8 @@ augroup vimrc_ft
         \ softtabstop=4
         \ textwidth=99
   autocmd FileType python setlocal textwidth=79
-  autocmd FileType gitcommit setlocal spell
+
+  autocmd FileType html setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
   autocmd FileType javascript setlocal
         \ expandtab
         \ shiftwidth=2
@@ -579,7 +543,9 @@ augroup vimrc_ft
         \ shiftwidth=2
         \ tabstop=2
         \ softtabstop=2
+
   autocmd FileType text nnoremap <buffer> <Leader>st :setlocal textwidth=78
+  autocmd FileType gitcommit setlocal spell
 augroup END
 
 " background
