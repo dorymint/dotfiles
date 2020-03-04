@@ -23,7 +23,7 @@ alias lat='command ls -halvt --color=auto'
 alias latle='command ls -halvt --color=always | less -R'
 alias lah='command ls -halvd --color=auto .*'
 alias dmesgl='command dmesg --color=always | less -R'
-alias hi='command grep --color=always -e "$" -e'
+#alias hi='command grep --color=always -e "$" -e'
 alias groot='command git rev-parse --show-toplevel >/dev/null &&
   builtin cd "$(command git rev-parse --show-toplevel)"'
 alias todo='${EDITOR:-vim} "$HOME"/todo.md'
@@ -76,8 +76,10 @@ alias enabled='sys-enabled; sys-user-enabled'
 alias duck='w3m https://duckduckgo.com/'
 
 ## vim -R gosrc
-if [ -d "$(go env GOROOT)/src" ]; then
-  alias gosrc='(builtin cd -- "$(go env GOROOT)/src" && vim -R .)'
+if command -v go >/dev/null 2>&1; then
+  if [ -d "$(go env GOROOT)/src" ]; then
+    alias gosrc='(builtin cd -- "$(go env GOROOT)/src" && vim -R .)'
+  fi
 fi
 
 ## vim -R rustsrc
