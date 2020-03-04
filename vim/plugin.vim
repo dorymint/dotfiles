@@ -27,11 +27,11 @@ call plug#begin('~/.vim/plugged')
   " language server protocol
   Plug 'prabirshrestha/vim-lsp'
   Plug 'prabirshrestha/async.vim'
+  Plug 'mattn/vim-lsp-settings'
 
-  " TODO: remove?
-  " auto complete
-  "Plug 'prabirshrestha/asyncomplete.vim'
-  "Plug 'prabirshrestha/asyncomplete-lsp.vim'
+  " code complition via vim-lsp
+  Plug 'prabirshrestha/asyncomplete.vim'
+  Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
   " command runner
   Plug 'thinca/vim-quickrun'
@@ -142,115 +142,9 @@ let g:EasyMotion_do_mapping = 0
 " vim-lsp
 let g:lsp_diagnostics_echo_cursor = 1
 let g:lsp_signs_enabled = 1
-let s:lsp_state = v:true
-function! s:lsp_toggle() abort
-  if s:lsp_state
-    call lsp#disable()
-    let s:lsp_state = v:false
-    echo "Lsp disabled"
-  else
-    call lsp#enable()
-    let s:lsp_state = v:true
-    echo "Lsp enabled"
-  endif
-endfunction
-augroup vimrc_plugin_LSP
-  autocmd!
-  " Go:
-  "   Install: go get golang.org/x/tools/cmd/gopls
-  if executable('gopls')
-    autocmd User lsp_setup call lsp#register_server({
-          \ 'name': 'gopls',
-          \ 'cmd': {server_info -> ['gopls', '-mode', 'stdio']},
-          \ 'whitelist': ['go'],
-          \ })
-    "autocmd BufWritePre *.go LspDocumentFormatSync
-  endif
 
-  " Rust:
-  "   Install: `rustup update`
-  "          : `rustup component add rls-preview rust-analysis rust-src`
-  if executable('rls')
-    autocmd User lsp_setup call lsp#register_server({
-          \ 'name': 'rls',
-          \ 'cmd': {server_info -> ['rustup', 'run', 'stable', 'rls']},
-          \ 'workspace_config': {'rust': {'clippy_preference': 'on'}},
-          \ 'whitelist': ['rust'],
-          \ })
-  endif
-
-  " C++:
-  "   Install: pacman -S clang-tools-extra # on Arch Linux
-  if executable('clangd')
-    autocmd User lsp_setup call lsp#register_server({
-          \ 'name': 'clangd',
-          \ 'cmd': {server_info -> ['clangd', '-background-index']},
-          \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
-          \ })
-  endif
-
-  " Bash:
-  "   Install: `npm install -g bash-language-server`
-  "   TODO: consider
-  if executable('bash-language-server')
-    autocmd User lsp_setup call lsp#register_server({
-          \ 'name': 'bash-language-server',
-          \ 'cmd': {server_info -> [&shell, &shellcmdflag, 'bash-language-server start']},
-          \ 'whitelist': [],
-          \ })
-  endif
-
-  " Python:
-  "   Install: pip install python-language-server
-  if executable('pyls')
-    autocmd User lsp_setup call lsp#register_server({
-          \ 'name': 'pyls',
-          \ 'cmd': {server_info -> ['pyls']},
-          \ 'whitelist': ['python'],
-          \ })
-  endif
-
-  " Genelic:
-  "   Install: `go get github.com/mattn/efm-langserver/cmd/efm-langserver`
-  "   Linters:
-  "     Markdown: `npm install -g markdownlint-cli`
-  "     Vim: `pip install vim-vint`
-  "     Shell: `pacman -S shellcheck` # on Arch Linux
-  "   DefaultConfigPath:
-  "     Linux: '$HOME/.config/efm-langserver/config.yaml'
-  "     Windows: '%APPDATA%\efm-langserver\config.yaml'
-  "   State: unstable
-  if executable('efm-langserver')
-      autocmd User lsp_setup call lsp#register_server({
-            \ 'name': 'efm-langserver',
-            \ 'cmd': {server_info -> ['efm-langserver']},
-            \ 'whitelist': ['sh', 'eruby', 'markdown', 'vim'],
-            \ })
-  endif
-augroup END
-
-" TODO: make debug function for LSP
-"if v:false
-"  let g:lsp_log_verbose = 1
-"
-"  " check: `tail --follow $logfile`
-"  let g:lsp_log_file = expand('~/tmp/vim-lsp.log')
-"
-"  let g:asyncomplete_log_file = expand('~/tmp/asyncomplete.log')
-"endif
-"if executable('mktemp') && executable('mkfifo') && executable('cat') && executable('rm')
-"  function! DebugLsp() abort
-"    let l:d = ""
-"    try
-"      silent let l:d = system('mktemp -d')
-"      silent let l:fifo = system("mkfifo \"l:d/debug_lsp.fifo\"")
-"    finally
-"      if l:d != ""
-"        call system("rm -rf l:d")
-"      endif
-"    endtry
-"  endfunction
-"endif
+" vim-slp-settings
+let g:lsp_settings_servers_dir = expand('~/.local/share/vim-lsp-settings/servers')
 
 " vim-racer
 if executable(expand('~/.cargo/bin/racer'))
@@ -264,10 +158,8 @@ endif
 if isdirectory(expand('~/dotfiles/vim/tmp/bin'))
   let g:go_bin_path = expand('~/dotfiles/vim/tmp/bin')
 endif
-" to disable
 let g:go_play_open_browser = 0
 let g:go_fmt_autosave = 0
-let g:go_template_autocreate = 0
 " pick vim-go or vim-lsp
 "let g:go_code_completion_enabled = 0
 "let g:go_gopls_enabled = 0
@@ -290,12 +182,33 @@ nnoremap <LocalLeader>s :<C-u>LspStatus<CR>
 nnoremap <LocalLeader>d :<C-u>LspDefinition<CR>
 nnoremap <LocalLeader>f :<C-u>LspDocumentFormat<CR>
 nnoremap <LocalLeader>t :<C-u>call <SID>lsp_toggle()<CR>
+let s:lsp_state = v:true
+function! s:lsp_toggle() abort
+  if s:lsp_state
+    call lsp#disable()
+    let s:lsp_state = v:false
+    echo "Lsp disabled"
+  else
+    call lsp#enable()
+    let s:lsp_state = v:true
+    echo "Lsp enabled"
+  endif
+endfunction
+
 " quickfix
 nnoremap <LocalLeader>o :<C-u>LspDocumentDiagnostics<CR>
 nnoremap <LocalLeader>e :<C-u>LspDocumentDiagnostics<CR>
 nnoremap <LocalLeader>c :<C-u>cclose<CR>
 nnoremap <LocalLeader>n :<C-u>LspNextError<CR>
 nnoremap <LocalLeader>p :<C-u>LspPreviousError<CR>
+
+" FileType:
+
+augroup vimrc_plugin_ft
+  autocmd!
+  autocmd FileType go call s:ftgo()
+  autocmd FileType rust call s:ftrust()
+augroup END
 
 function! s:ftgo()
   " vim-go
@@ -315,9 +228,3 @@ function! s:ftrust()
   " rust.vim
   nmap <buffer> <LocalLeader>f :<C-u>RustFmt<CR>
 endfunction
-
-augroup vimrc_plugin_ft
-  autocmd!
-  autocmd FileType go call s:ftgo()
-  autocmd FileType rust call s:ftrust()
-augroup END

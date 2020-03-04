@@ -272,8 +272,6 @@ if &t_Co == 256 || has('gui_running')
   "colorscheme hybrid
   "colorscheme iceberg
   "colorscheme molokai
-else
-  silent! colorscheme elflord
 endif
 
 syntax on
@@ -512,11 +510,12 @@ command! -nargs=+ -complete=command PutEx call s:putEx(<q-args>)
 "-----| filetype |-----"
 " filetypeによる挙動の変化を有効に設定
 " :help filetype
+" autocmd は再読込されるたびに重複して登録される
+" autocmd! によってグループの autocmd を初期化して重複を防ぐ
+
 filetype plugin indent on
 
 augroup vimrc_ft
-  " autocmd は再読込されるたびに重複して登録される
-  " autocmd! によってグループの autocmd を初期化して重複を防ぐ
   autocmd!
   autocmd FileType vim setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
   autocmd FileType sh setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
