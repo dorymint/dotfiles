@@ -121,7 +121,7 @@ type -a audio 2>/dev/null || alias audio='ncmpc -h 127.0.0.1 -p 6600'
 ## cclo
 if command -v cclo >/dev/null 2>&1; then
   ### pacman
-  alias checkupdates='cclo -f -- checkupdates'
+  alias checkupdates='cclo -stderr -f -- checkupdates'
   alias checklog='cclo -- checkupdates'
   ### trans
   alias trans='cclo -stderr -- trans'
