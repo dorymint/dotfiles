@@ -22,7 +22,6 @@ github.com/golang/lint/golint
 github.com/golang/dep/cmd/dep
 `
 
-// hard code
 var DefaultPackageList = func() string {
 	u, err := user.Current()
 	if err != nil {

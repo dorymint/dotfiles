@@ -13,7 +13,7 @@ goroot="$HOME/src/$path"
 
 #branch="release-branch.go1.13"
 #branch="master"
-branch="go1.14"
+branch="go1.14.1"
 
 branch_bootstrap="release-branch.go1.4"
 goroot_bootstrap="$HOME"/src/localhost/"$branch_bootstrap"
