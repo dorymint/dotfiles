@@ -160,9 +160,10 @@ if isdirectory(expand('~/dotfiles/vim/tmp/bin'))
 endif
 let g:go_play_open_browser = 0
 let g:go_fmt_autosave = 0
-" pick vim-go or vim-lsp
-"let g:go_code_completion_enabled = 0
-"let g:go_gopls_enabled = 0
+" use vim-lsp
+let g:go_gopls_enabled = 0
+let g:go_code_completion_enabled = 0
+let g:go_auto_type_info = 0
 
 " Mapping:
 
@@ -212,10 +213,9 @@ augroup END
 
 function! s:ftgo()
   " vim-go
+  nnoremap <buffer> gd :<C-u>LspDefinition<CR>
   nnoremap <buffer> <LocalLeader>i  :<C-u>GoImports<Space>
-  nnoremap <buffer> <LocalLeader>gd :<C-u>GoDoc<CR>
-  cnoremap <buffer> <C-o>i :<C-u>GoImport<space>
-  cnoremap <buffer> <C-o>d :<C-u>GoDrop<space>
+  "nnoremap <buffer> <LocalLeader>gd :<C-u>GoDoc<CR>
 endfunction
 
 function! s:ftrust()

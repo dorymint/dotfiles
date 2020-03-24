@@ -638,7 +638,7 @@ augroup END
 "  endfunction
 "endif
 
-"-----| diable |-----"
+"-----| not use |-----"
 let g:loaded_vimballPlugin = 1
 let g:loaded_getscriptPlugin = 1
 
