@@ -266,6 +266,13 @@ function! Giko()
 endfunction
 set foldtext=Giko()
 
+" rg
+if executable('rg')
+  set grepprg=rg\ --vimgrep\ --no-heading
+  set grepformat=%f:%l:%c:%m,%f:%l:%m
+  command! -nargs=+ RG execute 'silent grep! <args>' | copen 10
+endif
+
 "-----| color |-----"
 if &t_Co == 256 || has('gui_running')
   silent! colorscheme jellybeans
