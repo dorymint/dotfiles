@@ -27,11 +27,9 @@ call plug#begin('~/.vim/plugged')
   " language server protocol
   Plug 'prabirshrestha/vim-lsp'
   Plug 'prabirshrestha/async.vim'
-  Plug 'mattn/vim-lsp-settings'
-
-  " code complition via vim-lsp
   Plug 'prabirshrestha/asyncomplete.vim'
   Plug 'prabirshrestha/asyncomplete-lsp.vim'
+  Plug 'mattn/vim-lsp-settings'
 
   " command runner
   Plug 'thinca/vim-quickrun'
@@ -142,6 +140,17 @@ let g:EasyMotion_do_mapping = 0
 " vim-lsp
 let g:lsp_diagnostics_echo_cursor = 1
 let g:lsp_signs_enabled = 1
+augroup vimrc_plugin_LSP
+  autocmd!
+  " sh
+  if executable('shellcheck') && executable('efm-langserver')
+    autocmd User lsp_setup call lsp#register_server({
+          \ 'name': 'shellcheck',
+          \ 'cmd': {server_info -> ['efm-langserver']},
+          \ 'whitelist': ['sh']
+          \ })
+  endif
+augroup END
 
 " vim-slp-settings
 let g:lsp_settings_servers_dir = expand('~/.local/share/vim-lsp-settings/servers')

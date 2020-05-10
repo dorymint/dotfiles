@@ -1,7 +1,11 @@
 languages:
   sh:
-    lint-command: 'shellcheck -f gcc -'
+    lint-command: 'shellcheck -f gcc -x -'
     lint-stdin: true
+    lit-formats:
+      - '%f:%l:%c: %trror: %m'
+      - '%f:%l:%c: %tarning: %m'
+      - '%f:%l:%c: %tote: %m'
 
   eruby:
     lint-command: 'erb -x -T - | ruby -c'
