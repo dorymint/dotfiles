@@ -1,18 +1,12 @@
 # dotfiles
 
-Respect the KISS principle
-
-## Linux
-
 ```sh
 cd "$HOME"
-git clone https://github.com/yaeshimo/dotfiles.git
-
-cd dotfiles
+git clone https://github.com/yaeshimo/dotfiles
 
 # setup
-./setup/setup.sh
+~/dotfiles/setup/setup.sh
 
 # with gui
-./setup/setup.sh --gui
+~/dotfiles/setup/setup.sh --gui
 ```
