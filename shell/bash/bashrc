@@ -13,7 +13,6 @@ blue="\[\e[34m\]"
 magenta="\[\e[35m\]"
 cyan="\[\e[36m\]"
 
-
 code="$blue\$?$reset"
 u="$cyan\u$reset"
 h="\h"

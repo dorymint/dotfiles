@@ -95,6 +95,7 @@ fi
 ## nodejs
 if [ -d "$HOME"/.node_modules/bin ];then
   export PATH="$PATH":"$HOME"/.node_modules/bin
+  export npm_config_prefix=~/.node_modules
 fi
 
 ## Users bin
