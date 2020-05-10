@@ -11,33 +11,55 @@ alias chown='command chown --preserve-root'
 alias chmod='command chmod --preserve-root'
 alias chgrp='command chgrp --preserve-root'
 #alias dd='command dd status=progress'
-alias emacs='command emacs -nw'
 alias grep='command grep --ignore-case --color=auto'
 alias less='command less -O "$HOME"/tmp/less.log'
 
 ## Common
+alias :q='builtin exit'
+alias dmesgl='command dmesg --color=always | less -R'
+#alias hi='command grep --color=always -e "$" -e'
+alias todo='${EDITOR:-vim} "$HOME"/todo.md'
+alias manja='LC_ALL=ja_JP.UTF-8 command man'
+
+## ls
 alias l='command ls -lv --color=auto'
 alias la='command ls -halv --color=auto'
 alias lale='command ls -halv --color=always | less -R'
 alias lat='command ls -halvt --color=auto'
 alias latle='command ls -halvt --color=always | less -R'
 alias lah='command ls -halvd --color=auto .*'
-alias dmesgl='command dmesg --color=always | less -R'
-#alias hi='command grep --color=always -e "$" -e'
-alias todo='${EDITOR:-vim} "$HOME"/todo.md'
-alias :q='builtin exit'
-alias week='LANG=en command date +%A'
-alias month='LANG=en command date +%B'
+alias lsc='command ls -1c'
+alias lsone='lsc | sed -n 1p'
 
-## man
-alias manja='LC_ALL=ja_JP.UTF-8 command man'
+## date
+alias dayname='LANG=en command date +%A'
+alias day='dayname'
+alias month='LANG=en command date +%B'
+alias dr='LANG=en command date -R'
+
+## viewer
+#alias pic='feh'
+alias pic='sxiv'
+alias gif='imv'
+alias video='mpv'
+alias vpick='mpv -- "$(lsc | cho)"'
+
+# editor
+alias editor='vim'
+alias e='vim'
+alias emacs='command emacs -nw'
+if [ -x "$HOME"/opt/vim/bin/vim ]; then
+  alias viml='"$HOME"/opt/vim/bin/vim'
+fi
 
 ## cd
 alias ..='builtin cd ..'
-alias cdt='builtin cd -- "$(command git rev-parse --show-toplevel)"'
+alias cdr='builtin cd -- "$(command git rev-parse --show-toplevel)"'
 alias src='builtin cd -- "$HOME"/src'
 alias doc='builtin cd -- "$HOME"/Documents'
 alias github='builtin cd -- "$HOME"/src/github.com'
+alias g='github'
+alias gg='builtin cd -- "$(go env GOPATH)"/src/github.com'
 alias gw='builtin cd -- "$GOPATH"/src/github.com/"$(git config --global user.name)"'
 alias ww='builtin cd -- "$HOME"/src/github.com/"$(git config --global user.name)"'
 alias dotfiles='builtin cd -- "$HOME"/dotfiles'
@@ -57,6 +79,11 @@ if command -v gof >/dev/null 2>&1; then
   alias goe='gof -e'
 fi
 
+## pushd popd
+alias save='builtin pushd ./'
+alias s='save'
+alias p='builtin popd'
+
 ## cat
 alias file-max='command cat /proc/sys/fs/file-max'
 
@@ -65,10 +92,12 @@ alias sys-failed='command systemctl --failed'
 alias sys-enabled='command systemctl list-unit-files --state=enabled'
 alias sys-timers='command systemctl list-timers --no-pager'
 
+## systemd user
 alias sys-user-failed='command systemctl --user --failed'
 alias sys-user-enabled='command systemctl --user list-unit-files --state=enabled'
 alias sys-user-timers='command systemctl --user list-timers --no-pager'
 
+## systemd combine
 alias timers='sys-timers; sys-user-timers'
 alias failed='sys-failed; sys-user-failed'
 alias enabled='sys-enabled; sys-user-enabled'
@@ -90,19 +119,15 @@ if command -v rustc >/dev/null 2>&1; then
   fi
 fi
 
-## vim
-if [ -x "$HOME"/opt/vim/bin/vim ]; then
-  alias viml='"$HOME"/opt/vim/bin/vim'
-fi
-
 ## python
 if [ -r "$HOME"/python/venv/bin/activate ]; then
   alias pyactivate='builtin source "$HOME"/python/venv/bin/activate &&
     echo "virtual environments for python is activated" &&
     python --version &&
     builtin type python &&
-    echo "run \"deactivate\" to stop it"'
+    echo "call \"deactivate\" to stop"'
 fi
+alias serve='python -m http.server -bind 127.0.0.1'
 
 ## gits && cho
 if command -v gits >/dev/null 2>&1 && command -v cho >/dev/null 2>&1; then
@@ -129,5 +154,12 @@ if command -v cclo >/dev/null 2>&1; then
   alias transf='cclo -stderr -f -- trans'
   alias t='trans'
 fi
+
+## sway
+alias sidle='swayidle -w \
+         timeout 180 "swaylock -f -c 000000" \
+         timeout 360 "swaymsg \"output * dpms off\"" \
+              resume "swaymsg \"output * dpms on\"" \
+         before-sleep "swaylock -f -c 000000"'
 
 # vim:ft=sh:
