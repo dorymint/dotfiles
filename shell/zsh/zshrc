@@ -14,12 +14,12 @@ compinit
 # grml zshrc
 # TODO: consider to remove
 if command -v pacman &> /dev/null; then
-  if ! pacman -Q grml-zsh-config &> /dev/null; then
-    echo "recommend: pacman -S grml-zsh-config"
-    autoload -U promptinit
-    promptinit
-    prompt walters
-  fi
+	if ! pacman -Q grml-zsh-config &> /dev/null; then
+		echo "recommend: pacman -S grml-zsh-config"
+		autoload -U promptinit
+		promptinit
+		prompt walters
+	fi
 fi
 
 # setopt
@@ -30,19 +30,22 @@ setopt pushdignoredups
 # syntax highlight
 f=/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 if [ -f "$f" ] && [ -r "$f" ]; then
-  source "$f"
+	source "$f"
 fi
 unset f
 
 if command -v tmux &>/dev/null; then
-  if [ -z "$TMUX" ] && command tmux ls &>/dev/null; then
-    printf -- "--- tmux ls ---\n"
-    tmux ls
-    printf -- "---------------\n"
-  fi
+	if [ -z "$TMUX" ] && command tmux ls &>/dev/null; then
+		printf -- "--- tmux ls ---\n"
+		tmux ls
+		printf -- "---------------\n"
+	fi
 fi
 
 # alias
 source "$HOME"/dotfiles/shell/alias
 
-# vim:ft=zsh:expandtab:tabstop=2:softtabstop=2:
+# function
+source "$HOME"/dotfiles/shell/function
+
+# vim:ft=zsh:noexpandtab:

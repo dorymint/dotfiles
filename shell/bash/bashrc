@@ -3,9 +3,10 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-## PS1
+## for PS1
 reset="\[\e[0m\]"
 bold="\[\e[1m\]"
+
 red="\[\e[31m\]"
 green="\[\e[32m\]"
 yellow="\[\e[33m\]"
@@ -20,45 +21,47 @@ w="$bold\w$reset"
 
 f=/usr/share/git/completion/git-prompt.sh
 if [ -f "$f" ]; then
-  source "$f"
-  export GIT_PS1_SHOWDIRTYSTATE=1
-  gitps="\[\$(__git_ps1 \" $magenta($green%s$magenta)$reset \")\]"
-  export PS1="$code $u@$h:$w$gitps$"
-  unset gitps
+	source "$f"
+	export GIT_PS1_SHOWDIRTYSTATE=1
+	gitps="\[\$(__git_ps1 \" $magenta($green%s$magenta)$reset \")\]"
+	export PS1="$code $u@$h:$w$gitps$"
+	unset gitps
 else
   export PS1="$code $u@$h:$w$"
 fi
 unset f
-unset red green magenta cyan blue reset bold
+
+unset reset bold
+unset bold red green yellow blue magenta cyan
 unset code u h w
 
 if command -v tmux &>/dev/null; then
-  if [ -z "$TMUX" ] && command tmux ls &>/dev/null; then
-    printf -- "--- tmux ls ---\n"
-    command tmux ls
-    printf -- "---------------\n"
-  fi
+	if [ -z "$TMUX" ] && command tmux ls &>/dev/null; then
+		printf -- "--- tmux ls ---\n"
+		command tmux ls
+		printf -- "---------------\n"
+	fi
 fi
 
-## alias
-if [ -f "$HOME"/dotfiles/shell/alias ]; then
-  source "$HOME"/dotfiles/shell/alias
-fi
+source "$HOME"/dotfiles/shell/alias
 
-## man
+source "$HOME"/dotfiles/shell/function
+
 man() {
-  LESS_TERMCAP_mb=$'\E[01;31m' \
-  LESS_TERMCAP_md=$'\E[01;31m' \
-  LESS_TERMCAP_me=$'\E[0m' \
-  LESS_TERMCAP_se=$'\E[0m' \
-  LESS_TERMCAP_so=$'\E[01;44;33m' \
-  LESS_TERMCAP_ue=$'\E[0m' \
-  LESS_TERMCAP_us=$'\E[01;32m' \
-  command man "$@"
+	LESS_TERMCAP_mb=$'\E[01;31m' \
+	LESS_TERMCAP_md=$'\E[01;31m' \
+	LESS_TERMCAP_me=$'\E[0m' \
+	LESS_TERMCAP_se=$'\E[0m' \
+	LESS_TERMCAP_so=$'\E[01;44;33m' \
+	LESS_TERMCAP_ue=$'\E[0m' \
+	LESS_TERMCAP_us=$'\E[01;32m' \
+	command man "$@"
 }
 
 if [ "$SHLVL" -eq 1 ]; then
-  if command -v fortune &>/dev/null; then
-    command fortune -a
-  fi
+	if command -v fortune &>/dev/null; then
+		command fortune -a
+	fi
 fi
+
+# vim:ft=bash:noexpandtab:

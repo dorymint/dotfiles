@@ -20,16 +20,20 @@ alias dmesgl='command dmesg --color=always | less -R'
 #alias hi='command grep --color=always -e "$" -e'
 alias todo='${EDITOR:-vim} "$HOME"/todo.md'
 alias manja='LC_ALL=ja_JP.UTF-8 command man'
+alias rgp='rg --pretty'
 
 ## ls
 alias l='command ls -lv --color=auto'
 alias la='command ls -halv --color=auto'
 alias lale='command ls -halv --color=always | less -R'
-alias lat='command ls -halvt --color=auto'
-alias latle='command ls -halvt --color=always | less -R'
+alias lat='command ls -halv --color=auto'
+alias latle='command ls -halv --color=always | less -R'
+alias lac='command ls -halvc --color=auto'
+alias lacle='command ls -halvc --color=auto | less -R'
 alias lah='command ls -halvd --color=auto .*'
 alias lsc='command ls -1c'
 alias lsone='lsc | sed -n 1p'
+alias pick='lsc | cho'
 
 ## date
 alias dayname='LANG=en command date +%A'
@@ -39,10 +43,11 @@ alias dr='LANG=en command date -R'
 
 ## viewer
 #alias pic='feh'
-alias pic='sxiv'
+alias picture='sxiv'
 alias gif='imv'
 alias video='mpv'
-alias vpick='mpv -- "$(lsc | cho)"'
+alias vpick='v="$(lsc | cho)"; test ! -z "$v" && mpv -- "$v"; unset v'
+alias vpickq='v="$(lsc | cho -q)"; test ! -z "$v" && mpv -- "$v"; unset v'
 
 # editor
 alias editor='vim'

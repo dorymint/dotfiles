@@ -1,9 +1,6 @@
 # bash_profile
 
-f="$HOME"/dotfiles/shell/env
-[ -f "$f" ] && source "$f"
-unset f
-
+[ -f "$HOME"/dotfiles/shell/env ] && source "$HOME"/dotfiles/shell/env
 [ -f "$HOME"/.bashrc ] && source "$HOME"/.bashrc
 
 # vim:ft=sh:
