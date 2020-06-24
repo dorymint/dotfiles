@@ -1,0 +1,10 @@
+[Match]
+Name=en0
+
+[Network]
+Bridge=br0
+DHCP=yes
+MulticastDNS=yes
+
+[DHCP]
+RouteMetric=30

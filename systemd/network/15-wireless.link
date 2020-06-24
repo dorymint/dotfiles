@@ -1,8 +1,5 @@
-#
-# wl*
-#
 [Match]
-MACAddress=
+#MACAddress=
 
 [Link]
 Description=for default wireless lan

@@ -1,8 +1,5 @@
-#
-# en*
-#
 [Match]
-MACAddress=
+#MACAddress=
 
 [Link]
 Description=for default ethrnet
