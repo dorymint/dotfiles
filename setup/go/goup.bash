@@ -11,9 +11,9 @@ path="${url#https://}"
 
 goroot="$HOME/src/$path"
 
-#branch="release-branch.go1.13"
+branch="release-branch.go1.14"
 #branch="master"
-branch="go1.14.2"
+#branch="go1.14.4"
 
 branch_bootstrap="release-branch.go1.4"
 goroot_bootstrap="$HOME"/src/localhost/"$branch_bootstrap"
