@@ -469,11 +469,11 @@ command! JIS e ++enc=shift_jis
 command! UTF8 e ++enc=utf-8
 command! -complete=command -nargs=1 Type verbose command <args>
 
+command! Scratch call s:scratch()
 function! s:scratch() abort
   vnew
   setlocal buftype=nofile bufhidden=hide noswapfile
 endfunction
-command! Scratch call s:scratch()
 
 if executable('xclip')
   command! Paste read !xclip -o
@@ -488,6 +488,7 @@ endif
 
 " for edit the binary files
 if executable('xxd')
+  command! Xxd call s:toggle_xxd()
   function! s:toggle_xxd() abort
     if &filetype ==# 'xxd'
       setlocal filetype=
@@ -497,10 +498,10 @@ if executable('xxd')
       %!xxd
     endif
   endfunction
-  command! Xxd call s:toggle_xxd()
 endif
 
 " put the command output
+command! -nargs=+ -complete=command PutEx call s:putEx(<q-args>)
 function! s:putEx(exe) abort
   let l:save_more = &more
   set nomore
@@ -515,7 +516,6 @@ function! s:putEx(exe) abort
     let &more = l:save_more
   endtry
 endfunction
-command! -nargs=+ -complete=command PutEx call s:putEx(<q-args>)
 
 "-----| filetype |-----"
 " filetypeによる挙動の変化を有効に設定
@@ -570,6 +570,8 @@ augroup vimrc_bg
   autocmd VimEnter,ColorScheme * highlight Terminal ctermbg=NONE
   autocmd VimEnter,ColorScheme * highlight ColorColumn ctermbg=235
 augroup END
+
+command! ToggleBackground call s:toggleBackground()
 function! s:toggleBackground() abort
   if s:none_bg
     augroup vimrc_bg
@@ -591,62 +593,46 @@ function! s:toggleBackground() abort
   endif
   execute 'colorscheme ' . g:colors_name
 endfunction
-command! ToggleBackground call s:toggleBackground()
 
 " Input Method Framework
-let s:imf_name = substitute($XMODIFIERS, '^@im=\(.*\)$', '\1', '')
-augroup vimrc_imf
-  autocmd!
-  " ibus
-  if s:imf_name ==# "ibus"
-    let s:imf_default_engine = 'xkb:jp::jpn'
-    let s:imf_save_engine = trim(system('ibus engine'))
-    function s:imf_inactive_func() abort
-      let s:imf_save_engine = trim(system('ibus engine'))
-      if s:imf_save_engine isnot# s:imf_default_engine
-        call system('ibus engine ' . s:imf_default_engine)
-      endif
-    endfunction
-    autocmd InsertLeave * call s:imf_inactive_func()
-    function s:imf_active_func() abort
-      if s:imf_save_engine isnot# s:imf_default_engine
-        call system('ibus engine ' . s:imf_save_engine)
-      endif
-    endfunction
-    autocmd InsertEnter * call s:imf_active_func()
+let s:imf = substitute($XMODIFIERS, '^@im=\(.*\)$', '\1', '')
 
-  " fcitx
-  elseif s:imf_name ==# "fcitx"
-    function s:imf_inactive_func() abort
-      if system('fcitx-remote')[0] is# '2'
-        call system('fcitx-remote -c')
-      endif
-    endfunction
-    autocmd InsertLeave * call s:imf_inactive_func()
-  endif
-augroup END
+if s:imf ==# "ibus"
+  set iminsert=2 | set imsearch=2
+  let s:ibus_default_engine = 'xkb:jp::jpn'
+  let s:ibus_engine = 'anthy'
 
-" Too late
-"if s:imf_name ==# "ibus"
-"  set iminsert=2
-"  set imsearch=2
-"
-"  let s:ibus_default_engine = 'xkb:jp::jpn'
-"  let s:ibus_engine = 'anthy'
-"  set imactivatefunc=ImActivate
-"  function! ImActivate(active)
-"    if a:active
-"      call system('ibus engine ' . s:ibus_engine)
-"    else
-"      call system('ibus engine ' . s:ibus_default_engine)
-"    endif
-"  endfunction
-"
-"  set imstatusfunc=ImStatus
-"  function! ImStatus()
-"    return trim(system('ibus engine')) is# s:ibus_engine
-"  endfunction
-"endif
+  set imactivatefunc=ImActivate
+  function! ImActivate(active)
+    if a:active
+      call system('ibus engine ' . s:ibus_engine)
+    else
+      call system('ibus engine ' . s:ibus_default_engine)
+    endif
+  endfunction
+
+  set imstatusfunc=ImStatus
+  function! ImStatus()
+    return trim(system('ibus engine')) is# s:ibus_engine
+  endfunction
+
+elseif exepath('fcitx-remote') !=# "" && system('fcitx-remote')[0] isnot# '0'
+  set iminsert=2 | set imsearch=2
+
+  set imstatusfunc=ImStatus
+  function! ImStatus()
+    return system('fcitx-remote')[0] is# '2'
+  endfunction
+
+  set imactivatefunc=ImActivate
+  function! ImActivate(active)
+    if a:active
+      call system('fcitx-remote -o')
+    else
+      call system('fcitx-remote -c')
+    endif
+  endfunction
+endif
 
 "-----| not use |-----"
 let g:loaded_vimballPlugin = 1

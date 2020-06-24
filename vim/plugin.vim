@@ -26,7 +26,6 @@ call plug#begin('~/.vim/plugged')
 
   " language server protocol
   Plug 'prabirshrestha/vim-lsp'
-  Plug 'prabirshrestha/async.vim'
   Plug 'prabirshrestha/asyncomplete.vim'
   Plug 'prabirshrestha/asyncomplete-lsp.vim'
   Plug 'mattn/vim-lsp-settings'
@@ -72,13 +71,14 @@ if isdirectory(s:d)
   let g:sonictemplate_vim_template_dir = s:d
 endif
 unlet s:d
+
+nnoremap <LocalLeader>w :<C-u>call <SID>edit_templ()<CR>
 function! s:edit_templ() abort
   if isdirectory(g:sonictemplate_vim_template_dir)
     " open by NERDTree or netrw
     execute "vsplit " . g:sonictemplate_vim_template_dir
   endif
 endfunction
-nnoremap <LocalLeader>w :<C-u>call <SID>edit_templ()<CR>
 
 " lightline.vim
 let g:lightline = {
@@ -191,9 +191,10 @@ nnoremap <LocalLeader>w :<C-u>call <SID>edit_templ()<CR>
 nnoremap <LocalLeader>s :<C-u>LspStatus<CR>
 nnoremap <LocalLeader>d :<C-u>LspDefinition<CR>
 nnoremap <LocalLeader>f :<C-u>LspDocumentFormat<CR>
-nnoremap <LocalLeader>t :<C-u>call <SID>lsp_toggle()<CR>
+
+nnoremap <LocalLeader>t :<C-u>call <SID>toggle_lsp()<CR>
 let s:lsp_state = v:true
-function! s:lsp_toggle() abort
+function! s:toggle_lsp() abort
   if s:lsp_state
     call lsp#disable()
     let s:lsp_state = v:false
