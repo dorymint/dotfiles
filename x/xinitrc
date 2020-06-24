@@ -40,7 +40,7 @@ fi
 # keys
 
 xset r rate 200 30
-setxkbmap jp 106
+setxkbmap jp
 
 # input method frameworks
 case "${XMODIFIERS#@im=}" in

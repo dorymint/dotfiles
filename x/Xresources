@@ -3,11 +3,11 @@
 !
 ! xft
 !
-xft.dpi: 96
-xft.antialias: false
-xft.rgba: rgb
-xft.hinting: true
-xft.hintstyle: hitslight
+!xft.dpi: 96
+!xft.antialias: false
+!xft.rgba: rgb
+!xft.hinting: true
+!xft.hintstyle: hitslight
 
 !
 ! xterm
@@ -16,8 +16,8 @@ xterm*termName: xterm-256color
 xterm*locale: true
 xterm*saveLines: 4096
 xterm*reverseVideo: on
-xterm*faceName: Inconsolata
-xterm*faceNameDoublesize: Noto Sanse Mono CJK JP
+xterm*faceName: monospace
+!xterm*faceNameDoublesize: monospace
 xterm*faceSize: 13
 
 !
@@ -45,7 +45,7 @@ urxvt.keysym.Control-Right: \033[1;5C
 
 ! color
 urxvt.depth: 32
-urxvt.background: [85]#000000
+urxvt.background: [80]#000000
 urxvt.foreground: #c8c8c8
 urxvt.color0: #3f3f3f
 urxvt.color1: #705050
@@ -64,7 +64,9 @@ urxvt.color13: #ec93d3
 urxvt.color14: #93e0e3
 urxvt.color15: #ffffff
 
-urxvt.font: \
-  xft:Inconsolata:size=13, \
-  xft:Noto Sanse Mono CJK JP:size=13, \
-  xft:Ricty:size=13
+urxvt.font: xft:monospace:size=13
+!urxvt.font: \
+!  xft:monospace:size=13, \
+!  xft:Inconsolata:size=13, \
+!  xft:Noto Sanse Mono CJK JP:size=13, \
+!  xft:Ricty:size=13
