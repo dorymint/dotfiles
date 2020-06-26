@@ -38,7 +38,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'racer-rust/vim-racer'
 
   " go
-  Plug 'fatih/vim-go'
+  Plug 'mattn/vim-goimports'
 
   " UML is Unified Modeling Language, see 'plantuml.com'
   " vim-slumlord is for insert the ASCII diagrams
@@ -163,17 +163,6 @@ else
   echoerr 'not found "racer"'
 endif
 
-" vim-go
-if isdirectory(expand('~/dotfiles/vim/tmp/bin'))
-  let g:go_bin_path = expand('~/dotfiles/vim/tmp/bin')
-endif
-let g:go_play_open_browser = 0
-let g:go_fmt_autosave = 0
-" use vim-lsp
-let g:go_gopls_enabled = 0
-let g:go_code_completion_enabled = 0
-let g:go_auto_type_info = 0
-
 " Mapping:
 
 noremap <LocalLeader><LocalLeader> <Nop>
@@ -222,10 +211,10 @@ augroup vimrc_plugin_ft
 augroup END
 
 function! s:ftgo()
-  " vim-go
+  " vim-goimports
+  nnoremap <buffer> <LocalLeader>i :<C-u>GoImportRun<Space>
+  " vim-lsp
   nnoremap <buffer> gd :<C-u>LspDefinition<CR>
-  nnoremap <buffer> <LocalLeader>i  :<C-u>GoImports<Space>
-  "nnoremap <buffer> <LocalLeader>gd :<C-u>GoDoc<CR>
 endfunction
 
 function! s:ftrust()
@@ -234,7 +223,6 @@ function! s:ftrust()
   nmap <buffer> gs <Plug>(rust-def-split)
   nmap <buffer> gx <Plug>(rust-def-vertical)
   nmap <buffer> <LocalLeader>gd <Plug>(rust-doc)
-
   " rust.vim
   nmap <buffer> <LocalLeader>f :<C-u>RustFmt<CR>
 endfunction
