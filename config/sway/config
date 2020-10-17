@@ -259,7 +259,8 @@ client.focused_inactive $border $black $gray  $border $border
 
 seat seat0 hide_cursor 1000
 for_window [title=".*"] title_format %title (class=%class instance=%instance shell=%shell)
-for_window [class="Blender"] floating enabled
+for_window [class="Blender"] floating enable
+for_window [class="Gvim"] floating enable
 
 ### Include
 
