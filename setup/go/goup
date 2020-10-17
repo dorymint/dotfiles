@@ -1,0 +1,100 @@
+#!/usr/bin/bash
+
+# Ref: <https://golang.org/doc/install/source>
+
+set -eu
+
+remote=https://go.googlesource.com/go
+
+version=go1.15.2
+goroot="$HOME/src/${remote#https://}"
+
+version_bootstrap=release-branch.go1.4
+goroot_bootstrap="$HOME/src/localhost/$version_bootstrap"
+
+rebuild_bootstrap=no
+
+pkgs=(
+	#github.com/github/hub
+	github.com/go-delve/delve/cmd/dlv
+	github.com/google/gops
+	#github.com/jstemmer/gotags
+	github.com/mattn/cho
+	github.com/mattn/efm-langserver
+	github.com/mattn/gof
+	github.com/yaeshimo/cclo
+	github.com/yaeshimo/fdup
+	github.com/yaeshimo/gits
+
+	#golang.org/x/lint/golint
+	golang.org/x/tools/cmd/benchcmp
+	golang.org/x/tools/cmd/cover
+	golang.org/x/tools/cmd/godoc
+	golang.org/x/tools/cmd/goimports
+	golang.org/x/tools/cmd/gorename
+	golang.org/x/tools/cmd/gotype
+	#golang.org/x/tools/cmd/guru
+	golang.org/x/tools/cmd/stringer
+	golang.org/x/tools/gopls
+	golang.org/x/tour
+)
+
+# go get
+goget() {
+	gobin="$goroot/bin/go"
+	for x in "${pkgs[@]}"; do
+		"$gobin" get -v -u -- "$x"
+	done
+}
+
+fetch() {
+	# fetch
+	if [ -d "$goroot" ]; then
+		git -C "$goroot" fetch --all
+	else
+		git clone "$remote" "$goroot"
+	fi
+	(
+	cd "$goroot"
+	git checkout "$version"
+	)
+
+	# fetch bootstrap
+	if [ ! -d "$goroot_bootstrap" ]; then
+		git --git-dir="$goroot/.git" worktree add "$goroot_bootstrap" "$version_bootstrap"
+	fi
+	(
+	cd "$goroot_bootstrap"
+	git checkout "$version_bootstrap"
+	)
+}
+
+build() {
+	# build bootstrap
+	if [ ! -e "$goroot_bootstrap/bin/go" ] || [ "$rebuild_bootstrap" = "yes" ]; then
+		(
+		cd "$goroot_bootstrap/src"
+		CC=clang CXX=clang++ CGO_ENABLED=0 ./make.bash
+		)
+	fi
+
+	# build
+	(
+	cd "$goroot/src"
+	GOROOT_BOOTSTRAP="$goroot_bootstrap" ./all.bash
+	)
+}
+
+while [ $# -ne 0 ]; do
+	case "$1" in
+		-b|--bootstrap) rebuild_bootstrap=yes;;
+		-f|--fetch) fetch; exit 0;; # only fetch
+		-g|--get) goget; exit 0;; # only goget
+		*) echo "nivalid arg: $1"; exit 1;;
+	esac
+	shift
+done
+
+fetch
+build
+goget

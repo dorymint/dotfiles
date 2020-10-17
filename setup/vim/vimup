@@ -1,0 +1,44 @@
+#!/bin/sh
+set -eu
+
+url=https://github.com/vim/vim
+dir="$HOME/src/github.com/vim/vim"
+prefix="$HOME/opt/vim"
+version=master
+distclean=no
+
+while [ $# -ne 0 ]; do
+	case "$1" in
+		--distclean|-d)
+			distclean=yes
+			;;
+		*)
+			echo "unknown option: $1"
+			exit 1
+			;;
+	esac
+	shift
+done
+
+# update or clone
+if [ -d "$dir" ]; then
+	git -C "$dir" pull --all
+else
+	git clone -- "$url" "$dir"
+fi
+
+cd "$dir/src"
+
+git checkout "$version"
+
+if [ "$distclean" = "yes" ]; then
+	make distclean
+fi
+
+./configure --enable-fail-if-missing \
+	--disable-gui \
+	--without-x \
+	--prefix="$prefix"
+
+make
+make install

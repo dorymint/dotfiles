@@ -1,0 +1,31 @@
+#!/usr/bin/sh
+
+# TODO: remove this file
+
+# for Legacy MBR
+
+set -eu
+
+if [ $# -ne 1 ]; then
+	echo "not specify install device e.g. /dev/sd[X][X]"
+	exit 1
+fi
+
+echo "grub install to $1?"
+read -r key
+case "$key" in
+	"y"|"yes");; # PASS
+	*) exit 2;;
+esac
+
+# write to partition boot sector
+sudo chattr -i /boot/grub/i386-pc/core.img
+sudo grub-install --target=i386-pc --debug --force "$1"
+sudo chattr +i /boot/grub/i386-pc/core.img
+
+#arch-chroot /mnt
+#pacman -S linux
+#grub-mkconfig -o /boot/grub/grub.cfg
+
+# output for boot.img
+#dd count=1 bs=512 if="$1" of="$2"
