@@ -17,10 +17,11 @@ else
 fi
 
 ## ssh-agent
-if [ -z "$SSH_AGENT_PID" ]; then
-  if command -v ssh-agent >/dev/null 2>&1; then
-    eval $(ssh-agent)
-  fi
+if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+  ssh-agent -t 1h > "$XDG_RUNTIME_DIR"/ssh-agent.env
+fi
+if [ -z "$SSH_AUTH_SOCK" ]; then
+  source "$XDG_RUNTIME_DIR"/ssh-agent.env
 fi
 
 ## XDG
@@ -31,22 +32,9 @@ export XDG_DATA_HOME="$HOME"/.local/share
 ## Input method frameworks
 #imf=ibus
 imf=fcitx
-case "$imf" in
-  ibus)
-    if command -v ibus-daemon >/dev/null 2>&1; then
-      export GTK_IM_MODULE=ibus
-      export XMODIFIERS=@im=ibus
-      export QT_IM_MODULE=ibus
-    fi
-    ;;
-  fcitx)
-    if command -v fcitx-autostart >/dev/null 2>&1; then
-      export GTK_IM_MODULE=fcitx
-      export XMODIFIERS=@im=fcitx
-      export QT_IM_MODULE=fcitx
-    fi
-    ;;
-esac
+export GTK_IM_MODULE=$imf
+export XMODIFIERS=@im=$imf
+export QT_IM_MODULE=$imf
 unset imf
 
 ## Default command

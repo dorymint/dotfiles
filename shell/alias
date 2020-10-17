@@ -22,6 +22,7 @@ alias todo='${EDITOR:-vim} "$HOME"/todo.md'
 alias manja='LC_ALL=ja_JP.UTF-8 command man'
 alias rgp='rg --pretty'
 alias ss100='(for x in $(seq 100); do clear; ss -atn; printf "%s\n" "$x"; sleep 1; done)'
+alias functions='declare -f'
 
 ## ls
 alias l='command ls -lv --color=auto'
