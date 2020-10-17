@@ -108,9 +108,12 @@ if (has('win32') || has('win64')) &&
 endif
 
 " plug
-if filereadable(expand('~/.vim/autoload/plug.vim')) &&
-      \ filereadable(expand('~/dotfiles/vim/plugin.vim'))
+let s:plug_loc = expand('~/.vim/autoload/plug.vim')
+if filereadable(s:plug_loc)
   source ~/dotfiles/vim/plugin.vim
+else
+  let s:plug_url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+  command! GetPlug execute 'terminal curl -fLo ' . s:plug_loc . ' --create-dirs ' . s:plug_url
 endif
 
 "-----| set |-----"
@@ -172,9 +175,9 @@ set norevins
 "set nrformats=bin,octal,hex
 
 set helplang=ja,en
+set formatoptions+=m
 
 " cjk を追加で東アジア圏の言葉をチェックから除外できるらしい
-set nospell
 set spelllang=en,cjk
 
 " showmatch
@@ -274,6 +277,7 @@ endif
 
 "-----| color |-----"
 if &t_Co == 256 || has('gui_running')
+  set background=dark
   silent! colorscheme jellybeans
   "colorscheme hybrid
   "colorscheme iceberg
@@ -502,6 +506,7 @@ endif
 
 " put the command output
 command! -nargs=+ -complete=command PutEx call s:putEx(<q-args>)
+command! -nargs=+ -complete=command EX call s:putEx(<q-args>)
 function! s:putEx(exe) abort
   let l:save_more = &more
   set nomore
@@ -528,7 +533,7 @@ filetype plugin indent on
 augroup vimrc_ft
   autocmd!
   autocmd FileType vim setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-  autocmd FileType sh setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+  "autocmd FileType sh setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
   autocmd FileType go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=2
   " provided by $VIMRUNTIME/ftplugin/rust.vim
   "autocmd FileType rust setlocal
@@ -596,13 +601,18 @@ endfunction
 
 " Input Method Framework
 let s:imf = substitute($XMODIFIERS, '^@im=\(.*\)$', '\1', '')
-
 if s:imf ==# "ibus"
   set iminsert=2 | set imsearch=2
+  set imstatusfunc=ImStatus
+  set imactivatefunc=ImActivate
+
   let s:ibus_default_engine = 'xkb:jp::jpn'
   let s:ibus_engine = 'anthy'
 
-  set imactivatefunc=ImActivate
+  function! ImStatus()
+    return trim(system('ibus engine')) is# s:ibus_engine
+  endfunction
+
   function! ImActivate(active)
     if a:active
       call system('ibus engine ' . s:ibus_engine)
@@ -610,26 +620,26 @@ if s:imf ==# "ibus"
       call system('ibus engine ' . s:ibus_default_engine)
     endif
   endfunction
-
-  set imstatusfunc=ImStatus
-  function! ImStatus()
-    return trim(system('ibus engine')) is# s:ibus_engine
-  endfunction
-
-elseif exepath('fcitx-remote') !=# "" && system('fcitx-remote')[0] isnot# '0'
+elseif s:imf ==# "fcitx"
   set iminsert=2 | set imsearch=2
-
   set imstatusfunc=ImStatus
+  set imactivatefunc=ImActivate
+
+  " same api fcitx-remote,fcitx5-remote
+  let s:fcitx = "fcitx"
+  if executable("fcitx5")
+    let s:fcitx = "fcitx5"
+  endif
+
   function! ImStatus()
-    return system('fcitx-remote')[0] is# '2'
+    return system(s:fcitx . '-remote')[0] is# '2'
   endfunction
 
-  set imactivatefunc=ImActivate
   function! ImActivate(active)
     if a:active
-      call system('fcitx-remote -o')
+      call system(s:fcitx . '-remote -o')
     else
-      call system('fcitx-remote -c')
+      call system(s:fcitx . '-remote -c')
     endif
   endfunction
 endif

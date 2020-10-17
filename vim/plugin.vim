@@ -208,6 +208,7 @@ augroup vimrc_plugin_ft
   autocmd!
   autocmd FileType go call s:ftgo()
   autocmd FileType rust call s:ftrust()
+  autocmd FileType markdown call s:ftmd()
 augroup END
 
 function! s:ftgo()
@@ -225,4 +226,9 @@ function! s:ftrust()
   nmap <buffer> <LocalLeader>gd <Plug>(rust-doc)
   " rust.vim
   nmap <buffer> <LocalLeader>f :<C-u>RustFmt<CR>
+endfunction
+
+function! s:ftmd()
+  " previm
+  nnoremap <buffer> <LocalLeader>o :<C-u>PrevimOpen<CR>
 endfunction
