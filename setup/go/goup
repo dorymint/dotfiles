@@ -6,7 +6,7 @@ set -eu
 
 remote=https://go.googlesource.com/go
 
-version=go1.15.2
+version=go1.15.4
 goroot="$HOME/src/${remote#https://}"
 
 version_bootstrap=release-branch.go1.4
