@@ -11,3 +11,4 @@
 	dr = add --dry-run
 	ls = ls-files
 	alias = config --get-regexp "alias"
+	ls-alias= config --get-regexp "alias"

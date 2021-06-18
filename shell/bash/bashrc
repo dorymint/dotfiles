@@ -60,6 +60,7 @@ man() {
 
 if [ "$SHLVL" -eq 1 ]; then
 	if command -v fortune &>/dev/null; then
+		sleep 1
 		command fortune -a
 	fi
 fi

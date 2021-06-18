@@ -602,7 +602,6 @@ endfunction
 " Input Method Framework
 let s:imf = substitute($XMODIFIERS, '^@im=\(.*\)$', '\1', '')
 if s:imf ==# "ibus"
-  set iminsert=2 | set imsearch=2
   set imstatusfunc=ImStatus
   set imactivatefunc=ImActivate
 
@@ -621,7 +620,6 @@ if s:imf ==# "ibus"
     endif
   endfunction
 elseif s:imf ==# "fcitx"
-  set iminsert=2 | set imsearch=2
   set imstatusfunc=ImStatus
   set imactivatefunc=ImActivate
 

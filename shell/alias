@@ -24,6 +24,9 @@ alias rgp='rg --pretty'
 alias ss100='(for x in $(seq 100); do clear; ss -atn; printf "%s\n" "$x"; sleep 1; done)'
 alias functions='declare -f'
 
+# EXIF
+alias lsexif='exiftool -a -u -g1 -- '
+
 ## ls
 alias l='command ls -lv --color=auto'
 alias la='command ls -halv --color=auto'
@@ -35,7 +38,7 @@ alias lacle='command ls -halvc --color=auto | less -R'
 alias lah='command ls -halvd --color=auto .*'
 alias lsc='command ls -1c'
 alias lsone='lsc | sed -n 1p'
-alias pick='lsc | cho'
+alias pick='lsc | gof'
 
 ## date
 alias dayname='LANG=en command date +%A'
@@ -48,8 +51,8 @@ alias dr='LANG=en command date -R'
 alias picture='sxiv'
 alias gif='imv'
 alias video='mpv'
-alias vpick='v="$(lsc | cho)"; test ! -z "$v" && mpv -- "$v"; unset v'
-alias vpickq='v="$(lsc | cho -q)"; test ! -z "$v" && mpv -- "$v"; unset v'
+alias vpick='v="$(lsc | gof)"; test ! -z "$v" && mpv -- "$v"; unset v;'
+alias file-manager='nautilus;'
 
 # editor
 alias editor='vim'
@@ -136,9 +139,9 @@ if [ -r "$HOME"/python/venv/bin/activate ]; then
 fi
 alias serve='python -m http.server -bind 127.0.0.1'
 
-## gits && cho
-if command -v gits >/dev/null 2>&1 && command -v cho >/dev/null 2>&1; then
-  alias cdg='builtin cd -- $(command gits -list-repo-full | command cho || command pwd)'
+# cd gof
+if command -v gits >/dev/null 2>&1 && command -v gof >/dev/null 2>&1; then
+  alias cdg='builtin cd -- $(command gits -list-repo-full | command gof || command pwd)'
   alias gl='command gits -- status | less -R'
 fi
 
@@ -163,6 +166,7 @@ if command -v cclo >/dev/null 2>&1; then
 fi
 
 ## sway
+alias ls-app_id='swaymsg -t get_tree | grep "app_id"'
 alias sidle='swayidle -w \
          timeout 180 "swaylock -f -c 000000" \
          timeout 360 "swaymsg \"output * dpms off\"" \

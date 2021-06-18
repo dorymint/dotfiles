@@ -11,6 +11,7 @@ call plug#begin('~/.vim/plugged')
 
   " file explorer
   Plug 'scrooloose/nerdtree'
+  "Plug 'mattn/vim-molder'
 
   " jump to words
   Plug 'easymotion/vim-easymotion'
@@ -75,7 +76,6 @@ unlet s:d
 nnoremap <LocalLeader>w :<C-u>call <SID>edit_templ()<CR>
 function! s:edit_templ() abort
   if isdirectory(g:sonictemplate_vim_template_dir)
-    " open by NERDTree or netrw
     execute "vsplit " . g:sonictemplate_vim_template_dir
   endif
 endfunction

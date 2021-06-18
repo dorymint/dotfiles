@@ -22,7 +22,7 @@ done
 
 # update or clone
 if [ -d "$dir" ]; then
-	git -C "$dir" pull --all
+	git -C "$dir" pull --no-rebase --all
 else
 	git clone -- "$url" "$dir"
 fi

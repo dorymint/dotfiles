@@ -33,6 +33,10 @@ floating_modifier $mod
 bindsym $mod+Return exec urxvt
 bindsym $mod+Shift+a exec i3-sensible-terminal
 
+# browser
+bindsym $mod+b exec firefox
+bindsym $mod+n exec nautilus
+
 # kill focused window
 bindsym $mod+Shift+q kill
 
@@ -69,10 +73,10 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
-bindsym $mod+Shift+Space floating toggle
+bindsym $mod+Shift+f floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+Space focus mode_toggle
+#bindsym $mod+Space focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
@@ -249,6 +253,6 @@ for_window [title="^Page Info .*$"] floating enable
 
 # start exec
 exec --no-startup-id conky --daemonize
-exec --no-startup-id compton --daemon
+exec --no-startup-id picom --daemon
 
 # vim:expandtab:
